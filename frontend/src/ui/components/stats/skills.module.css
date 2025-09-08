@@ -1,0 +1,10 @@
+.container {
+  list-style: none;
+  width: 10rem;
+}
+
+.skill {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}

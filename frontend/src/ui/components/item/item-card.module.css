@@ -1,0 +1,91 @@
+.item-card {
+  width: 10rem;
+  height: 10rem;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 4px;
+  background: transparent;
+  padding: 0;
+  color: #e5e7eb;
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    sans-serif;
+  overflow: hidden;
+}
+
+.item-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 2rem; /* évite un haut “vide” */
+}
+.item-title {
+  margin: 0;
+  font-weight: 800;
+  font-size: clamp(0.8rem, 0.9rem, 1rem);
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.item-thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
+  /* petit “zoom” si tu veux remplir un peu plus */
+  transform: translateY(0);
+}
+
+.item-meta {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+  font-size: 0.65rem;
+  line-height: 1.1;
+}
+.item-meta > div {
+  display: flex;
+  justify-content: space-between;
+}
+.item-meta dt {
+  color: #9aa4b2;
+}
+.item-meta dd {
+  margin: 0;
+}
+
+.item-stats {
+  list-style: none;
+  margin: 2px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  font-size: 0.65rem;
+}
+.item-stats li {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 4px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid #202534;
+
+  &.invalid {
+    color: var(--color-red);
+  }
+}
+
+li:not(.invalid) .key {
+  color: #9aa4b2;
+}
+li:not(.invalid) .value {
+  font-weight: 600;
+  color: #6c8cff;
+}

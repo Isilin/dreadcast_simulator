@@ -1,0 +1,26 @@
+import type { Skill } from './skill';
+
+export type ItemType = 'head' | 'chest' | 'legs' | 'feet' | 'secondary';
+
+export interface Prerequisite {
+  skill: Skill;
+  value: number;
+}
+
+export type Property = Skill | 'health' | 'stamina' | 'integrity';
+
+export interface Effect {
+  property: Property;
+  value: number;
+}
+
+export interface Item {
+  id: string;
+  name: string;
+  image: string;
+  tech: number;
+  integrity: number;
+  type: ItemType;
+  prerequisites?: Prerequisite[];
+  effects?: Effect[];
+}

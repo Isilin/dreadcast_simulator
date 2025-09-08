@@ -1,0 +1,8 @@
+node_modules
+dist
+build
+coverage
+.yarn
+.next
+out
+public/**/*.min.js
