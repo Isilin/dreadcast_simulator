@@ -22,7 +22,7 @@ export const RaceSelector = () => {
       <Field.Label>Race</Field.Label>
       <Select.Root
         items={raceItems}
-        value={race?.type || null}
+        value={race?.type || 'Humain'}
         onValueChange={handleChange}
       >
         <Select.Trigger className={styles.Select}>
