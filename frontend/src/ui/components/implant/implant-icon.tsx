@@ -103,8 +103,7 @@ export const ImplantIcon = ({ implant, state = 'DEFAULT' }: Props) => {
       case 'Enragé':
         return enragéIcon;
       default:
-        return;
-      // throw new Error(`Unknown implant: ${implant}`);
+        throw new Error(`Unknown implant: ${implant}`);
     }
   }, [implant]);
 
