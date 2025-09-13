@@ -28,7 +28,8 @@
   font-weight: 800;
   font-size: clamp(0.8rem, 0.9rem, 1rem);
   line-height: 1.1;
-  white-space: nowrap;
+  max-height: 2rem;
+  line-break: auto;
   overflow: hidden;
   text-overflow: ellipsis;
 }

@@ -21,19 +21,23 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  min-width: 24rem;
-  max-width: calc(100vw - 3rem);
-  max-height: 30rem;
+  width: 980px;
+  max-height: 32rem;
   margin-top: -2rem;
-  padding: 1.5rem;
+  padding: 0.5rem;
   border-radius: 0.5rem;
   outline: 1px solid var(--color-gray-200);
   background-color: var(--color-gray-50);
   color: var(--color-gray-900);
   transition: all 150ms;
+  transition:
+    transform 150ms,
+    opacity 150ms;
+  overflow-y: auto;
 
   @media (prefers-color-scheme: dark) {
     outline: 1px solid var(--color-gray-300);
+    outline-offset: -1px;
   }
 
   &[data-starting-style],
@@ -47,8 +51,10 @@
   font-size: 1rem;
   color: var(--color-gray-600);
   display: flex;
+  justify-content: center;
   flex-flow: row wrap;
   gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .Actions {
