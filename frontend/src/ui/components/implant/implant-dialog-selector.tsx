@@ -1,5 +1,6 @@
 import { Dialog } from '@base-ui-components/react';
 
+import { Spinner } from '../spinner/spinner';
 import styles from './implant-dialog-selector.module.css';
 import { ImplantSelector } from './implant-selector';
 import { ImplantsCounter } from './implants-counter';
@@ -18,7 +19,7 @@ export const ImplantDialogSElector = () => {
         </Dialog.Title>
         <div className={styles.content}>
           {status === 'error' && <p>{error.message}</p>}
-          {status === 'pending' && <p>Loading...</p>}
+          {status === 'pending' && <Spinner size={40} />}
           {status === 'success' &&
             implants?.map((i) => <ImplantSelector implant={i} key={i.name} />)}
         </div>

@@ -1,0 +1,57 @@
+/* Conteneur logique */
+.spinner {
+  display: inline-grid;
+  place-items: center;
+  width: var(--sp-size, 20px);
+  height: var(--sp-size, 20px);
+  color: inherit; /* utile si color=currentColor */
+}
+
+/* Anneau : piste + secteur animé via conic-gradient */
+.spinnerRing {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+
+  /* Piste (fond) */
+  background:
+    radial-gradient(
+        closest-side,
+        transparent calc(100% - var(--sp-thickness, 2px) - 0.5px),
+        var(--sp-track, rgba(0, 0, 0, 0.15))
+          calc(100% - var(--sp-thickness, 2px)),
+        var(--sp-track, rgba(0, 0, 0, 0.15)) 99.9%,
+        transparent
+      )
+      top/100% 100% no-repeat,
+    conic-gradient(var(--sp-color, currentColor) 0 25%, transparent 0 100%);
+
+  /* Masque pour creuser le disque au centre (permet une épaisseur ajustable) */
+  -webkit-mask: radial-gradient(
+    closest-side,
+    transparent calc(100% - var(--sp-thickness, 2px)),
+    #000 0
+  );
+  mask: radial-gradient(
+    closest-side,
+    transparent calc(100% - var(--sp-thickness, 2px)),
+    #000 0
+  );
+
+  animation: spinner-rotate 0.8s linear infinite;
+  will-change: transform;
+}
+
+/* Rotation GPU-friendly */
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Respect des préférences utilisateur */
+@media (prefers-reduced-motion: reduce) {
+  .spinner__ring {
+    animation: none;
+  }
+}
