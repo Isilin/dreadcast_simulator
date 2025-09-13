@@ -1,6 +1,13 @@
 import type { Skill } from './skill';
 
-export type ItemType = 'head' | 'chest' | 'legs' | 'feet' | 'secondary';
+export type ItemType =
+  | 'head'
+  | 'chest'
+  | 'legs'
+  | 'feet'
+  | 'secondary'
+  | 'left_arm'
+  | 'right_arm';
 
 export interface Prerequisite {
   skill: Skill;

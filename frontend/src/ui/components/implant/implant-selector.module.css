@@ -227,3 +227,8 @@
     }
   }
 }
+
+.label,
+.icon {
+  text-align: center;
+}

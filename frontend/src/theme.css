@@ -25,6 +25,8 @@
   @media (prefers-color-scheme: dark) {
     --color-blue: oklch(69% 50% 264deg);
     --color-red: oklch(80% 55% 31deg);
+    --color-orange: oklch(78% 53% 70deg);
+    --color-green: oklch(72% 48% 150deg);
 
     --color-gray-50: oklch(17% 1% 264deg);
     --color-gray-100: oklch(28% 3% 264deg / 65%);

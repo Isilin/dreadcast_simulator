@@ -2,7 +2,13 @@ import type { Stat } from '@/domain/skill';
 
 export interface ImplantResponseDto {
   name:
+    | 'Génie'
+    | 'Réplicateur'
+    | 'Sain et sauf'
+    | 'Chameau'
+    | 'Monsieur Clone'
     | 'Geek'
+    | 'Chanceux'
     | 'Raciste'
     | 'Urgentiste'
     | 'Prestidigitateur'
@@ -13,9 +19,11 @@ export interface ImplantResponseDto {
     | 'Brute'
     | 'Rôdeur'
     | "Peau d'acier"
+    | 'La Main Bleue'
     | 'Éclaireur'
     | 'Je te vois'
     | 'Scientifique'
+    | 'Économe'
     | 'Félin'
     | 'Aide de camp'
     | 'Commando'

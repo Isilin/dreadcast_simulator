@@ -1,5 +1,6 @@
 import { Field, Select } from '@base-ui-components/react';
 
+import { ImplantIcon } from './implant-icon';
 import styles from './implant-selector.module.css';
 
 import type { Implant } from '@/domain/implant';
@@ -21,9 +22,14 @@ export const ImplantSelector = ({ implant }: Props) => {
     })),
   ];
 
+  const iconState = currentImplant && currentImplant > 0 ? 'ACTIVE' : 'DEFAULT';
+
   return (
     <Field.Root>
       <Field.Label className={styles.label}>{implant.name}</Field.Label>
+      <Field.Description className={styles.icon}>
+        <ImplantIcon implant={implant.name} state={iconState} />
+      </Field.Description>
       <Select.Root
         items={levelItems}
         value={currentImplant || 0}

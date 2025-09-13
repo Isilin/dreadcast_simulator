@@ -7,9 +7,39 @@ import { sleep } from '@/utils/sleep';
 
 const MOCK_IMPLANTS: ImplantResponseDto[] = [
   {
+    name: 'Génie',
+    attributes: [],
+    valuePerLevel: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  },
+  {
+    name: 'Réplicateur',
+    attributes: [],
+    valuePerLevel: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  },
+  {
+    name: 'Sain et sauf',
+    attributes: [],
+    valuePerLevel: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  },
+  {
+    name: 'Chameau',
+    attributes: [],
+    valuePerLevel: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  },
+  {
+    name: 'Monsieur Clone',
+    attributes: [],
+    valuePerLevel: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  },
+  {
     name: 'Geek',
     attributes: ['computing'],
     valuePerLevel: [5, 10, 15, 20, 25, 30, 35, 40, 50, 60],
+  },
+  {
+    name: 'Chanceux',
+    attributes: [],
+    valuePerLevel: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   },
   {
     name: 'Raciste',
@@ -62,6 +92,11 @@ const MOCK_IMPLANTS: ImplantResponseDto[] = [
     valuePerLevel: [29, 57, 84, 110, 135, 159, 182, 204, 225, 245],
   },
   {
+    name: 'La Main Bleue',
+    attributes: [],
+    valuePerLevel: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  },
+  {
     name: 'Éclaireur',
     attributes: ['hit_rating'],
     valuePerLevel: [0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.18, 0.2],
@@ -75,6 +110,11 @@ const MOCK_IMPLANTS: ImplantResponseDto[] = [
     name: 'Scientifique',
     attributes: ['medicine', 'computing', 'engineering'],
     valuePerLevel: [6, 12, 18, 24, 30, 36, 42, 48, 54, 60],
+  },
+  {
+    name: 'Économe',
+    attributes: [],
+    valuePerLevel: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   },
   {
     name: 'Félin',

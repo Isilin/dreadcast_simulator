@@ -33,7 +33,14 @@ export interface ItemResponseDto {
   image: string;
   tech: number;
   integrity: number;
-  type: 'head' | 'chest' | 'legs' | 'feet' | 'secondary';
+  type:
+    | 'head'
+    | 'chest'
+    | 'legs'
+    | 'feet'
+    | 'secondary'
+    | 'left_arm'
+    | 'right_arm';
   prerequisites?: PrerequisiteResponseDto[];
   effects?: EffectResponseDto[];
 }

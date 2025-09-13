@@ -6,7 +6,15 @@ export const itemResponseDtoSchema = z.object({
   image: z.url(),
   tech: z.number().min(0),
   integrity: z.number().min(0),
-  type: z.enum(['head', 'chest', 'legs', 'feet', 'secondary']),
+  type: z.enum([
+    'head',
+    'chest',
+    'legs',
+    'feet',
+    'secondary',
+    'left_arm',
+    'right_arm',
+  ]),
   prerequisites: z
     .array(
       z.object({

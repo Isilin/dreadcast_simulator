@@ -1,7 +1,13 @@
 import type { Stat } from './skill';
 
 export const ImplantNameValues = [
+  'Génie',
+  'Réplicateur',
+  'Sain et sauf',
+  'Chameau',
+  'Monsieur Clone',
   'Geek',
+  'Chanceux',
   'Raciste',
   'Urgentiste',
   'Prestidigitateur',
@@ -12,9 +18,11 @@ export const ImplantNameValues = [
   'Brute',
   'Rôdeur',
   "Peau d'acier",
+  'La Main Bleue',
   'Éclaireur',
   'Je te vois',
   'Scientifique',
+  'Économe',
   'Félin',
   'Aide de camp',
   'Commando',

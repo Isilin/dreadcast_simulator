@@ -2,6 +2,7 @@ import { Dialog } from '@base-ui-components/react';
 
 import styles from './implant-dialog-selector.module.css';
 import { ImplantSelector } from './implant-selector';
+import { ImplantsCounter } from './implants-counter';
 
 import { useImplants } from '@/data/implant/implant.queries';
 
@@ -12,7 +13,9 @@ export const ImplantDialogSElector = () => {
     <Dialog.Portal>
       <Dialog.Backdrop className={styles.Backdrop} />
       <Dialog.Popup className={styles.Popup}>
-        <Dialog.Title>Choisissez vos implants</Dialog.Title>
+        <Dialog.Title>
+          Choisissez vos implants <ImplantsCounter />
+        </Dialog.Title>
         <div className={styles.content}>
           {status === 'error' && <p>{error.message}</p>}
           {status === 'pending' && <p>Loading...</p>}

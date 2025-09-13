@@ -1,0 +1,11 @@
+.countError {
+  color: var(--color-red);
+}
+
+.countValid {
+  color: var(--color-green);
+}
+
+.countIncomplete {
+  color: var(--color-orange);
+}

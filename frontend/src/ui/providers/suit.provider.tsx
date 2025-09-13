@@ -61,6 +61,7 @@ interface SuitSelectors {
   critical_cac_damages: number;
   hit_damages: number;
   critical_hit_damages: number;
+  implantsCount: number;
 }
 
 type SuitContextValues = SuitState & SuitActions & SuitSelectors;
@@ -104,6 +105,12 @@ export const SuitProvider = ({
   const setImplant = useCallback((implant: ImplantName, level: number) => {
     setImplantations((prev) => ({ ...prev, [implant]: level }));
   }, []);
+  const implantsCount = useMemo(() => {
+    return Object.entries(implantations).reduce(
+      (acc, curr) => acc + curr[1],
+      0,
+    );
+  }, [implantations]);
 
   const getStat = useCallback(
     (stat: Stat) => {
@@ -141,6 +148,7 @@ export const SuitProvider = ({
         ...stats,
         implantations,
         setImplant,
+        implantsCount,
       }}
     >
       {children}
