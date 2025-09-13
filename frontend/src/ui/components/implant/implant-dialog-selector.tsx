@@ -1,11 +1,11 @@
 import { Dialog } from '@base-ui-components/react';
 
-import { Spinner } from '../spinner/spinner';
 import styles from './implant-dialog-selector.module.css';
 import { ImplantSelector } from './implant-selector';
 import { ImplantsCounter } from './implants-counter';
 
 import { useImplants } from '@/data/implant/implant.queries';
+import { Spinner } from '@/ui/components/spinner/spinner';
 
 export const ImplantDialogSElector = () => {
   const { data: implants, status, error } = useImplants();

@@ -3,6 +3,7 @@
   height: 800px;
   position: absolute;
   align-self: center;
+  z-index: -1;
 }
 
 .silhouetteFill {
