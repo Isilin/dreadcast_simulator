@@ -1,10 +1,11 @@
-import { Field, Select } from '@base-ui-components/react';
+import { Field, NumberField } from '@base-ui-components/react';
 
 import { ImplantIcon } from './implant-icon';
 import styles from './implant-selector.module.css';
 
 import type { Implant } from '@/domain/implant';
 import { useSuit } from '@/ui/hooks/use-suit';
+import { CursorGrowIcon, MinusIcon, PlusIcon } from '@/ui/icons';
 
 interface Props {
   implant: Implant;
@@ -14,14 +15,6 @@ export const ImplantSelector = ({ implant }: Props) => {
   const { implantations, setImplant } = useSuit();
   const currentImplant = implantations?.[implant.name];
 
-  const levelItems = [
-    { label: implant.name, value: 0 },
-    ...Array.from(Array(implant.levelMax).keys()).map((l) => ({
-      label: `${l + 1}`,
-      value: l + 1,
-    })),
-  ];
-
   const iconState = currentImplant && currentImplant > 0 ? 'ACTIVE' : 'DEFAULT';
 
   return (
@@ -30,71 +23,37 @@ export const ImplantSelector = ({ implant }: Props) => {
       <Field.Description className={styles.icon}>
         <ImplantIcon implant={implant.name} state={iconState} />
       </Field.Description>
-      <Select.Root
-        items={levelItems}
+      <NumberField.Root
+        id={`implant-${implant.name}`}
+        defaultValue={0}
+        className={styles.field}
+        min={0}
+        max={implant.levelMax}
         value={currentImplant || 0}
-        onValueChange={(value) => setImplant(implant.name, value)}
+        onValueChange={(value) => setImplant(implant.name, value || 0)}
       >
-        <Select.Trigger className={styles.Select}>
-          <Select.Value />
-          <Select.Icon className={styles.SelectIcon}>
-            <ChevronUpDownIcon />
-          </Select.Icon>
-        </Select.Trigger>
-        <Select.Portal>
-          <Select.Positioner className={styles.Positioner} sideOffset={8}>
-            <Select.ScrollUpArrow className={styles.ScrollArrow} />
-            <Select.Popup className={styles.Popup}>
-              {levelItems?.map(({ label, value }) => (
-                <Select.Item
-                  key={`${implant.name}-${label}`}
-                  value={value}
-                  className={styles.Item}
-                >
-                  <Select.ItemIndicator className={styles.ItemIndicator}>
-                    <CheckIcon className={styles.ItemIndicatorIcon} />
-                  </Select.ItemIndicator>
-                  <Select.ItemText className={styles.ItemText}>
-                    {label}
-                  </Select.ItemText>
-                </Select.Item>
-              ))}
-            </Select.Popup>
-            <Select.ScrollDownArrow className={styles.ScrollArrow} />
-          </Select.Positioner>
-        </Select.Portal>
-      </Select.Root>
+        <NumberField.ScrubArea className={styles.scrubArea}>
+          <NumberField.ScrubAreaCursor className={styles.scrubAreaCursor}>
+            <CursorGrowIcon />
+          </NumberField.ScrubAreaCursor>
+        </NumberField.ScrubArea>
+
+        <NumberField.Group className={styles.group}>
+          <NumberField.Decrement
+            className={styles.decrement}
+            disabled={!currentImplant || currentImplant <= 0}
+          >
+            <MinusIcon />
+          </NumberField.Decrement>
+          <NumberField.Input className={styles.input} />
+          <NumberField.Increment
+            className={styles.increment}
+            disabled={!!currentImplant && currentImplant >= implant.levelMax}
+          >
+            <PlusIcon />
+          </NumberField.Increment>
+        </NumberField.Group>
+      </NumberField.Root>
     </Field.Root>
-  );
-};
-
-const ChevronUpDownIcon = (props: React.ComponentProps<'svg'>) => {
-  return (
-    <svg
-      width="8"
-      height="12"
-      viewBox="0 0 8 12"
-      fill="none"
-      stroke="currentcolor"
-      strokeWidth="1.5"
-      {...props}
-    >
-      <path d="M0.5 4.5L4 1.5L7.5 4.5" />
-      <path d="M0.5 7.5L4 10.5L7.5 7.5" />
-    </svg>
-  );
-};
-
-const CheckIcon = (props: React.ComponentProps<'svg'>) => {
-  return (
-    <svg
-      fill="currentcolor"
-      width="10"
-      height="10"
-      viewBox="0 0 10 10"
-      {...props}
-    >
-      <path d="M9.1603 1.12218C9.50684 1.34873 9.60427 1.81354 9.37792 2.16038L5.13603 8.66012C5.01614 8.8438 4.82192 8.96576 4.60451 8.99384C4.3871 9.02194 4.1683 8.95335 4.00574 8.80615L1.24664 6.30769C0.939709 6.02975 0.916013 5.55541 1.19372 5.24822C1.47142 4.94102 1.94536 4.91731 2.2523 5.19524L4.36085 7.10461L8.12299 1.33999C8.34934 0.993152 8.81376 0.895638 9.1603 1.12218Z" />
-    </svg>
   );
 };
