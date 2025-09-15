@@ -1,32 +1,29 @@
-import { Dialog } from '@base-ui-components/react';
-
-import styles from './implant-dialog-selector.module.css';
 import { ImplantSelector } from './implant-selector';
 import { ImplantsCounter } from './implants-counter';
 
 import { useImplants } from '@/data/implant/implant.queries';
+import { Modal } from '@/ui/components/modal/modal';
 import { Spinner } from '@/ui/components/spinner/spinner';
 
 export const ImplantDialogSElector = () => {
   const { data: implants, status, error } = useImplants();
 
   return (
-    <Dialog.Portal>
-      <Dialog.Backdrop className={styles.Backdrop} />
-      <Dialog.Popup className={styles.Popup}>
-        <Dialog.Title>
+    <Modal>
+      <Modal.Header>
+        <Modal.Title>
           Choisissez vos implants <ImplantsCounter />
-        </Dialog.Title>
-        <div className={styles.content}>
-          {status === 'error' && <p>{error.message}</p>}
-          {status === 'pending' && <Spinner size={40} />}
-          {status === 'success' &&
-            implants?.map((i) => <ImplantSelector implant={i} key={i.name} />)}
-        </div>
-        <div className={styles.Actions}>
-          <Dialog.Close className={styles.Button}>Close</Dialog.Close>
-        </div>
-      </Dialog.Popup>
-    </Dialog.Portal>
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Content>
+        {status === 'error' && <p>{error.message}</p>}
+        {status === 'pending' && <Spinner size={40} />}
+        {status === 'success' &&
+          implants?.map((i) => <ImplantSelector implant={i} key={i.name} />)}
+      </Modal.Content>
+      <Modal.Footer>
+        <Modal.Close>Close</Modal.Close>
+      </Modal.Footer>
+    </Modal>
   );
 };

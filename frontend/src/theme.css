@@ -20,6 +20,7 @@
   --muted: #9aa4b2;
   --accent: #6c8cff; /* ta couleur principale */
   --radius: 14px;
+  --gap: 16px;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 
   @media (prefers-color-scheme: dark) {
