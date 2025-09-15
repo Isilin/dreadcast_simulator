@@ -14,7 +14,7 @@ export interface Prerequisite {
   value: number;
 }
 
-export type Property = Skill | 'health' | 'stamina' | 'integrity';
+export type Property = Skill | 'health' | 'stamina' | 'integrity' | 'speed';
 
 export interface Effect {
   property: Property;

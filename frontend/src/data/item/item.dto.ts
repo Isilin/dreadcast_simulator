@@ -23,7 +23,8 @@ export interface EffectResponseDto {
     | 'engineering'
     | 'health'
     | 'stamina'
-    | 'integrity';
+    | 'integrity'
+    | 'speed';
   value: number;
 }
 

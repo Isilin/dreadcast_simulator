@@ -47,6 +47,7 @@ export const itemResponseDtoSchema = z.object({
           'health',
           'stamina',
           'integrity',
+          'speed',
         ]),
         value: z.number(),
       }),
