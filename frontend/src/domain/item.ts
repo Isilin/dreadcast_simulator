@@ -1,4 +1,4 @@
-import type { Skill } from './skill';
+import { getTagFromSkill, type Skill } from './skill';
 
 export type ItemType =
   | 'head'
@@ -15,6 +15,21 @@ export interface Prerequisite {
 }
 
 export type Property = Skill | 'health' | 'stamina' | 'integrity' | 'speed';
+
+export const getTagFromProperty = (property: Property): string => {
+  switch (property) {
+    case 'health':
+      return 'SANTE';
+    case 'stamina':
+      return 'FORME';
+    case 'integrity':
+      return 'Etat max';
+    case 'speed':
+      return 'Vitesse';
+    default:
+      return getTagFromSkill(property as Skill);
+  }
+};
 
 export interface Effect {
   property: Property;

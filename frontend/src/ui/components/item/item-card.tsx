@@ -1,12 +1,15 @@
 import styles from './item-card.module.css';
 
-import type { Item } from '@/domain/item';
+import { getTagFromProperty, type Item } from '@/domain/item';
+import { getTagFromSkill } from '@/domain/skill';
 import { useSuit } from '@/ui/hooks/use-suit';
 
 interface Props {
   item: Item;
   onClick?: () => void;
 }
+
+// TODO mettre un spinner aussi pour le temps de chargement de l'aperçu de l'item
 
 export const ItemCard = ({ item, onClick }: Props) => {
   const suit = useSuit();
@@ -30,10 +33,6 @@ export const ItemCard = ({ item, onClick }: Props) => {
           <dt>Tech :</dt>
           <dd>{item.tech}</dd>
         </div>
-        <div>
-          <dt>Type :</dt>
-          <dd>{item.type}</dd>
-        </div>
       </dl>
       <ul className={styles['item-stats']}>
         {item.prerequisites?.map((prerequisite) => (
@@ -47,7 +46,9 @@ export const ItemCard = ({ item, onClick }: Props) => {
             }
           >
             <span className={styles.key}>{prerequisite.value}</span>
-            <span className={styles.value}>{prerequisite.skill}</span>
+            <span className={styles.value}>
+              {getTagFromSkill(prerequisite.skill)}
+            </span>
           </li>
         ))}
       </ul>
@@ -56,7 +57,7 @@ export const ItemCard = ({ item, onClick }: Props) => {
           <li key={`effect-` + effect.property}>
             <span>
               {effect.value > 0 && '+'}
-              {effect.value} {effect.property}
+              {effect.value} {getTagFromProperty(effect.property)}
             </span>
           </li>
         ))}

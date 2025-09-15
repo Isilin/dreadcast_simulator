@@ -22,7 +22,7 @@ export const ItemSelector = ({ type }: Props) => {
 
   return (
     <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
-      <Dialog.Trigger className={styles.card} disabled={!!currentItem}>
+      <Dialog.Trigger className={styles.card}>
         {currentItem ? <ItemCard item={currentItem} /> : 'Choisir un item'}
       </Dialog.Trigger>
       <ItemDialogSelector onItemSelect={onItemSelect} type={type} />

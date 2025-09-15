@@ -56,6 +56,29 @@ export const getNameFromSkill = (skill: Skill): string => {
   }
 };
 
+export const getTagFromSkill = (skill: Skill): string => {
+  switch (skill) {
+    case 'strength':
+      return 'FOR';
+    case 'agility':
+      return 'AGI';
+    case 'robustness':
+      return 'RES';
+    case 'perception':
+      return 'PER';
+    case 'stealth':
+      return 'FUR';
+    case 'computing':
+      return 'INF';
+    case 'medicine':
+      return 'MED';
+    case 'engineering':
+      return 'ING';
+    default:
+      throw new Error('Unknown skill.');
+  }
+};
+
 export const getNameFromStat = (stat: Stat): string => {
   switch (stat) {
     case 'strength':
