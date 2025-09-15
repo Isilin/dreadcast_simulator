@@ -63,9 +63,9 @@ function RouteComponent() {
               gap: '16px',
             }}
           >
-            <ItemSelector type="secondary" />
             <ItemSelector type="left_arm" />
             <ItemSelector type="right_arm" />
+            <ItemSelector type="secondary" />
           </div>
         </div>
         <Silhouette />

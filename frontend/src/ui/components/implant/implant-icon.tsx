@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import styles from './implant-icon.module.css';
 
@@ -33,6 +33,7 @@ import urgentisteIcon from '@/assets/implant/urgentiste.png';
 import éclaireurIcon from '@/assets/implant/éclaireur.png';
 import économeIcon from '@/assets/implant/économe.png';
 import type { ImplantName } from '@/domain/implant';
+import { Spinner } from '@/ui/components/spinner/spinner';
 
 interface Props {
   implant: ImplantName;
@@ -40,6 +41,8 @@ interface Props {
 }
 
 export const ImplantIcon = ({ implant, state = 'DEFAULT' }: Props) => {
+  const [loaded, setLoaded] = useState(false);
+
   const thumb = useMemo(() => {
     switch (implant) {
       case 'Génie':
@@ -108,10 +111,14 @@ export const ImplantIcon = ({ implant, state = 'DEFAULT' }: Props) => {
   }, [implant]);
 
   return (
-    <img
-      src={thumb}
-      alt={implant}
-      className={state === 'ACTIVE' ? styles.active : ''}
-    />
+    <>
+      {!loaded && <Spinner />}
+      <img
+        src={thumb}
+        alt={implant}
+        onLoad={() => setLoaded(true)}
+        className={`${state === 'ACTIVE' ? styles.active : ''} ${loaded ? styles.visible : styles.hidden}`}
+      />
+    </>
   );
 };

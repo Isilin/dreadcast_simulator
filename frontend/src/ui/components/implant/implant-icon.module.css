@@ -18,3 +18,11 @@
       drop-shadow(0 0 11px var(--color-blue));
   }
 }
+
+.hidden {
+  opacity: 0;
+}
+
+.visible {
+  opacity: 1;
+}

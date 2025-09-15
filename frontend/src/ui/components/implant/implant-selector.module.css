@@ -51,7 +51,6 @@
   font-variant-numeric: tabular-nums;
 
   &:focus {
-    z-index: 1;
     outline: 2px solid var(--color-blue);
     outline-offset: -1px;
   }
