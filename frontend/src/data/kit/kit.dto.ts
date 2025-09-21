@@ -4,13 +4,6 @@ export interface KitResponseDto {
   id: string;
   name: string;
   tech: number;
-  type:
-    | 'head'
-    | 'chest'
-    | 'legs'
-    | 'feet'
-    | 'secondary'
-    | 'leftArm'
-    | 'rightArm';
+  type: 'head' | 'chest' | 'legs' | 'feet' | 'secondary' | 'weapon';
   effects: EffectResponseDto[];
 }
