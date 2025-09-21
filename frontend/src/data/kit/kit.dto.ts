@@ -10,7 +10,7 @@ export interface KitResponseDto {
     | 'legs'
     | 'feet'
     | 'secondary'
-    | 'left_arm'
-    | 'right_arm';
+    | 'leftArm'
+    | 'rightArm';
   effects: EffectResponseDto[];
 }

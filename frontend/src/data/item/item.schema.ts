@@ -6,15 +6,7 @@ export const itemResponseDtoSchema = z.object({
   image: z.url(),
   tech: z.number().min(0),
   integrity: z.number().min(0),
-  type: z.enum([
-    'head',
-    'chest',
-    'legs',
-    'feet',
-    'secondary',
-    'left_arm',
-    'right_arm',
-  ]),
+  type: z.enum(['head', 'chest', 'legs', 'feet', 'secondary', 'weapon']),
   prerequisites: z
     .array(
       z.object({
@@ -53,6 +45,11 @@ export const itemResponseDtoSchema = z.object({
       }),
     )
     .optional(),
+  minDamage: z.number().min(0).optional(),
+  maxDamage: z.number().min(0).optional(),
+  hands: z.number().min(0).max(2).optional(),
+  reach: z.number().min(0).max(14).optional(),
+  hitsPerRound: z.number().min(0).optional(),
 });
 
 export const itemArrayResponseSchema = z.array(itemResponseDtoSchema);

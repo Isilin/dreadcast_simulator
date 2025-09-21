@@ -14,13 +14,18 @@ import type { Gender } from '@/data/gender';
 import { useImplants } from '@/data/implant/implant.queries';
 import { useRaces } from '@/data/race/race.queries';
 import { ImplantNameValues, type ImplantName } from '@/domain/implant';
-import type { Item } from '@/domain/item';
+import {
+  ItemSpotValue,
+  type Item,
+  type ItemSpot,
+  type Property,
+} from '@/domain/item';
 import type { Kit } from '@/domain/kit';
 import type { Race } from '@/domain/race';
 import { StatValues, type Skill, type Stat } from '@/domain/skill';
 
 interface SuitPiece {
-  item: Item;
+  item: Item | null;
   kits: Kit[];
 }
 
@@ -32,6 +37,8 @@ interface SuitState {
   legs?: SuitPiece;
   feet?: SuitPiece;
   secondary?: SuitPiece;
+  leftArm?: SuitPiece;
+  rightArm?: SuitPiece;
   implantations?: Record<ImplantName, number>;
 }
 
@@ -39,6 +46,7 @@ interface SuitActions {
   setRace: Dispatch<SetStateAction<Race | undefined>>;
   setGender: Dispatch<SetStateAction<Gender>>;
   setImplant: (implant: ImplantName, level: number) => void;
+  setItem: (item: Item, spot: ItemSpot) => void;
 }
 
 interface SuitSelectors {
@@ -112,6 +120,39 @@ export const SuitProvider = ({
     );
   }, [implantations]);
 
+  const [items, setItems] = useState<Record<ItemSpot, SuitPiece>>({
+    head: { item: null, kits: [] },
+    chest: { item: null, kits: [] },
+    legs: { item: null, kits: [] },
+    feet: { item: null, kits: [] },
+    secondary: { item: null, kits: [] },
+    leftArm: { item: null, kits: [] },
+    rightArm: { item: null, kits: [] },
+  });
+
+  const setItem = useCallback((item: Item, spot: ItemSpot) => {
+    setItems((previous) => {
+      let next = { ...previous };
+      next[spot] = { item, kits: previous[spot].kits };
+
+      const other = spot === 'leftArm' ? 'rightArm' : 'leftArm';
+      if (
+        (spot === 'leftArm' || spot === 'rightArm') &&
+        item.hands &&
+        item.hands > 1
+      ) {
+        next[other] = next[spot];
+      } else if (
+        (spot === 'leftArm' || spot === 'rightArm') &&
+        previous[spot].item?.hands &&
+        previous[spot].item.hands > 1
+      ) {
+        next[other] = { ...next[spot], item: null };
+      }
+      return next;
+    });
+  }, []);
+
   const getStat = useCallback(
     (stat: Stat) => {
       return (
@@ -121,10 +162,17 @@ export const SuitProvider = ({
           .reduce((acc, k) => {
             const curr = implantations[k.name] - 1;
             return acc + (curr === -1 ? 0 : k.valuePerLevel[curr]);
-          }, 0) || 0)
+          }, 0) || 0) +
+        (ItemSpotValue.reduce((acc, k) => {
+          const curr =
+            items[k]?.item?.effects?.find(
+              (val) => val?.property === (stat as Property),
+            )?.value || 0;
+          return acc + curr;
+        }, 0) || 0)
       );
     },
-    [implantations, implants, race],
+    [implantations, implants, items, race],
   );
   const stats = useMemo(
     () =>
@@ -149,6 +197,8 @@ export const SuitProvider = ({
         implantations,
         setImplant,
         implantsCount,
+        ...items,
+        setItem,
       }}
     >
       {children}

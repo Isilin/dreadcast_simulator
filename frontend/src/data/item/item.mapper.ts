@@ -11,6 +11,11 @@ export const toDomain = (dto: ItemResponseDto): Item => ({
   type: dto.type,
   prerequisites: dto.prerequisites,
   effects: dto.effects,
+  minDamage: dto.minDamage,
+  maxDamage: dto.maxDamage,
+  hands: dto.hands,
+  reach: dto.reach,
+  hitsPerRound: dto.hitsPerRound,
 });
 
 export const toDTO = (item: Item): ItemResponseDto => ({
@@ -22,4 +27,9 @@ export const toDTO = (item: Item): ItemResponseDto => ({
   type: item.type,
   prerequisites: item.prerequisites,
   effects: item.effects,
+  minDamage: item.minDamage,
+  maxDamage: item.maxDamage,
+  hands: item.hands,
+  reach: item.reach,
+  hitsPerRound: item.hitsPerRound,
 });

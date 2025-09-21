@@ -50,10 +50,10 @@ function RouteComponent() {
               gap: '16px',
             }}
           >
-            <ItemSelector type="head" />
-            <ItemSelector type="chest" />
-            <ItemSelector type="legs" />
-            <ItemSelector type="feet" />
+            <ItemSelector spot="head" />
+            <ItemSelector spot="chest" />
+            <ItemSelector spot="legs" />
+            <ItemSelector spot="feet" />
           </div>
           <div
             style={{
@@ -63,9 +63,9 @@ function RouteComponent() {
               gap: '16px',
             }}
           >
-            <ItemSelector type="left_arm" />
-            <ItemSelector type="right_arm" />
-            <ItemSelector type="secondary" />
+            <ItemSelector spot="leftArm" />
+            <ItemSelector spot="rightArm" />
+            <ItemSelector spot="secondary" />
           </div>
         </div>
         <Silhouette />

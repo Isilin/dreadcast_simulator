@@ -34,14 +34,12 @@ export interface ItemResponseDto {
   image: string;
   tech: number;
   integrity: number;
-  type:
-    | 'head'
-    | 'chest'
-    | 'legs'
-    | 'feet'
-    | 'secondary'
-    | 'left_arm'
-    | 'right_arm';
+  type: 'head' | 'chest' | 'legs' | 'feet' | 'secondary' | 'weapon';
   prerequisites?: PrerequisiteResponseDto[];
   effects?: EffectResponseDto[];
+  minDamage?: number;
+  maxDamage?: number;
+  hands?: number;
+  reach?: number;
+  hitsPerRound?: number;
 }

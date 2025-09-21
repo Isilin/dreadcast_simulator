@@ -6,8 +6,7 @@ export type ItemType =
   | 'legs'
   | 'feet'
   | 'secondary'
-  | 'left_arm'
-  | 'right_arm';
+  | 'weapon';
 
 export interface Prerequisite {
   skill: Skill;
@@ -45,4 +44,27 @@ export interface Item {
   type: ItemType;
   prerequisites?: Prerequisite[];
   effects?: Effect[];
+  minDamage?: number;
+  maxDamage?: number;
+  hands?: number;
+  reach?: number;
+  hitsPerRound?: number;
 }
+
+export const ItemSpotValue = [
+  'head',
+  'chest',
+  'legs',
+  'feet',
+  'secondary',
+  'leftArm',
+  'rightArm',
+] as const;
+
+export type ItemSpot = (typeof ItemSpotValue)[number];
+
+export const toType = (spot: ItemSpot): ItemType => {
+  return spot === 'leftArm' || spot === 'rightArm'
+    ? 'weapon'
+    : (spot as ItemType);
+};
