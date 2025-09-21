@@ -1,3 +1,6 @@
+import { Tooltip } from '@base-ui-components/react';
+import type { HTMLProps } from 'react';
+
 import styles from './item-card.module.css';
 
 import { getTagFromProperty, type Item } from '@/domain/item';
@@ -11,13 +14,34 @@ interface Props {
 
 // TODO mettre un spinner aussi pour le temps de chargement de l'aperçu de l'item
 
+const Title = ({ value }: { value: string }) => {
+  return (
+    <Tooltip.Root delay={100}>
+      <Tooltip.Trigger
+        render={(props: HTMLProps<HTMLHeadingElement>) => (
+          <h3 {...props} className={styles['item-title']}>
+            {props.children}
+          </h3>
+        )}
+      >
+        {value}
+      </Tooltip.Trigger>
+      <Tooltip.Portal>
+        <Tooltip.Positioner sideOffset={10}>
+          <Tooltip.Popup className={styles.Popup}>{value}</Tooltip.Popup>
+        </Tooltip.Positioner>
+      </Tooltip.Portal>
+    </Tooltip.Root>
+  );
+};
+
 export const ItemCard = ({ item, onClick }: Props) => {
   const suit = useSuit();
 
   return (
     <article className={styles['item-card']} onClick={onClick}>
       <div className={styles['item-head']}>
-        <h3 className={styles['item-title']}>{item.name}</h3>
+        <Title value={item.name} />
         <img
           src={item.image}
           alt={item.name}
