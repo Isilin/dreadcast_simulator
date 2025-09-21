@@ -169,7 +169,12 @@ export const SuitProvider = ({
               (val) => val?.property === (stat as Property),
             )?.value || 0;
           return acc + curr;
-        }, 0) || 0)
+        }, 0) || 0) -
+        (items['leftArm']?.item?.hands && items['leftArm']?.item?.hands > 1
+          ? items['rightArm']?.item?.effects?.find(
+              (val) => val?.property === (stat as Property),
+            )?.value || 0
+          : 0)
       );
     },
     [implantations, implants, items, race],
