@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 6rem;
+  height: 10rem;
   width: 10rem;
   padding: 0 0.875rem;
   margin: 0;
@@ -32,4 +32,14 @@
     outline: 2px solid var(--color-blue);
     outline-offset: -1px;
   }
+}
+
+.Card {
+  border: 1px solid var(--color-gray-200);
+  border-radius: 0.5rem;
+  height: 10rem;
+  width: 6rem;
+  padding: 1rem;
+  background-color: var(--color-white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

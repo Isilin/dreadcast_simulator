@@ -22,9 +22,9 @@ export const getTagFromProperty = (property: Property): string => {
     case 'stamina':
       return 'FORME';
     case 'integrity':
-      return 'Etat max';
+      return 'ÉTAT';
     case 'speed':
-      return 'Vitesse';
+      return 'VIT';
     default:
       return getTagFromSkill(property as Skill);
   }

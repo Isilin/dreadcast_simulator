@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: var(--small-gap);
+}
+
+.name {
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--text);
+}
+
+.effects {
+  display: flex;
+  flex-direction: row;
+  gap: var(--small-gap);
+  flex-wrap: wrap;
+}

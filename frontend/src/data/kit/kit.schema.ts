@@ -4,7 +4,17 @@ export const kitResponseDtoSchema = z.object({
   id: z.string(),
   name: z.string(),
   tech: z.number().min(0),
-  type: z.enum(['head', 'chest', 'legs', 'feet', 'secondary']),
+  type: z.enum([
+    'head',
+    'chest',
+    'legs',
+    'feet',
+    'secondary',
+    '1handShot',
+    '2handsShot',
+    '1handMelee',
+    '2handsMelee',
+  ]),
   effects: z.array(
     z.object({
       property: z.enum([
@@ -19,6 +29,7 @@ export const kitResponseDtoSchema = z.object({
         'health',
         'stamina',
         'integrity',
+        'speed',
       ]),
       value: z.number(),
     }),

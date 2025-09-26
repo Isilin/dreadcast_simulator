@@ -4,7 +4,7 @@ import { fetchKits } from './kit.repo';
 
 import type { Kit } from '@/domain/kit';
 
-export const useKits = (type?: Kit['type']) =>
+export const useKits = (type?: Kit['type'] | Array<Kit['type']>) =>
   useQuery({
     queryKey: ['kits', type],
     queryFn: () => fetchKits(type),

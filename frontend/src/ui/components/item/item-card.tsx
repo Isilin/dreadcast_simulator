@@ -3,8 +3,9 @@ import type { HTMLProps } from 'react';
 
 import styles from './item-card.module.css';
 
-import { getTagFromProperty, type Item } from '@/domain/item';
+import { type Item } from '@/domain/item';
 import { getTagFromSkill } from '@/domain/skill';
+import { EffectChip } from '@/ui/components/effect-chip/effect-chip';
 import { useSuit } from '@/ui/hooks/use-suit';
 
 interface Props {
@@ -79,10 +80,7 @@ export const ItemCard = ({ item, onClick }: Props) => {
       <ul className={styles['item-stats']}>
         {item.effects?.map((effect) => (
           <li key={`effect-` + effect.property}>
-            <span>
-              {effect.value > 0 && '+'}
-              {effect.value} {getTagFromProperty(effect.property)}
-            </span>
+            <EffectChip effect={effect} />
           </li>
         ))}
       </ul>

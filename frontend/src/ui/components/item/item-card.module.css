@@ -29,8 +29,8 @@
   font-size: clamp(0.8rem, 0.9rem, 1rem);
   line-height: 1.1;
   max-height: 2rem;
-  width: 5rem;
-  max-width: 5rem;
+  width: 4rem;
+  max-width: 4rem;
   line-break: auto;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -73,18 +73,11 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 2px;
   font-size: 0.65rem;
+  margin-bottom: var(--small-gap);
 }
 .item-stats li {
   display: flex;
-  justify-content: space-between;
-  padding: 2px 4px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid #202534;
-
-  &.invalid {
-    color: var(--color-red);
-  }
+  justify-content: space-around;
 }
 
 li:not(.invalid) .key {

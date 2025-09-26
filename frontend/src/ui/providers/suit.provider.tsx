@@ -24,9 +24,14 @@ import type { Kit } from '@/domain/kit';
 import type { Race } from '@/domain/race';
 import { StatValues, type Skill, type Stat } from '@/domain/skill';
 
-interface SuitPiece {
+export interface KitSelection {
+  kit: Kit;
+  number: number;
+}
+
+export interface SuitPiece {
   item: Item | null;
-  kits: Kit[];
+  kits: Array<KitSelection>;
 }
 
 interface SuitState {
@@ -47,6 +52,10 @@ interface SuitActions {
   setGender: Dispatch<SetStateAction<Gender>>;
   setImplant: (implant: ImplantName, level: number) => void;
   setItem: (item: Item, spot: ItemSpot) => void;
+  addKit: (spot: ItemSpot, kit: Kit, newKit?: boolean) => void;
+  setKit: (spot: ItemSpot, kit: Kit, index: number) => void;
+  removeKit: (spot: ItemSpot, index: number) => void;
+  setKitNumber: (spot: ItemSpot, index: number, number: number) => void;
 }
 
 interface SuitSelectors {
@@ -168,7 +177,19 @@ export const SuitProvider = ({
             items[k]?.item?.effects?.find(
               (val) => val?.property === (stat as Property),
             )?.value || 0;
-          return acc + curr;
+          const kitsCurr = items[k]?.kits.reduce((kitAcc, kitCurr) => {
+            return (
+              kitAcc +
+              kitCurr.kit.effects.reduce((effAcc, effCurr) => {
+                if (effCurr.property === (stat as Property)) {
+                  return effAcc + effCurr.value * kitCurr.number;
+                }
+                return effAcc;
+              }, 0)
+            );
+          }, 0);
+
+          return acc + curr + kitsCurr;
         }, 0) || 0) -
         (items['leftArm']?.item?.hands && items['leftArm']?.item?.hands > 1
           ? items['rightArm']?.item?.effects?.find(
@@ -191,6 +212,73 @@ export const SuitProvider = ({
     [getStat],
   );
 
+  const addKit = useCallback((spot: ItemSpot, kit: Kit, newKit?: boolean) => {
+    setItems((previous) => {
+      const slot = previous[spot];
+      const existingIndex = slot.kits.findIndex((k) => k.kit.id === kit.id);
+
+      let kits: typeof slot.kits;
+      if (!newKit && existingIndex !== -1) {
+        kits = slot.kits.map((k, i) =>
+          i === existingIndex ? { ...k, number: k.number + 1 } : k,
+        );
+      } else {
+        kits = [...slot.kits, { kit, number: 1 }];
+      }
+
+      return { ...previous, [spot]: { ...slot, kits } };
+    });
+  }, []);
+
+  const setKit = useCallback((spot: ItemSpot, kit: Kit, index: number) => {
+    setItems((previous) => {
+      const slot = previous[spot];
+      if (!slot || slot.kits.length <= index) return previous;
+
+      const kits = slot.kits.map((k, i) => (i === index ? { ...k, kit } : k));
+
+      return { ...previous, [spot]: { ...slot, kits } };
+    });
+  }, []);
+
+  const removeKit = useCallback((spot: ItemSpot, index: number) => {
+    setItems((previous) => {
+      const slot = previous[spot];
+      if (!slot || index < 0 || index >= slot.kits.length) return previous;
+
+      const target = slot.kits[index];
+      let kits: typeof slot.kits;
+
+      if (target.number > 1) {
+        kits = slot.kits.map((k, i) =>
+          i === index ? { ...k, number: k.number - 1 } : k,
+        );
+      } else {
+        kits = slot.kits.filter((_, i) => i !== index);
+      }
+      return {
+        ...previous,
+        [spot]: { ...slot, kits },
+      };
+    });
+  }, []);
+
+  const setKitNumber = useCallback(
+    (spot: ItemSpot, index: number, number: number) => {
+      setItems((previous) => {
+        const slot = previous[spot];
+        if (!slot || slot.kits.length <= index) return previous;
+
+        const kits = slot.kits.map((k, i) =>
+          i === index ? { ...k, number } : k,
+        );
+
+        return { ...previous, [spot]: { ...slot, kits } };
+      });
+    },
+    [],
+  );
+
   return (
     <SuitContext.Provider
       value={{
@@ -204,6 +292,10 @@ export const SuitProvider = ({
         implantsCount,
         ...items,
         setItem,
+        addKit,
+        setKit,
+        removeKit,
+        setKitNumber,
       }}
     >
       {children}

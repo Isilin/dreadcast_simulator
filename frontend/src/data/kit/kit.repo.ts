@@ -3,7 +3,9 @@ import { fetchKitsMock } from './kit.repo.mock';
 import type { Kit } from '@/domain/kit';
 import { USE_MOCK } from '@/utils/use-mock';
 
-export async function fetchKits(type?: Kit['type']): Promise<Kit[]> {
+export async function fetchKits(
+  type?: Kit['type'] | Array<Kit['type']>,
+): Promise<Kit[]> {
   if (USE_MOCK) {
     return fetchKitsMock(type);
   }

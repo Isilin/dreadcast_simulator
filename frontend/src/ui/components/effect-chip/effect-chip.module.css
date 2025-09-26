@@ -1,0 +1,22 @@
+.chip {
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  line-height: 1rem;
+  background: var(--color-gray-500);
+  border: 1px solid var(--card-bd);
+  color: var(--text);
+  box-shadow: var(--shadow);
+
+  &.positive {
+    color: var(--color-green);
+  }
+
+  &.negative {
+    color: var(--color-red);
+  }
+
+  &.neutral {
+    color: var(--color-blue);
+  }
+}
