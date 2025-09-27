@@ -30,11 +30,11 @@ export const KitSelector = ({ type }: Props) => {
     const totals = new Map<Property, number>();
     let tech = 0;
     kits?.forEach(({ kit, number }) => {
-      tech += kit.tech * Math.max(1, number);
+      tech += kit.tech * number;
       kit.effects.forEach((eff) => {
         totals.set(
           eff.property,
-          (totals.get(eff.property) ?? 0) + eff.value * Math.max(1, number),
+          (totals.get(eff.property) ?? 0) + eff.value * number,
         );
       });
     });
