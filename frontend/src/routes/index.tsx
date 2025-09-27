@@ -1,45 +1,119 @@
-import { Input } from '@base-ui-components/react';
 import { createFileRoute } from '@tanstack/react-router';
-import { useState } from 'react';
 
-import reactLogo from '@/assets/react.svg';
+import { GenderSelector } from '@/ui/components/gender/gender-selector';
+import { Implants } from '@/ui/components/implant/implants';
+import { ItemSelector } from '@/ui/components/item/item-selector';
+import { KitSelector } from '@/ui/components/kit/kit-selector';
+import { RaceSelector } from '@/ui/components/race/race-selector';
+import { Silhouette } from '@/ui/components/silhouette/silhouette';
+import { Skills } from '@/ui/components/stats/skills';
+
 import './App.css';
-import viteLogo from '/vite.svg';
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div style={{ display: 'flex', flexDirection: 'row', gap: '8rem' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          flex: '0 0 auto',
+          minWidth: '120px',
+        }}
+      >
+        <GenderSelector />
+        <RaceSelector />
+        <Skills />
+        <Implants />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          flex: '1 1 auto',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '16px',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '16px',
+              }}
+            >
+              <ItemSelector spot="head" />
+              <ItemSelector spot="chest" />
+              <ItemSelector spot="legs" />
+              <ItemSelector spot="feet" />
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '16px',
+              }}
+            >
+              <KitSelector type="head" />
+              <KitSelector type="chest" />
+              <KitSelector type="legs" />
+              <KitSelector type="feet" />
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '16px',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-end',
+                gap: '16px',
+              }}
+            >
+              <KitSelector type="weapon" />
+              <KitSelector type="weapon" />
+              <KitSelector type="secondary" />
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-end',
+                gap: '16px',
+              }}
+            >
+              <ItemSelector spot="leftArm" />
+              <ItemSelector spot="rightArm" />
+              <ItemSelector spot="secondary" />
+            </div>
+          </div>
+        </div>
+        <Silhouette />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <Input
-        aria-label="Demo input"
-        placeholder="Type something…"
-        aria-disabled
-      />
-    </>
+    </div>
   );
 }
