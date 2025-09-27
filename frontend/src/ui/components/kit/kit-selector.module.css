@@ -34,12 +34,75 @@
   }
 }
 
-.Card {
-  border: 1px solid var(--color-gray-200);
-  border-radius: 0.5rem;
-  height: 10rem;
-  width: 6rem;
-  padding: 1rem;
-  background-color: var(--color-white);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.placeholder {
+  align-self: center;
+  justify-self: center;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* Contenu rempli */
+.content {
+  display: grid;
+  gap: 8px;
+}
+
+/* Noms concaténés */
+.names {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+  font:
+    800 18px/1.05 system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    sans-serif;
+}
+.name {
+  white-space: nowrap;
+}
+.sup {
+  font-size: 0.65em;
+  margin-left: 2px;
+  vertical-align: super;
+  color: var(--accent);
+}
+.sep {
+  opacity: 0.5;
+}
+
+/* Tags (pills) */
+.effects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Pied : Tech total */
+.footer {
+  margin-top: 2px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  margin-bottom: var(--gap);
+}
+.techLabel {
+  color: var(--muted);
+  font: 700 12px/1 system-ui;
+}
+.techValue {
+  color: var(--accent);
+  font: 800 16px/1 system-ui;
+
+  &.missingTech {
+    color: var(--color-red);
+  }
+  &.overTech {
+    color: var(--color-red);
+  }
+  &.perfectTech {
+    color: var(--color-green);
+  }
 }
