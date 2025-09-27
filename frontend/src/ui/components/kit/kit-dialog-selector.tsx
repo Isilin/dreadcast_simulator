@@ -1,5 +1,6 @@
 import { Dialog } from '@base-ui-components/react';
 
+import { DeleteButton } from '../delete-button/delete-button';
 import { KitCombobox } from './kit-combobox';
 import styles from './kit-dialog-selector.module.css';
 import { KitNumber } from './kit-number';
@@ -42,6 +43,9 @@ export const KitDialogSelector = ({ type }: Props) => {
                   onChange={(newNumber) =>
                     suit.setKitNumber(type as ItemSpot, index, newNumber)
                   }
+                />
+                <DeleteButton
+                  onClick={() => suit.removeKit(type as ItemSpot, index)}
                 />
               </li>
             ))}
