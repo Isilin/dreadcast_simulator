@@ -34,6 +34,7 @@ export interface ItemResponseDto {
   image: string;
   tech: number;
   integrity: number;
+  // TODO: replace 'weapon' par the 4 types
   type: 'head' | 'chest' | 'legs' | 'feet' | 'secondary' | 'weapon';
   prerequisites?: PrerequisiteResponseDto[];
   effects?: EffectResponseDto[];

@@ -10,9 +10,9 @@ import {
   type SetStateAction,
 } from 'react';
 
-import type { Gender } from '@/data/gender';
-import { useImplants } from '@/data/implant/implant.queries';
-import { useRaces } from '@/data/race/race.queries';
+import { useImplants } from '@/data/implant';
+import { useRaces } from '@/data/race';
+import type { Gender } from '@/domain/gender';
 import { ImplantNameValues, type ImplantName } from '@/domain/implant';
 import {
   ItemSpotValue,

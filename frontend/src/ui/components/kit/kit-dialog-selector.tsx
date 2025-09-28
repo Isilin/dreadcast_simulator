@@ -1,13 +1,13 @@
 import { Dialog } from '@base-ui-components/react';
 
-import { DeleteButton } from '../delete-button/delete-button';
 import { KitCombobox } from './kit-combobox';
 import styles from './kit-dialog-selector.module.css';
 import { KitNumber } from './kit-number';
 
-import { useKits } from '@/data/kit/kit.queries';
+import { useKits } from '@/data/kit';
 import type { Item, ItemSpot } from '@/domain/item';
 import type { Kit, KitType } from '@/domain/kit';
+import { DeleteButton } from '@/ui/components/delete-button/delete-button';
 import { useSuit } from '@/ui/hooks/use-suit';
 import type { KitSelection } from '@/ui/providers/suit.provider';
 

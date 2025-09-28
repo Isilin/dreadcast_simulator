@@ -2,7 +2,7 @@ import { Dialog } from '@base-ui-components/react';
 
 import { ItemCard } from './item-card';
 
-import { useItems } from '@/data/item/item.queries';
+import { useItems } from '@/data/item';
 import type { Item } from '@/domain/item';
 import { Modal } from '@/ui/components/modal/modal';
 import { Spinner } from '@/ui/components/spinner/spinner';

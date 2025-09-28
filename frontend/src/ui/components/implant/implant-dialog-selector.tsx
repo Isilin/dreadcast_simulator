@@ -1,7 +1,7 @@
 import { ImplantSelector } from './implant-selector';
 import { ImplantsCounter } from './implants-counter';
 
-import { useImplants } from '@/data/implant/implant.queries';
+import { useImplants } from '@/data/implant';
 import { Modal } from '@/ui/components/modal/modal';
 import { Spinner } from '@/ui/components/spinner/spinner';
 

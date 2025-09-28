@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import styles from './kit-combobox.module.css';
 import { KitLabel } from './kit-label';
 
-import { useKits } from '@/data/kit/kit.queries';
+import { useKits } from '@/data/kit';
 import { type Item } from '@/domain/item';
 import type { Kit } from '@/domain/kit';
 import { CheckIcon, ChevronUpDownIcon } from '@/ui/icons';
