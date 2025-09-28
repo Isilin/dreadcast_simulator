@@ -7,7 +7,7 @@ import { MOCK_LEGS_ITEMS } from './legs-items.mock';
 import { MOCK_SECONDARY_ITEMS } from './secondary-items.mock';
 import { MOCK_WEAPONS_ITEMS } from './weapons-items.mock';
 
-import type { Item } from '@/domain/item';
+import type { Item } from '@/domain';
 import { sleep } from '@/utils/sleep';
 
 export async function fetchItemsMock(type?: Item['type']): Promise<Item[]> {

@@ -32,7 +32,7 @@ import tireurDéliteIcon from "@/assets/implant/tireur d'élite.png";
 import urgentisteIcon from '@/assets/implant/urgentiste.png';
 import éclaireurIcon from '@/assets/implant/éclaireur.png';
 import économeIcon from '@/assets/implant/économe.png';
-import type { ImplantName } from '@/domain/implant';
+import type { ImplantName } from '@/domain';
 import { Spinner } from '@/ui/components/spinner/spinner';
 
 interface Props {

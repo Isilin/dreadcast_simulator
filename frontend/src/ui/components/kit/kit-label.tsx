@@ -1,6 +1,6 @@
 import styles from './kit-label.module.css';
 
-import type { Kit } from '@/domain/kit';
+import type { Kit } from '@/domain';
 import { EffectChip } from '@/ui/components/effect-chip/effect-chip';
 import { TechBadge } from '@/ui/components/tech-badge/tech-badge';
 

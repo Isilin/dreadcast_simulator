@@ -5,7 +5,7 @@ import { ItemCard } from './item-card';
 import { ItemDialogSelector } from './item-dialog-selector';
 import styles from './item-selector.module.css';
 
-import { toType, type Item, type ItemSpot } from '@/domain/item';
+import { toType, type Item, type ItemSpot } from '@/domain';
 import { useSuit } from '@/ui/hooks/use-suit';
 
 interface Props {

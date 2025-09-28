@@ -1,6 +1,6 @@
 import type { KitResponseDto } from './kit.dto';
 
-import type { Kit } from '@/domain/kit';
+import type { Kit } from '@/domain';
 
 export const toDomain = (dto: KitResponseDto): Kit => ({
   id: dto.id,

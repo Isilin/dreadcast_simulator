@@ -1,4 +1,23 @@
-import type { Stat } from '@/domain/skill';
+type StatDto =
+  | 'strength'
+  | 'agility'
+  | 'robustness'
+  | 'perception'
+  | 'stealth'
+  | 'computing'
+  | 'medicine'
+  | 'engineering'
+  | 'health'
+  | 'stamina'
+  | 'speed'
+  | 'race_damage'
+  | 'hit_rating'
+  | 'team_heal'
+  | 'cac_damage'
+  | 'critical_cac_chance'
+  | 'critical_cac_damages'
+  | 'hit_damages'
+  | 'critical_hit_damages';
 
 export interface ImplantResponseDto {
   name:
@@ -32,6 +51,6 @@ export interface ImplantResponseDto {
     | "Tireur d'élite"
     | 'Oeil de lynx'
     | 'Enragé';
-  attributes: Stat[];
+  attributes: StatDto[];
   valuePerLevel: number[];
 }

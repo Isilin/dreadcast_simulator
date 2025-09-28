@@ -2,7 +2,7 @@ import { Field, Radio, RadioGroup } from '@base-ui-components/react';
 
 import styles from './gender-selector.module.css';
 
-import type { Gender } from '@/domain/gender';
+import type { Gender } from '@/domain';
 import { useSuit } from '@/ui/hooks/use-suit';
 
 export const GenderSelector = () => {

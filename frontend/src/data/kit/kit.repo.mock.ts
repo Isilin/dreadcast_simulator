@@ -7,7 +7,7 @@ import { MOCK_LEGS_KITS } from './legs-kits.mock';
 import { MOCK_SECONDARY_KITS } from './secondary-kits.mock';
 import { MOCK_WEAPONS_KITS } from './weapons-kits.mock';
 
-import type { Kit } from '@/domain/kit';
+import type { Kit } from '@/domain';
 import { sleep } from '@/utils/sleep';
 
 export async function fetchKitsMock(

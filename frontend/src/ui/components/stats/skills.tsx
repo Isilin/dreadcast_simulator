@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import styles from './skills.module.css';
 
-import { getNameFromStat, StatValues, type Skill } from '@/domain/skill';
+import { getNameFromStat, StatValues, type Skill } from '@/domain';
 import { useSuit } from '@/ui/hooks/use-suit';
 
 export const Skills = () => {

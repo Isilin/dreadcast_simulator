@@ -5,8 +5,7 @@ import styles from './kit-combobox.module.css';
 import { KitLabel } from './kit-label';
 
 import { useKits } from '@/data/kit';
-import { type Item } from '@/domain/item';
-import type { Kit } from '@/domain/kit';
+import type { Item, Kit } from '@/domain';
 import { CheckIcon, ChevronUpDownIcon } from '@/ui/icons';
 
 interface Props {

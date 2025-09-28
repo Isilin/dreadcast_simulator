@@ -3,7 +3,7 @@ import { Field, Select } from '@base-ui-components/react';
 import styles from './race-selector.module.css';
 
 import { useRaces } from '@/data/race';
-import type { RaceType } from '@/domain/race';
+import type { RaceType } from '@/domain';
 import { useSuit } from '@/ui/hooks/use-suit';
 import { CheckIcon, ChevronUpDownIcon } from '@/ui/icons';
 

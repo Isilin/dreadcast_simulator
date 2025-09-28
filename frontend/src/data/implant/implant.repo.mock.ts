@@ -2,7 +2,7 @@ import type { ImplantResponseDto } from './implant.dto';
 import { toDomain } from './implant.mapper';
 import { implantArrayResponseSchema } from './implant.schema';
 
-import type { Implant } from '@/domain/implant';
+import type { Implant } from '@/domain';
 import { sleep } from '@/utils/sleep';
 
 const MOCK_IMPLANTS: ImplantResponseDto[] = [

@@ -4,7 +4,7 @@ import { Fragment, useMemo, useState } from 'react';
 import { KitDialogSelector } from './kit-dialog-selector';
 import styles from './kit-selector.module.css';
 
-import type { Item, Property } from '@/domain/item';
+import type { Item, Property } from '@/domain';
 import { EffectChip } from '@/ui/components/effect-chip/effect-chip';
 import { useSuit } from '@/ui/hooks/use-suit';
 import type { SuitPiece } from '@/ui/providers/suit.provider';

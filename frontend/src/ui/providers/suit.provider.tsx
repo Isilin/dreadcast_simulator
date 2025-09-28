@@ -12,17 +12,20 @@ import {
 
 import { useImplants } from '@/data/implant';
 import { useRaces } from '@/data/race';
-import type { Gender } from '@/domain/gender';
-import { ImplantNameValues, type ImplantName } from '@/domain/implant';
 import {
+  ImplantNameValues,
   ItemSpotValue,
+  StatValues,
+  type Gender,
+  type ImplantName,
   type Item,
   type ItemSpot,
+  type Kit,
   type Property,
-} from '@/domain/item';
-import type { Kit } from '@/domain/kit';
-import type { Race } from '@/domain/race';
-import { StatValues, type Skill, type Stat } from '@/domain/skill';
+  type Race,
+  type Skill,
+  type Stat,
+} from '@/domain';
 
 export interface KitSelection {
   kit: Kit;

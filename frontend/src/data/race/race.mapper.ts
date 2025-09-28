@@ -1,6 +1,6 @@
 import type { RaceResponseDto } from './race.dto';
 
-import type { Race } from '@/domain/race';
+import type { Race } from '@/domain';
 
 export const toDomain = (race: RaceResponseDto): Race => ({
   type: race.type,

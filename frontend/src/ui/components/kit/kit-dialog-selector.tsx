@@ -5,8 +5,7 @@ import styles from './kit-dialog-selector.module.css';
 import { KitNumber } from './kit-number';
 
 import { useKits } from '@/data/kit';
-import type { Item, ItemSpot } from '@/domain/item';
-import type { Kit, KitType } from '@/domain/kit';
+import type { Item, ItemSpot, Kit, KitType } from '@/domain';
 import { DeleteButton } from '@/ui/components/delete-button/delete-button';
 import { useSuit } from '@/ui/hooks/use-suit';
 import type { KitSelection } from '@/ui/providers/suit.provider';

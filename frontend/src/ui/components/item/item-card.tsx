@@ -3,8 +3,7 @@ import type { HTMLProps } from 'react';
 
 import styles from './item-card.module.css';
 
-import { type Item } from '@/domain/item';
-import { getTagFromSkill } from '@/domain/skill';
+import { type Item, getTagFromSkill } from '@/domain';
 import { EffectChip } from '@/ui/components/effect-chip/effect-chip';
 import { useSuit } from '@/ui/hooks/use-suit';
 

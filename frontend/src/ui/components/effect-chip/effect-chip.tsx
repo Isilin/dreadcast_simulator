@@ -1,6 +1,6 @@
 import styles from './effect-chip.module.css';
 
-import { getTagFromProperty, type Effect } from '@/domain/item';
+import { getTagFromProperty, type Effect } from '@/domain';
 
 interface Props {
   effect: Effect;

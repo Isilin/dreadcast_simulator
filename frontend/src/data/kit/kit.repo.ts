@@ -1,6 +1,6 @@
 import { fetchKitsMock } from './kit.repo.mock';
 
-import type { Kit } from '@/domain/kit';
+import type { Kit } from '@/domain';
 import { USE_MOCK } from '@/utils/use-mock';
 
 export async function fetchKits(

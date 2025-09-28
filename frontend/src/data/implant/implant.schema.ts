@@ -1,7 +1,6 @@
 import z from 'zod';
 
-import { ImplantNameValues } from '@/domain/implant';
-import { StatValues } from '@/domain/skill';
+import { ImplantNameValues, StatValues } from '@/domain';
 
 export const implantResponseDtoSchema = z.object({
   name: z.enum(ImplantNameValues),

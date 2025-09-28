@@ -3,7 +3,7 @@ import { Field, NumberField } from '@base-ui-components/react';
 import { ImplantIcon } from './implant-icon';
 import styles from './implant-selector.module.css';
 
-import type { Implant } from '@/domain/implant';
+import type { Implant } from '@/domain';
 import { useSuit } from '@/ui/hooks/use-suit';
 import { CursorGrowIcon, MinusIcon, PlusIcon } from '@/ui/icons';
 
