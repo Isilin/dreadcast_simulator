@@ -1,0 +1,42 @@
+/* container de la ligne, adapte si tu as déjà une grille */
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto; /* ex: select | dec | value | controls */
+  gap: var(--small-gap);
+  align-items: center;
+}
+
+/* bouton delete rouge discret, néon/dark-friendly */
+.iconDanger {
+  all: unset;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: rgba(255, 0, 0, 0.06);
+  border: 1px solid color-mix(in oklch, oklch(80% 0.55 31) 35%, transparent);
+  color: oklch(80% 0.55 31); /* ton rouge OKLCH */
+  cursor: pointer;
+  transition:
+    transform 0.08s ease,
+    background-color 0.12s ease,
+    border-color 0.12s ease,
+    opacity 0.12s ease;
+}
+.iconDanger:hover {
+  background: rgba(255, 0, 0, 0.12);
+  border-color: color-mix(in oklch, oklch(80% 0.55 31) 55%, transparent);
+}
+.iconDanger:active {
+  transform: translateY(1px) scale(0.98);
+}
+.iconDanger:focus-visible {
+  outline: 2px solid color-mix(in oklch, oklch(80% 0.55 31) 60%, white 40%);
+  outline-offset: 2px;
+}
+.iconDanger svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}

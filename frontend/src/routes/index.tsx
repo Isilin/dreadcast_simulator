@@ -1,12 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { GenderSelector } from '@/ui/components/gender/gender-selector';
-import { Implants } from '@/ui/components/implant/implants';
-import { ItemSelector } from '@/ui/components/item/item-selector';
-import { KitSelector } from '@/ui/components/kit/kit-selector';
-import { RaceSelector } from '@/ui/components/race/race-selector';
-import { Silhouette } from '@/ui/components/silhouette/silhouette';
-import { Skills } from '@/ui/components/stats/skills';
+import { GenderSelector } from '@/feature/gender/gender-selector';
+import { ImplantsButton } from '@/feature/implant/implants-button.tsx';
+import { ItemSelector } from '@/feature/item/item-selector';
+import { KitSelector } from '@/feature/kit/kit-selector';
+import { RaceSelector } from '@/feature/race/race-selector';
+import { Silhouette } from '@/feature/race/silhouette';
+import { Skills } from '@/feature/stats/skills';
 
 import './App.css';
 
@@ -29,7 +29,7 @@ function RouteComponent() {
         <GenderSelector />
         <RaceSelector />
         <Skills />
-        <Implants />
+        <ImplantsButton />
       </div>
       <div
         style={{
