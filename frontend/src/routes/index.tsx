@@ -72,10 +72,10 @@ function RouteComponent() {
                 gap: '16px',
               }}
             >
-              <KitSelector type="head" />
-              <KitSelector type="chest" />
-              <KitSelector type="legs" />
-              <KitSelector type="feet" />
+              <KitSelector spot="head" />
+              <KitSelector spot="chest" />
+              <KitSelector spot="legs" />
+              <KitSelector spot="feet" />
             </div>
           </div>
 
@@ -94,9 +94,9 @@ function RouteComponent() {
                 gap: '16px',
               }}
             >
-              <KitSelector type="weapon" />
-              <KitSelector type="weapon" />
-              <KitSelector type="secondary" />
+              <KitSelector spot="leftArm" />
+              <KitSelector spot="rightArm" />
+              <KitSelector spot="secondary" />
             </div>
             <div
               style={{

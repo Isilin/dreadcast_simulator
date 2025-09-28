@@ -4,26 +4,24 @@ import { Fragment, useMemo, useState } from 'react';
 import { KitDialogSelector } from '../kit-dialog-selector';
 import styles from './kit-selector.module.css';
 
-import type { Item, Property } from '@/domain';
+import { toType, type ItemSpot, type Property } from '@/domain';
 import { EffectChip } from '@/feature/effect-chip';
 import { useSuit } from '@/ui/hooks/use-suit';
 import type { SuitPiece } from '@/ui/providers/suit.provider';
 
 interface Props {
-  type: Item['type'];
+  spot: ItemSpot;
 }
 
-export const KitSelector = ({ type }: Props) => {
+export const KitSelector = ({ spot }: Props) => {
   const suit = useSuit();
   const [dialogOpen, setDialogOpen] = useState(false);
+  const type = useMemo(() => toType(spot), [spot]);
   const limitTech = useMemo(
     () => (suit[type as keyof typeof suit] as SuitPiece)?.item?.tech || 0,
     [suit, type],
   );
-  const kits = useMemo(
-    () => (suit[type as keyof typeof suit] as SuitPiece)?.kits,
-    [suit, type],
-  );
+  const kits = useMemo(() => suit[spot]?.kits, [suit, spot]);
   const isEmpty = useMemo(() => kits?.length === 0, [kits]);
 
   const { techTotal, statTotals } = useMemo(() => {
@@ -61,7 +59,7 @@ export const KitSelector = ({ type }: Props) => {
               {kits?.map(
                 (k, i) =>
                   k.number > 0 && (
-                    <Fragment key={k.kit.id}>
+                    <Fragment key={`${i}-${k.kit.id}`}>
                       <span className={styles.name}>
                         {k.kit.name}
                         {k.number > 1 && (
@@ -92,7 +90,7 @@ export const KitSelector = ({ type }: Props) => {
           </div>
         )}
       </Dialog.Trigger>
-      <KitDialogSelector type={type} />
+      <KitDialogSelector spot={spot} />
     </Dialog.Root>
   );
 };

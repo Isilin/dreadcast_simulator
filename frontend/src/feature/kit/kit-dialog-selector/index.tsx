@@ -1,25 +1,24 @@
 import { Dialog } from '@base-ui-components/react';
+import { useMemo } from 'react';
 
 import { KitCombobox } from '../kit-combobox';
 import { KitNumber } from '../kit-number';
 import styles from './kit-dialog-selector.module.css';
 
 import { useKits } from '@/data/kit';
-import type { Item, ItemSpot, Kit, KitType } from '@/domain';
+import { toKitType, toType, type ItemSpot, type Kit } from '@/domain';
 import { DeleteButton } from '@/ui/delete-button';
 import { useSuit } from '@/ui/hooks/use-suit';
-import type { KitSelection } from '@/ui/providers/suit.provider';
 
 interface Props {
-  type: Item['type'];
+  spot: ItemSpot;
 }
 
-export const KitDialogSelector = ({ type }: Props) => {
+export const KitDialogSelector = ({ spot }: Props) => {
   const suit = useSuit();
-  const kits =
-    (suit[type as keyof typeof suit] as { kits: Array<KitSelection> })?.kits ||
-    [];
-  const { data: allKits } = useKits(type as KitType);
+  const type = useMemo(() => toType(spot), [spot]);
+  const kits = suit[spot]?.kits || [];
+  const { data: allKits } = useKits(toKitType(type));
 
   return (
     <Dialog.Portal>
@@ -33,19 +32,15 @@ export const KitDialogSelector = ({ type }: Props) => {
                 <KitCombobox
                   type={type}
                   kit={kit}
-                  onChange={(newKit: Kit) =>
-                    suit.setKit(type as ItemSpot, newKit, index)
-                  }
+                  onChange={(newKit: Kit) => suit.setKit(spot, newKit, index)}
                 />
                 <KitNumber
                   value={number}
                   onChange={(newNumber) =>
-                    suit.setKitNumber(type as ItemSpot, index, newNumber)
+                    suit.setKitNumber(spot, index, newNumber)
                   }
                 />
-                <DeleteButton
-                  onClick={() => suit.removeKit(type as ItemSpot, index)}
-                />
+                <DeleteButton onClick={() => suit.removeKit(spot, index)} />
               </li>
             ))}
           </ul>
@@ -53,7 +48,7 @@ export const KitDialogSelector = ({ type }: Props) => {
         {allKits && (
           <button
             className={styles.addButton}
-            onClick={() => suit.addKit(type as ItemSpot, allKits[0], true)}
+            onClick={() => suit.addKit(spot, allKits[0], true)}
           >
             +
           </button>
