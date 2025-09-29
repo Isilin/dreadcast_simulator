@@ -10,22 +10,23 @@ import {
   type SetStateAction,
 } from 'react';
 
-import { useImplants } from '@/data/implant';
 import { useRaces } from '@/data/race';
 import {
-  ImplantNameValues,
   ItemSpotValue,
-  StatValues,
   type Gender,
-  type ImplantName,
   type Item,
   type ItemSpot,
   type Kit,
   type Property,
   type Race,
   type Skill,
-  type Stat,
 } from '@/domain';
+import {
+  StatValues,
+  useImplants,
+  useImplantsState,
+  type Stat,
+} from '@/feature/implant';
 
 export interface KitSelection {
   kit: Kit;
@@ -47,13 +48,11 @@ interface SuitState {
   secondary?: SuitPiece;
   leftArm?: SuitPiece;
   rightArm?: SuitPiece;
-  implantations?: Record<ImplantName, number>;
 }
 
 interface SuitActions {
   setRace: Dispatch<SetStateAction<Race | undefined>>;
   setGender: Dispatch<SetStateAction<Gender>>;
-  setImplant: (implant: ImplantName, level: number) => void;
   setItem: (item: Item, spot: ItemSpot) => void;
   addKit: (spot: ItemSpot, kit: Kit, newKit?: boolean) => void;
   setKit: (spot: ItemSpot, kit: Kit, index: number) => void;
@@ -81,7 +80,6 @@ interface SuitSelectors {
   critical_cac_damages: number;
   hit_damages: number;
   critical_hit_damages: number;
-  implantsCount: number;
 }
 
 type SuitContextValues = SuitState & SuitActions & SuitSelectors;
@@ -109,28 +107,6 @@ export const SuitProvider = ({
   }, [race, races]);
 
   const [gender, setGender] = useState<Gender>('male');
-
-  const { data: implants } = useImplants();
-  const [implantations, setImplantations] = useState<
-    Record<ImplantName, number>
-  >(
-    ImplantNameValues.reduce(
-      (acc, k) => {
-        acc[k] = 0;
-        return acc;
-      },
-      {} as Record<ImplantName, number>,
-    ),
-  );
-  const setImplant = useCallback((implant: ImplantName, level: number) => {
-    setImplantations((prev) => ({ ...prev, [implant]: level }));
-  }, []);
-  const implantsCount = useMemo(() => {
-    return Object.entries(implantations).reduce(
-      (acc, curr) => acc + curr[1],
-      0,
-    );
-  }, [implantations]);
 
   const [items, setItems] = useState<Record<ItemSpot, SuitPiece>>({
     head: { item: null, kits: [] },
@@ -164,6 +140,9 @@ export const SuitProvider = ({
       return next;
     });
   }, []);
+
+  const { data: implants } = useImplants();
+  const implantations = useImplantsState();
 
   const getStat = useCallback(
     (stat: Stat) => {
@@ -290,9 +269,6 @@ export const SuitProvider = ({
         gender,
         setGender,
         ...stats,
-        implantations,
-        setImplant,
-        implantsCount,
         ...items,
         setItem,
         addKit,

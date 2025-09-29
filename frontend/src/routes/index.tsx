@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { GenderSelector } from '@/feature/gender/gender-selector';
-import { ImplantsButton } from '@/feature/implant/implants-button.tsx';
+import { ImplantsButton } from '@/feature/implant';
 import { ItemSelector } from '@/feature/item/item-selector';
 import { KitSelector } from '@/feature/kit/kit-selector';
 import { RaceSelector } from '@/feature/race/race-selector';

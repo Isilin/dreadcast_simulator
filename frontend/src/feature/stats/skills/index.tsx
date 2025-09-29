@@ -2,7 +2,8 @@ import { useMemo } from 'react';
 
 import styles from './skills.module.css';
 
-import { getNameFromStat, StatValues, type Skill } from '@/domain';
+import { getNameFromStat, type Skill } from '@/domain';
+import { StatValues } from '@/feature/implant';
 import { useSuit } from '@/ui/hooks/use-suit';
 
 export const Skills = () => {

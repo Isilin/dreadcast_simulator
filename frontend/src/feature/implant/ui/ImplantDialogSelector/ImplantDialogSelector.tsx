@@ -1,7 +1,7 @@
-import { ImplantSelector } from '../implant-selector';
-import { ImplantsCounter } from '../implants-counter';
+import { useImplants } from '../../services';
+import { ImplantsCounter } from '../ImplantsCounter/ImplantsCounter';
+import { ImplantSelector } from '../ImplantSelector/ImplantSelector';
 
-import { useImplants } from '@/data/implant';
 import { Modal } from '@/ui/modal/modal';
 import { Spinner } from '@/ui/spinner';
 

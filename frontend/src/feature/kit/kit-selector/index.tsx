@@ -4,8 +4,13 @@ import { Fragment, useMemo, useState } from 'react';
 import { KitDialogSelector } from '../kit-dialog-selector';
 import styles from './kit-selector.module.css';
 
-import { toType, type ItemSpot, type Property } from '@/domain';
-import { EffectChip } from '@/feature/effect-chip';
+import {
+  getTagFromProperty,
+  toType,
+  type ItemSpot,
+  type Property,
+} from '@/domain';
+import { EffectChip } from '@/ui/effect-chip';
 import { useSuit } from '@/ui/hooks/use-suit';
 import type { SuitPiece } from '@/ui/providers/suit.provider';
 
@@ -76,7 +81,8 @@ export const KitSelector = ({ spot }: Props) => {
             <div className={styles.effects}>
               {statTotals.map(([stat, total]) => (
                 <EffectChip
-                  effect={{ property: stat, value: total }}
+                  value={total}
+                  label={getTagFromProperty(stat)}
                   key={stat}
                 />
               ))}

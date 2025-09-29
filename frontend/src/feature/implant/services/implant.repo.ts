@@ -1,6 +1,6 @@
 import { fetchImplantsMock } from './implant.repo.mock';
 
-import type { Implant } from '@/domain';
+import type { Implant } from '@/feature/implant';
 import { USE_MOCK } from '@/utils/use-mock';
 
 export async function fetchImplants(): Promise<Implant[]> {

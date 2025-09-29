@@ -1,9 +1,9 @@
 import { Dialog } from '@base-ui-components/react';
 import { useState } from 'react';
 
-import { ImplantDialogSelector } from '../implant-dialog-selector';
-import { ImplantsCounter } from '../implants-counter';
-import styles from './implants-button.module.css';
+import { ImplantDialogSelector } from '../ImplantDialogSelector';
+import { ImplantsCounter } from '../ImplantsCounter';
+import styles from './ImplantsButton.module.css';
 
 export const ImplantsButton = () => {
   const [dialogOpen, setDialogOpen] = useState(false);

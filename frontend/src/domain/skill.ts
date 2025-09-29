@@ -1,3 +1,5 @@
+import type { Stat } from '@/feature/implant';
+
 export const SkillValues = [
   'strength',
   'agility',
@@ -9,29 +11,6 @@ export const SkillValues = [
   'engineering',
 ] as const;
 export type Skill = (typeof SkillValues)[number];
-
-export const StatValues = [
-  'strength',
-  'agility',
-  'robustness',
-  'perception',
-  'stealth',
-  'computing',
-  'medicine',
-  'engineering',
-  'health',
-  'stamina',
-  'speed',
-  'race_damage',
-  'hit_rating',
-  'team_heal',
-  'cac_damage',
-  'critical_cac_chance',
-  'critical_cac_damages',
-  'hit_damages',
-  'critical_hit_damages',
-] as const;
-export type Stat = (typeof StatValues)[number];
 
 export const getNameFromSkill = (skill: Skill): string => {
   switch (skill) {

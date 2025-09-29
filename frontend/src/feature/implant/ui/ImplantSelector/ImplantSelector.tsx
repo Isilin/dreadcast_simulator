@@ -1,10 +1,13 @@
 import { Field, NumberField } from '@base-ui-components/react';
 
-import { ImplantIcon } from '../implant-icon';
-import styles from './implant-selector.module.css';
+import {
+  useImplantsDispatch,
+  useImplantsState,
+} from '../../model/implant.hooks';
+import type { Implant } from '../../model/implant.types';
+import { ImplantIcon } from '../ImplantIcon';
+import styles from './ImplantSelector.module.css';
 
-import type { Implant } from '@/domain';
-import { useSuit } from '@/ui/hooks/use-suit';
 import { CursorGrowIcon, MinusIcon, PlusIcon } from '@/ui/icons';
 
 interface Props {
@@ -12,16 +15,15 @@ interface Props {
 }
 
 export const ImplantSelector = ({ implant }: Props) => {
-  const { implantations, setImplant } = useSuit();
-  const currentImplant = implantations?.[implant.name];
-
-  const iconState = currentImplant && currentImplant > 0 ? 'ACTIVE' : 'DEFAULT';
+  const implantations = useImplantsState();
+  const { setImplant } = useImplantsDispatch();
+  const currentImplant = implantations[implant.name];
 
   return (
     <Field.Root>
       <Field.Label className={styles.label}>{implant.name}</Field.Label>
       <Field.Description className={styles.icon}>
-        <ImplantIcon implant={implant.name} state={iconState} />
+        <ImplantIcon implant={implant.name} />
       </Field.Description>
       <NumberField.Root
         id={`implant-${implant.name}`}

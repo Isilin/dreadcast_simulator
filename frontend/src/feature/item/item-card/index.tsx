@@ -1,7 +1,7 @@
 import styles from './item-card.module.css';
 
-import { type Item, getTagFromSkill } from '@/domain';
-import { EffectChip } from '@/feature/effect-chip';
+import { type Item, getTagFromProperty, getTagFromSkill } from '@/domain';
+import { EffectChip } from '@/ui/effect-chip';
 import { useSuit } from '@/ui/hooks/use-suit';
 import { Popin } from '@/ui/popin';
 
@@ -58,7 +58,10 @@ export const ItemCard = ({ item, onClick }: Props) => {
       <ul className={styles['item-stats']}>
         {item.effects?.map((effect) => (
           <li key={`effect-` + effect.property}>
-            <EffectChip effect={effect} />
+            <EffectChip
+              value={effect.value}
+              label={getTagFromProperty(effect.property)}
+            />
           </li>
         ))}
       </ul>

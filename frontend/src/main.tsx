@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import './theme.css';
 
+import { ImplantsProvider } from './feature/implant';
 import { routeTree } from './routeTree.gen';
 import { SuitProvider } from './ui/providers/suit.provider';
 
@@ -27,9 +28,11 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <Tooltip.Provider>
-          <SuitProvider>
-            <RouterProvider router={router} />
-          </SuitProvider>
+          <ImplantsProvider>
+            <SuitProvider>
+              <RouterProvider router={router} />
+            </SuitProvider>
+          </ImplantsProvider>
         </Tooltip.Provider>
       </QueryClientProvider>
     </StrictMode>,

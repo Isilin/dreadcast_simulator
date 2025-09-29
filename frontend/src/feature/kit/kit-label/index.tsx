@@ -1,8 +1,8 @@
 import styles from './kit-label.module.css';
 
-import type { Kit } from '@/domain';
-import { EffectChip } from '@/feature/effect-chip';
-import { TechBadge } from '@/feature/tech-badge';
+import { getTagFromProperty, type Kit } from '@/domain';
+import { EffectChip } from '@/ui/effect-chip';
+import { TechBadge } from '@/ui/tech-badge';
 
 interface Props {
   kit: Kit;
@@ -11,11 +11,15 @@ interface Props {
 export const KitLabel = ({ kit }: Props) => {
   return (
     <div className={styles.container}>
-      <TechBadge tech={kit.tech} />
+      <TechBadge value={kit.tech} />
       <span className={styles.name}>{kit.name}</span>
       <div className={styles.effects}>
         {kit.effects?.map((e) => (
-          <EffectChip key={e.property} effect={e} />
+          <EffectChip
+            key={e.property}
+            value={e.value}
+            label={getTagFromProperty(e.property)}
+          />
         ))}
       </div>
     </div>
