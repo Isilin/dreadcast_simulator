@@ -1,8 +1,8 @@
 import { Dialog } from '@base-ui-components/react';
 import { useState } from 'react';
 
-import { ImplantDialogSelector } from '../ImplantDialogSelector';
 import { ImplantsCounter } from '../ImplantsCounter';
+import { ImplantsDialog } from '../ImplantsDialog';
 import styles from './ImplantsButton.module.css';
 
 export const ImplantsButton = () => {
@@ -13,7 +13,7 @@ export const ImplantsButton = () => {
       <Dialog.Trigger className={styles.button}>
         Implants <ImplantsCounter />
       </Dialog.Trigger>
-      <ImplantDialogSelector />
+      <ImplantsDialog />
     </Dialog.Root>
   );
 };

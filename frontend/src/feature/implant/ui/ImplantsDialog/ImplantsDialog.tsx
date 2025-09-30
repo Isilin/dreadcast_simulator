@@ -1,11 +1,11 @@
 import { useImplants } from '../../services';
-import { ImplantsCounter } from '../ImplantsCounter/ImplantsCounter';
-import { ImplantSelector } from '../ImplantSelector/ImplantSelector';
+import { ImplantsCounter } from '../ImplantsCounter';
+import { ImplantSelector } from '../ImplantSelector';
+import { ImplantsListSkeleton } from './ImplantsListSkeleton';
 
-import { Modal } from '@/ui/modal/modal';
-import { Spinner } from '@/ui/spinner';
+import { Modal } from '@/ui/Modal/Modal';
 
-export const ImplantDialogSelector = () => {
+export const ImplantsDialog = () => {
   const { data: implants, status, error } = useImplants();
 
   return (
@@ -17,7 +17,7 @@ export const ImplantDialogSelector = () => {
       </Modal.Header>
       <Modal.Content>
         {status === 'error' && <p>{error.message}</p>}
-        {status === 'pending' && <Spinner size={40} />}
+        {status === 'pending' && <ImplantsListSkeleton />}
         {status === 'success' &&
           implants?.map((i) => <ImplantSelector implant={i} key={i.name} />)}
       </Modal.Content>

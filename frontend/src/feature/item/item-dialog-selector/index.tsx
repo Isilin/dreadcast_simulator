@@ -4,7 +4,7 @@ import { ItemCard } from '../item-card';
 
 import { useItems } from '@/data/item';
 import type { Item } from '@/domain';
-import { Modal } from '@/ui/modal/modal';
+import { Modal } from '@/ui/Modal/Modal';
 import { Spinner } from '@/ui/spinner';
 
 interface Props {

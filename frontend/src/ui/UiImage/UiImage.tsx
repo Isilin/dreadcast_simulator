@@ -63,13 +63,15 @@ export const UiImage = ({
   };
 
   return (
-    <div
+    <span
       className={[styles.wrapper, wrapperClassName].filter(Boolean).join(' ')}
       style={{ width: w, height: h, borderRadius: radius }}
       aria-busy={!loaded && !errored}
     >
       {!loaded && !errored && (
-        <div className={styles.center}>{spinner ?? <Spinner size={24} />}</div>
+        <span className={styles.center}>
+          {spinner ?? <Spinner size={24} />}
+        </span>
       )}
 
       {!errored ? (
@@ -98,15 +100,15 @@ export const UiImage = ({
           style={{ objectFit: fit, borderRadius: radius }}
         />
       ) : (
-        <div
+        <span
           className={[styles.center, styles.fallback].join(' ')}
           role="img"
           aria-label={alt}
           title={title}
         >
           {fallback ?? <Fallback />}
-        </div>
+        </span>
       )}
-    </div>
+    </span>
   );
 };

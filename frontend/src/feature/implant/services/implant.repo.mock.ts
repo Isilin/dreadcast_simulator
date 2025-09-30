@@ -170,7 +170,7 @@ const MOCK_IMPLANTS: ImplantResponseDto[] = [
 ];
 
 export async function fetchImplantsMock(): Promise<Implant[]> {
-  await sleep(1000);
+  await sleep(5000);
   const validated = await implantArrayResponseSchema.parseAsync(MOCK_IMPLANTS);
 
   const implants = validated.map(toDomain);

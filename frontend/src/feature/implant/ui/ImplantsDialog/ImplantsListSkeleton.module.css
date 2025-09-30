@@ -1,0 +1,67 @@
+.skel {
+  border-radius: 8px;
+  composes: shimmer from '@/styles/animations.module.css';
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  flex-flow: row wrap;
+  gap: var(--gap);
+  padding: var(--gap) 0;
+  margin: 0;
+  list-style: none;
+  overflow-y: auto;
+}
+
+.card {
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+}
+
+.title {
+  composes: skel;
+  height: 20px;
+  width: 70px;
+}
+
+.thumbWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.thumb {
+  composes: skel;
+  width: 100px;
+  height: 100px;
+  border-radius: var(--small-gap);
+  margin: var(--gap) 0;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  align-items: center;
+}
+.btn {
+  composes: skel;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--small-gap);
+}
+.counter {
+  composes: skel;
+  width: 80px;
+  height: 30px;
+  border-radius: var(--small-gap);
+}
+
+/* Respecte les préférences d’accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  .skel {
+    animation: none;
+  }
+}
