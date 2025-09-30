@@ -3,7 +3,7 @@ import { ImplantsCounter } from '../ImplantsCounter';
 import { ImplantSelector } from '../ImplantSelector';
 import { ImplantsListSkeleton } from './ImplantsListSkeleton';
 
-import { Modal } from '@/ui/Modal/Modal';
+import { Modal } from '@/ui/__Modal/Modal';
 
 export const ImplantsDialog = () => {
   const { data: implants, status, error } = useImplants();
