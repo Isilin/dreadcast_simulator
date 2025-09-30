@@ -4,8 +4,8 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 
+import '@/styles/theme.css';
 import './index.css';
-import './theme.css';
 
 import { ImplantsProvider } from './feature/implant';
 import { routeTree } from './routeTree.gen';

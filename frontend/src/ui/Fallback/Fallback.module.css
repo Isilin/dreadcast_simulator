@@ -1,0 +1,6 @@
+.fallbackMark {
+  width: 45%;
+  height: 45%;
+  border-radius: 6px;
+  background: var(--card-bd);
+}
