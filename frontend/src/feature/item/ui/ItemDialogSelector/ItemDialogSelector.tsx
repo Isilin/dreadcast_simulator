@@ -5,7 +5,6 @@ import { useItems } from '../../services';
 import { ItemCard } from '../ItemCard/ItemCard';
 
 import { Modal } from '@/ui/Modal/Modal';
-import { Spinner } from '@/ui/spinner';
 
 interface Props {
   type?: ItemType[];
@@ -22,8 +21,7 @@ export const ItemDialogSelector = ({ onItemSelect, type }: Props) => {
       </Modal.Header>
       <Modal.Content>
         {status === 'error' && <p>{error.message}</p>}
-        {status === 'pending' && <Spinner />}
-        {status === 'success' &&
+        {status !== 'error' &&
           items?.map((item) => (
             <ItemCard
               key={item.id}

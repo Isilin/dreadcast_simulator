@@ -5,6 +5,7 @@ import { type Item } from '@/feature/item';
 import { EffectChip } from '@/ui/effect-chip';
 import { useSuit } from '@/ui/hooks/use-suit';
 import { Popin } from '@/ui/popin';
+import { UiImage } from '@/ui/UiImage/UiImage';
 
 interface Props {
   item: Item;
@@ -22,10 +23,12 @@ export const ItemCard = ({ item, onClick }: Props) => {
         <Popin content={item.name}>
           <h3 className={styles['item-title']}>{item.name}</h3>
         </Popin>
-        <img
+        <UiImage
           src={item.image}
           alt={item.name}
-          className={styles['item-thumb']}
+          wrapperClassName={styles['item-thumb']}
+          radius={8}
+          fit="contain"
         />
       </div>
       <dl className={styles['item-meta']}>
