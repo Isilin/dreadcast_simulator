@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   height: 2.5rem;
+  width: 200px;
   padding: 0 0.875rem;
   margin: 0;
   outline: 0;
@@ -16,6 +17,9 @@
   line-height: 1.5rem;
   color: var(--color-gray-900);
   user-select: none;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
 
   @media (hover: hover) {
     &:hover {
@@ -30,5 +34,10 @@
   &:focus-visible {
     outline: 2px solid var(--color-blue);
     outline-offset: -1px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
   }
 }
