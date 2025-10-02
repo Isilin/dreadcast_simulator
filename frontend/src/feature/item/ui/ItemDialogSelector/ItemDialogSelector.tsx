@@ -11,6 +11,8 @@ interface Props {
   onItemSelect: (item: Item) => void;
 }
 
+// TODO : allow to deselect item
+// TODO : remove kits on deselect
 export const ItemDialogSelector = ({ onItemSelect, type }: Props) => {
   const { data: items, status, error } = useItems(type);
 

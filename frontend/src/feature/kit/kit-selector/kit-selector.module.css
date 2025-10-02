@@ -17,6 +17,9 @@
   line-height: 1.5rem;
   color: var(--color-gray-900);
   user-select: none;
+  transition:
+    background-color 0.2s ease,
+    border 0.2s ease;
 
   @media (hover: hover) {
     &:hover {
@@ -34,8 +37,12 @@
   }
 
   &:disabled {
-    background-color: var(--color-gray-300);
-    border-color: var(--color-red);
+    background-color: oklch(20% 0.015 264 / 0.35);
+    border-color: oklch(24% 0.02 264 / 0.5);
+    color: oklch(80% 0 264 / 0.5);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
   }
 }
 
