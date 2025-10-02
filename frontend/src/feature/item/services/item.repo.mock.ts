@@ -7,10 +7,10 @@ import { MOCK_LEGS_ITEMS } from './legs-items.mock';
 import { MOCK_SECONDARY_ITEMS } from './secondary-items.mock';
 import { MOCK_WEAPONS_ITEMS } from './weapons-items.mock';
 
-import type { Item } from '@/domain';
+import type { Item, ItemType } from '@/feature/item';
 import { sleep } from '@/utils/sleep';
 
-export async function fetchItemsMock(type?: Item['type']): Promise<Item[]> {
+export async function fetchItemsMock(type?: ItemType[]): Promise<Item[]> {
   await sleep(1000);
   const MOCK_ITEMS = [
     ...MOCK_HEAD_ITEMS,
@@ -23,7 +23,7 @@ export async function fetchItemsMock(type?: Item['type']): Promise<Item[]> {
   const validated = itemArrayResponseSchema.parse(MOCK_ITEMS);
 
   const filtered = type
-    ? validated.filter((item) => item.type === type)
+    ? validated.filter((item) => type.includes(item.type))
     : validated;
 
   const ordered = filtered.sort((a, b) => a.name.localeCompare(b.name));

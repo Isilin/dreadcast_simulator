@@ -7,10 +7,10 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/b/bf/Bistouri70.png',
     tech: 60,
     integrity: 100,
-    type: 'weapon',
+    type: '2handsMelee',
     prerequisites: [
       {
-        skill: 'medicine',
+        property: 'medicine',
         value: 150,
       },
     ],
@@ -33,7 +33,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/f/f2/DAGUE_ENERGETIQUE262.png/150px-DAGUE_ENERGETIQUE262.png',
     tech: 350,
     integrity: 150,
-    type: 'weapon',
+    type: '1handMelee',
     effects: [
       {
         property: 'agility',
@@ -53,7 +53,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/6/6b/KANUF_262px.png/100px-KANUF_262px.png',
     tech: 300,
     integrity: 50,
-    type: 'weapon',
+    type: '1handMelee',
     effects: [
       {
         property: 'agility',
@@ -72,7 +72,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/e/e8/Poing_americain.png',
     tech: 120,
     integrity: 200,
-    type: 'weapon',
+    type: '1handMelee',
     effects: [
       {
         property: 'strength',
@@ -91,10 +91,10 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/6/65/Gants_bijou.png',
     tech: 240,
     integrity: 300,
-    type: 'weapon',
+    type: '2handsMelee',
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 50,
       },
     ],
@@ -116,7 +116,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/9/9f/Gant_boxe.png',
     tech: 0,
     integrity: 300,
-    type: 'weapon',
+    type: '2handsMelee',
     effects: [
       {
         property: 'agility',
@@ -136,7 +136,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/0/0e/GANTS_HYDRO262.png/100px-GANTS_HYDRO262.png',
     tech: 240,
     integrity: 120,
-    type: 'weapon',
+    type: '1handMelee',
     effects: [
       {
         property: 'strength',
@@ -155,10 +155,10 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/f/f4/Gant-a-pik.png',
     tech: 300,
     integrity: 250,
-    type: 'weapon',
+    type: '2handsMelee',
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 50,
       },
     ],
@@ -180,7 +180,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/a/a2/Cuirgants.png',
     tech: 360,
     integrity: 80,
-    type: 'weapon',
+    type: '2handsMelee',
     effects: [
       {
         property: 'stealth',
@@ -199,14 +199,14 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/0/0d/Gant-info999.png',
     tech: 60,
     integrity: 100,
-    type: 'weapon',
+    type: '2handsMelee',
     prerequisites: [
       {
-        skill: 'computing',
+        property: 'computing',
         value: 150,
       },
       {
-        skill: 'agility',
+        property: 'agility',
         value: 130,
       },
     ],
@@ -229,7 +229,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/4/47/WOLFERS262.png/150px-WOLFERS262.png',
     tech: 300,
     integrity: 160,
-    type: 'weapon',
+    type: '2handsMelee',
     effects: [
       {
         property: 'agility',
@@ -249,10 +249,10 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/5/56/Exosquelette-main.png/100px-Exosquelette-main.png',
     tech: 80,
     integrity: 150,
-    type: 'weapon',
+    type: '2handsMelee',
     prerequisites: [
       {
-        skill: 'engineering',
+        property: 'engineering',
         value: 150,
       },
     ],
@@ -275,7 +275,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/f/f1/Gantlet_bleu.png/100px-Gantlet_bleu.png',
     tech: 320,
     integrity: 240,
-    type: 'weapon',
+    type: '2handsMelee',
     effects: [
       {
         property: 'strength',
@@ -295,14 +295,14 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/7/79/Gants_steak.png/100px-Gants_steak.png',
     tech: 60,
     integrity: 60,
-    type: 'weapon',
+    type: '2handsMelee',
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 75,
       },
       {
-        skill: 'stealth',
+        property: 'stealth',
         value: 75,
       },
     ],
@@ -324,7 +324,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/7/78/Gant_A323.png',
     tech: 360,
     integrity: 300,
-    type: 'weapon',
+    type: '1handMelee',
     minDamage: 21,
     maxDamage: 31,
     hitsPerRound: 1,
@@ -338,7 +338,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/a/a2/Gants_A-S9.png/100px-Gants_A-S9.png',
     tech: 460,
     integrity: 300,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 34,
     maxDamage: 66,
     hitsPerRound: 1,
@@ -352,7 +352,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/a/a2/Gants_A-S9.png/100px-Gants_A-S9.png',
     tech: 60,
     integrity: 300,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 34,
     maxDamage: 66,
     hitsPerRound: 1,
@@ -376,7 +376,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/a/a2/Gants_A-S9.png/100px-Gants_A-S9.png',
     tech: 60,
     integrity: 300,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 34,
     maxDamage: 66,
     hitsPerRound: 1,
@@ -396,7 +396,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/a/a2/Gants_A-S9.png/100px-Gants_A-S9.png',
     tech: 60,
     integrity: 300,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 34,
     maxDamage: 66,
     hitsPerRound: 1,
@@ -416,7 +416,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/a/a2/Gants_A-S9.png/100px-Gants_A-S9.png',
     tech: 60,
     integrity: 300,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 34,
     maxDamage: 66,
     hitsPerRound: 1,
@@ -436,7 +436,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/a/a2/Gants_A-S9.png/100px-Gants_A-S9.png',
     tech: 60,
     integrity: 300,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 34,
     maxDamage: 66,
     hitsPerRound: 1,
@@ -456,7 +456,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/a/a2/Gants_A-S9.png/100px-Gants_A-S9.png',
     tech: 60,
     integrity: 300,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 34,
     maxDamage: 66,
     hitsPerRound: 1,
@@ -476,7 +476,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/9/9a/AGRI2.png/150px-AGRI2.png',
     tech: 0,
     integrity: 120,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 50,
     maxDamage: 90,
     hitsPerRound: 1,
@@ -484,7 +484,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 160,
       },
     ],
@@ -501,7 +501,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/9/9f/Epee_2m.png',
     tech: 0,
     integrity: 120,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 55,
     maxDamage: 87,
     hitsPerRound: 1,
@@ -509,7 +509,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 160,
       },
     ],
@@ -526,7 +526,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/7/7f/Powersword.png',
     tech: 100,
     integrity: 180,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 40,
     maxDamage: 78,
     hitsPerRound: 1,
@@ -534,7 +534,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 80,
       },
     ],
@@ -551,7 +551,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/a/ad/Epee_quantique.png',
     tech: 320,
     integrity: 200,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 40,
     maxDamage: 78,
     hitsPerRound: 1,
@@ -559,7 +559,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 80,
       },
     ],
@@ -577,7 +577,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/0/08/KATANNA_262px.png/150px-KATANNA_262px.png',
     tech: 320,
     integrity: 140,
-    type: 'weapon',
+    type: '1handMelee',
     minDamage: 14,
     maxDamage: 36,
     hitsPerRound: 1,
@@ -585,7 +585,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 120,
       },
     ],
@@ -602,7 +602,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/a/af/Tranchoir_fusion.png',
     tech: 200,
     integrity: 130,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 34,
     maxDamage: 90,
     hitsPerRound: 1,
@@ -610,11 +610,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 150,
       },
       {
-        skill: 'engineering',
+        property: 'engineering',
         value: 110,
       },
     ],
@@ -632,7 +632,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/b/b9/Lame-A370.png/150px-Lame-A370.png',
     tech: 0,
     integrity: 200,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 50,
     maxDamage: 90,
     hitsPerRound: 1,
@@ -651,7 +651,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/d/d4/Hacheglace.png',
     tech: 180,
     integrity: 120,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 50,
     maxDamage: 78,
     hitsPerRound: 1,
@@ -659,11 +659,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 120,
       },
       {
-        skill: 'agility',
+        property: 'agility',
         value: 110,
       },
     ],
@@ -680,7 +680,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/3/37/Hache_rustique.png',
     tech: 240,
     integrity: 160,
-    type: 'weapon',
+    type: '1handMelee',
     minDamage: 22,
     maxDamage: 34,
     hitsPerRound: 1,
@@ -688,11 +688,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 60,
       },
       {
-        skill: 'agility',
+        property: 'agility',
         value: 120,
       },
     ],
@@ -703,7 +703,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/7/7a/Koup_koup.png',
     tech: 180,
     integrity: 160,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 44,
     maxDamage: 84,
     hitsPerRound: 1,
@@ -711,11 +711,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 160,
       },
       {
-        skill: 'agility',
+        property: 'agility',
         value: 110,
       },
     ],
@@ -726,7 +726,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/8/87/Bouclier.png',
     tech: 0,
     integrity: 250,
-    type: 'weapon',
+    type: '1handMelee',
     minDamage: 13,
     maxDamage: 23,
     hitsPerRound: 1,
@@ -734,7 +734,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 150,
       },
     ],
@@ -755,7 +755,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/5/5d/Powerbouclier.png',
     tech: 0,
     integrity: 120,
-    type: 'weapon',
+    type: '1handMelee',
     minDamage: 20,
     maxDamage: 30,
     hitsPerRound: 1,
@@ -775,7 +775,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/7/71/BATTE-DE-BASEBALL262.png/100px-BATTE-DE-BASEBALL262.png',
     tech: 80,
     integrity: 450,
-    type: 'weapon',
+    type: '1handMelee',
     minDamage: 24,
     maxDamage: 34,
     hitsPerRound: 1,
@@ -788,7 +788,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/2/29/Batte-a-clou.png',
     tech: 120,
     integrity: 400,
-    type: 'weapon',
+    type: '1handMelee',
     minDamage: 10,
     maxDamage: 26,
     hitsPerRound: 1,
@@ -801,7 +801,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/5/5a/Fouet.png',
     tech: 320,
     integrity: 140,
-    type: 'weapon',
+    type: '1handMelee',
     minDamage: 20,
     maxDamage: 32,
     hitsPerRound: 1,
@@ -809,7 +809,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 130,
       },
     ],
@@ -820,7 +820,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/b/b1/Hallebarde.png',
     tech: 0,
     integrity: 200,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 48,
     maxDamage: 86,
     hitsPerRound: 1,
@@ -828,7 +828,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 120,
       },
     ],
@@ -845,7 +845,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/4/48/Masse_energetique.png',
     tech: 320,
     integrity: 320,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 52,
     maxDamage: 84,
     hitsPerRound: 1,
@@ -865,7 +865,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/2/28/MONOFILAMENT262.png/100px-MONOFILAMENT262.png',
     tech: 240,
     integrity: 240,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 1,
     maxDamage: 99,
     hitsPerRound: 1,
@@ -878,7 +878,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/a/a2/Petite_cuillere.png',
     tech: 0,
     integrity: 9999,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 99,
     maxDamage: 999,
     hitsPerRound: 1,
@@ -891,7 +891,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/0/0d/Pied_biche.png',
     tech: 0,
     integrity: 250,
-    type: 'weapon',
+    type: '1handMelee',
     minDamage: 14,
     maxDamage: 48,
     hitsPerRound: 1,
@@ -899,11 +899,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 50,
       },
       {
-        skill: 'agility',
+        property: 'agility',
         value: 50,
       },
     ],
@@ -915,7 +915,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/a/a2/ROULEAU-PATISSERIE_262px.png/150px-ROULEAU-PATISSERIE_262px.png',
     tech: 150,
     integrity: 300,
-    type: 'weapon',
+    type: '1handMelee',
     minDamage: 7,
     maxDamage: 13,
     hitsPerRound: 1,
@@ -929,7 +929,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/a/a2/ROULEAU-PATISSERIE_262px.png/150px-ROULEAU-PATISSERIE_262px.png',
     tech: 80,
     integrity: 100,
-    type: 'weapon',
+    type: '1handMelee',
     minDamage: 8,
     maxDamage: 36,
     hitsPerRound: 1,
@@ -937,7 +937,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 80,
       },
     ],
@@ -949,7 +949,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/b/b0/POELLE_262px.png/150px-POELLE_262px.png',
     tech: 280,
     integrity: 80,
-    type: 'weapon',
+    type: '1handMelee',
     minDamage: 5,
     maxDamage: 25,
     hitsPerRound: 1,
@@ -957,7 +957,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 80,
       },
     ],
@@ -969,7 +969,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/c/cb/Chalumeau.png/150px-Chalumeau.png',
     tech: 320,
     integrity: 140,
-    type: 'weapon',
+    type: '1handMelee',
     minDamage: 20,
     maxDamage: 32,
     hitsPerRound: 1,
@@ -977,7 +977,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'engineering',
+        property: 'engineering',
         value: 150,
       },
     ],
@@ -995,7 +995,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/b/b8/CLE-Molette_262px.png/100px-CLE-Molette_262px.png',
     tech: 300,
     integrity: 80,
-    type: 'weapon',
+    type: '1handMelee',
     minDamage: 6,
     maxDamage: 30,
     hitsPerRound: 1,
@@ -1003,7 +1003,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'engineering',
+        property: 'engineering',
         value: 150,
       },
     ],
@@ -1020,7 +1020,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/a/ac/Tazer.png',
     tech: 0,
     integrity: 250,
-    type: 'weapon',
+    type: '1handMelee',
     minDamage: 10,
     maxDamage: 44,
     hitsPerRound: 1,
@@ -1028,11 +1028,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 50,
       },
       {
-        skill: 'agility',
+        property: 'agility',
         value: 50,
       },
     ],
@@ -1044,7 +1044,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/a/ab/TRONCOLAME.png/150px-TRONCOLAME.png',
     tech: 480,
     integrity: 200,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 34,
     maxDamage: 66,
     hitsPerRound: 1,
@@ -1058,7 +1058,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/f/fe/Canne.png/100px-Canne.png',
     tech: 80,
     integrity: 160,
-    type: 'weapon',
+    type: '1handMelee',
     minDamage: 22,
     maxDamage: 32,
     hitsPerRound: 1,
@@ -1071,7 +1071,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/f/f9/Pelle.png',
     tech: 180,
     integrity: 200,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 24,
     maxDamage: 32,
     hitsPerRound: 1,
@@ -1084,7 +1084,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/f/f9/Pelle.png',
     tech: 0,
     integrity: 0,
-    type: 'weapon',
+    type: '2handsMelee',
     minDamage: 0,
     maxDamage: 0,
     hitsPerRound: 1,
@@ -1098,7 +1098,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/e/e6/CITY-EAGLE_262px.png/150px-CITY-EAGLE_262px.png',
     tech: 320,
     integrity: 120,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 9,
     maxDamage: 31,
     hitsPerRound: 1,
@@ -1106,11 +1106,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 1,
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 60,
       },
       {
-        skill: 'perception',
+        property: 'perception',
         value: 80,
       },
     ],
@@ -1121,7 +1121,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/d/d2/Doublecalibre32.png',
     tech: 240,
     integrity: 110,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 11,
     maxDamage: 15,
     hitsPerRound: 2,
@@ -1141,7 +1141,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/e/ea/FI2615_IMPERIAL2.png/150px-FI2615_IMPERIAL2.png',
     tech: 120,
     integrity: 140,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 7,
     maxDamage: 31,
     hitsPerRound: 3,
@@ -1149,7 +1149,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 6,
     prerequisites: [
       {
-        skill: 'perception',
+        property: 'perception',
         value: 110,
       },
     ],
@@ -1167,7 +1167,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/6/63/FUSIL_LINCOLN262.png/150px-FUSIL_LINCOLN262.png',
     tech: 450,
     integrity: 200,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 22,
     maxDamage: 46,
     hitsPerRound: 1,
@@ -1181,7 +1181,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/7/71/FUSIL_T31_262px.png/150px-FUSIL_T31_262px.png',
     tech: 200,
     integrity: 80,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 18,
     maxDamage: 36,
     hitsPerRound: 2,
@@ -1189,11 +1189,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 4,
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 110,
       },
       {
-        skill: 'perception',
+        property: 'perception',
         value: 80,
       },
     ],
@@ -1204,7 +1204,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/e/e4/Deaglegold.png',
     tech: 320,
     integrity: 120,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 23,
     maxDamage: 33,
     hitsPerRound: 1,
@@ -1212,11 +1212,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 3,
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 20,
       },
       {
-        skill: 'perception',
+        property: 'perception',
         value: 20,
       },
     ],
@@ -1227,7 +1227,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/e/e0/Haka47.png',
     tech: 120,
     integrity: 300,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 12,
     maxDamage: 26,
     hitsPerRound: 3,
@@ -1235,7 +1235,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 5,
     prerequisites: [
       {
-        skill: 'perception',
+        property: 'perception',
         value: 100,
       },
     ],
@@ -1247,7 +1247,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/0/04/MAGNUM-A-LUNETTE262.png/150px-MAGNUM-A-LUNETTE262.png',
     tech: 550,
     integrity: 130,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 11,
     maxDamage: 23,
     hitsPerRound: 1,
@@ -1266,7 +1266,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/e/eb/Minigun.png',
     tech: 115,
     integrity: 400,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 13,
     maxDamage: 19,
     hitsPerRound: 3,
@@ -1274,11 +1274,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 5,
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 80,
       },
       {
-        skill: 'perception',
+        property: 'perception',
         value: 40,
       },
     ],
@@ -1290,7 +1290,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/a/a3/NEO-BERETTA_9mm_262px.png/150px-NEO-BERETTA_9mm_262px.png',
     tech: 240,
     integrity: 150,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 12,
     maxDamage: 30,
     hitsPerRound: 1,
@@ -1298,7 +1298,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 5,
     prerequisites: [
       {
-        skill: 'perception',
+        property: 'perception',
         value: 60,
       },
     ],
@@ -1315,7 +1315,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/6/6b/Calibre32.png',
     tech: 240,
     integrity: 110,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 12,
     maxDamage: 30,
     hitsPerRound: 1,
@@ -1323,7 +1323,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 1,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 40,
       },
     ],
@@ -1340,7 +1340,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/5/51/Calibre40.png',
     tech: 240,
     integrity: 130,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 11,
     maxDamage: 31,
     hitsPerRound: 1,
@@ -1348,7 +1348,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 1,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 40,
       },
     ],
@@ -1366,7 +1366,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/2/2a/SULFATEUSE262.png/150px-SULFATEUSE262.png',
     tech: 130,
     integrity: 350,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 2,
     maxDamage: 14,
     hitsPerRound: 5,
@@ -1379,7 +1379,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/a/a0/Xvi.png',
     tech: 260,
     integrity: 100,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 6,
     maxDamage: 20,
     hitsPerRound: 3,
@@ -1387,11 +1387,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 6,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 60,
       },
       {
-        skill: 'perception',
+        property: 'perception',
         value: 80,
       },
     ],
@@ -1409,7 +1409,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/0/01/A-317_REVOLVER_MAGNUS_BLEU_262-PX.png/90px-A-317_REVOLVER_MAGNUS_BLEU_262-PX.png',
     tech: 320,
     integrity: 300,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 6,
     maxDamage: 12,
     hitsPerRound: 2,
@@ -1423,7 +1423,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/4/4f/A-317_FUSIL_D_ASSAULT_GRIPPIN_ROUGE_262-PX.png/150px-A-317_FUSIL_D_ASSAULT_GRIPPIN_ROUGE_262-PX.png',
     tech: 470,
     integrity: 300,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 24,
     maxDamage: 42,
     hitsPerRound: 1,
@@ -1437,7 +1437,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/b/be/A332WEAPON_PM_ROUGE.png/100px-A332WEAPON_PM_ROUGE.png',
     tech: 130,
     integrity: 350,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 2,
     maxDamage: 14,
     hitsPerRound: 5,
@@ -1451,7 +1451,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/a/a9/AZMAT262.png/150px-AZMAT262.png',
     tech: 320,
     integrity: 90,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 6,
     maxDamage: 12,
     hitsPerRound: 2,
@@ -1465,7 +1465,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/4/48/FLINGUE_PLASMA262.png/150px-FLINGUE_PLASMA262.png',
     tech: 550,
     integrity: 130,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 11,
     maxDamage: 21,
     hitsPerRound: 1,
@@ -1479,7 +1479,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/f/ff/FUSIL_LASER2.png/150px-FUSIL_LASER2.png',
     tech: 470,
     integrity: 145,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 24,
     maxDamage: 42,
     hitsPerRound: 1,
@@ -1487,7 +1487,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 12,
     prerequisites: [
       {
-        skill: 'perception',
+        property: 'perception',
         value: 150,
       },
     ],
@@ -1498,7 +1498,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/9/90/Plasma.png',
     tech: 0,
     integrity: 85,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 24,
     maxDamage: 40,
     hitsPerRound: 1,
@@ -1506,11 +1506,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 2,
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 50,
       },
       {
-        skill: 'perception',
+        property: 'perception',
         value: 50,
       },
     ],
@@ -1522,7 +1522,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/0/0c/Gatling_Laser2.png/150px-Gatling_Laser2.png',
     tech: 260,
     integrity: 100,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 12,
     maxDamage: 22,
     hitsPerRound: 3,
@@ -1530,15 +1530,15 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 3,
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 120,
       },
       {
-        skill: 'perception',
+        property: 'perception',
         value: 60,
       },
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 100,
       },
     ],
@@ -1559,7 +1559,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/8/84/Pulseur.png',
     tech: 340,
     integrity: 115,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 16,
     maxDamage: 26,
     hitsPerRound: 1,
@@ -1567,11 +1567,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 4,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 60,
       },
       {
-        skill: 'perception',
+        property: 'perception',
         value: 60,
       },
     ],
@@ -1583,7 +1583,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/b/b6/V42J4_262px.png/150px-V42J4_262px.png',
     tech: 260,
     integrity: 120,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 20,
     maxDamage: 26,
     hitsPerRound: 2,
@@ -1591,11 +1591,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 7,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 80,
       },
       {
-        skill: 'perception',
+        property: 'perception',
         value: 80,
       },
     ],
@@ -1607,7 +1607,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/5/5e/Runner_262.png/150px-Runner_262.png',
     tech: 320,
     integrity: 90,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 3,
     maxDamage: 15,
     hitsPerRound: 2,
@@ -1615,7 +1615,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 4,
     prerequisites: [
       {
-        skill: 'perception',
+        property: 'perception',
         value: 150,
       },
     ],
@@ -1627,7 +1627,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/b/b8/Gatling_G1.png/150px-Gatling_G1.png',
     tech: 260,
     integrity: 100,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 18,
     maxDamage: 42,
     hitsPerRound: 2,
@@ -1635,15 +1635,15 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 5,
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 120,
       },
       {
-        skill: 'perception',
+        property: 'perception',
         value: 60,
       },
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 100,
       },
     ],
@@ -1665,7 +1665,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/1/18/Fusilsniper.png/150px-Fusilsniper.png',
     tech: 470,
     integrity: 145,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 36,
     maxDamage: 48,
     hitsPerRound: 1,
@@ -1673,7 +1673,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 14,
     prerequisites: [
       {
-        skill: 'perception',
+        property: 'perception',
         value: 150,
       },
     ],
@@ -1684,7 +1684,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/a/aa/Fusil_iem.png',
     tech: 500,
     integrity: 130,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 13,
     maxDamage: 25,
     hitsPerRound: 1,
@@ -1704,7 +1704,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/3/3e/LANCE-FLAME2.png/150px-LANCE-FLAME2.png',
     tech: 0,
     integrity: 110,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 12,
     maxDamage: 60,
     hitsPerRound: 2,
@@ -1712,11 +1712,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 4,
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 80,
       },
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 80,
       },
     ],
@@ -1733,7 +1733,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/b/b6/Arba-auto.png',
     tech: 320,
     integrity: 250,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 15,
     maxDamage: 25,
     hitsPerRound: 1,
@@ -1741,11 +1741,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 4,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 70,
       },
       {
-        skill: 'perception',
+        property: 'perception',
         value: 70,
       },
     ],
@@ -1757,7 +1757,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/c/c7/Arc_positrons.png/150px-Arc_positrons.png',
     tech: 450,
     integrity: 150,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 20,
     maxDamage: 48,
     hitsPerRound: 1,
@@ -1765,11 +1765,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 9,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 180,
       },
       {
-        skill: 'perception',
+        property: 'perception',
         value: 100,
       },
     ],
@@ -1786,7 +1786,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/7/7d/Arc_controle_bleu.png',
     tech: 460,
     integrity: 150,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 22,
     maxDamage: 40,
     hitsPerRound: 1,
@@ -1794,11 +1794,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 12,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 120,
       },
       {
-        skill: 'perception',
+        property: 'perception',
         value: 150,
       },
     ],
@@ -1810,7 +1810,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/4/4a/Arc_a_poulie.png/150px-Arc_a_poulie.png',
     tech: 450,
     integrity: 180,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 18,
     maxDamage: 48,
     hitsPerRound: 1,
@@ -1818,11 +1818,11 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 9,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 120,
       },
       {
-        skill: 'perception',
+        property: 'perception',
         value: 120,
       },
     ],
@@ -1834,7 +1834,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/2/21/PISTACLOUS262.png/150px-PISTACLOUS262.png',
     tech: 80,
     integrity: 80,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 7,
     maxDamage: 13,
     hitsPerRound: 3,
@@ -1847,7 +1847,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/0/0d/Pistoconfetti.png',
     tech: 0,
     integrity: 1,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 0,
     maxDamage: 2,
     hitsPerRound: 1,
@@ -1860,7 +1860,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/1/1f/Pisto-bille.png',
     tech: 50,
     integrity: 200,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 2,
     maxDamage: 4,
     hitsPerRound: 1,
@@ -1873,7 +1873,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     image: 'https://wiki.dreadcast.net/images/6/67/Pisto-ventouse.png',
     tech: 0,
     integrity: 120,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 0,
     maxDamage: 2,
     hitsPerRound: 1,
@@ -1887,7 +1887,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/c/c6/RAIL-GUN262.png/150px-RAIL-GUN262.png',
     tech: 260,
     integrity: 60,
-    type: 'weapon',
+    type: '2handsShot',
     minDamage: 10,
     maxDamage: 70,
     hitsPerRound: 1,
@@ -1901,7 +1901,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       'https://wiki.dreadcast.net/images/thumb/2/2e/Vibrolame.png/100px-Vibrolame.png',
     tech: 360,
     integrity: 150,
-    type: 'weapon',
+    type: '1handShot',
     minDamage: 20,
     maxDamage: 36,
     hitsPerRound: 1,
@@ -1909,7 +1909,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     reach: 0,
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 110,
       },
     ],

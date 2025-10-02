@@ -1,4 +1,4 @@
-import type { EffectResponseDto } from '../item/item.dto';
+import type { StatModifierResponseDto } from '../stats.dto';
 
 export interface KitResponseDto {
   id: string;
@@ -14,5 +14,5 @@ export interface KitResponseDto {
     | '2handsShot'
     | '1handMelee'
     | '2handsMelee';
-  effects: EffectResponseDto[];
+  effects: StatModifierResponseDto[];
 }

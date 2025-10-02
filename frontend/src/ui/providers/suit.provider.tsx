@@ -11,49 +11,36 @@ import {
 } from 'react';
 
 import { useRaces } from '@/data/race';
-import {
-  ItemSpotValue,
-  type Gender,
-  type Item,
-  type ItemSpot,
-  type Kit,
-  type Property,
-  type Race,
-  type Skill,
-} from '@/domain';
+import type { Gender, Kit, Race, Skill } from '@/domain';
+import { ItemSpotValue, type ItemSpot } from '@/domain/suit';
 import {
   StatValues,
   useImplants,
   useImplantsState,
   type Stat,
 } from '@/feature/implant';
+import { useItemsEffect, useItemsState } from '@/feature/item';
 
 export interface KitSelection {
   kit: Kit;
   number: number;
 }
 
-export interface SuitPiece {
-  item: Item | null;
-  kits: Array<KitSelection>;
-}
-
 interface SuitState {
   race?: Race;
   gender?: Gender;
-  head?: SuitPiece;
-  chest?: SuitPiece;
-  legs?: SuitPiece;
-  feet?: SuitPiece;
-  secondary?: SuitPiece;
-  leftArm?: SuitPiece;
-  rightArm?: SuitPiece;
+  head?: KitSelection[];
+  chest?: KitSelection[];
+  legs?: KitSelection[];
+  feet?: KitSelection[];
+  secondary?: KitSelection[];
+  leftArm?: KitSelection[];
+  rightArm?: KitSelection[];
 }
 
 interface SuitActions {
   setRace: Dispatch<SetStateAction<Race | undefined>>;
   setGender: Dispatch<SetStateAction<Gender>>;
-  setItem: (item: Item, spot: ItemSpot) => void;
   addKit: (spot: ItemSpot, kit: Kit, newKit?: boolean) => void;
   setKit: (spot: ItemSpot, kit: Kit, index: number) => void;
   removeKit: (spot: ItemSpot, index: number) => void;
@@ -108,41 +95,22 @@ export const SuitProvider = ({
 
   const [gender, setGender] = useState<Gender>('male');
 
-  const [items, setItems] = useState<Record<ItemSpot, SuitPiece>>({
-    head: { item: null, kits: [] },
-    chest: { item: null, kits: [] },
-    legs: { item: null, kits: [] },
-    feet: { item: null, kits: [] },
-    secondary: { item: null, kits: [] },
-    leftArm: { item: null, kits: [] },
-    rightArm: { item: null, kits: [] },
+  const [kits, setKits] = useState<Record<ItemSpot, KitSelection[]>>({
+    head: [],
+    chest: [],
+    legs: [],
+    feet: [],
+    secondary: [],
+    leftArm: [],
+    rightArm: [],
   });
 
-  const setItem = useCallback((item: Item, spot: ItemSpot) => {
-    setItems((previous) => {
-      let next = { ...previous };
-      next[spot] = { item, kits: previous[spot].kits };
-
-      const other = spot === 'leftArm' ? 'rightArm' : 'leftArm';
-      if (
-        (spot === 'leftArm' || spot === 'rightArm') &&
-        item.hands &&
-        item.hands > 1
-      ) {
-        next[other] = next[spot];
-      } else if (
-        (spot === 'leftArm' || spot === 'rightArm') &&
-        previous[spot].item?.hands &&
-        previous[spot].item.hands > 1
-      ) {
-        next[other] = { ...next[spot], item: null };
-      }
-      return next;
-    });
-  }, []);
+  const items = useItemsState();
 
   const { data: implants } = useImplants();
   const implantations = useImplantsState();
+
+  const itemEffects = useItemsEffect();
 
   const getStat = useCallback(
     (stat: Stat) => {
@@ -154,33 +122,33 @@ export const SuitProvider = ({
             const curr = implantations[k.name] - 1;
             return acc + (curr === -1 ? 0 : k.valuePerLevel[curr]);
           }, 0) || 0) +
+        (itemEffects[stat] || 0) +
         (ItemSpotValue.reduce((acc, k) => {
-          const curr =
-            items[k]?.item?.effects?.find(
-              (val) => val?.property === (stat as Property),
-            )?.value || 0;
-          const kitsCurr = items[k]?.kits.reduce((kitAcc, kitCurr) => {
-            return (
-              kitAcc +
-              kitCurr.kit.effects.reduce((effAcc, effCurr) => {
-                if (effCurr.property === (stat as Property)) {
-                  return effAcc + effCurr.value * kitCurr.number;
-                }
-                return effAcc;
-              }, 0)
-            );
-          }, 0);
+          const kitsCurr =
+            kits[k].reduce((kitAcc, kitCurr) => {
+              return (
+                kitAcc +
+                kitCurr.kit.effects.reduce(
+                  (effAcc, effCurr) =>
+                    effAcc +
+                    (effCurr.property === stat
+                      ? effCurr.value * kitCurr.number
+                      : 0),
+                  0,
+                )
+              );
+            }, 0) || 0;
 
-          return acc + curr + kitsCurr;
+          return acc + kitsCurr;
         }, 0) || 0) -
-        (items['leftArm']?.item?.hands && items['leftArm']?.item?.hands > 1
-          ? items['rightArm']?.item?.effects?.find(
-              (val) => val?.property === (stat as Property),
+        (items['leftArm']?.hands && items['leftArm']?.hands > 1
+          ? items['rightArm']?.effects?.find(
+              (val) => val?.property === (stat as Stat),
             )?.value || 0
           : 0)
       );
     },
-    [implantations, implants, items, race],
+    [implantations, implants, itemEffects, items, kits, race],
   );
   const stats = useMemo(
     () =>
@@ -195,67 +163,65 @@ export const SuitProvider = ({
   );
 
   const addKit = useCallback((spot: ItemSpot, kit: Kit, newKit?: boolean) => {
-    setItems((previous) => {
+    setKits((previous) => {
       const slot = previous[spot];
-      const existingIndex = slot.kits.findIndex((k) => k.kit.id === kit.id);
+      const existingIndex = slot.findIndex?.((k) => k.kit.id === kit.id);
 
-      let kits: typeof slot.kits;
+      let kits: KitSelection[];
       if (!newKit && existingIndex !== -1) {
-        kits = slot.kits.map((k, i) =>
+        kits = slot.map?.((k, i) =>
           i === existingIndex ? { ...k, number: k.number + 1 } : k,
         );
       } else {
-        kits = [...slot.kits, { kit, number: 1 }];
+        kits = [...slot, { kit, number: 1 }];
       }
 
-      return { ...previous, [spot]: { ...slot, kits } };
+      return { ...previous, [spot]: kits };
     });
   }, []);
 
   const setKit = useCallback((spot: ItemSpot, kit: Kit, index: number) => {
-    setItems((previous) => {
+    setKits((previous) => {
       const slot = previous[spot];
-      if (!slot || slot.kits.length <= index) return previous;
+      if (!slot || slot.length <= index) return previous;
 
-      const kits = slot.kits.map((k, i) => (i === index ? { ...k, kit } : k));
+      const kits = slot.map?.((k, i) => (i === index ? { ...k, kit } : k));
 
-      return { ...previous, [spot]: { ...slot, kits } };
+      return { ...previous, [spot]: kits };
     });
   }, []);
 
   const removeKit = useCallback((spot: ItemSpot, index: number) => {
-    setItems((previous) => {
+    setKits((previous) => {
       const slot = previous[spot];
-      if (!slot || index < 0 || index >= slot.kits.length) return previous;
+      if (!slot || index < 0 || index >= slot.length) return previous;
 
-      const target = slot.kits[index];
-      let kits: typeof slot.kits;
+      const target = slot[index];
+      let kits: typeof slot;
 
       if (target.number > 1) {
-        kits = slot.kits.map((k, i) =>
+        kits = slot.map?.((k, i) =>
           i === index ? { ...k, number: k.number - 1 } : k,
         );
       } else {
-        kits = slot.kits.filter((_, i) => i !== index);
+        kits = slot.filter?.((_, i) => i !== index);
       }
       return {
         ...previous,
-        [spot]: { ...slot, kits },
+        [spot]: kits,
       };
     });
   }, []);
 
   const setKitNumber = useCallback(
     (spot: ItemSpot, index: number, number: number) => {
-      setItems((previous) => {
+      setKits((previous) => {
         const slot = previous[spot];
-        if (!slot || slot.kits.length <= index) return previous;
+        if (!slot || slot.length <= index) return previous;
 
-        const kits = slot.kits.map((k, i) =>
-          i === index ? { ...k, number } : k,
-        );
+        const kits = slot.map((k, i) => (i === index ? { ...k, number } : k));
 
-        return { ...previous, [spot]: { ...slot, kits } };
+        return { ...previous, [spot]: kits };
       });
     },
     [],
@@ -269,8 +235,7 @@ export const SuitProvider = ({
         gender,
         setGender,
         ...stats,
-        ...items,
-        setItem,
+        ...kits,
         addKit,
         setKit,
         removeKit,

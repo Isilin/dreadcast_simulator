@@ -1,4 +1,4 @@
-import type { Effect, ItemType } from './item';
+import type { StatModifier } from './stats';
 
 export type KitType =
   | 'head'
@@ -16,11 +16,5 @@ export interface Kit {
   name: string;
   tech: number;
   type: KitType;
-  effects: Effect[];
+  effects: StatModifier[];
 }
-
-export const toKitType = (type: ItemType): KitType | KitType[] => {
-  if (type === 'weapon') {
-    return ['1handMelee', '1handShot', '2handsMelee', '2handsShot'];
-  } else return type as KitType;
-};

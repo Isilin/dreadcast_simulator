@@ -1,6 +1,7 @@
 import styles from './kit-label.module.css';
 
-import { getTagFromProperty, type Kit } from '@/domain';
+import { type Kit } from '@/domain';
+import { StatValues } from '@/domain/stats';
 import { EffectChip } from '@/ui/effect-chip';
 import { TechBadge } from '@/ui/tech-badge';
 
@@ -18,7 +19,7 @@ export const KitLabel = ({ kit }: Props) => {
           <EffectChip
             key={e.property}
             value={e.value}
-            label={getTagFromProperty(e.property)}
+            label={StatValues[e.property].label}
           />
         ))}
       </div>

@@ -9,6 +9,7 @@ import '@/styles/theme.css';
 import './index.css';
 
 import { ImplantsProvider } from './feature/implant';
+import { ItemsProvider } from './feature/item';
 import { routeTree } from './routeTree.gen';
 import { SuitProvider } from './ui/providers/suit.provider';
 
@@ -30,9 +31,11 @@ if (!rootElement.innerHTML) {
       <QueryClientProvider client={queryClient}>
         <Tooltip.Provider>
           <ImplantsProvider>
-            <SuitProvider>
-              <RouterProvider router={router} />
-            </SuitProvider>
+            <ItemsProvider>
+              <SuitProvider>
+                <RouterProvider router={router} />
+              </SuitProvider>
+            </ItemsProvider>
           </ImplantsProvider>
         </Tooltip.Provider>
       </QueryClientProvider>

@@ -10,7 +10,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
     type: 'legs',
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 60,
       },
     ],
@@ -41,11 +41,11 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
     type: 'legs',
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 10,
       },
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 20,
       },
     ],
@@ -69,7 +69,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
     type: 'legs',
     prerequisites: [
       {
-        skill: 'computing',
+        property: 'computing',
         value: 10,
       },
     ],
@@ -93,11 +93,11 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
     type: 'legs',
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 60,
       },
       {
-        skill: 'agility',
+        property: 'agility',
         value: 100,
       },
     ],
@@ -112,7 +112,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
     type: 'legs',
     prerequisites: [
       {
-        skill: 'engineering',
+        property: 'engineering',
         value: 30,
       },
     ],
@@ -132,7 +132,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
     type: 'legs',
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 69,
       },
     ],
@@ -146,11 +146,11 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
     type: 'legs',
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 120,
       },
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 50,
       },
     ],
@@ -178,7 +178,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
     type: 'legs',
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 120,
       },
     ],
@@ -202,11 +202,11 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
     type: 'legs',
     prerequisites: [
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 50,
       },
       {
-        skill: 'computing',
+        property: 'computing',
         value: 120,
       },
     ],
@@ -258,11 +258,11 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
     type: 'legs',
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 20,
       },
       {
-        skill: 'agility',
+        property: 'agility',
         value: 20,
       },
     ],
@@ -338,7 +338,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
     type: 'legs',
     prerequisites: [
       {
-        skill: 'engineering',
+        property: 'engineering',
         value: 30,
       },
     ],
@@ -437,7 +437,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
     type: 'legs',
     prerequisites: [
       {
-        skill: 'medicine',
+        property: 'medicine',
         value: 30,
       },
     ],
@@ -541,7 +541,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
     type: 'legs',
     prerequisites: [
       {
-        skill: 'computing',
+        property: 'computing',
         value: 50,
       },
     ],

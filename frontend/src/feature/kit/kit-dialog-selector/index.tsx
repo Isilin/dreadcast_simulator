@@ -6,7 +6,9 @@ import { KitNumber } from '../kit-number';
 import styles from './kit-dialog-selector.module.css';
 
 import { useKits } from '@/data/kit';
-import { toKitType, toType, type ItemSpot, type Kit } from '@/domain';
+import { type Kit } from '@/domain';
+import { type ItemSpot } from '@/domain/suit';
+import { getItemTypes } from '@/feature/item';
 import { DeleteButton } from '@/ui/delete-button';
 import { useSuit } from '@/ui/hooks/use-suit';
 
@@ -16,9 +18,9 @@ interface Props {
 
 export const KitDialogSelector = ({ spot }: Props) => {
   const suit = useSuit();
-  const type = useMemo(() => toType(spot), [spot]);
-  const kits = suit[spot]?.kits || [];
-  const { data: allKits } = useKits(toKitType(type));
+  const types = useMemo(() => getItemTypes(spot), [spot]);
+  const kits = suit[spot] || [];
+  const { data: allKits } = useKits(types);
 
   return (
     <Dialog.Portal>
@@ -30,7 +32,7 @@ export const KitDialogSelector = ({ spot }: Props) => {
             {kits.map(({ kit, number }, index) => (
               <li key={index} className={styles.KitListItem}>
                 <KitCombobox
-                  type={type}
+                  type={types}
                   kit={kit}
                   onChange={(newKit: Kit) => suit.setKit(spot, newKit, index)}
                 />

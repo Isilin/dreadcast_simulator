@@ -11,7 +11,7 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
     type: 'head',
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 50,
       },
     ],
@@ -49,7 +49,7 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
     type: 'head',
     prerequisites: [
       {
-        skill: 'engineering',
+        property: 'engineering',
         value: 150,
       },
     ],
@@ -70,7 +70,7 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
     type: 'head',
     prerequisites: [
       {
-        skill: 'medicine',
+        property: 'medicine',
         value: 30,
       },
     ],
@@ -91,11 +91,11 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
     type: 'head',
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 60,
       },
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 60,
       },
     ],
@@ -115,7 +115,7 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
     type: 'head',
     prerequisites: [
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 60,
       },
     ],
@@ -149,7 +149,7 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
     type: 'head',
     prerequisites: [
       {
-        skill: 'engineering',
+        property: 'engineering',
         value: 130,
       },
     ],
@@ -170,7 +170,7 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
     type: 'head',
     prerequisites: [
       {
-        skill: 'engineering',
+        property: 'engineering',
         value: 30,
       },
     ],
@@ -191,7 +191,7 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
     type: 'head',
     prerequisites: [
       {
-        skill: 'computing',
+        property: 'computing',
         value: 130,
       },
     ],
@@ -216,11 +216,11 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
     type: 'head',
     prerequisites: [
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 80,
       },
       {
-        skill: 'perception',
+        property: 'perception',
         value: 100,
       },
     ],
@@ -315,11 +315,11 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
     type: 'head',
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 60,
       },
       {
-        skill: 'stealth',
+        property: 'stealth',
         value: 60,
       },
     ],
@@ -340,7 +340,7 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
     type: 'head',
     prerequisites: [
       {
-        skill: 'computing',
+        property: 'computing',
         value: 30,
       },
     ],
@@ -361,11 +361,11 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
     type: 'head',
     prerequisites: [
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 50,
       },
       {
-        skill: 'engineering',
+        property: 'engineering',
         value: 50,
       },
     ],
@@ -390,7 +390,7 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
     type: 'head',
     prerequisites: [
       {
-        skill: 'stealth',
+        property: 'stealth',
         value: 10,
       },
     ],
@@ -411,11 +411,11 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
     type: 'head',
     prerequisites: [
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 50,
       },
       {
-        skill: 'perception',
+        property: 'perception',
         value: 50,
       },
     ],
@@ -685,7 +685,7 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
     type: 'head',
     prerequisites: [
       {
-        skill: 'stealth',
+        property: 'stealth',
         value: 125,
       },
     ],

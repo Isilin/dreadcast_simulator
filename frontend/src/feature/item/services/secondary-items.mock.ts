@@ -71,7 +71,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     type: 'secondary',
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 90,
       },
     ],
@@ -119,7 +119,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     type: 'secondary',
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 50,
       },
     ],
@@ -144,7 +144,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     type: 'secondary',
     prerequisites: [
       {
-        skill: 'computing',
+        property: 'computing',
         value: 150,
       },
     ],
@@ -178,7 +178,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     type: 'secondary',
     prerequisites: [
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 130,
       },
     ],
@@ -233,7 +233,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     type: 'secondary',
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 110,
       },
     ],
@@ -262,7 +262,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     type: 'secondary',
     prerequisites: [
       {
-        skill: 'computing',
+        property: 'computing',
         value: 150,
       },
     ],
@@ -358,7 +358,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     type: 'secondary',
     prerequisites: [
       {
-        skill: 'stealth',
+        property: 'stealth',
         value: 20,
       },
     ],
@@ -379,7 +379,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     type: 'secondary',
     prerequisites: [
       {
-        skill: 'computing',
+        property: 'computing',
         value: 200,
       },
     ],
@@ -419,7 +419,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     type: 'secondary',
     prerequisites: [
       {
-        skill: 'medicine',
+        property: 'medicine',
         value: 150,
       },
     ],
@@ -590,11 +590,11 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     type: 'secondary',
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 110,
       },
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 60,
       },
     ],

@@ -4,15 +4,11 @@ import { Fragment, useMemo, useState } from 'react';
 import { KitDialogSelector } from '../kit-dialog-selector';
 import styles from './kit-selector.module.css';
 
-import {
-  getTagFromProperty,
-  toType,
-  type ItemSpot,
-  type Property,
-} from '@/domain';
+import { StatValues, type Stat } from '@/domain/stats';
+import { type ItemSpot } from '@/domain/suit';
+import { useItemsState } from '@/feature/item';
 import { EffectChip } from '@/ui/effect-chip';
 import { useSuit } from '@/ui/hooks/use-suit';
-import type { SuitPiece } from '@/ui/providers/suit.provider';
 
 interface Props {
   spot: ItemSpot;
@@ -21,18 +17,16 @@ interface Props {
 export const KitSelector = ({ spot }: Props) => {
   const suit = useSuit();
   const [dialogOpen, setDialogOpen] = useState(false);
-  const type = useMemo(() => toType(spot), [spot]);
-  const limitTech = useMemo(
-    () => (suit[type as keyof typeof suit] as SuitPiece)?.item?.tech || 0,
-    [suit, type],
-  );
-  const kits = useMemo(() => suit[spot]?.kits, [suit, spot]);
+  const items = useItemsState();
+  const limitTech = useMemo(() => items[spot]?.tech || 0, [items, spot]);
+  const kits = useMemo(() => suit[spot], [suit, spot]);
   const isEmpty = useMemo(() => kits?.length === 0, [kits]);
+  const isDisable = useMemo(() => items[spot] === null, [items, spot]);
 
   const { techTotal, statTotals } = useMemo(() => {
-    const totals = new Map<Property, number>();
+    const totals = new Map<Stat, number>();
     let tech = 0;
-    kits?.forEach(({ kit, number }) => {
+    kits?.forEach?.(({ kit, number }) => {
       tech += kit.tech * number;
       kit.effects.forEach((eff) => {
         totals.set(
@@ -55,7 +49,7 @@ export const KitSelector = ({ spot }: Props) => {
 
   return (
     <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
-      <Dialog.Trigger className={styles.card}>
+      <Dialog.Trigger className={styles.card} disabled={isDisable}>
         {isEmpty ? (
           <div className={styles.placeholder}>Choisir un kit</div>
         ) : (
@@ -82,7 +76,7 @@ export const KitSelector = ({ spot }: Props) => {
               {statTotals.map(([stat, total]) => (
                 <EffectChip
                   value={total}
-                  label={getTagFromProperty(stat)}
+                  label={StatValues[stat].label}
                   key={stat}
                 />
               ))}

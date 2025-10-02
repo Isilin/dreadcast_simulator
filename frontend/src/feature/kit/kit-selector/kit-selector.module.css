@@ -32,6 +32,11 @@
     outline: 2px solid var(--color-blue);
     outline-offset: -1px;
   }
+
+  &:disabled {
+    background-color: var(--color-gray-300);
+    border-color: var(--color-red);
+  }
 }
 
 .placeholder {

@@ -1,26 +1,21 @@
 import { Select } from '@base-ui-components/react';
-import { useMemo } from 'react';
 
 import { KitLabel } from '../kit-label';
 import styles from './kit-combobox.module.css';
 
 import { useKits } from '@/data/kit';
-import type { Item, Kit } from '@/domain';
+import type { Kit } from '@/domain';
+import type { ItemType } from '@/feature/item';
 import { CheckIcon, ChevronUpDownIcon } from '@/ui/icons';
 
 interface Props {
-  type: Item['type'];
+  type: ItemType[];
   kit: Kit;
   onChange: (kit: Kit) => void;
 }
 
 export const KitCombobox = ({ type, kit, onChange }: Props) => {
-  const kitType: Array<Kit['type']> = useMemo(() => {
-    if (type === 'weapon')
-      return ['1handShot', '2handsShot', '1handMelee', '2handsMelee'];
-    else return [type];
-  }, [type]);
-  const { data } = useKits(kitType);
+  const { data } = useKits(type);
 
   return (
     <Select.Root value={kit} onValueChange={(k) => onChange(k)}>

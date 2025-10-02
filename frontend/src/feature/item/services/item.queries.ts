@@ -2,9 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 
 import { fetchItems } from './item.repo';
 
-import type { Item } from '@/domain';
+import type { ItemType } from '@/feature/item';
 
-export const useItems = (type?: Item['type']) =>
+export const useItems = (type?: ItemType[]) =>
   useQuery({
     queryKey: ['items', type],
     queryFn: () => fetchItems(type),

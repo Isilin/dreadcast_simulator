@@ -177,7 +177,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
     type: 'feet',
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 1,
       },
     ],
@@ -197,7 +197,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
     type: 'feet',
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 10,
       },
     ],
@@ -222,7 +222,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
     type: 'feet',
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 20,
       },
     ],
@@ -247,11 +247,11 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
     type: 'feet',
     prerequisites: [
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 60,
       },
       {
-        skill: 'strength',
+        property: 'strength',
         value: 50,
       },
     ],
@@ -275,7 +275,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
     type: 'feet',
     prerequisites: [
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 20,
       },
     ],
@@ -335,7 +335,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
     type: 'feet',
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 120,
       },
     ],

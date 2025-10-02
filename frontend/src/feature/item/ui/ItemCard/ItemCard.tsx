@@ -1,6 +1,7 @@
-import styles from './item-card.module.css';
+import styles from './ItemCard.module.css';
 
-import { type Item, getTagFromProperty, getTagFromSkill } from '@/domain';
+import { StatValues } from '@/domain/stats';
+import { type Item } from '@/feature/item';
 import { EffectChip } from '@/ui/effect-chip';
 import { useSuit } from '@/ui/hooks/use-suit';
 import { Popin } from '@/ui/popin';
@@ -40,9 +41,9 @@ export const ItemCard = ({ item, onClick }: Props) => {
       <ul className={styles['item-stats']}>
         {item.prerequisites?.map((prerequisite) => (
           <li
-            key={`prerequisite-` + prerequisite.skill}
+            key={`prerequisite-` + prerequisite.property}
             className={
-              suit[prerequisite.skill as keyof typeof useSuit] <
+              suit[prerequisite.property as keyof typeof useSuit] <
               prerequisite.value
                 ? styles['invalid']
                 : ''
@@ -50,7 +51,7 @@ export const ItemCard = ({ item, onClick }: Props) => {
           >
             <span className={styles.key}>{prerequisite.value}</span>
             <span className={styles.value}>
-              {getTagFromSkill(prerequisite.skill)}
+              {StatValues[prerequisite.property].tag}
             </span>
           </li>
         ))}
@@ -60,7 +61,7 @@ export const ItemCard = ({ item, onClick }: Props) => {
           <li key={`effect-` + effect.property}>
             <EffectChip
               value={effect.value}
-              label={getTagFromProperty(effect.property)}
+              label={StatValues[effect.property].label}
             />
           </li>
         ))}

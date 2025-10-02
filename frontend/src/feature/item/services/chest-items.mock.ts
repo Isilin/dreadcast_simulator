@@ -11,11 +11,11 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     type: 'chest',
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 120,
       },
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 120,
       },
     ],
@@ -63,11 +63,11 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     type: 'chest',
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 105,
       },
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 105,
       },
     ],
@@ -92,11 +92,11 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     type: 'chest',
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 105,
       },
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 105,
       },
     ],
@@ -116,11 +116,11 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     type: 'chest',
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 120,
       },
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 160,
       },
     ],
@@ -164,11 +164,11 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     type: 'chest',
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 60,
       },
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 60,
       },
     ],
@@ -271,11 +271,11 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     type: 'chest',
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 50,
       },
       {
-        skill: 'agility',
+        property: 'agility',
         value: 50,
       },
     ],
@@ -322,11 +322,11 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     type: 'chest',
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 10,
       },
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 20,
       },
     ],
@@ -361,11 +361,11 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     type: 'chest',
     prerequisites: [
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 60,
       },
       {
-        skill: 'stealth',
+        property: 'stealth',
         value: 30,
       },
     ],
@@ -451,11 +451,11 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     type: 'chest',
     prerequisites: [
       {
-        skill: 'strength',
+        property: 'strength',
         value: 60,
       },
       {
-        skill: 'robustness',
+        property: 'robustness',
         value: 60,
       },
     ],
@@ -495,7 +495,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     type: 'chest',
     prerequisites: [
       {
-        skill: 'agility',
+        property: 'agility',
         value: 60,
       },
     ],
@@ -510,7 +510,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     type: 'chest',
     prerequisites: [
       {
-        skill: 'computing',
+        property: 'computing',
         value: 50,
       },
     ],
@@ -595,7 +595,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     tech: 320,
     integrity: 60,
     type: 'chest',
-    prerequisites: [{ skill: 'medicine', value: 30 }],
+    prerequisites: [{ property: 'medicine', value: 30 }],
     effects: [
       {
         property: 'stealth',
@@ -633,7 +633,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     tech: 320,
     integrity: 90,
     type: 'chest',
-    prerequisites: [{ skill: 'computing', value: 30 }],
+    prerequisites: [{ property: 'computing', value: 30 }],
     effects: [
       {
         property: 'agility',
@@ -653,7 +653,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     tech: 360,
     integrity: 120,
     type: 'chest',
-    prerequisites: [{ skill: 'engineering', value: 30 }],
+    prerequisites: [{ property: 'engineering', value: 30 }],
     effects: [
       {
         property: 'engineering',
@@ -669,7 +669,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     tech: 200,
     integrity: 100,
     type: 'chest',
-    prerequisites: [{ skill: 'engineering', value: 150 }],
+    prerequisites: [{ property: 'engineering', value: 150 }],
     effects: [
       {
         property: 'agility',

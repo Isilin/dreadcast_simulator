@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 
+import type { createImplantsActions } from './implant.actions';
 import { DispatchCtx, StateCtx } from './implant.contexts';
 import type { ImplantsState } from './implant.types';
 
@@ -11,7 +12,9 @@ export const useImplantsState = (): ImplantsState => {
   return state;
 };
 
-export const useImplantsDispatch = () => {
+export const useImplantsDispatch = (): ReturnType<
+  typeof createImplantsActions
+> => {
   const dispatch = useContext(DispatchCtx);
   if (!dispatch) {
     throw new Error('Missing ImplantsProvider');

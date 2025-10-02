@@ -1,14 +1,14 @@
 import { Dialog } from '@base-ui-components/react';
 
-import { ItemCard } from '../item-card';
+import type { Item, ItemType } from '../../model/item.types';
+import { useItems } from '../../services';
+import { ItemCard } from '../ItemCard/ItemCard';
 
-import { useItems } from '@/data/item';
-import type { Item } from '@/domain';
 import { Modal } from '@/ui/Modal/Modal';
 import { Spinner } from '@/ui/spinner';
 
 interface Props {
-  type?: Item['type'];
+  type?: ItemType[];
   onItemSelect: (item: Item) => void;
 }
 

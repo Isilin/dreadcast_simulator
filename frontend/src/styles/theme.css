@@ -30,7 +30,7 @@
     --color-orange: oklch(78% 53% 70deg);
     --color-green: oklch(72% 48% 150deg);
 
-    --color-gray-50: oklch(17% 1% 264deg);
+    --color-gray-50: oklch(17% 1% 264deg / 95%);
     --color-gray-100: oklch(28% 3% 264deg / 65%);
     --color-gray-200: oklch(31% 3% 264deg / 80%);
     --color-gray-300: oklch(35% 3% 264deg / 80%);
