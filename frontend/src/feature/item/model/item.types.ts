@@ -1,5 +1,4 @@
-import type { StatModifier } from '@/domain/stats';
-import type { ItemSpot } from '@/domain/suit';
+import type { ItemSpot, StatModifier } from '@/domain';
 
 export const ItemTypeValues = [
   'head',

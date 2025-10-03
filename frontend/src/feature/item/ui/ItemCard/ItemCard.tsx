@@ -1,6 +1,6 @@
 import styles from './ItemCard.module.css';
 
-import { StatValues } from '@/domain/stats';
+import { StatValues } from '@/domain';
 import { type Item } from '@/feature/item';
 import { EffectChip } from '@/ui/effect-chip';
 import { useSuit } from '@/ui/hooks/use-suit';

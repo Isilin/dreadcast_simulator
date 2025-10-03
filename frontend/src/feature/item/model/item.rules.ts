@@ -1,6 +1,6 @@
 import type { ItemType } from './item.types';
 
-import type { ItemSpot } from '@/domain/suit';
+import type { ItemSpot } from '@/domain';
 
 export const getOtherHand = (spot: ItemSpot, hands: number | undefined) => {
   if (

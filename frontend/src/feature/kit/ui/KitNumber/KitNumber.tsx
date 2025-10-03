@@ -1,6 +1,6 @@
 import { NumberField } from '@base-ui-components/react';
 
-import styles from './kit-number.module.css';
+import styles from './KitNumber.module.css';
 
 import { CursorGrowIcon, MinusIcon, PlusIcon } from '@/ui/icons';
 

@@ -1,7 +1,7 @@
-import styles from './kit-label.module.css';
+import styles from './KitLabel.module.css';
 
-import { type Kit } from '@/domain';
-import { StatValues } from '@/domain/stats';
+import { StatValues } from '@/domain';
+import type { Kit } from '@/feature/kit';
 import { EffectChip } from '@/ui/effect-chip';
 import { TechBadge } from '@/ui/tech-badge';
 

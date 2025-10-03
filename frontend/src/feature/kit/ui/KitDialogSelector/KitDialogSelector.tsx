@@ -1,25 +1,26 @@
 import { Dialog } from '@base-ui-components/react';
 import { useMemo } from 'react';
 
-import { KitCombobox } from '../kit-combobox';
-import { KitNumber } from '../kit-number';
-import styles from './kit-dialog-selector.module.css';
+import type { Kit } from '../../model';
+import { useKitsDispatch } from '../../model/kit.hooks';
+import { useKitsOnSpot } from '../../model/kit.selectors';
+import { useKits } from '../../services';
+import { KitCombobox } from '../KitCombobox';
+import { KitNumber } from '../KitNumber';
+import styles from './KitDialogSelector.module.css';
 
-import { useKits } from '@/data/kit';
-import { type Kit } from '@/domain';
-import { type ItemSpot } from '@/domain/suit';
+import { type ItemSpot } from '@/domain';
 import { getItemTypes } from '@/feature/item';
 import { DeleteButton } from '@/ui/delete-button';
-import { useSuit } from '@/ui/hooks/use-suit';
 
 interface Props {
   spot: ItemSpot;
 }
 
 export const KitDialogSelector = ({ spot }: Props) => {
-  const suit = useSuit();
   const types = useMemo(() => getItemTypes(spot), [spot]);
-  const kits = suit[spot] || [];
+  const { kits } = useKitsOnSpot(spot);
+  const dispatch = useKitsDispatch();
   const { data: allKits } = useKits(types);
 
   return (
@@ -34,15 +35,17 @@ export const KitDialogSelector = ({ spot }: Props) => {
                 <KitCombobox
                   type={types}
                   kit={kit}
-                  onChange={(newKit: Kit) => suit.setKit(spot, newKit, index)}
+                  onChange={(newKit: Kit) =>
+                    dispatch.setKit(spot, index, newKit)
+                  }
                 />
                 <KitNumber
                   value={number}
                   onChange={(newNumber) =>
-                    suit.setKitNumber(spot, index, newNumber)
+                    dispatch.setKitNumber(spot, index, newNumber)
                   }
                 />
-                <DeleteButton onClick={() => suit.removeKit(spot, index)} />
+                <DeleteButton onClick={() => dispatch.deleteKit(spot, index)} />
               </li>
             ))}
           </ul>
@@ -50,7 +53,7 @@ export const KitDialogSelector = ({ spot }: Props) => {
         {allKits && (
           <button
             className={styles.addButton}
-            onClick={() => suit.addKit(spot, allKits[0], true)}
+            onClick={() => dispatch.addKit(spot, allKits[0], true)}
           >
             +
           </button>

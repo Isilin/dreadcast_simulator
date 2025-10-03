@@ -1,6 +1,6 @@
 import { useItemsState } from './item.hooks';
 
-import { ItemSpotValue } from '@/domain/suit';
+import { ItemSpotValue } from '@/domain';
 import type { Stat } from '@/feature/implant';
 
 export const useItemsEffect = (): Record<Stat, number> => {

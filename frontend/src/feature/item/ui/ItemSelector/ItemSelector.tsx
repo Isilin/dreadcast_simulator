@@ -7,7 +7,7 @@ import { ItemCard } from '../ItemCard';
 import { ItemDialogSelector } from '../ItemDialogSelector';
 import styles from './ItemSelector.module.css';
 
-import { type ItemSpot } from '@/domain/suit';
+import { type ItemSpot } from '@/domain';
 
 interface Props {
   spot: ItemSpot;

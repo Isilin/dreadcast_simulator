@@ -11,8 +11,7 @@ import {
 } from 'react';
 
 import { useRaces } from '@/data/race';
-import type { Gender, Kit, Race, Skill } from '@/domain';
-import { ItemSpotValue, type ItemSpot } from '@/domain/suit';
+import { ItemSpotValue, type Gender, type Race, type Skill } from '@/domain';
 import {
   StatValues,
   useImplants,
@@ -20,31 +19,16 @@ import {
   type Stat,
 } from '@/feature/implant';
 import { useItemsEffect, useItemsState } from '@/feature/item';
-
-export interface KitSelection {
-  kit: Kit;
-  number: number;
-}
+import { useKitsState } from '@/feature/kit';
 
 interface SuitState {
   race?: Race;
   gender?: Gender;
-  head?: KitSelection[];
-  chest?: KitSelection[];
-  legs?: KitSelection[];
-  feet?: KitSelection[];
-  secondary?: KitSelection[];
-  leftArm?: KitSelection[];
-  rightArm?: KitSelection[];
 }
 
 interface SuitActions {
   setRace: Dispatch<SetStateAction<Race | undefined>>;
   setGender: Dispatch<SetStateAction<Gender>>;
-  addKit: (spot: ItemSpot, kit: Kit, newKit?: boolean) => void;
-  setKit: (spot: ItemSpot, kit: Kit, index: number) => void;
-  removeKit: (spot: ItemSpot, index: number) => void;
-  setKitNumber: (spot: ItemSpot, index: number, number: number) => void;
 }
 
 interface SuitSelectors {
@@ -95,22 +79,13 @@ export const SuitProvider = ({
 
   const [gender, setGender] = useState<Gender>('male');
 
-  const [kits, setKits] = useState<Record<ItemSpot, KitSelection[]>>({
-    head: [],
-    chest: [],
-    legs: [],
-    feet: [],
-    secondary: [],
-    leftArm: [],
-    rightArm: [],
-  });
-
   const items = useItemsState();
 
   const { data: implants } = useImplants();
   const implantations = useImplantsState();
 
   const itemEffects = useItemsEffect();
+  const kits = useKitsState();
 
   const getStat = useCallback(
     (stat: Stat) => {
@@ -142,9 +117,8 @@ export const SuitProvider = ({
           return acc + kitsCurr;
         }, 0) || 0) -
         (items['leftArm']?.hands && items['leftArm']?.hands > 1
-          ? items['rightArm']?.effects?.find(
-              (val) => val?.property === (stat as Stat),
-            )?.value || 0
+          ? items['rightArm']?.effects?.find((val) => val?.property === stat)
+              ?.value || 0
           : 0)
       );
     },
@@ -162,71 +136,6 @@ export const SuitProvider = ({
     [getStat],
   );
 
-  const addKit = useCallback((spot: ItemSpot, kit: Kit, newKit?: boolean) => {
-    setKits((previous) => {
-      const slot = previous[spot];
-      const existingIndex = slot.findIndex?.((k) => k.kit.id === kit.id);
-
-      let kits: KitSelection[];
-      if (!newKit && existingIndex !== -1) {
-        kits = slot.map?.((k, i) =>
-          i === existingIndex ? { ...k, number: k.number + 1 } : k,
-        );
-      } else {
-        kits = [...slot, { kit, number: 1 }];
-      }
-
-      return { ...previous, [spot]: kits };
-    });
-  }, []);
-
-  const setKit = useCallback((spot: ItemSpot, kit: Kit, index: number) => {
-    setKits((previous) => {
-      const slot = previous[spot];
-      if (!slot || slot.length <= index) return previous;
-
-      const kits = slot.map?.((k, i) => (i === index ? { ...k, kit } : k));
-
-      return { ...previous, [spot]: kits };
-    });
-  }, []);
-
-  const removeKit = useCallback((spot: ItemSpot, index: number) => {
-    setKits((previous) => {
-      const slot = previous[spot];
-      if (!slot || index < 0 || index >= slot.length) return previous;
-
-      const target = slot[index];
-      let kits: typeof slot;
-
-      if (target.number > 1) {
-        kits = slot.map?.((k, i) =>
-          i === index ? { ...k, number: k.number - 1 } : k,
-        );
-      } else {
-        kits = slot.filter?.((_, i) => i !== index);
-      }
-      return {
-        ...previous,
-        [spot]: kits,
-      };
-    });
-  }, []);
-
-  const setKitNumber = useCallback(
-    (spot: ItemSpot, index: number, number: number) => {
-      setKits((previous) => {
-        const slot = previous[spot];
-        if (!slot || slot.length <= index) return previous;
-
-        const kits = slot.map((k, i) => (i === index ? { ...k, number } : k));
-
-        return { ...previous, [spot]: kits };
-      });
-    },
-    [],
-  );
-
   return (
     <SuitContext.Provider
       value={{
@@ -235,11 +144,6 @@ export const SuitProvider = ({
         gender,
         setGender,
         ...stats,
-        ...kits,
-        addKit,
-        setKit,
-        removeKit,
-        setKitNumber,
       }}
     >
       {children}

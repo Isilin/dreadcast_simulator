@@ -1,10 +1,10 @@
 import { Select } from '@base-ui-components/react';
 
-import { KitLabel } from '../kit-label';
-import styles from './kit-combobox.module.css';
+import type { Kit } from '../../model';
+import { useKits } from '../../services';
+import { KitLabel } from '../KitLabel';
+import styles from './KitCombobox.module.css';
 
-import { useKits } from '@/data/kit';
-import type { Kit } from '@/domain';
 import type { ItemType } from '@/feature/item';
 import { CheckIcon, ChevronUpDownIcon } from '@/ui/icons';
 

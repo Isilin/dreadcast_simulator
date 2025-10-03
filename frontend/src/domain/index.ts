@@ -1,4 +1,5 @@
 export * from './gender';
-export * from './kit';
 export * from './race';
 export * from './skill';
+export * from './stats';
+export * from './suit';

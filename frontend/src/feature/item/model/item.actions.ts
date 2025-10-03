@@ -3,7 +3,7 @@ import type { Dispatch } from 'react';
 import { getOtherHand, itemMatchsSpot } from './item.rules';
 import type { Item, ItemsState } from './item.types';
 
-import { ItemSpotValue, type ItemSpot } from '@/domain/suit';
+import { ItemSpotValue, type ItemSpot } from '@/domain';
 
 export type Action =
   | {

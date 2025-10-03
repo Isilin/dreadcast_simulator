@@ -1,45 +1,26 @@
 import { Dialog } from '@base-ui-components/react';
 import { Fragment, useMemo, useState } from 'react';
 
-import { KitDialogSelector } from '../kit-dialog-selector';
-import styles from './kit-selector.module.css';
+import { useKitsOnSpot } from '../../model/kit.selectors';
+import { KitDialogSelector } from '../KitDialogSelector';
+import styles from './KitSelector.module.css';
 
-import { StatValues, type Stat } from '@/domain/stats';
-import { type ItemSpot } from '@/domain/suit';
+import { StatValues, type ItemSpot, type Stat } from '@/domain';
 import { useItemsState } from '@/feature/item';
 import { EffectChip } from '@/ui/effect-chip';
-import { useSuit } from '@/ui/hooks/use-suit';
 
 interface Props {
   spot: ItemSpot;
 }
 
 export const KitSelector = ({ spot }: Props) => {
-  const suit = useSuit();
   const [dialogOpen, setDialogOpen] = useState(false);
   const items = useItemsState();
   const limitTech = useMemo(() => items[spot]?.tech || 0, [items, spot]);
-  const kits = useMemo(() => suit[spot], [suit, spot]);
-  const isEmpty = useMemo(() => kits?.length === 0, [kits]);
+  const { kits, noKits, techCost, totalEffect } = useKitsOnSpot(spot);
   const isDisable = useMemo(() => items[spot] === null, [items, spot]);
 
-  const { techTotal, statTotals } = useMemo(() => {
-    const totals = new Map<Stat, number>();
-    let tech = 0;
-    kits?.forEach?.(({ kit, number }) => {
-      tech += kit.tech * number;
-      kit.effects.forEach((eff) => {
-        totals.set(
-          eff.property,
-          (totals.get(eff.property) ?? 0) + eff.value * number,
-        );
-      });
-    });
-    return {
-      techTotal: limitTech - tech,
-      statTotals: Array.from(totals.entries()).filter(([, v]) => v !== 0),
-    };
-  }, [kits, limitTech]);
+  const techTotal = useMemo(() => limitTech - techCost, [limitTech, techCost]);
   const techEval = useMemo(() => {
     if (techTotal > 40) return styles.missingTech;
     if (techTotal < 0) return styles.overTech;
@@ -50,7 +31,7 @@ export const KitSelector = ({ spot }: Props) => {
   return (
     <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
       <Dialog.Trigger className={styles.card} disabled={isDisable}>
-        {isEmpty ? (
+        {noKits ? (
           <div className={styles.placeholder}>Choisir un kit</div>
         ) : (
           <div className={styles.content}>
@@ -73,10 +54,10 @@ export const KitSelector = ({ spot }: Props) => {
               )}
             </div>
             <div className={styles.effects}>
-              {statTotals.map(([stat, total]) => (
+              {Object.entries(totalEffect).map(([stat, total]) => (
                 <EffectChip
                   value={total}
-                  label={StatValues[stat].label}
+                  label={StatValues[stat as Stat].label}
                   key={stat}
                 />
               ))}
