@@ -1,6 +1,6 @@
 import { useMemo, type CSSProperties } from 'react';
 
-import styles from './silhouette.module.css';
+import styles from './Silhouette.module.css';
 
 import androidFemale from '@/assets/silhouette/androide_f.png';
 import androidMale from '@/assets/silhouette/androide_m.png';
