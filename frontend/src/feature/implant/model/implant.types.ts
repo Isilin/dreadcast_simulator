@@ -1,25 +1,4 @@
-export const StatValues = [
-  'strength',
-  'agility',
-  'robustness',
-  'perception',
-  'stealth',
-  'computing',
-  'medicine',
-  'engineering',
-  'health',
-  'stamina',
-  'speed',
-  'race_damage',
-  'hit_rating',
-  'team_heal',
-  'cac_damage',
-  'critical_cac_chance',
-  'critical_cac_damages',
-  'hit_damages',
-  'critical_hit_damages',
-] as const;
-export type Stat = (typeof StatValues)[number];
+import type { Stat } from '@/domain';
 
 export const ImplantNameValues = [
   'Génie',

@@ -1,5 +1,5 @@
 export const StatValues = {
-  strength: { tag: 'STR', label: 'Force' },
+  strength: { tag: 'FOR', label: 'Force' },
   agility: { tag: 'AGI', label: 'Agilité' },
   robustness: { tag: 'RES', label: 'Résistance' },
   perception: { tag: 'PER', label: 'Perception' },

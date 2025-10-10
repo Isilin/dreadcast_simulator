@@ -1,8 +1,8 @@
+import type { Race } from '../model';
 import type { RaceResponseDto } from './race.dto';
 import { toDomain } from './race.mapper';
 import { raceArrayResponseSchema } from './race.schema';
 
-import type { Race } from '@/domain';
 import { sleep } from '@/utils/sleep';
 
 const MOCK_RACES: RaceResponseDto[] = [

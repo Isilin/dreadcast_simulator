@@ -9,15 +9,16 @@ type StatDto =
   | 'engineering'
   | 'health'
   | 'stamina'
+  | 'integrity'
   | 'speed'
-  | 'race_damage'
-  | 'hit_rating'
-  | 'team_heal'
-  | 'cac_damage'
-  | 'critical_cac_chance'
-  | 'critical_cac_damages'
-  | 'hit_damages'
-  | 'critical_hit_damages';
+  | 'raceDamage'
+  | 'hitRating'
+  | 'teamHeal'
+  | 'cacDamage'
+  | 'criticalCacChance'
+  | 'criticalCacDamage'
+  | 'hitDamages'
+  | 'criticalHitDamage';
 
 export interface ImplantResponseDto {
   name:

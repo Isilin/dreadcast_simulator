@@ -43,7 +43,7 @@ const MOCK_IMPLANTS: ImplantResponseDto[] = [
   },
   {
     name: 'Raciste',
-    attributes: ['race_damage'],
+    attributes: ['raceDamage'],
     valuePerLevel: [0.01, 0.02, 0.03, 0.04, 0.05],
   },
   {
@@ -98,7 +98,7 @@ const MOCK_IMPLANTS: ImplantResponseDto[] = [
   },
   {
     name: 'Éclaireur',
-    attributes: ['hit_rating'],
+    attributes: ['hitRating'],
     valuePerLevel: [0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.18, 0.2],
   },
   {
@@ -123,19 +123,19 @@ const MOCK_IMPLANTS: ImplantResponseDto[] = [
   },
   {
     name: 'Aide de camp',
-    attributes: ['team_heal'],
+    attributes: ['teamHeal'],
     valuePerLevel: [0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.18, 0.2],
   },
   {
     name: 'Commando',
-    attributes: ['critical_cac_chance'],
+    attributes: ['criticalCacChance'],
     valuePerLevel: [
       0.005, 0.01, 0.015, 0.02, 0.025, 0.03, 0.035, 0.04, 0.045, 0.05,
     ],
   },
   {
     name: 'Ninja',
-    attributes: ['cac_damage'],
+    attributes: ['cacDamage'],
     valuePerLevel: [0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.18],
   },
   {
@@ -154,17 +154,17 @@ const MOCK_IMPLANTS: ImplantResponseDto[] = [
   },
   {
     name: "Tireur d'élite",
-    attributes: ['critical_hit_damages'],
+    attributes: ['criticalHitDamage'],
     valuePerLevel: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
   },
   {
     name: 'Oeil de lynx',
-    attributes: ['hit_damages'],
+    attributes: ['hitDamages'],
     valuePerLevel: [0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.18],
   },
   {
     name: 'Enragé',
-    attributes: ['critical_cac_damages'],
+    attributes: ['criticalCacDamage'],
     valuePerLevel: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
   },
 ];

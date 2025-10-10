@@ -11,6 +11,7 @@ import './index.css';
 import { ImplantsProvider } from './feature/implant';
 import { ItemsProvider } from './feature/item';
 import { KitsProvider } from './feature/kit';
+import { ProfileProvider } from './feature/profile';
 import { routeTree } from './routeTree.gen';
 import { SuitProvider } from './ui/providers/suit.provider';
 
@@ -34,9 +35,11 @@ if (!rootElement.innerHTML) {
           <ImplantsProvider>
             <ItemsProvider>
               <KitsProvider>
-                <SuitProvider>
-                  <RouterProvider router={router} />
-                </SuitProvider>
+                <ProfileProvider>
+                  <SuitProvider>
+                    <RouterProvider router={router} />
+                  </SuitProvider>
+                </ProfileProvider>
               </KitsProvider>
             </ItemsProvider>
           </ImplantsProvider>

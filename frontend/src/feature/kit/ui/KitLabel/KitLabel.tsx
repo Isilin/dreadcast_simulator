@@ -19,7 +19,7 @@ export const KitLabel = ({ kit }: Props) => {
           <EffectChip
             key={e.property}
             value={e.value}
-            label={StatValues[e.property].label}
+            tag={StatValues[e.property].tag}
           />
         ))}
       </div>

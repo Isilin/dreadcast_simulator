@@ -2,8 +2,7 @@ import { useMemo } from 'react';
 
 import styles from './skills.module.css';
 
-import { getNameFromStat, type Skill } from '@/domain';
-import { StatValues } from '@/feature/implant';
+import { StatValues } from '@/domain';
 import { useSuit } from '@/ui/hooks/use-suit';
 
 export const Skills = () => {
@@ -11,9 +10,9 @@ export const Skills = () => {
 
   const skills = useMemo(
     () =>
-      Object.values(StatValues).map((s: string) => {
+      Object.entries(StatValues).map(([s, sData]) => {
         return {
-          label: getNameFromStat(s as Skill),
+          label: sData.label,
           value: suit[s as keyof typeof useSuit],
         };
       }),

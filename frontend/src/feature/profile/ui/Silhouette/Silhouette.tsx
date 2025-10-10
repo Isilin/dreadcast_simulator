@@ -24,13 +24,13 @@ import trollFemale from '@/assets/silhouette/troll_f.png';
 import trollMale from '@/assets/silhouette/troll_m.png';
 import vautourFemale from '@/assets/silhouette/vautour_f.png';
 import vautourMale from '@/assets/silhouette/vautour_m.png';
-import { useSuit } from '@/ui/hooks/use-suit';
+import { useProfileState } from '@/feature/profile';
 
 export const Silhouette = () => {
-  const { gender, race } = useSuit();
+  const { gender, race } = useProfileState();
 
   const thumb = useMemo(() => {
-    switch (race?.type) {
+    switch (race) {
       case 'Androide':
         return gender === 'male' ? androidMale : androidFemale;
       case 'Elfe':

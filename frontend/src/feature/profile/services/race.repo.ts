@@ -1,6 +1,6 @@
+import type { Race } from '../model';
 import { fetchRacesMock } from './race.repo.mock';
 
-import type { Race } from '@/domain';
 import { USE_MOCK } from '@/utils/use-mock';
 
 export async function fetchRaces(): Promise<Race[]> {

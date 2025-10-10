@@ -1,21 +1,25 @@
 import { Field, Select } from '@base-ui-components/react';
 
-import styles from './race-selector.module.css';
+import styles from './RaceSelector.module.css';
 
-import { useRaces } from '@/data/race';
-import type { RaceType } from '@/domain';
-import { useSuit } from '@/ui/hooks/use-suit';
+import {
+  usePRofileDispatch,
+  useProfileState,
+  useRaces,
+  type RaceType,
+} from '@/feature/profile';
 import { CheckIcon, ChevronUpDownIcon } from '@/ui/icons';
 
 export const RaceSelector = () => {
-  const { race, setRace } = useSuit();
+  const { race } = useProfileState();
+  const { setRace } = usePRofileDispatch();
   const { data: races } = useRaces();
 
   const raceItems = races?.map((r) => ({ label: r.type, value: r.type }));
 
   const handleChange = (value: RaceType) => {
     const race = races?.find((r) => r.type === value);
-    if (race) setRace(race);
+    if (race) setRace(race.type);
   };
 
   return (
@@ -23,7 +27,7 @@ export const RaceSelector = () => {
       <Field.Label>Race</Field.Label>
       <Select.Root
         items={raceItems}
-        value={race?.type || 'Humain'}
+        value={race || 'Humain'}
         onValueChange={handleChange}
       >
         <Select.Trigger className={styles.Select}>

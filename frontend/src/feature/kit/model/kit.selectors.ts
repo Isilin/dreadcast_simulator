@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { useKitsState } from './kit.hooks';
 
-import type { ItemSpot, Stat } from '@/domain';
+import { ItemSpotValue, StatValues, type ItemSpot, type Stat } from '@/domain';
 
 export const useKitsOnSpot = (spot: ItemSpot) => {
   const kits = useKitsState()[spot];
@@ -12,23 +12,39 @@ export const useKitsOnSpot = (spot: ItemSpot) => {
     () => kits.reduce((acc, curr) => acc + curr.kit.tech * curr.number, 0),
     [kits],
   );
-  const totalEffect = useMemo(
-    () =>
-      kits.reduce(
-        (acc, curr) => {
-          curr.kit.effects.forEach((e) => {
-            if (acc[e.property] === undefined) {
-              acc[e.property] = e.value * curr.number;
-            } else {
-              acc[e.property] += e.value * curr.number;
-            }
-          });
-          return acc;
-        },
-        {} as Record<Stat, number>,
+  const totalEffect = useMemo(() => {
+    const base = Object.fromEntries(
+      Object.entries(StatValues).map((s) => [s[0], 0]),
+    ) as Record<Stat, number>;
+
+    kits.forEach((kit) =>
+      kit.kit.effects.forEach(
+        (e) => (base[e.property] += e.value * kit.number),
       ),
-    [kits],
-  );
+    );
+
+    return base;
+  }, [kits]);
 
   return { kits, noKits, techCost, totalEffect };
+};
+
+export const useKitsEffects = () => {
+  const kits = useKitsState();
+
+  return useMemo(() => {
+    const base = Object.fromEntries(
+      Object.entries(StatValues).map((s) => [s[0], 0]),
+    ) as Record<Stat, number>;
+
+    ItemSpotValue.forEach((spot) =>
+      kits[spot].forEach((kit) =>
+        kit.kit.effects.forEach(
+          (e) => (base[e.property] += e.value * kit.number),
+        ),
+      ),
+    );
+
+    return base;
+  }, [kits]);
 };

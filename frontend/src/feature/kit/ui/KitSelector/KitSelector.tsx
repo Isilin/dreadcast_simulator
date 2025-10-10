@@ -54,13 +54,15 @@ export const KitSelector = ({ spot }: Props) => {
               )}
             </div>
             <div className={styles.effects}>
-              {Object.entries(totalEffect).map(([stat, total]) => (
-                <EffectChip
-                  value={total}
-                  label={StatValues[stat as Stat].label}
-                  key={stat}
-                />
-              ))}
+              {Object.entries(totalEffect)
+                .filter((stat) => stat[1] !== 0)
+                .map(([stat, total]) => (
+                  <EffectChip
+                    value={total}
+                    tag={StatValues[stat as Stat].tag}
+                    key={stat}
+                  />
+                ))}
             </div>
             <div className={styles.footer}>
               <span className={styles.techLabel}>Tech :</span>

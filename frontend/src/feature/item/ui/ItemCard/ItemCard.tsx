@@ -64,7 +64,7 @@ export const ItemCard = ({ item, onClick }: Props) => {
           <li key={`effect-` + effect.property}>
             <EffectChip
               value={effect.value}
-              label={StatValues[effect.property].label}
+              tag={StatValues[effect.property].tag}
             />
           </li>
         ))}

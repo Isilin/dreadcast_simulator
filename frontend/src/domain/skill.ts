@@ -1,5 +1,3 @@
-import type { Stat } from '@/feature/implant';
-
 export const SkillValues = [
   'strength',
   'agility',
@@ -55,50 +53,5 @@ export const getTagFromSkill = (skill: Skill): string => {
       return 'ING';
     default:
       throw new Error('Unknown skill.');
-  }
-};
-
-export const getNameFromStat = (stat: Stat): string => {
-  switch (stat) {
-    case 'strength':
-      return 'Force';
-    case 'agility':
-      return 'Agilité';
-    case 'robustness':
-      return 'Résistance';
-    case 'perception':
-      return 'Perception';
-    case 'stealth':
-      return 'Furtivité';
-    case 'computing':
-      return 'Informatique';
-    case 'medicine':
-      return 'Médecine';
-    case 'engineering':
-      return 'Ingénierie';
-    case 'health':
-      return 'Santé';
-    case 'stamina':
-      return 'Forme';
-    case 'race_damage':
-      return 'Dégâts aux autres races';
-    case 'speed':
-      return 'Vitesse';
-    case 'hit_rating':
-      return 'Score de toucher';
-    case 'team_heal':
-      return 'Soin équipe';
-    case 'cac_damage':
-      return 'Dégâts au CaC';
-    case 'critical_cac_chance':
-      return 'Chance de coup critique au CaC';
-    case 'critical_cac_damages':
-      return 'Dégâts des coups critiques au CaC';
-    case 'hit_damages':
-      return 'Dégâts au Tir';
-    case 'critical_hit_damages':
-      return 'Dégâts des coups critiques au Tir';
-    default:
-      throw new Error('Unknown stat.');
   }
 };
