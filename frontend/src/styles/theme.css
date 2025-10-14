@@ -32,6 +32,7 @@
 
     --color-gray-50: oklch(17% 1% 264deg / 95%);
     --color-gray-100: oklch(28% 3% 264deg / 65%);
+    --color-gray-150: rgb(28, 27, 34);
     --color-gray-200: oklch(31% 3% 264deg / 80%);
     --color-gray-300: oklch(35% 3% 264deg / 80%);
     --color-gray-400: oklch(47% 3.5% 264deg / 80%);
