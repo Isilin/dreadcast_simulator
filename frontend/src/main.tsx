@@ -45,6 +45,6 @@ if (!rootElement.innerHTML) {
           </ImplantsProvider>
         </Tooltip.Provider>
       </QueryClientProvider>
-    </StrictMode>
+    </StrictMode>,
   );
 }

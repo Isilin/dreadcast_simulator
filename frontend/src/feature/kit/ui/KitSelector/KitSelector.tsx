@@ -46,7 +46,7 @@ export const KitSelector = ({ spot }: Props) => {
                       </span>
                       {i < kits.length - 1 && <span className={styles.sep}> </span>}
                     </Fragment>
-                  )
+                  ),
               )}
             </div>
             <div className={styles.effects}>

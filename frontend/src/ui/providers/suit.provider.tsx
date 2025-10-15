@@ -62,7 +62,7 @@ export const SuitProvider = ({ children }: PropsWithChildren<ProviderProps>) => 
           : 0)
       );
     },
-    [implantsEffects, itemEffects, items, kitsEffects, raceStats]
+    [implantsEffects, itemEffects, items, kitsEffects, raceStats],
   );
   const stats = useMemo(
     () =>
@@ -71,9 +71,9 @@ export const SuitProvider = ({ children }: PropsWithChildren<ProviderProps>) => 
           acc[s as Stat] = getStat(s as Stat);
           return acc;
         },
-        {} as Record<Stat, number>
+        {} as Record<Stat, number>,
       ),
-    [getStat]
+    [getStat],
   );
 
   return <SuitContext.Provider value={stats}>{children}</SuitContext.Provider>;

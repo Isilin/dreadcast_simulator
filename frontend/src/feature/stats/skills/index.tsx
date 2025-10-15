@@ -16,7 +16,7 @@ export const Skills = () => {
           value: suit[s as keyof typeof useSuit],
         };
       }),
-    [suit]
+    [suit],
   );
 
   return (

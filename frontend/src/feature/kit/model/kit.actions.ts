@@ -16,7 +16,7 @@ export type Action =
   | { type: 'setKitNumber'; spot: ItemSpot; index: number; number: number };
 
 export const initialState: KitsState = Object.fromEntries(
-  ItemSpotValue.map((name) => [name, [] as KitSelection[]])
+  ItemSpotValue.map((name) => [name, [] as KitSelection[]]),
 ) as KitsState;
 
 export const reducer = (state: KitsState, action: Action): KitsState => {

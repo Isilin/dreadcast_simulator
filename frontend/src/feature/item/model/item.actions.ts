@@ -17,7 +17,7 @@ export type Action =
     };
 
 export const initialState: ItemsState = Object.fromEntries(
-  ItemSpotValue.map((name) => [name, null])
+  ItemSpotValue.map((name) => [name, null]),
 ) as ItemsState;
 
 export const reducer = (state: ItemsState, action: Action): ItemsState => {

@@ -18,7 +18,7 @@ export type Action =
     };
 
 export const initialState: ImplantsState = Object.fromEntries(
-  ImplantNameValues.map((name) => [name, 0])
+  ImplantNameValues.map((name) => [name, 0]),
 ) as ImplantsState;
 
 export const reducer = (state: ImplantsState, action: Action): ImplantsState => {

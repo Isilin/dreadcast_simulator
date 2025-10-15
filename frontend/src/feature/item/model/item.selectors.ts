@@ -15,7 +15,7 @@ export const useItemsEffect = (): Record<Stat, number> => {
         res[effect.property as Stat] = 0;
       }
       res[effect.property as Stat] += effect.value;
-    })
+    }),
   );
   return res;
 };
