@@ -8,11 +8,17 @@ interface Props {
   placement?: 'top' | 'bottom' | 'left' | 'right';
 }
 
-export const Popin = ({ content, children, placement }: PropsWithChildren<Props>) => {
+export const Popin = ({
+  content,
+  children,
+  placement,
+}: PropsWithChildren<Props>) => {
   return (
     <Tooltip.Root delay={100}>
       <Tooltip.Trigger
-        render={(props: HTMLProps<HTMLHeadingElement>) => <span {...props}>{props.children}</span>}
+        render={(props: HTMLProps<HTMLHeadingElement>) => (
+          <span {...props}>{props.children}</span>
+        )}
       >
         {children}
       </Tooltip.Trigger>

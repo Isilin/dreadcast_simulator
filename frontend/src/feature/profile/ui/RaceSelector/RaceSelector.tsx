@@ -2,7 +2,12 @@ import { Field, Select } from '@base-ui-components/react';
 
 import styles from './RaceSelector.module.css';
 
-import { usePRofileDispatch, useProfileState, useRaces, type RaceType } from '@/feature/profile';
+import {
+  usePRofileDispatch,
+  useProfileState,
+  useRaces,
+  type RaceType,
+} from '@/feature/profile';
 import { CheckIcon, ChevronUpDownIcon } from '@/ui/icons';
 
 export const RaceSelector = () => {
@@ -20,7 +25,11 @@ export const RaceSelector = () => {
   return (
     <Field.Root>
       <Field.Label>Race</Field.Label>
-      <Select.Root items={raceItems} value={race || 'Humain'} onValueChange={handleChange}>
+      <Select.Root
+        items={raceItems}
+        value={race || 'Humain'}
+        onValueChange={handleChange}
+      >
         <Select.Trigger className={styles.Select}>
           <Select.Value />
           <Select.Icon className={styles.SelectIcon}>
@@ -36,7 +45,9 @@ export const RaceSelector = () => {
                   <Select.ItemIndicator className={styles.ItemIndicator}>
                     <CheckIcon className={styles.ItemIndicatorIcon} />
                   </Select.ItemIndicator>
-                  <Select.ItemText className={styles.ItemText}>{label}</Select.ItemText>
+                  <Select.ItemText className={styles.ItemText}>
+                    {label}
+                  </Select.ItemText>
                 </Select.Item>
               ))}
             </Select.Popup>

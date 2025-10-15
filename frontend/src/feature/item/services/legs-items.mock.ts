@@ -105,7 +105,8 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
   {
     id: '206',
     name: 'Exo-Jambières de chantier',
-    image: 'https://wiki.dreadcast.net/images/c/cf/Exo-jambieres_de_chantier.png',
+    image:
+      'https://wiki.dreadcast.net/images/c/cf/Exo-jambieres_de_chantier.png',
     tech: 340,
     integrity: 120,
     type: 'legs',

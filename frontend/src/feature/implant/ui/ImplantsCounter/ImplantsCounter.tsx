@@ -1,6 +1,10 @@
 import styles from './ImplantsCounter.module.css';
 
-import { MAX_IMPLANTS, useImplantsCount, useImplantsStatus } from '@/feature/implant';
+import {
+  MAX_IMPLANTS,
+  useImplantsCount,
+  useImplantsStatus,
+} from '@/feature/implant';
 
 export const ImplantsCounter = () => {
   const implantsCount = useImplantsCount();

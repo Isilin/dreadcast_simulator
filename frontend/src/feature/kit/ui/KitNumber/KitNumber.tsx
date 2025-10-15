@@ -24,7 +24,10 @@ export const KitNumber = ({ value, onChange }: Props) => {
       </NumberField.ScrubArea>
 
       <NumberField.Group className={styles.Group}>
-        <NumberField.Decrement className={styles.Decrement} disabled={value <= 0}>
+        <NumberField.Decrement
+          className={styles.Decrement}
+          disabled={value <= 0}
+        >
           <MinusIcon />
         </NumberField.Decrement>
         <NumberField.Input className={styles.Input} />

@@ -22,7 +22,8 @@ export function Spinner({
   style,
 }: SpinnerProps) {
   const s: CSSProperties = {
-    ['--sp-size' as keyof CSSProperties]: typeof size === 'number' ? `${size}px` : size,
+    ['--sp-size' as keyof CSSProperties]:
+      typeof size === 'number' ? `${size}px` : size,
     ['--sp-color' as keyof CSSProperties]: color,
     ['--sp-track' as keyof CSSProperties]: trackColor,
     ['--sp-thickness' as keyof CSSProperties]: `${thickness}px`,

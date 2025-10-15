@@ -16,7 +16,11 @@ export const KitLabel = ({ kit }: Props) => {
       <span className={styles.name}>{kit.name}</span>
       <div className={styles.effects}>
         {kit.effects?.map((e) => (
-          <EffectChip key={e.property} value={e.value} tag={StatValues[e.property].tag} />
+          <EffectChip
+            key={e.property}
+            value={e.value}
+            tag={StatValues[e.property].tag}
+          />
         ))}
       </div>
     </div>

@@ -1,6 +1,10 @@
 import { useMemo, useReducer, type PropsWithChildren } from 'react';
 
-import { createProfilesActions, initialState, reducer } from './profile.actions';
+import {
+  createProfilesActions,
+  initialState,
+  reducer,
+} from './profile.actions';
 import { DispatchCtx, StateCtx } from './profile.contexts';
 
 export const ProfileProvider = ({ children }: PropsWithChildren) => {

@@ -12,7 +12,9 @@ export const useProfileState = (): ProfileState => {
   return state;
 };
 
-export const usePRofileDispatch = (): ReturnType<typeof createProfilesActions> => {
+export const usePRofileDispatch = (): ReturnType<
+  typeof createProfilesActions
+> => {
   const dispatch = useContext(DispatchCtx);
   if (!dispatch) {
     throw new Error('Missing ProfileProvider');

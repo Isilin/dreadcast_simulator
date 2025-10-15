@@ -1,4 +1,10 @@
-import { createContext, useCallback, useContext, useMemo, type PropsWithChildren } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  type PropsWithChildren,
+} from 'react';
 
 import { StatValues, type Skill, type Stat } from '@/domain';
 import { useImplantsEffects } from '@/feature/implant';
@@ -41,7 +47,9 @@ export const useSuitContext = () => {
 
 interface ProviderProps {}
 
-export const SuitProvider = ({ children }: PropsWithChildren<ProviderProps>) => {
+export const SuitProvider = ({
+  children,
+}: PropsWithChildren<ProviderProps>) => {
   const raceStats = useRaceStats();
 
   const items = useItemsState();
@@ -58,7 +66,8 @@ export const SuitProvider = ({ children }: PropsWithChildren<ProviderProps>) => 
         itemEffects[stat] +
         kitsEffects[stat] -
         (items['leftArm']?.hands && items['leftArm']?.hands > 1
-          ? items['rightArm']?.effects?.find((val) => val?.property === stat)?.value || 0
+          ? items['rightArm']?.effects?.find((val) => val?.property === stat)
+              ?.value || 0
           : 0)
       );
     },

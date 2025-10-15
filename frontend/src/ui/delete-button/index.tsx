@@ -8,7 +8,12 @@ interface Props {
 
 export const DeleteButton = ({ onClick }: Props) => {
   return (
-    <button type="button" className={styles.iconDanger} onClick={onClick} title="Supprimer">
+    <button
+      type="button"
+      className={styles.iconDanger}
+      onClick={onClick}
+      title="Supprimer"
+    >
       <ClearIcon />
     </button>
   );

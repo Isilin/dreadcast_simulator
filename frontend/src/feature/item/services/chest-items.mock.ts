@@ -264,7 +264,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '112',
     name: "Cosmo/Cosmopolitain/Cosmopolitain étanche/Cosmopolitain velour/Anapurnol bleu/Anapurnol marron/Veste Rad' (R)/Veste Rad' (F)",
-    image: 'https://wiki.dreadcast.net/images/thumb/8/8c/COSMO2.png/100px-COSMO2.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/8/8c/COSMO2.png/100px-COSMO2.png',
     tech: 400,
     integrity: 110,
     type: 'chest',
@@ -296,7 +297,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '114',
     name: 'Veste de cérémonie',
-    image: 'https://wiki.dreadcast.net/images/5/50/Veste_de_C%C3%A9r%C3%A9monie.png',
+    image:
+      'https://wiki.dreadcast.net/images/5/50/Veste_de_C%C3%A9r%C3%A9monie.png',
     tech: 320,
     integrity: 80,
     type: 'chest',
@@ -352,7 +354,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '117',
     name: 'Trench-coat',
-    image: 'https://wiki.dreadcast.net/images/thumb/1/13/TRENCH-COAT2.png/100px-TRENCH-COAT2.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/1/13/TRENCH-COAT2.png/100px-TRENCH-COAT2.png',
     tech: 360,
     integrity: 120,
     type: 'chest',
@@ -412,7 +415,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '120',
     name: 'Costume Buss',
-    image: 'https://wiki.dreadcast.net/images/thumb/9/95/Costumebuss.png/100px-Costumebuss.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/9/95/Costumebuss.png/100px-Costumebuss.png',
     tech: 200,
     integrity: 60,
     type: 'chest',
@@ -440,7 +444,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '122',
     name: 'Robe carbone',
-    image: 'https://wiki.dreadcast.net/images/thumb/b/bf/Robe_carbone.png/100px-Robe_carbone.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/b/bf/Robe_carbone.png/100px-Robe_carbone.png',
     tech: 350,
     integrity: 150,
     type: 'chest',
@@ -464,7 +469,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '123',
     name: 'Robe fendue/Robe noire',
-    image: 'https://wiki.dreadcast.net/images/thumb/a/a7/Robe_fendue.png/100px-Robe_fendue.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/a/a7/Robe_fendue.png/100px-Robe_fendue.png',
     tech: 250,
     integrity: 65,
     type: 'chest',
@@ -549,7 +555,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '129',
     name: 'Chemise Homme/Chemisier',
-    image: 'https://wiki.dreadcast.net/images/thumb/9/95/Chemise_femme.png/100px-Chemise_femme.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/9/95/Chemise_femme.png/100px-Chemise_femme.png',
     tech: 320,
     integrity: 60,
     type: 'chest',
@@ -557,7 +564,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '130',
     name: 'Sweat',
-    image: 'https://wiki.dreadcast.net/images/thumb/b/bc/Sweat.png/100px-Sweat.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/b/bc/Sweat.png/100px-Sweat.png',
     tech: 400,
     integrity: 80,
     type: 'chest',
@@ -777,7 +785,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '142',
     name: 'Armure AXXXN',
-    image: 'https://wiki.dreadcast.net/images/thumb/e/ef/Armure_A300.png/100px-Armure_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/e/ef/Armure_A300.png/100px-Armure_A300.png',
     tech: 200,
     integrity: 350,
     type: 'chest',
@@ -795,7 +804,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '143',
     name: 'Armure AXXXP',
-    image: 'https://wiki.dreadcast.net/images/thumb/e/ef/Armure_A300.png/100px-Armure_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/e/ef/Armure_A300.png/100px-Armure_A300.png',
     tech: 200,
     integrity: 400,
     type: 'chest',
@@ -813,7 +823,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '144',
     name: 'Armure AXXXT',
-    image: 'https://wiki.dreadcast.net/images/thumb/e/ef/Armure_A300.png/100px-Armure_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/e/ef/Armure_A300.png/100px-Armure_A300.png',
     tech: 200,
     integrity: 400,
     type: 'chest',
@@ -821,7 +832,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '145',
     name: 'Armure AXXXL',
-    image: 'https://wiki.dreadcast.net/images/thumb/e/ef/Armure_A300.png/100px-Armure_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/e/ef/Armure_A300.png/100px-Armure_A300.png',
     tech: 200,
     integrity: 360,
     type: 'chest',
@@ -839,7 +851,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '146',
     name: 'Armure AXXXJ',
-    image: 'https://wiki.dreadcast.net/images/thumb/e/ef/Armure_A300.png/100px-Armure_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/e/ef/Armure_A300.png/100px-Armure_A300.png',
     tech: 200,
     integrity: 340,
     type: 'chest',
@@ -853,7 +866,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '147',
     name: 'Armure AXXXO',
-    image: 'https://wiki.dreadcast.net/images/thumb/e/ef/Armure_A300.png/100px-Armure_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/e/ef/Armure_A300.png/100px-Armure_A300.png',
     tech: 200,
     integrity: 320,
     type: 'chest',
@@ -871,7 +885,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '148',
     name: 'Armure AXXXD',
-    image: 'https://wiki.dreadcast.net/images/thumb/e/ef/Armure_A300.png/100px-Armure_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/e/ef/Armure_A300.png/100px-Armure_A300.png',
     tech: 200,
     integrity: 320,
     type: 'chest',

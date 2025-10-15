@@ -4,7 +4,8 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '1',
     name: 'Bandana Jaune/Vert/Rouge/Noir/Bleu',
-    image: 'https://wiki.dreadcast.net/images/thumb/4/4a/Bandana_noir.png/50px-Bandana_noir.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/4/4a/Bandana_noir.png/50px-Bandana_noir.png',
     tech: 300,
     integrity: 90,
     type: 'head',
@@ -32,7 +33,8 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '2',
     name: 'Bonnet',
-    image: 'https://wiki.dreadcast.net/images/thumb/5/58/Bonnet.png/50px-Bonnet.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/5/58/Bonnet.png/50px-Bonnet.png',
     tech: 380,
     integrity: 90,
     type: 'head',
@@ -61,7 +63,8 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '4',
     name: 'Calot',
-    image: 'https://wiki.dreadcast.net/images/thumb/e/e7/Calot.png/50px-Calot.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/e/e7/Calot.png/50px-Calot.png',
     tech: 320,
     integrity: 65,
     type: 'head',
@@ -206,7 +209,8 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '11',
     name: 'Casque M21',
-    image: 'https://wiki.dreadcast.net/images/thumb/b/bb/Casque_m21.png/50px-Casque_m21.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/b/bb/Casque_m21.png/50px-Casque_m21.png',
     tech: 350,
     integrity: 130,
     type: 'head',
@@ -304,7 +308,8 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '16',
     name: 'Foulard',
-    image: 'https://wiki.dreadcast.net/images/thumb/4/4b/Foulard.png/50px-Foulard.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/4/4b/Foulard.png/50px-Foulard.png',
     tech: 280,
     integrity: 90,
     type: 'head',
@@ -349,7 +354,8 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '18',
     name: 'Masque à Gaz',
-    image: 'https://wiki.dreadcast.net/images/thumb/b/b2/Masque_a_gaz.png/50px-Masque_a_gaz.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/b/b2/Masque_a_gaz.png/50px-Masque_a_gaz.png',
     tech: 360,
     integrity: 120,
     type: 'head',
@@ -464,7 +470,8 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '24',
     name: 'Borsalino',
-    image: 'https://wiki.dreadcast.net/images/thumb/7/71/BORSALINO_HD.png/50px-BORSALINO_HD.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/7/71/BORSALINO_HD.png/50px-BORSALINO_HD.png',
     tech: 340,
     integrity: 100,
     type: 'head',
@@ -497,7 +504,8 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '26',
     name: 'Casque AXXXD',
-    image: 'https://wiki.dreadcast.net/images/thumb/c/c2/Casque_A300.png/50px-Casque_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/c/c2/Casque_A300.png/50px-Casque_A300.png',
     tech: 320,
     integrity: 300,
     type: 'head',
@@ -511,7 +519,8 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '27',
     name: 'Casque AXXXJ',
-    image: 'https://wiki.dreadcast.net/images/thumb/c/c2/Casque_A300.png/50px-Casque_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/c/c2/Casque_A300.png/50px-Casque_A300.png',
     tech: 330,
     integrity: 300,
     type: 'head',
@@ -525,7 +534,8 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '28',
     name: 'Casque AXXXL',
-    image: 'https://wiki.dreadcast.net/images/thumb/c/c2/Casque_A300.png/50px-Casque_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/c/c2/Casque_A300.png/50px-Casque_A300.png',
     tech: 280,
     integrity: 300,
     type: 'head',
@@ -539,7 +549,8 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '29',
     name: 'Casque AXXXN',
-    image: 'https://wiki.dreadcast.net/images/thumb/c/c2/Casque_A300.png/50px-Casque_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/c/c2/Casque_A300.png/50px-Casque_A300.png',
     tech: 400,
     integrity: 300,
     type: 'head',
@@ -547,7 +558,8 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '30',
     name: 'Casque AXXXO',
-    image: 'https://wiki.dreadcast.net/images/thumb/c/c2/Casque_A300.png/50px-Casque_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/c/c2/Casque_A300.png/50px-Casque_A300.png',
     tech: 400,
     integrity: 300,
     type: 'head',
@@ -561,7 +573,8 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '31',
     name: 'Casque AXXXP',
-    image: 'https://wiki.dreadcast.net/images/thumb/c/c2/Casque_A300.png/50px-Casque_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/c/c2/Casque_A300.png/50px-Casque_A300.png',
     tech: 280,
     integrity: 300,
     type: 'head',
@@ -575,7 +588,8 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '32',
     name: 'Casque AXXXT',
-    image: 'https://wiki.dreadcast.net/images/thumb/c/c2/Casque_A300.png/50px-Casque_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/c/c2/Casque_A300.png/50px-Casque_A300.png',
     tech: 360,
     integrity: 300,
     type: 'head',
@@ -664,7 +678,8 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '38',
     name: 'Cagoule',
-    image: 'https://wiki.dreadcast.net/images/thumb/a/a9/Cagoule.png/50px-Cagoule.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/a/a9/Cagoule.png/50px-Cagoule.png',
     tech: 300,
     integrity: 320,
     type: 'head',

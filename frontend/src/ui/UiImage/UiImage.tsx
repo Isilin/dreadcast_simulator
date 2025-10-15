@@ -88,7 +88,10 @@ export const UiImage = ({
         width: w,
         height: h,
         borderRadius: radius,
-        backgroundImage: !loaded && !errored && placeholder ? `url(${placeholder})` : undefined,
+        backgroundImage:
+          !loaded && !errored && placeholder
+            ? `url(${placeholder})`
+            : undefined,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
@@ -96,7 +99,9 @@ export const UiImage = ({
       onMouseEnter={handleMouseEnter}
     >
       {!loaded && !errored && (
-        <span className={styles.center}>{spinner ?? <Spinner size={24} />}</span>
+        <span className={styles.center}>
+          {spinner ?? <Spinner size={24} />}
+        </span>
       )}
 
       {!errored ? (
@@ -104,7 +109,12 @@ export const UiImage = ({
         sources && sources.length ? (
           <picture>
             {sources.map((s) => (
-              <source key={s.src} srcSet={s.srcSet ?? s.src} type={s.type} sizes={s.sizes} />
+              <source
+                key={s.src}
+                srcSet={s.srcSet ?? s.src}
+                type={s.type}
+                sizes={s.sizes}
+              />
             ))}
             <img
               src={src}
@@ -120,7 +130,11 @@ export const UiImage = ({
               fetchPriority={fetchPriority}
               onLoad={handleLoad}
               onError={handleError}
-              className={[styles.img, loaded ? styles.visible : styles.hidden, className]
+              className={[
+                styles.img,
+                loaded ? styles.visible : styles.hidden,
+                className,
+              ]
                 .filter(Boolean)
                 .join(' ')}
               style={{ objectFit: fit, borderRadius: radius }}
@@ -142,7 +156,11 @@ export const UiImage = ({
             onLoad={handleLoad}
             onError={handleError}
             onMouseEnter={() => prefetchImage(src)}
-            className={[styles.img, loaded ? styles.visible : styles.hidden, className]
+            className={[
+              styles.img,
+              loaded ? styles.visible : styles.hidden,
+              className,
+            ]
               .filter(Boolean)
               .join(' ')}
             style={{ objectFit: fit, borderRadius: radius }}

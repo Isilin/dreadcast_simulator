@@ -4,7 +4,8 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '300',
     name: 'Ballerines',
-    image: 'https://wiki.dreadcast.net/images/thumb/c/cb/BALLERINES2.png/100px-BALLERINES2.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/c/cb/BALLERINES2.png/100px-BALLERINES2.png',
     tech: 360,
     integrity: 60,
     type: 'feet',
@@ -109,7 +110,8 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '305',
     name: 'Chaussures de Sécurité/Exos pompes de chantiers',
-    image: 'https://wiki.dreadcast.net/images/thumb/b/bf/Mecano-pied.png/100px-Mecano-pied.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/b/bf/Mecano-pied.png/100px-Mecano-pied.png',
     tech: 330,
     integrity: 120,
     type: 'feet',
@@ -145,7 +147,8 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '307',
     name: 'Sabots',
-    image: 'https://wiki.dreadcast.net/images/thumb/b/bf/Medecin-pied.png/100px-Medecin-pied.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/b/bf/Medecin-pied.png/100px-Medecin-pied.png',
     tech: 320,
     integrity: 45,
     type: 'feet',
@@ -298,7 +301,8 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '313',
     name: 'Santiags',
-    image: 'https://wiki.dreadcast.net/images/thumb/b/b5/Santiag262.png/70px-Santiag262.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/b/b5/Santiag262.png/70px-Santiag262.png',
     tech: 400,
     integrity: 140,
     type: 'feet',
@@ -353,7 +357,8 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '315',
     name: 'Chaussettes',
-    image: 'https://wiki.dreadcast.net/images/thumb/1/1c/Chaussettes.png/150px-Chaussettes.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/1/1c/Chaussettes.png/150px-Chaussettes.png',
     tech: 50,
     integrity: 20,
     type: 'feet',
@@ -361,7 +366,8 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '316',
     name: 'Leg Warmers',
-    image: 'https://wiki.dreadcast.net/images/thumb/f/f3/Leg-warmers.png/150px-Leg-warmers.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/f/f3/Leg-warmers.png/150px-Leg-warmers.png',
     tech: 400,
     integrity: 90,
     type: 'feet',
@@ -369,7 +375,8 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '317',
     name: 'Bottes A3XXXN',
-    image: 'https://wiki.dreadcast.net/images/thumb/7/7a/Bottes_A300.png/100px-Bottes_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/7/7a/Bottes_A300.png/100px-Bottes_A300.png',
     tech: 400,
     integrity: 300,
     type: 'feet',
@@ -391,7 +398,8 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '318',
     name: 'Bottes A3XXXP',
-    image: 'https://wiki.dreadcast.net/images/thumb/7/7a/Bottes_A300.png/100px-Bottes_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/7/7a/Bottes_A300.png/100px-Bottes_A300.png',
     tech: 350,
     integrity: 300,
     type: 'feet',
@@ -413,7 +421,8 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '319',
     name: 'Bottes A3XXXT/Bottes A3XXXL/Bottes A3XXXJ',
-    image: 'https://wiki.dreadcast.net/images/thumb/7/7a/Bottes_A300.png/100px-Bottes_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/7/7a/Bottes_A300.png/100px-Bottes_A300.png',
     tech: 400,
     integrity: 300,
     type: 'feet',
@@ -421,7 +430,8 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '320',
     name: 'Bottes A3XXXO',
-    image: 'https://wiki.dreadcast.net/images/thumb/7/7a/Bottes_A300.png/100px-Bottes_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/7/7a/Bottes_A300.png/100px-Bottes_A300.png',
     tech: 320,
     integrity: 300,
     type: 'feet',
@@ -439,7 +449,8 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '321',
     name: 'Bottes A3XXXD',
-    image: 'https://wiki.dreadcast.net/images/thumb/7/7a/Bottes_A300.png/100px-Bottes_A300.png',
+    image:
+      'https://wiki.dreadcast.net/images/thumb/7/7a/Bottes_A300.png/100px-Bottes_A300.png',
     tech: 320,
     integrity: 300,
     type: 'feet',

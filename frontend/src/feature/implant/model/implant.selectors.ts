@@ -9,7 +9,10 @@ import { StatValues, type Stat } from '@/domain';
 
 export const useImplantsCount = () => {
   const state = useImplantsState();
-  return useMemo(() => Object.entries(state).reduce((acc, curr) => acc + curr[1], 0), [state]);
+  return useMemo(
+    () => Object.entries(state).reduce((acc, curr) => acc + curr[1], 0),
+    [state],
+  );
 };
 
 export const useImplantsStatus = () => {
@@ -32,10 +35,9 @@ export const useImplantsEffects = () => {
   const { data: implants } = useImplants();
 
   return useMemo(() => {
-    const base = Object.fromEntries(Object.entries(StatValues).map((s) => [s[0], 0])) as Record<
-      Stat,
-      number
-    >;
+    const base = Object.fromEntries(
+      Object.entries(StatValues).map((s) => [s[0], 0]),
+    ) as Record<Stat, number>;
 
     if (!implants) return base;
 

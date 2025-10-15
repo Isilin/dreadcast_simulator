@@ -22,7 +22,9 @@ export async function fetchItemsMock(type?: ItemType[]): Promise<Item[]> {
   ];
   const validated = itemArrayResponseSchema.parse(MOCK_ITEMS);
 
-  const filtered = type ? validated.filter((item) => type.includes(item.type)) : validated;
+  const filtered = type
+    ? validated.filter((item) => type.includes(item.type))
+    : validated;
 
   const ordered = filtered.sort((a, b) => a.name.localeCompare(b.name));
 

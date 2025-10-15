@@ -18,7 +18,8 @@
     radial-gradient(
         closest-side,
         transparent calc(100% - var(--sp-thickness, 2px) - 0.5px),
-        var(--sp-track, rgba(0, 0, 0, 0.15)) calc(100% - var(--sp-thickness, 2px)),
+        var(--sp-track, rgba(0, 0, 0, 0.15))
+          calc(100% - var(--sp-thickness, 2px)),
         var(--sp-track, rgba(0, 0, 0, 0.15)) 99.9%,
         transparent
       )
@@ -31,7 +32,11 @@
     transparent calc(100% - var(--sp-thickness, 2px)),
     #000 0
   );
-  mask: radial-gradient(closest-side, transparent calc(100% - var(--sp-thickness, 2px)), #000 0);
+  mask: radial-gradient(
+    closest-side,
+    transparent calc(100% - var(--sp-thickness, 2px)),
+    #000 0
+  );
 
   animation: spinner-rotate 0.8s linear infinite;
   will-change: transform;

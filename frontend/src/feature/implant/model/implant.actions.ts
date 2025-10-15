@@ -1,6 +1,10 @@
 import type { Dispatch } from 'react';
 
-import { ImplantNameValues, type ImplantName, type ImplantsState } from './implant.types';
+import {
+  ImplantNameValues,
+  type ImplantName,
+  type ImplantsState,
+} from './implant.types';
 
 export type Action =
   | {
@@ -21,7 +25,10 @@ export const initialState: ImplantsState = Object.fromEntries(
   ImplantNameValues.map((name) => [name, 0]),
 ) as ImplantsState;
 
-export const reducer = (state: ImplantsState, action: Action): ImplantsState => {
+export const reducer = (
+  state: ImplantsState,
+  action: Action,
+): ImplantsState => {
   const implant = state[action.implantName];
   switch (action.type) {
     case 'setImplant':
