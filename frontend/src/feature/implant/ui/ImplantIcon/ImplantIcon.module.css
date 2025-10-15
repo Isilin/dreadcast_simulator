@@ -6,8 +6,7 @@
 }
 
 .active {
-  filter: brightness(0) saturate(100%) invert(43%) sepia(94%) saturate(750%)
-    hue-rotate(180deg) opacity(0.5) drop-shadow(0 0 1px var(--color-blue))
-    drop-shadow(0 0 5px var(--color-blue));
+  filter: brightness(0) saturate(100%) invert(43%) sepia(94%) saturate(750%) hue-rotate(180deg)
+    opacity(0.5) drop-shadow(0 0 1px var(--color-blue)) drop-shadow(0 0 5px var(--color-blue));
   composes: glowPulse from '@/styles/animations.module.css';
 }

@@ -17,11 +17,7 @@ export const ImplantIcon = ({ implant }: Props) => {
       src={src}
       alt={implant}
       size={100}
-      wrapperClassName={[
-        styles.img,
-        styles.wrapper,
-        status ? styles[status] : '',
-      ]
+      wrapperClassName={[styles.img, styles.wrapper, status ? styles[status] : '']
         .filter(Boolean)
         .join(' ')}
       radius={8}

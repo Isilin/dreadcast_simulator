@@ -129,9 +129,7 @@ const MOCK_IMPLANTS: ImplantResponseDto[] = [
   {
     name: 'Commando',
     attributes: ['criticalCacChance'],
-    valuePerLevel: [
-      0.005, 0.01, 0.015, 0.02, 0.025, 0.03, 0.035, 0.04, 0.045, 0.05,
-    ],
+    valuePerLevel: [0.005, 0.01, 0.015, 0.02, 0.025, 0.03, 0.035, 0.04, 0.045, 0.05],
   },
   {
     name: 'Ninja',

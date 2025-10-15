@@ -10,9 +10,7 @@ import { MOCK_WEAPONS_KITS } from './weapons-kits.mock';
 
 import { sleep } from '@/utils/sleep';
 
-export async function fetchKitsMock(
-  type?: Kit['type'] | Array<Kit['type']>,
-): Promise<Kit[]> {
+export async function fetchKitsMock(type?: Kit['type'] | Array<Kit['type']>): Promise<Kit[]> {
   await sleep(1000);
   const MOCK_KITS = [
     ...MOCK_HEAD_KITS,

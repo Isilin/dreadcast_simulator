@@ -46,26 +46,20 @@ export const ItemCard = ({ item, onClick }: Props) => {
           <li
             key={`prerequisite-` + prerequisite.property}
             className={
-              suit[prerequisite.property as keyof typeof useSuit] <
-              prerequisite.value
+              suit[prerequisite.property as keyof typeof useSuit] < prerequisite.value
                 ? styles['invalid']
                 : ''
             }
           >
             <span className={styles.key}>{prerequisite.value}</span>
-            <span className={styles.value}>
-              {StatValues[prerequisite.property].tag}
-            </span>
+            <span className={styles.value}>{StatValues[prerequisite.property].tag}</span>
           </li>
         ))}
       </ul>
       <ul className={styles['item-stats']}>
         {item.effects?.map((effect) => (
           <li key={`effect-` + effect.property}>
-            <EffectChip
-              value={effect.value}
-              tag={StatValues[effect.property].tag}
-            />
+            <EffectChip value={effect.value} tag={StatValues[effect.property].tag} />
           </li>
         ))}
       </ul>

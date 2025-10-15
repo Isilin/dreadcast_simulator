@@ -42,33 +42,23 @@ export const KitSelector = ({ spot }: Props) => {
                     <Fragment key={`${i}-${k.kit.id}`}>
                       <span className={styles.name}>
                         {k.kit.name}
-                        {k.number > 1 && (
-                          <sup className={styles.sup}>{k.number}</sup>
-                        )}
+                        {k.number > 1 && <sup className={styles.sup}>{k.number}</sup>}
                       </span>
-                      {i < kits.length - 1 && (
-                        <span className={styles.sep}> </span>
-                      )}
+                      {i < kits.length - 1 && <span className={styles.sep}> </span>}
                     </Fragment>
-                  ),
+                  )
               )}
             </div>
             <div className={styles.effects}>
               {Object.entries(totalEffect)
                 .filter((stat) => stat[1] !== 0)
                 .map(([stat, total]) => (
-                  <EffectChip
-                    value={total}
-                    tag={StatValues[stat as Stat].tag}
-                    key={stat}
-                  />
+                  <EffectChip value={total} tag={StatValues[stat as Stat].tag} key={stat} />
                 ))}
             </div>
             <div className={styles.footer}>
               <span className={styles.techLabel}>Tech :</span>
-              <span className={`${styles.techValue} ${techEval}`}>
-                {techTotal}
-              </span>
+              <span className={`${styles.techValue} ${techEval}`}>{techTotal}</span>
             </div>
           </div>
         )}

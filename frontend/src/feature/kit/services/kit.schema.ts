@@ -40,7 +40,7 @@ export const kitResponseDtoSchema = z.object({
         'criticalHitDamage',
       ]),
       value: z.number(),
-    }),
+    })
   ),
 });
 

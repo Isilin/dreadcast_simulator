@@ -35,15 +35,11 @@ export const KitDialogSelector = ({ spot }: Props) => {
                 <KitCombobox
                   type={types}
                   kit={kit}
-                  onChange={(newKit: Kit) =>
-                    dispatch.setKit(spot, index, newKit)
-                  }
+                  onChange={(newKit: Kit) => dispatch.setKit(spot, index, newKit)}
                 />
                 <KitNumber
                   value={number}
-                  onChange={(newNumber) =>
-                    dispatch.setKitNumber(spot, index, newNumber)
-                  }
+                  onChange={(newNumber) => dispatch.setKitNumber(spot, index, newNumber)}
                 />
                 <DeleteButton onClick={() => dispatch.deleteKit(spot, index)} />
               </li>

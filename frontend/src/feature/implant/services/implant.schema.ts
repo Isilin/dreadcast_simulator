@@ -27,7 +27,7 @@ export const implantResponseDtoSchema = z.object({
       'criticalCacDamage',
       'hitDamages',
       'criticalHitDamage',
-    ]),
+    ])
   ),
   valuePerLevel: z.array(z.number()),
 });

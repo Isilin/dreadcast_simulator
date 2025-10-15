@@ -6,12 +6,7 @@ interface Props {
 
 export function ImplantsListSkeleton({ count = 15 }: Props) {
   return (
-    <ul
-      className={styles.list}
-      role="status"
-      aria-live="polite"
-      aria-busy="true"
-    >
+    <ul className={styles.list} role="status" aria-live="polite" aria-busy="true">
       {Array.from({ length: count }).map((_, i) => (
         <li className={styles.card} key={i}>
           <div className={styles.title} aria-hidden />

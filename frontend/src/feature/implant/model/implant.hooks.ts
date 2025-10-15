@@ -12,9 +12,7 @@ export const useImplantsState = (): ImplantsState => {
   return state;
 };
 
-export const useImplantsDispatch = (): ReturnType<
-  typeof createImplantsActions
-> => {
+export const useImplantsDispatch = (): ReturnType<typeof createImplantsActions> => {
   const dispatch = useContext(DispatchCtx);
   if (!dispatch) {
     throw new Error('Missing ImplantsProvider');

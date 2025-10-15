@@ -25,11 +25,7 @@ export const ItemDialogSelector = ({ onItemSelect, type }: Props) => {
         {status === 'error' && <p>{error.message}</p>}
         {status !== 'error' &&
           items?.map((item) => (
-            <ItemCard
-              key={item.id}
-              item={item}
-              onClick={() => onItemSelect(item)}
-            />
+            <ItemCard key={item.id} item={item} onClick={() => onItemSelect(item)} />
           ))}
       </Modal.Content>
       <Modal.Footer>

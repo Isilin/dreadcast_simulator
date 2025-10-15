@@ -18,8 +18,7 @@ export const ImplantsDialog = () => {
       <Modal.Content>
         {status === 'error' && <p>{error.message}</p>}
         {status === 'pending' && <ImplantsListSkeleton />}
-        {status === 'success' &&
-          implants?.map((i) => <ImplantSelector implant={i} key={i.name} />)}
+        {status === 'success' && implants?.map((i) => <ImplantSelector implant={i} key={i.name} />)}
       </Modal.Content>
       <Modal.Footer>
         <Modal.Close>Close</Modal.Close>

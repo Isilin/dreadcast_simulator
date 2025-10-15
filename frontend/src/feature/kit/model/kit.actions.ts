@@ -16,7 +16,7 @@ export type Action =
   | { type: 'setKitNumber'; spot: ItemSpot; index: number; number: number };
 
 export const initialState: KitsState = Object.fromEntries(
-  ItemSpotValue.map((name) => [name, [] as KitSelection[]]),
+  ItemSpotValue.map((name) => [name, [] as KitSelection[]])
 ) as KitsState;
 
 export const reducer = (state: KitsState, action: Action): KitsState => {
@@ -27,9 +27,7 @@ export const reducer = (state: KitsState, action: Action): KitsState => {
 
       let kits: KitSelection[];
       if (!action.force && existingIndex !== -1) {
-        kits = slot.map((k, i) =>
-          i === existingIndex ? { ...k, number: k.number + 1 } : k,
-        );
+        kits = slot.map((k, i) => (i === existingIndex ? { ...k, number: k.number + 1 } : k));
       } else {
         kits = [...slot, { kit: action.kit, number: 1 }];
       }
@@ -38,19 +36,15 @@ export const reducer = (state: KitsState, action: Action): KitsState => {
     }
     case 'setKit': {
       const slot = state[action.spot];
-      if (!slot || action.index < 0 || action.index >= slot.length)
-        return state;
+      if (!slot || action.index < 0 || action.index >= slot.length) return state;
 
-      let kits = slot.map((k, i) =>
-        i === action.index ? { ...k, kit: action.kit } : k,
-      );
+      let kits = slot.map((k, i) => (i === action.index ? { ...k, kit: action.kit } : k));
 
       return { ...state, [action.spot]: kits };
     }
     case 'deleteKit': {
       const slot = state[action.spot];
-      if (!slot || action.index < 0 || action.index >= slot.length)
-        return state;
+      if (!slot || action.index < 0 || action.index >= slot.length) return state;
 
       let kits = slot.filter((_, i) => i !== action.index);
 
@@ -61,12 +55,9 @@ export const reducer = (state: KitsState, action: Action): KitsState => {
     }
     case 'setKitNumber': {
       const slot = state[action.spot];
-      if (!slot || action.index < 0 || action.index >= slot.length)
-        return state;
+      if (!slot || action.index < 0 || action.index >= slot.length) return state;
 
-      let kits = slot.map((k, i) =>
-        i === action.index ? { ...k, number: action.number } : k,
-      );
+      let kits = slot.map((k, i) => (i === action.index ? { ...k, number: action.number } : k));
 
       return {
         ...state,

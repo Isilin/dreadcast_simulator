@@ -27,10 +27,7 @@ export const ItemSelector = ({ spot }: Props) => {
       <Dialog.Trigger className={styles.card}>
         {items[spot] ? <ItemCard item={items[spot]} /> : 'Choisir un item'}
       </Dialog.Trigger>
-      <ItemDialogSelector
-        onItemSelect={onItemSelect}
-        type={getItemTypes(spot)}
-      />
+      <ItemDialogSelector onItemSelect={onItemSelect} type={getItemTypes(spot)} />
     </Dialog.Root>
   );
 };

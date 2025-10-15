@@ -43,7 +43,7 @@ export const itemResponseDtoSchema = z.object({
           'criticalHitDamage',
         ]),
         value: z.number().min(0),
-      }),
+      })
     )
     .optional(),
   effects: z
@@ -72,7 +72,7 @@ export const itemResponseDtoSchema = z.object({
           'criticalHitDamage',
         ]),
         value: z.number(),
-      }),
+      })
     )
     .optional(),
   minDamage: z.number().min(0).optional(),

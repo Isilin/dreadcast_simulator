@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  type PropsWithChildren,
-} from 'react';
+import { createContext, useCallback, useContext, useMemo, type PropsWithChildren } from 'react';
 
 import { StatValues, type Skill, type Stat } from '@/domain';
 import { useImplantsEffects } from '@/feature/implant';
@@ -47,9 +41,7 @@ export const useSuitContext = () => {
 
 interface ProviderProps {}
 
-export const SuitProvider = ({
-  children,
-}: PropsWithChildren<ProviderProps>) => {
+export const SuitProvider = ({ children }: PropsWithChildren<ProviderProps>) => {
   const raceStats = useRaceStats();
 
   const items = useItemsState();
@@ -66,12 +58,11 @@ export const SuitProvider = ({
         itemEffects[stat] +
         kitsEffects[stat] -
         (items['leftArm']?.hands && items['leftArm']?.hands > 1
-          ? items['rightArm']?.effects?.find((val) => val?.property === stat)
-              ?.value || 0
+          ? items['rightArm']?.effects?.find((val) => val?.property === stat)?.value || 0
           : 0)
       );
     },
-    [implantsEffects, itemEffects, items, kitsEffects, raceStats],
+    [implantsEffects, itemEffects, items, kitsEffects, raceStats]
   );
   const stats = useMemo(
     () =>
@@ -80,9 +71,9 @@ export const SuitProvider = ({
           acc[s as Stat] = getStat(s as Stat);
           return acc;
         },
-        {} as Record<Stat, number>,
+        {} as Record<Stat, number>
       ),
-    [getStat],
+    [getStat]
   );
 
   return <SuitContext.Provider value={stats}>{children}</SuitContext.Provider>;

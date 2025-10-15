@@ -73,18 +73,8 @@ export const Silhouette = () => {
       >
         <defs>
           <filter id="edgeGlow" colorInterpolationFilters="sRGB">
-            <feMorphology
-              in="SourceAlpha"
-              operator="dilate"
-              radius="1.01"
-              result="outer"
-            />
-            <feMorphology
-              in="SourceAlpha"
-              operator="erode"
-              radius="0.99"
-              result="inner"
-            />
+            <feMorphology in="SourceAlpha" operator="dilate" radius="1.01" result="outer" />
+            <feMorphology in="SourceAlpha" operator="erode" radius="0.99" result="inner" />
             <feComposite in="outer" in2="inner" operator="out" result="ring" />
             <feGaussianBlur in="ring" stdDeviation="1.8" result="blur" />
             <feFlood floodColor="oklch(64.9% 0.1677 255.26)" result="col" />

@@ -17,24 +17,19 @@ export type Action =
     };
 
 export const initialState: ItemsState = Object.fromEntries(
-  ItemSpotValue.map((name) => [name, null]),
+  ItemSpotValue.map((name) => [name, null])
 ) as ItemsState;
 
 export const reducer = (state: ItemsState, action: Action): ItemsState => {
   switch (action.type) {
     case 'setItem':
       if (!itemMatchsSpot(action.item.type, action.spot)) return state;
-      const previousOther = getOtherHand(
-        action.spot,
-        state[action.spot]?.hands,
-      );
+      const previousOther = getOtherHand(action.spot, state[action.spot]?.hands);
       const other = getOtherHand(action.spot, action.item.hands);
-      if (!other && !previousOther)
-        return { ...state, [action.spot]: action.item };
+      if (!other && !previousOther) return { ...state, [action.spot]: action.item };
       else if (!other && !!previousOther)
         return { ...state, [action.spot]: action.item, [previousOther]: null };
-      else
-        return { ...state, [action.spot]: action.item, [other!]: action.item };
+      else return { ...state, [action.spot]: action.item, [other!]: action.item };
     case 'resetItem':
       return { ...state, [action.spot]: null };
     default:

@@ -1,9 +1,6 @@
 import { Field, NumberField } from '@base-ui-components/react';
 
-import {
-  useImplantsDispatch,
-  useImplantsState,
-} from '../../model/implant.hooks';
+import { useImplantsDispatch, useImplantsState } from '../../model/implant.hooks';
 import type { Implant } from '../../model/implant.types';
 import { ImplantIcon } from '../ImplantIcon';
 import styles from './ImplantSelector.module.css';

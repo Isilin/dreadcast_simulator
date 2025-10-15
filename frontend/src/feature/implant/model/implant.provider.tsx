@@ -1,10 +1,6 @@
 import { useMemo, useReducer, type PropsWithChildren } from 'react';
 
-import {
-  createImplantsActions,
-  initialState,
-  reducer,
-} from './implant.actions';
+import { createImplantsActions, initialState, reducer } from './implant.actions';
 import { DispatchCtx, StateCtx } from './implant.contexts';
 
 export const ImplantsProvider = ({ children }: PropsWithChildren) => {

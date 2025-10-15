@@ -1,14 +1,12 @@
 @keyframes glowPulse {
   0%,
   100% {
-    filter: brightness(0) saturate(100%) invert(43%) sepia(94%) saturate(750%)
-      hue-rotate(180deg) opacity(0.5) drop-shadow(0 0 1px var(--color-blue))
-      drop-shadow(0 0 4px var(--color-blue));
+    filter: brightness(0) saturate(100%) invert(43%) sepia(94%) saturate(750%) hue-rotate(180deg)
+      opacity(0.5) drop-shadow(0 0 1px var(--color-blue)) drop-shadow(0 0 4px var(--color-blue));
   }
   50% {
-    filter: brightness(0) saturate(100%) invert(43%) sepia(94%) saturate(750%)
-      hue-rotate(180deg) opacity(0.5) drop-shadow(0 0 3px var(--color-blue))
-      drop-shadow(0 0 11px var(--color-blue));
+    filter: brightness(0) saturate(100%) invert(43%) sepia(94%) saturate(750%) hue-rotate(180deg)
+      opacity(0.5) drop-shadow(0 0 3px var(--color-blue)) drop-shadow(0 0 11px var(--color-blue));
   }
 }
 

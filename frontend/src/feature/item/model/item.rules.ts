@@ -3,11 +3,7 @@ import type { ItemType } from './item.types';
 import type { ItemSpot } from '@/domain';
 
 export const getOtherHand = (spot: ItemSpot, hands: number | undefined) => {
-  if (
-    (spot !== 'leftArm' && spot !== 'rightArm') ||
-    hands === undefined ||
-    hands === 1
-  )
+  if ((spot !== 'leftArm' && spot !== 'rightArm') || hands === undefined || hands === 1)
     return undefined;
   else return spot === 'leftArm' ? 'rightArm' : 'leftArm';
 };
