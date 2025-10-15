@@ -1,8 +1,9 @@
-.Button {
+.button {
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: var(--small-gap);
   height: 2.5rem;
   width: 200px;
   padding: 0 0.875rem;
@@ -10,7 +11,7 @@
   outline: 0;
   border: 1px solid var(--color-gray-200);
   border-radius: 0.375rem;
-  background-color: var(--color-gray-50);
+  background-color: var(--color-gray-100);
   font-family: inherit;
   font-size: 1rem;
   font-weight: 500;
@@ -23,7 +24,8 @@
 
   @media (hover: hover) {
     &:hover {
-      background-color: var(--color-gray-100);
+      background-color: var(--color-gray-200);
+      cursor: pointer;
     }
   }
 
