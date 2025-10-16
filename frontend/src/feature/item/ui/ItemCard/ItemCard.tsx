@@ -2,8 +2,8 @@ import styles from './ItemCard.module.css';
 
 import { StatValues } from '@/domain';
 import { type Item } from '@/feature/item';
+import { useSuitSelector } from '@/feature/suit';
 import { EffectChip } from '@/ui/effect-chip';
-import { useSuit } from '@/ui/hooks/use-suit';
 import { Popin } from '@/ui/popin';
 import { UiImage } from '@/ui/UiImage/UiImage';
 
@@ -15,7 +15,7 @@ interface Props {
 // TODO mettre un spinner aussi pour le temps de chargement de l'aperçu de l'item
 
 export const ItemCard = ({ item, onClick }: Props) => {
-  const suit = useSuit();
+  const suit = useSuitSelector();
 
   return (
     <article className={styles['item-card']} onClick={onClick}>
@@ -46,7 +46,7 @@ export const ItemCard = ({ item, onClick }: Props) => {
           <li
             key={`prerequisite-` + prerequisite.property}
             className={
-              suit[prerequisite.property as keyof typeof useSuit] <
+              suit[prerequisite.property as keyof typeof useSuitSelector] <
               prerequisite.value
                 ? styles['invalid']
                 : ''

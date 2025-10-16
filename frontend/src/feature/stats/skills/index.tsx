@@ -3,17 +3,17 @@ import { useMemo } from 'react';
 import styles from './skills.module.css';
 
 import { StatValues } from '@/domain';
-import { useSuit } from '@/ui/hooks/use-suit';
+import { useSuitSelector } from '@/feature/suit';
 
 export const Skills = () => {
-  const suit = useSuit();
+  const suit = useSuitSelector();
 
   const skills = useMemo(
     () =>
       Object.entries(StatValues).map(([s, sData]) => {
         return {
           label: sData.label,
-          value: suit[s as keyof typeof useSuit],
+          value: suit[s as keyof typeof useSuitSelector],
         };
       }),
     [suit],

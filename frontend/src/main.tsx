@@ -13,8 +13,6 @@ import { ItemsProvider } from './feature/item';
 import { KitsProvider } from './feature/kit';
 import { ProfileProvider } from './feature/profile';
 import { routeTree } from './routeTree.gen';
-import { SuitProvider } from './ui/providers/suit.provider';
-
 const router = createRouter({ routeTree });
 
 declare module '@tanstack/react-router' {
@@ -36,9 +34,7 @@ if (!rootElement.innerHTML) {
             <ItemsProvider>
               <KitsProvider>
                 <ProfileProvider>
-                  <SuitProvider>
-                    <RouterProvider router={router} />
-                  </SuitProvider>
+                  <RouterProvider router={router} />
                 </ProfileProvider>
               </KitsProvider>
             </ItemsProvider>
