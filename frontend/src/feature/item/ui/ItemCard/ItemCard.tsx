@@ -1,9 +1,8 @@
-import { itemPrerequisitesMet } from '../../model/item.rules';
 import styles from './ItemCard.module.css';
 
 import { StatValues } from '@/domain';
 import { useImplantsEffects } from '@/feature/implant';
-import { type Item } from '@/feature/item';
+import { itemPrerequisitesMet, type Item } from '@/feature/item';
 import { useRaceStats } from '@/feature/profile';
 import { EffectChip } from '@/ui/effect-chip';
 import { WarningIcon } from '@/ui/icons';
@@ -31,12 +30,7 @@ export const ItemCard = ({ item, onClick }: Props) => {
       <div className={styles['item-head']}>
         <Popin content={item.name}>
           <h3 className={styles['item-title']}>
-            {!prerequisitesOk && (
-              <WarningIcon
-                className={styles.warningIcon}
-                title="Pré-requis non remplis"
-              />
-            )}
+            {!prerequisitesOk && <WarningIcon />}
             {item.name}
           </h3>
         </Popin>

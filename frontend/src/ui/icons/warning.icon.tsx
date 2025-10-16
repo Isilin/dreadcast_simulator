@@ -1,9 +1,4 @@
-interface Props {
-  className?: string;
-  title?: string;
-}
-
-export const WarningIcon = ({ className, title = 'Attention' }: Props) => (
+export const WarningIcon = () => (
   <svg
     width="16"
     height="16"
@@ -15,7 +10,7 @@ export const WarningIcon = ({ className, title = 'Attention' }: Props) => (
     stroke-linejoin="round"
     xmlns="http://www.w3.org/2000/svg"
     role="img"
-    aria-label={title}
+    aria-label="Attention"
     aria-hidden="true"
   >
     <defs>
