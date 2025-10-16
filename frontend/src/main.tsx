@@ -11,7 +11,7 @@ import './index.css';
 import { ImplantsProvider } from './feature/implant';
 import { ItemsProvider } from './feature/item';
 import { KitsProvider } from './feature/kit';
-import { PersistBuild } from './feature/persistence/PersistBuild';
+import { BuildTabs } from './feature/persistence/BuildTabs';
 import { ProfileProvider } from './feature/profile';
 import { routeTree } from './routeTree.gen';
 const router = createRouter({ routeTree });
@@ -35,8 +35,8 @@ if (!rootElement.innerHTML) {
             <ItemsProvider>
               <KitsProvider>
                 <ProfileProvider>
-                  <PersistBuild />
                   <RouterProvider router={router} />
+                  <BuildTabs />
                 </ProfileProvider>
               </KitsProvider>
             </ItemsProvider>

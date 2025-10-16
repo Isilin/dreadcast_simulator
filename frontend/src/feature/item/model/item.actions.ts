@@ -14,6 +14,10 @@ export type Action =
   | {
       type: 'resetItem';
       spot: ItemSpot;
+    }
+  | {
+      type: 'replaceItems';
+      state: ItemsState;
     };
 
 export const initialState: ItemsState = Object.fromEntries(
@@ -37,6 +41,8 @@ export const reducer = (state: ItemsState, action: Action): ItemsState => {
         return { ...state, [action.spot]: action.item, [other!]: action.item };
     case 'resetItem':
       return { ...state, [action.spot]: null };
+    case 'replaceItems':
+      return action.state;
     default:
       return state;
   }
@@ -54,6 +60,11 @@ export const createItemsActions = (dispatch: Dispatch<Action>) => {
       dispatch({
         type: 'resetItem',
         spot,
+      }),
+    replaceItems: (state: ItemsState) =>
+      dispatch({
+        type: 'replaceItems',
+        state,
       }),
   };
 };

@@ -5,9 +5,9 @@ import type { ImplantName } from '@/feature/implant';
 import { useImplantsDispatch, useImplantsState } from '@/feature/implant';
 import type { Item } from '@/feature/item';
 import { useItemsDispatch, useItemsState } from '@/feature/item';
-import type { Kit } from '@/feature/kit';
+import type { KitSelection } from '@/feature/kit';
 import { useKitsDispatch, useKitsState } from '@/feature/kit';
-import type { Gender, RaceType } from '@/feature/profile';
+import type { Gender, ProfileState, RaceType } from '@/feature/profile';
 import { usePRofileDispatch, useProfileState } from '@/feature/profile';
 
 const STORAGE_KEY = 'dreadcast.build.v1';
@@ -30,54 +30,30 @@ export const PersistBuild = () => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;
-      const data = JSON.parse(raw) as Record<string, unknown>;
+      const data = JSON.parse(raw);
 
-      const prof = data.profile as Record<string, unknown> | undefined;
-      if (prof) {
-        const g = prof.gender as string | undefined;
-        const r = prof.race as string | undefined;
-        if (g) profileDispatch.setGender(g as Gender);
-        if (r) profileDispatch.setRace(r as RaceType);
+      const prof = data?.profile;
+      if (prof?.gender && prof?.race) {
+        const newProfile: ProfileState = {
+          gender: prof.gender as Gender,
+          race: prof.race as RaceType,
+        };
+        profileDispatch.replaceProfile(newProfile);
       }
 
-      const imps = data.implants as Record<string, unknown> | undefined;
+      const imps = data?.implants as Record<ImplantName, number>;
       if (imps) {
-        for (const [name, level] of Object.entries(imps)) {
-          const lvl = Number(level as unknown);
-          implantsDispatch.setImplant(
-            name as ImplantName,
-            Number.isFinite(lvl) ? lvl : 0,
-          );
-        }
+        implantsDispatch.replaceImplants(imps);
       }
 
-      const its = data.items as Record<string, unknown> | undefined;
+      const its = data?.items as Record<ItemSpot, Item | null>;
       if (its) {
-        for (const [spot, item] of Object.entries(its)) {
-          if (item === null) itemsDispatch.resetItem(spot as ItemSpot);
-          else itemsDispatch.setItem(spot as ItemSpot, item as Item);
-        }
+        itemsDispatch.replaceItems(its);
       }
 
-      const kts = data.kits as Record<string, unknown> | undefined;
+      const kts = data?.kits as Record<ItemSpot, KitSelection[]>;
       if (kts) {
-        for (const [spot, selections] of Object.entries(kts)) {
-          if (!Array.isArray(selections)) continue;
-          let idx = 0;
-          for (const sel of selections as unknown[]) {
-            const s = sel as Record<string, unknown>;
-            if (!s.kit) continue;
-            kitsDispatch.addKit(spot as ItemSpot, s.kit as Kit, true);
-            if (s.number) {
-              kitsDispatch.setKitNumber(
-                spot as ItemSpot,
-                idx,
-                Number(s.number),
-              );
-            }
-            idx++;
-          }
-        }
+        kitsDispatch.replaceKits(kts);
       }
     } catch (e) {
       // ignore malformed data

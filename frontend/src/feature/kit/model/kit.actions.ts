@@ -13,7 +13,8 @@ export type Action =
     }
   | { type: 'setKit'; spot: ItemSpot; index: number; kit: Kit }
   | { type: 'deleteKit'; spot: ItemSpot; index: number }
-  | { type: 'setKitNumber'; spot: ItemSpot; index: number; number: number };
+  | { type: 'setKitNumber'; spot: ItemSpot; index: number; number: number }
+  | { type: 'replaceKits'; state: KitsState };
 
 export const initialState: KitsState = Object.fromEntries(
   ItemSpotValue.map((name) => [name, [] as KitSelection[]]),
@@ -73,6 +74,8 @@ export const reducer = (state: KitsState, action: Action): KitsState => {
         [action.spot]: kits,
       };
     }
+    case 'replaceKits':
+      return action.state;
     default:
       return state;
   }
@@ -106,6 +109,11 @@ export const createKitsActions = (dispatch: Dispatch<Action>) => {
         spot,
         index,
         number,
+      }),
+    replaceKits: (state: KitsState) =>
+      dispatch({
+        type: 'replaceKits',
+        state,
       }),
   };
 };

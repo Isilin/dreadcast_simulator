@@ -10,7 +10,8 @@ export type Action =
   | {
       type: 'setRace';
       race: RaceType;
-    };
+    }
+  | { type: 'replaceProfile'; state: ProfileState };
 
 export const initialState: ProfileState = {
   race: 'Humain',
@@ -23,6 +24,8 @@ export const reducer = (state: ProfileState, action: Action): ProfileState => {
       return { ...state, gender: action.gender };
     case 'setRace':
       return { ...state, race: action.race };
+    case 'replaceProfile':
+      return action.state;
     default:
       return state;
   }
@@ -32,5 +35,7 @@ export const createProfilesActions = (dispatch: Dispatch<Action>) => {
   return {
     setGender: (gender: Gender) => dispatch({ type: 'setGender', gender }),
     setRace: (race: RaceType) => dispatch({ type: 'setRace', race }),
+    replaceProfile: (state: ProfileState) =>
+      dispatch({ type: 'replaceProfile', state }),
   };
 };

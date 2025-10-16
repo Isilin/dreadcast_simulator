@@ -19,7 +19,8 @@ export type Action =
   | {
       type: 'decreaseImplant';
       implantName: ImplantName;
-    };
+    }
+  | { type: 'replaceImplants'; state: ImplantsState };
 
 export const initialState: ImplantsState = Object.fromEntries(
   ImplantNameValues.map((name) => [name, 0]),
@@ -29,14 +30,15 @@ export const reducer = (
   state: ImplantsState,
   action: Action,
 ): ImplantsState => {
-  const implant = state[action.implantName];
   switch (action.type) {
     case 'setImplant':
       return { ...state, [action.implantName]: action.level };
     case 'increaseImplant':
-      return { ...state, [action.implantName]: implant + 1 };
+      return { ...state, [action.implantName]: state[action.implantName] + 1 };
     case 'decreaseImplant':
-      return { ...state, [action.implantName]: implant - 1 };
+      return { ...state, [action.implantName]: state[action.implantName] - 1 };
+    case 'replaceImplants':
+      return action.state;
     default:
       return state;
   }
@@ -60,5 +62,7 @@ export const createImplantsActions = (dispatch: Dispatch<Action>) => {
         type: 'decreaseImplant',
         implantName: name,
       }),
+    replaceImplants: (state: ImplantsState) =>
+      dispatch({ type: 'replaceImplants', state }),
   };
 };
