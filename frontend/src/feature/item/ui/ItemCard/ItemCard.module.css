@@ -80,6 +80,14 @@
   justify-content: space-around;
 }
 
+.warningIcon {
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+  box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.12);
+  margin-right: 0.25rem;
+}
+
 li:not(.invalid) .key {
   color: #9aa4b2;
 }
