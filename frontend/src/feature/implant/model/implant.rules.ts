@@ -1,37 +1,53 @@
 import { type Implant } from './implant.types';
 
-import { StatValues, type Stat } from '@/domain';
+import { type Stat } from '@/domain';
+import { createEmptyStats } from '@/utils/stats';
 
+/**
+ * Maximum number of implants allowed
+ */
 export const MAX_IMPLANTS = 58;
 
+/**
+ * Computes the total number of implants installed
+ */
 export const computeImplantsCount = (state: Record<string, number>): number =>
-  Object.entries(state).reduce((acc, curr) => acc + curr[1], 0);
+  Object.entries(state).reduce((acc, [, value]) => acc + value, 0);
 
-export const computeImplantsStatus = (
-  count: number,
-): 'perfect' | 'error' | 'incomplete' => {
+/**
+ * Type representing the possible implants installation status
+ */
+export type ImplantsStatus = 'perfect' | 'error' | 'incomplete';
+
+/**
+ * Computes the overall implants installation status
+ */
+export const computeImplantsStatus = (count: number): ImplantsStatus => {
   if (count === MAX_IMPLANTS) return 'perfect';
-  else if (count > MAX_IMPLANTS) return 'error';
-  else return 'incomplete';
+  if (count > MAX_IMPLANTS) return 'error';
+  return 'incomplete';
 };
 
+/**
+ * Checks if a specific implant is active
+ */
 export const computeImplantStatus = (
   state: Record<string, number>,
   name: string,
 ): 'active' | undefined => {
-  if (state[name] > 0) return 'active';
-  else return undefined;
+  return state[name] > 0 ? 'active' : undefined;
 };
 
+/**
+ * Computes the total effects from all active implants
+ */
 export const computeImplantsEffects = (
   state: Record<string, number>,
   implants: Implant[] | undefined,
 ): Record<Stat, number> => {
-  const base = Object.fromEntries(
-    Object.entries(StatValues).map((s) => [s[0], 0]),
-  ) as Record<Stat, number>;
+  const stats = createEmptyStats();
 
-  if (!implants) return base;
+  if (!implants) return stats;
 
   implants.forEach((implant) => {
     const level = state[implant.name] ?? 0;
@@ -39,9 +55,9 @@ export const computeImplantsEffects = (
 
     const value = implant.valuePerLevel[level - 1] ?? 0;
     implant.attributes.forEach((stat) => {
-      base[stat] += value;
+      stats[stat] += value;
     });
   });
 
-  return base;
+  return stats;
 };

@@ -1,6 +1,30 @@
 import { type Skill, type Stat } from '@/domain';
 import { type Item } from '@/feature/item';
 
+const ARM_SPOTS = {
+  LEFT: 'leftArm',
+  RIGHT: 'rightArm',
+} as const;
+
+/**
+ * Calculates the right arm penalty for two-handed weapons
+ */
+const computeRightArmPenalty = (
+  items: Record<string, Item | null>,
+  stat: Stat,
+): number => {
+  const hasOffhand = (items[ARM_SPOTS.LEFT]?.hands ?? 0) > 1;
+  if (!hasOffhand) return 0;
+
+  return (
+    items[ARM_SPOTS.RIGHT]?.effects?.find((val) => val?.property === stat)
+      ?.value ?? 0
+  );
+};
+
+/**
+ * Computes the final value for a given stat, taking into account all effects and penalties
+ */
 export const computeStat = (
   stat: Stat,
   raceStats: Partial<Record<Skill, number>>,
@@ -9,17 +33,11 @@ export const computeStat = (
   implantsEffects: Record<Stat, number>,
   kitsEffects: Record<Stat, number>,
 ): number => {
-  const rightArmPenalty =
-    (items['leftArm']?.hands ?? 0) > 1
-      ? (items['rightArm']?.effects?.find((val) => val?.property === stat)
-          ?.value ?? 0)
-      : 0;
-
   return (
     (raceStats[stat as Skill] ?? 0) +
     implantsEffects[stat] +
     itemEffects[stat] +
     kitsEffects[stat] -
-    rightArmPenalty
+    computeRightArmPenalty(items, stat)
   );
 };

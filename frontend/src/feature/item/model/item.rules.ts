@@ -1,46 +1,63 @@
 import { type ItemType, type ItemsState } from './item.types';
 
-import { ItemSpotValue, StatValues, type ItemSpot, type Stat } from '@/domain';
+import { ItemSpotValue, type ItemSpot, type Stat } from '@/domain';
+import { createEmptyStats } from '@/utils/stats';
 
-export const getOtherHand = (spot: ItemSpot, hands: number | undefined) => {
+const ARM_SPOTS = ['leftArm', 'rightArm'] as const;
+const HAND_WEAPONS = [
+  '1handMelee',
+  '1handShot',
+  '2handsMelee',
+  '2handsShot',
+] as const;
+
+/**
+ * Gets the opposite arm spot when using two-handed weapons
+ */
+export const getOtherHand = (
+  spot: ItemSpot,
+  hands: number | undefined,
+): ItemSpot | undefined => {
   if (
-    (spot !== 'leftArm' && spot !== 'rightArm') ||
-    hands === undefined ||
+    !ARM_SPOTS.includes(spot as (typeof ARM_SPOTS)[number]) ||
+    !hands ||
     hands === 1
-  )
+  ) {
     return undefined;
-  else return spot === 'leftArm' ? 'rightArm' : 'leftArm';
+  }
+  return spot === 'leftArm' ? 'rightArm' : 'leftArm';
 };
 
-export const itemMatchsSpot = (type: ItemType, spot: ItemSpot) => {
+/**
+ * Checks if an item type can be equipped in a given spot
+ */
+export const itemMatchsSpot = (type: ItemType, spot: ItemSpot): boolean => {
   return (
     type === spot ||
-    ((type === '1handMelee' ||
-      type === '1handShot' ||
-      type === '2handsMelee' ||
-      type === '2handsShot') &&
-      (spot === 'leftArm' || spot === 'rightArm'))
+    (HAND_WEAPONS.includes(type as (typeof HAND_WEAPONS)[number]) &&
+      ARM_SPOTS.includes(spot as (typeof ARM_SPOTS)[number]))
   );
 };
 
+/**
+ * Gets the allowed item types for a given spot
+ */
 export const getItemTypes = (spot: ItemSpot): ItemType[] => {
-  if (spot === 'rightArm' || spot === 'leftArm') {
+  if (ARM_SPOTS.includes(spot as (typeof ARM_SPOTS)[number])) {
     return ['1handMelee', '1handMelee', '2handsMelee', '2handsShot'];
   }
   return [spot as ItemType];
 };
 
+/**
+ * Computes the total effects from all equipped items
+ */
 export const computeItemsEffect = (state: ItemsState): Record<Stat, number> => {
-  const res = Object.fromEntries(
-    Object.entries(StatValues).map((s) => [s[0], 0]),
-  ) as Record<Stat, number>;
+  const stats = createEmptyStats();
   Object.values(ItemSpotValue).forEach((spot) =>
     state[spot]?.effects?.forEach((effect) => {
-      if (res[effect.property as Stat] === undefined) {
-        res[effect.property as Stat] = 0;
-      }
-      res[effect.property as Stat] += effect.value;
+      stats[effect.property as Stat] += effect.value;
     }),
   );
-  return res;
+  return stats;
 };
