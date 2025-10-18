@@ -60,6 +60,11 @@ yarn dev
 # Ouvrir la page web à http://localhost:5173
 ```
 
+## 🌐 Accès en ligne
+
+L'application est déployée et accessible à l'adresse suivante :  
+[https://dreadcast-simulator-kappa.vercel.app/](https://dreadcast-simulator-kappa.vercel.app/)
+
 ## ❗ Notes importantes
 
 - Ce simulateur est un projet communautaire non-officiel.
@@ -86,6 +91,7 @@ Chaque contribution aide à maintenir et améliorer l'outil !
 - [ ] Mode sombre/clair
 - [ ] Version mobile responsive
 - [ ] Formules de stats avancées (encaissement, etc...)
+- [ ] Bonus d'armes
 
 ## ❓ FAQ
 
