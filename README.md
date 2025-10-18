@@ -1,5 +1,8 @@
 # Simulateur de Build Dreadcast
 
+![Version](https://img.shields.io/github/v/release/Isilin/dreadcast_simulator)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Vercel Deploy](https://deploy-badge.vercel.app/vercel/dreadcast-simulator-kappa)](https://dreadcast-simulator-kappa.vercel.app/)
+
 Un outil de simulation pour créer et optimiser votre personnage sur [Dreadcast](https://dreadcast.net), le jeu de rôle cyberpunk francophone par navigateur.
 
 ## 🎮 Fonctionnalités
@@ -15,6 +18,13 @@ Un outil de simulation pour créer et optimiser votre personnage sur [Dreadcast]
 - **Sauvegarde**
   - Système de sauvegarde locale des builds
   - Possibilité de sauvegarder dix builds différents
+
+## 📸 Captures d'écran
+
+![Interface principale](screenshots/main.png)
+![Gestion des implants](screenshots/implants.png)
+![Choix des items](screenshots/items.png)
+![Ajout de kits](screenshots/kits.png)
 
 ## 🚀 Utilisation
 
@@ -68,6 +78,28 @@ Si vous trouvez cet outil utile, vous pouvez soutenir son développement de plus
 - **In-game** : Vous pouvez également faire un don en ¢rédits à mon personnage _[Pelagia]_ sur Dreadcast. L'outil y est proposé de manière RP à tous les joueurs.
 
 Chaque contribution aide à maintenir et améliorer l'outil !
+
+## 🗺️ Roadmap
+
+- [ ] Partager des builds
+- [ ] Comparaison et suggestions de builds
+- [ ] Mode sombre/clair
+- [ ] Version mobile responsive
+- [ ] Formules de stats avancées (encaissement, etc...)
+
+## ❓ FAQ
+
+**Q: Les statistiques sont-elles exactement les mêmes que dans le jeu ?**
+R: Les calculs sont basés sur les formules connues, mais certaines variations peuvent exister.
+
+**Q: Puis-je proposer des corrections ou des mises à jour ?**
+R: Bien sûr ! Ouvrez une issue ou une PR sur GitHub.
+
+## 📞 Contact
+
+- Discord : [isilibn]
+- MP Dreadcast : [Pelagia]
+- GitHub : [@Isilin](https://github.com/Isilin)
 
 ## 📝 Licence
 
