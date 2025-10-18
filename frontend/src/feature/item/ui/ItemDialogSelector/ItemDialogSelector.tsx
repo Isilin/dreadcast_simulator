@@ -1,9 +1,9 @@
 import { Dialog } from '@base-ui-components/react';
 
-import type { Item, ItemType } from '../../model/item.types';
-import { useItems } from '../../services';
-import { ItemCard } from '../ItemCard/ItemCard';
+import { ItemCard } from '../ItemCard';
+import styles from './ItemDialogSelector.module.css';
 
+import { useItems, type Item, type ItemType } from '@/feature/item';
 import { Modal } from '@/ui/Modal/Modal';
 
 interface Props {
@@ -33,7 +33,7 @@ export const ItemDialogSelector = ({ onItemSelect, type }: Props) => {
           ))}
       </Modal.Content>
       <Modal.Footer>
-        <Dialog.Close>Close</Dialog.Close>
+        <Dialog.Close className={styles.Button}>Close</Dialog.Close>
       </Modal.Footer>
     </Modal>
   );
