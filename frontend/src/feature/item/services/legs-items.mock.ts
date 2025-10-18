@@ -395,7 +395,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '221',
-    name: 'https://wiki.dreadcast.net/images/0/03/Pantalon_collectionneur.png',
+    name: 'Pantalon Cyber',
     image: 'https://wiki.dreadcast.net/images/4/40/Pantalon_cyber.png',
     tech: 310,
     integrity: 85,
