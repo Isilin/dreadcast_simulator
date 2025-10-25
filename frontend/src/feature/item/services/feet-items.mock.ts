@@ -4,8 +4,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '300',
     name: 'Ballerines',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/c/cb/BALLERINES2.png/100px-BALLERINES2.png',
+    image: 'https://wiki.dreadcast.net/images/c/cb/BALLERINES2.png',
     tech: 360,
     integrity: 60,
     type: 'feet',
@@ -18,7 +17,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '301',
-    name: 'Baskets Arika/Baskets Globe/Baskets Poumo/Baskets Reezo',
+    name: 'Baskets Arika',
     image: 'https://wiki.dreadcast.net/images/6/6c/Baskets_lumi_vertes.png',
     tech: 320,
     integrity: 70,
@@ -41,8 +40,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '302',
     name: 'Chaussure Squelette',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/2/2e/Chaussure-squelette.png/100px-Chaussure-squelette.png',
+    image: 'https://wiki.dreadcast.net/images/2/2e/Chaussure-squelette.png',
     tech: 400,
     integrity: 60,
     type: 'feet',
@@ -79,9 +77,8 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '303',
-    name: 'Chaussures de ville/Chaussures de Bowling',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/b/be/10chaussure_bowling.png/100px-10chaussure_bowling.png',
+    name: 'Chaussures de Bowling',
+    image: 'https://wiki.dreadcast.net/images/b/be/10chaussure_bowling.png',
     tech: 340,
     integrity: 60,
     type: 'feet',
@@ -94,12 +91,17 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '304',
-    name: 'Chaussures de Dreadball/Bottes alpha/Bottes gamma/Bottes à talons',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/6/6c/11chaussure_dreadball.png/100px-11chaussure_dreadball.png',
+    name: 'Chaussures de Dreadball',
+    image: 'https://wiki.dreadcast.net/images/6/6c/11chaussure_dreadball.png',
     tech: 400,
     integrity: 100,
     type: 'feet',
+    prerequisites: [
+      {
+        property: 'agility',
+        value: 1,
+      },
+    ],
     effects: [
       {
         property: 'speed',
@@ -109,9 +111,8 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '305',
-    name: 'Chaussures de Sécurité/Exos pompes de chantiers',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/b/bf/Mecano-pied.png/100px-Mecano-pied.png',
+    name: 'Chaussures de Sécurité',
+    image: 'https://wiki.dreadcast.net/images/b/bf/Mecano-pied.png',
     tech: 330,
     integrity: 120,
     type: 'feet',
@@ -147,8 +148,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '307',
     name: 'Sabots',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/b/bf/Medecin-pied.png/100px-Medecin-pied.png',
+    image: 'https://wiki.dreadcast.net/images/b/bf/Medecin-pied.png',
     tech: 320,
     integrity: 45,
     type: 'feet',
@@ -169,18 +169,12 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '308',
-    name: 'Chaussures à talons/Escarpins',
+    name: 'Chaussures à talons',
     image:
-      'https://wiki.dreadcast.net/images/thumb/8/89/ASSETS_Chaussures_a_talons_262-PX.png/70px-ASSETS_Chaussures_a_talons_262-PX.png',
+      'https://wiki.dreadcast.net/images/8/89/ASSETS_Chaussures_a_talons_262-PX.png',
     tech: 340,
     integrity: 60,
     type: 'feet',
-    prerequisites: [
-      {
-        property: 'agility',
-        value: 1,
-      },
-    ],
     effects: [
       {
         property: 'speed',
@@ -216,7 +210,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
     id: '310',
     name: 'Bottes',
     image:
-      'https://wiki.dreadcast.net/images/thumb/3/32/ASSETS_Bottes-Militaires_262-PX.png/70px-ASSETS_Bottes-Militaires_262-PX.png',
+      'https://wiki.dreadcast.net/images/3/32/ASSETS_Bottes-Militaires_262-PX.png',
     tech: 330,
     integrity: 100,
     type: 'feet',
@@ -240,8 +234,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '311',
     name: 'Bottes',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/c/cb/BOTTES-A-PIQUES_262px.png/70px-BOTTES-A-PIQUES_262px.png',
+    image: 'https://wiki.dreadcast.net/images/c/cb/BOTTES-A-PIQUES_262px.png',
     tech: 360,
     integrity: 90,
     type: 'feet',
@@ -301,8 +294,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '313',
     name: 'Santiags',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/b/b5/Santiag262.png/70px-Santiag262.png',
+    image: 'https://wiki.dreadcast.net/images/b/b5/Santiag262.png',
     tech: 400,
     integrity: 140,
     type: 'feet',
@@ -328,8 +320,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '314',
     name: 'Boosters',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/b/b8/BOOSTERS_262px.png/70px-BOOSTERS_262px.png',
+    image: 'https://wiki.dreadcast.net/images/b/b8/BOOSTERS_262px.png',
     tech: 200,
     integrity: 75,
     type: 'feet',
@@ -357,8 +348,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '315',
     name: 'Chaussettes',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/1/1c/Chaussettes.png/150px-Chaussettes.png',
+    image: 'https://wiki.dreadcast.net/images/1/1c/Chaussettes.png',
     tech: 50,
     integrity: 20,
     type: 'feet',
@@ -366,8 +356,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '316',
     name: 'Leg Warmers',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/f/f3/Leg-warmers.png/150px-Leg-warmers.png',
+    image: 'https://wiki.dreadcast.net/images/f/f3/Leg-warmers.png',
     tech: 400,
     integrity: 90,
     type: 'feet',
@@ -375,8 +364,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '317',
     name: 'Bottes A3XXXN',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/7/7a/Bottes_A300.png/100px-Bottes_A300.png',
+    image: 'https://wiki.dreadcast.net/images/7/7a/Bottes_A300.png',
     tech: 400,
     integrity: 300,
     type: 'feet',
@@ -398,8 +386,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '318',
     name: 'Bottes A3XXXP',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/7/7a/Bottes_A300.png/100px-Bottes_A300.png',
+    image: 'https://wiki.dreadcast.net/images/7/7a/Bottes_A300.png',
     tech: 350,
     integrity: 300,
     type: 'feet',
@@ -420,9 +407,8 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '319',
-    name: 'Bottes A3XXXT/Bottes A3XXXL/Bottes A3XXXJ',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/7/7a/Bottes_A300.png/100px-Bottes_A300.png',
+    name: 'Bottes A3XXXT',
+    image: 'https://wiki.dreadcast.net/images/7/7a/Bottes_A300.png',
     tech: 400,
     integrity: 300,
     type: 'feet',
@@ -430,8 +416,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '320',
     name: 'Bottes A3XXXO',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/7/7a/Bottes_A300.png/100px-Bottes_A300.png',
+    image: 'https://wiki.dreadcast.net/images/7/7a/Bottes_A300.png',
     tech: 320,
     integrity: 300,
     type: 'feet',
@@ -449,8 +434,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '321',
     name: 'Bottes A3XXXD',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/7/7a/Bottes_A300.png/100px-Bottes_A300.png',
+    image: 'https://wiki.dreadcast.net/images/7/7a/Bottes_A300.png',
     tech: 320,
     integrity: 300,
     type: 'feet',
@@ -460,5 +444,193 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
         value: 7,
       },
     ],
+  },
+  {
+    id: '322',
+    name: 'Baskets Globe',
+    image: 'https://wiki.dreadcast.net/images/5/51/Baskets_lumi_noires.png',
+    tech: 320,
+    integrity: 70,
+    type: 'feet',
+    effects: [
+      {
+        property: 'agility',
+        value: 4,
+      },
+      {
+        property: 'stealth',
+        value: -10,
+      },
+      {
+        property: 'speed',
+        value: 1,
+      },
+    ],
+  },
+  {
+    id: '323',
+    name: 'Baskets Poumo',
+    image: 'https://wiki.dreadcast.net/images/2/27/Baskets_lumi_rouges.png',
+    tech: 320,
+    integrity: 70,
+    type: 'feet',
+    effects: [
+      {
+        property: 'agility',
+        value: 4,
+      },
+      {
+        property: 'stealth',
+        value: -10,
+      },
+      {
+        property: 'speed',
+        value: 1,
+      },
+    ],
+  },
+  {
+    id: '324',
+    name: 'Baskets Reezo',
+    image: 'https://wiki.dreadcast.net/images/5/55/Baskets_lumi_bleues.png',
+    tech: 320,
+    integrity: 70,
+    type: 'feet',
+    effects: [
+      {
+        property: 'agility',
+        value: 4,
+      },
+      {
+        property: 'stealth',
+        value: -10,
+      },
+      {
+        property: 'speed',
+        value: 1,
+      },
+    ],
+  },
+  {
+    id: '325',
+    name: 'Chaussures de ville',
+    image: 'https://wiki.dreadcast.net/images/9/97/CHAUSSURE_VILLE2.png',
+    tech: 340,
+    integrity: 60,
+    type: 'feet',
+    effects: [
+      {
+        property: 'speed',
+        value: 1,
+      },
+    ],
+  },
+  {
+    id: '326',
+    name: 'Bottes alpha',
+    image: 'https://wiki.dreadcast.net/images/8/82/Bottes_alpha.png',
+    tech: 400,
+    integrity: 100,
+    type: 'feet',
+    prerequisites: [
+      {
+        property: 'agility',
+        value: 1,
+      },
+    ],
+    effects: [
+      {
+        property: 'speed',
+        value: 1,
+      },
+    ],
+  },
+  {
+    id: '327',
+    name: 'Bottes gamma',
+    image: 'https://wiki.dreadcast.net/images/6/61/Bottes_alpha-ss.png',
+    tech: 400,
+    integrity: 100,
+    type: 'feet',
+    prerequisites: [
+      {
+        property: 'agility',
+        value: 1,
+      },
+    ],
+    effects: [
+      {
+        property: 'speed',
+        value: 1,
+      },
+    ],
+  },
+  {
+    id: '328',
+    name: 'Bottes à talons',
+    image: 'https://wiki.dreadcast.net/images/c/c7/BOTTES_SEXY2.png',
+    tech: 400,
+    integrity: 100,
+    type: 'feet',
+    prerequisites: [
+      {
+        property: 'agility',
+        value: 1,
+      },
+    ],
+    effects: [
+      {
+        property: 'speed',
+        value: 1,
+      },
+    ],
+  },
+  {
+    id: '329',
+    name: 'Exos pompes de chantiers',
+    image: 'https://wiki.dreadcast.net/images/6/60/Exosquelette-pied.png',
+    tech: 330,
+    integrity: 120,
+    type: 'feet',
+    effects: [
+      {
+        property: 'engineering',
+        value: 8,
+      },
+      {
+        property: 'speed',
+        value: 1,
+      },
+    ],
+  },
+  {
+    id: '330',
+    name: 'Escarpins',
+    image: 'https://wiki.dreadcast.net/images/f/ff/ESCARPINS_NOIR_262px.png',
+    tech: 340,
+    integrity: 60,
+    type: 'feet',
+    effects: [
+      {
+        property: 'speed',
+        value: 1,
+      },
+    ],
+  },
+  {
+    id: '331',
+    name: 'Bottes A3XXXL',
+    image: 'https://wiki.dreadcast.net/images/7/7a/Bottes_A300.png',
+    tech: 400,
+    integrity: 300,
+    type: 'feet',
+  },
+  {
+    id: '332',
+    name: 'Bottes A3XXXJ',
+    image: 'https://wiki.dreadcast.net/images/7/7a/Bottes_A300.png',
+    tech: 400,
+    integrity: 300,
+    type: 'feet',
   },
 ];

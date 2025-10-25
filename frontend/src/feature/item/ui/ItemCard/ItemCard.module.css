@@ -21,7 +21,7 @@
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 8px;
-  min-height: 2rem; /* évite un haut “vide” */
+  min-height: 2rem;
 }
 .item-title {
   margin: 0;
@@ -34,7 +34,6 @@
   line-break: auto;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
   cursor: default;
 }
 .item-thumb {

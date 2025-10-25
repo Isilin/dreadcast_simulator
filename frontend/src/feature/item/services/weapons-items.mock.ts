@@ -29,8 +29,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '501',
     name: 'Dague énergétique',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/f/f2/DAGUE_ENERGETIQUE262.png/150px-DAGUE_ENERGETIQUE262.png',
+    image: 'https://wiki.dreadcast.net/images/f/f2/DAGUE_ENERGETIQUE262.png',
     tech: 350,
     integrity: 150,
     type: '1handMelee',
@@ -49,8 +48,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '502',
     name: 'Kanuf',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/6/6b/KANUF_262px.png/100px-KANUF_262px.png',
+    image: 'https://wiki.dreadcast.net/images/6/6b/KANUF_262px.png',
     tech: 300,
     integrity: 50,
     type: '1handMelee',
@@ -68,7 +66,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '503',
-    name: 'Poing américain/Dardepoing',
+    name: 'Poing américain',
     image: 'https://wiki.dreadcast.net/images/e/e8/Poing_americain.png',
     tech: 120,
     integrity: 200,
@@ -87,7 +85,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '504',
-    name: 'Gants Cyber/Gants Dreadball/Gants de fer',
+    name: 'Gants Cyber',
     image: 'https://wiki.dreadcast.net/images/6/65/Gants_bijou.png',
     tech: 240,
     integrity: 300,
@@ -112,7 +110,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '505',
-    name: 'Gants de boxe/Golden Punch',
+    name: 'Gants de boxe',
     image: 'https://wiki.dreadcast.net/images/9/9f/Gant_boxe.png',
     tech: 0,
     integrity: 300,
@@ -132,8 +130,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '506',
     name: 'Gant Hydro',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/0/0e/GANTS_HYDRO262.png/100px-GANTS_HYDRO262.png',
+    image: 'https://wiki.dreadcast.net/images/0/0e/GANTS_HYDRO262.png',
     tech: 240,
     integrity: 120,
     type: '1handMelee',
@@ -195,7 +192,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '509',
-    name: 'Gants technologiques/Gants techno sombres',
+    name: 'Gants technologiques',
     image: 'https://wiki.dreadcast.net/images/0/0d/Gant-info999.png',
     tech: 60,
     integrity: 100,
@@ -225,8 +222,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '510',
     name: 'Wolfers',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/4/47/WOLFERS262.png/150px-WOLFERS262.png',
+    image: 'https://wiki.dreadcast.net/images/4/47/WOLFERS262.png',
     tech: 300,
     integrity: 160,
     type: '2handsMelee',
@@ -245,8 +241,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '511',
     name: 'Exo gants',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/5/56/Exosquelette-main.png/100px-Exosquelette-main.png',
+    image: 'https://wiki.dreadcast.net/images/5/56/Exosquelette-main.png',
     tech: 80,
     integrity: 150,
     type: '2handsMelee',
@@ -271,8 +266,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '512',
     name: 'Gantelet du Juge',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/f/f1/Gantlet_bleu.png/100px-Gantlet_bleu.png',
+    image: 'https://wiki.dreadcast.net/images/f/f1/Gantlet_bleu.png',
     tech: 320,
     integrity: 240,
     type: '2handsMelee',
@@ -291,8 +285,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '513',
     name: 'Gantelet Steak',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/7/79/Gants_steak.png/100px-Gants_steak.png',
+    image: 'https://wiki.dreadcast.net/images/7/79/Gants_steak.png',
     tech: 60,
     integrity: 60,
     type: '2handsMelee',
@@ -320,7 +313,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '514',
-    name: 'Gantelet A323/Bracelet A323',
+    name: 'Gantelet A323',
     image: 'https://wiki.dreadcast.net/images/7/78/Gant_A323.png',
     tech: 360,
     integrity: 300,
@@ -333,9 +326,8 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '515',
-    name: 'Gantelet AXXXN/Épée A317N',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/a/a2/Gants_A-S9.png/100px-Gants_A-S9.png',
+    name: 'Gantelet AXXXN',
+    image: 'https://wiki.dreadcast.net/images/a/a2/Gants_A-S9.png',
     tech: 460,
     integrity: 300,
     type: '2handsMelee',
@@ -347,9 +339,8 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '516',
-    name: 'Gantelet AXXXP/Épée A317P',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/a/a2/Gants_A-S9.png/100px-Gants_A-S9.png',
+    name: 'Gantelet AXXXP',
+    image: 'https://wiki.dreadcast.net/images/a/a2/Gants_A-S9.png',
     tech: 60,
     integrity: 300,
     type: '2handsMelee',
@@ -372,8 +363,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '517',
     name: 'Gantelet AXXXT',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/a/a2/Gants_A-S9.png/100px-Gants_A-S9.png',
+    image: 'https://wiki.dreadcast.net/images/a/a2/Gants_A-S9.png',
     tech: 60,
     integrity: 300,
     type: '2handsMelee',
@@ -392,8 +382,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '518',
     name: 'Gantelet AXXXL',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/a/a2/Gants_A-S9.png/100px-Gants_A-S9.png',
+    image: 'https://wiki.dreadcast.net/images/a/a2/Gants_A-S9.png',
     tech: 60,
     integrity: 300,
     type: '2handsMelee',
@@ -412,8 +401,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '519',
     name: 'Gantelet AXXXJ',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/a/a2/Gants_A-S9.png/100px-Gants_A-S9.png',
+    image: 'https://wiki.dreadcast.net/images/a/a2/Gants_A-S9.png',
     tech: 60,
     integrity: 300,
     type: '2handsMelee',
@@ -432,8 +420,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '520',
     name: 'Gantelet AXXXO',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/a/a2/Gants_A-S9.png/100px-Gants_A-S9.png',
+    image: 'https://wiki.dreadcast.net/images/a/a2/Gants_A-S9.png',
     tech: 60,
     integrity: 300,
     type: '2handsMelee',
@@ -452,8 +439,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '521',
     name: 'Gantelet AXXXD',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/a/a2/Gants_A-S9.png/100px-Gants_A-S9.png',
+    image: 'https://wiki.dreadcast.net/images/a/a2/Gants_A-S9.png',
     tech: 60,
     integrity: 300,
     type: '2handsMelee',
@@ -472,8 +458,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '522',
     name: 'Agrimensor',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/9/9a/AGRI2.png/150px-AGRI2.png',
+    image: 'https://wiki.dreadcast.net/images/9/9a/AGRI2.png',
     tech: 0,
     integrity: 120,
     type: '2handsMelee',
@@ -573,8 +558,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '526',
     name: 'Katana',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/0/08/KATANNA_262px.png/150px-KATANNA_262px.png',
+    image: 'https://wiki.dreadcast.net/images/0/08/KATANNA_262px.png',
     tech: 320,
     integrity: 140,
     type: '1handMelee',
@@ -628,8 +612,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '528',
     name: 'Lame carbone A370',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/b/b9/Lame-A370.png/150px-Lame-A370.png',
+    image: 'https://wiki.dreadcast.net/images/b/b9/Lame-A370.png',
     tech: 0,
     integrity: 200,
     type: '2handsMelee',
@@ -647,7 +630,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '529',
-    name: 'Blizzaxe/Ironix',
+    name: 'Blizzaxe',
     image: 'https://wiki.dreadcast.net/images/d/d4/Hacheglace.png',
     tech: 180,
     integrity: 120,
@@ -676,7 +659,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '530',
-    name: 'Hache rustique/Technohache',
+    name: 'Hache rustique',
     image: 'https://wiki.dreadcast.net/images/3/37/Hache_rustique.png',
     tech: 240,
     integrity: 160,
@@ -771,8 +754,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '534',
     name: 'Batte de dreadball',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/7/71/BATTE-DE-BASEBALL262.png/100px-BATTE-DE-BASEBALL262.png',
+    image: 'https://wiki.dreadcast.net/images/7/71/BATTE-DE-BASEBALL262.png',
     tech: 80,
     integrity: 450,
     type: '1handMelee',
@@ -797,7 +779,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '536',
-    name: 'Fouet/Chaine cloutée',
+    name: 'Fouet',
     image: 'https://wiki.dreadcast.net/images/5/5a/Fouet.png',
     tech: 320,
     integrity: 140,
@@ -861,8 +843,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '539',
     name: 'Monofilament',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/2/28/MONOFILAMENT262.png/100px-MONOFILAMENT262.png',
+    image: 'https://wiki.dreadcast.net/images/2/28/MONOFILAMENT262.png',
     tech: 240,
     integrity: 240,
     type: '2handsMelee',
@@ -912,7 +893,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     id: '542',
     name: 'Rouleau en poly tétra fluoro éthylène',
     image:
-      'https://wiki.dreadcast.net/images/thumb/a/a2/ROULEAU-PATISSERIE_262px.png/150px-ROULEAU-PATISSERIE_262px.png',
+      'https://wiki.dreadcast.net/images/a/a2/ROULEAU-PATISSERIE_262px.png',
     tech: 150,
     integrity: 300,
     type: '1handMelee',
@@ -926,7 +907,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     id: '543',
     name: 'Rouleau à Pâtisserie',
     image:
-      'https://wiki.dreadcast.net/images/thumb/a/a2/ROULEAU-PATISSERIE_262px.png/150px-ROULEAU-PATISSERIE_262px.png',
+      'https://wiki.dreadcast.net/images/a/a2/ROULEAU-PATISSERIE_262px.png',
     tech: 80,
     integrity: 100,
     type: '1handMelee',
@@ -945,8 +926,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '544',
     name: 'Poêle',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/b/b0/POELLE_262px.png/150px-POELLE_262px.png',
+    image: 'https://wiki.dreadcast.net/images/b/b0/POELLE_262px.png',
     tech: 280,
     integrity: 80,
     type: '1handMelee',
@@ -965,8 +945,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '545',
     name: 'Chalumeau',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/c/cb/Chalumeau.png/150px-Chalumeau.png',
+    image: 'https://wiki.dreadcast.net/images/c/cb/Chalumeau.png',
     tech: 320,
     integrity: 140,
     type: '1handMelee',
@@ -991,8 +970,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '546',
     name: 'Clef à molette',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/b/b8/CLE-Molette_262px.png/100px-CLE-Molette_262px.png',
+    image: 'https://wiki.dreadcast.net/images/b/b8/CLE-Molette_262px.png',
     tech: 300,
     integrity: 80,
     type: '1handMelee',
@@ -1040,8 +1018,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '548',
     name: 'Tronçolame',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/a/ab/TRONCOLAME.png/150px-TRONCOLAME.png',
+    image: 'https://wiki.dreadcast.net/images/a/ab/TRONCOLAME.png',
     tech: 480,
     integrity: 200,
     type: '2handsMelee',
@@ -1054,8 +1031,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '549',
     name: 'Canne',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/f/fe/Canne.png/100px-Canne.png',
+    image: 'https://wiki.dreadcast.net/images/f/fe/Canne.png',
     tech: 80,
     integrity: 160,
     type: '1handMelee',
@@ -1094,8 +1070,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '552',
     name: 'City Eagle',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/e/e6/CITY-EAGLE_262px.png/150px-CITY-EAGLE_262px.png',
+    image: 'https://wiki.dreadcast.net/images/e/e6/CITY-EAGLE_262px.png',
     tech: 320,
     integrity: 120,
     type: '1handShot',
@@ -1137,8 +1112,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '554',
     name: 'FI2615',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/e/ea/FI2615_IMPERIAL2.png/150px-FI2615_IMPERIAL2.png',
+    image: 'https://wiki.dreadcast.net/images/e/ea/FI2615_IMPERIAL2.png',
     tech: 120,
     integrity: 140,
     type: '2handsShot',
@@ -1163,8 +1137,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '555',
     name: 'Fusil Lincoln',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/6/63/FUSIL_LINCOLN262.png/150px-FUSIL_LINCOLN262.png',
+    image: 'https://wiki.dreadcast.net/images/6/63/FUSIL_LINCOLN262.png',
     tech: 450,
     integrity: 200,
     type: '2handsShot',
@@ -1177,8 +1150,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '556',
     name: 'Fusil T31',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/7/71/FUSIL_T31_262px.png/150px-FUSIL_T31_262px.png',
+    image: 'https://wiki.dreadcast.net/images/7/71/FUSIL_T31_262px.png',
     tech: 200,
     integrity: 80,
     type: '2handsShot',
@@ -1243,8 +1215,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '559',
     name: 'Magnum à lunette',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/0/04/MAGNUM-A-LUNETTE262.png/150px-MAGNUM-A-LUNETTE262.png',
+    image: 'https://wiki.dreadcast.net/images/0/04/MAGNUM-A-LUNETTE262.png',
     tech: 550,
     integrity: 130,
     type: '1handShot',
@@ -1286,8 +1257,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '561',
     name: 'Pistolet 9mm',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/a/a3/NEO-BERETTA_9mm_262px.png/150px-NEO-BERETTA_9mm_262px.png',
+    image: 'https://wiki.dreadcast.net/images/a/a3/NEO-BERETTA_9mm_262px.png',
     tech: 240,
     integrity: 150,
     type: '1handShot',
@@ -1362,8 +1332,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '564',
     name: 'Sulfateuse',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/2/2a/SULFATEUSE262.png/150px-SULFATEUSE262.png',
+    image: 'https://wiki.dreadcast.net/images/2/2a/SULFATEUSE262.png',
     tech: 130,
     integrity: 350,
     type: '2handsShot',
@@ -1404,9 +1373,9 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '566',
-    name: 'Gun A 317/Gun A370',
+    name: 'Gun A 317',
     image:
-      'https://wiki.dreadcast.net/images/thumb/0/01/A-317_REVOLVER_MAGNUS_BLEU_262-PX.png/90px-A-317_REVOLVER_MAGNUS_BLEU_262-PX.png',
+      'https://wiki.dreadcast.net/images/0/01/A-317_REVOLVER_MAGNUS_BLEU_262-PX.png',
     tech: 320,
     integrity: 300,
     type: '1handShot',
@@ -1420,7 +1389,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     id: '567',
     name: 'Fusil A 317 T',
     image:
-      'https://wiki.dreadcast.net/images/thumb/4/4f/A-317_FUSIL_D_ASSAULT_GRIPPIN_ROUGE_262-PX.png/150px-A-317_FUSIL_D_ASSAULT_GRIPPIN_ROUGE_262-PX.png',
+      'https://wiki.dreadcast.net/images/4/4f/A-317_FUSIL_D_ASSAULT_GRIPPIN_ROUGE_262-PX.png',
     tech: 470,
     integrity: 300,
     type: '2handsShot',
@@ -1433,8 +1402,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '568',
     name: 'Fusil A 332',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/b/be/A332WEAPON_PM_ROUGE.png/100px-A332WEAPON_PM_ROUGE.png',
+    image: 'https://wiki.dreadcast.net/images/b/be/A332WEAPON_PM_ROUGE.png',
     tech: 130,
     integrity: 350,
     type: '2handsShot',
@@ -1447,8 +1415,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '569',
     name: 'Azmat',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/a/a9/AZMAT262.png/150px-AZMAT262.png',
+    image: 'https://wiki.dreadcast.net/images/a/a9/AZMAT262.png',
     tech: 320,
     integrity: 90,
     type: '1handShot',
@@ -1461,8 +1428,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '570',
     name: 'Flingue plasma',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/4/48/FLINGUE_PLASMA262.png/150px-FLINGUE_PLASMA262.png',
+    image: 'https://wiki.dreadcast.net/images/4/48/FLINGUE_PLASMA262.png',
     tech: 550,
     integrity: 130,
     type: '1handShot',
@@ -1475,8 +1441,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '571',
     name: 'Fusil laser',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/f/ff/FUSIL_LASER2.png/150px-FUSIL_LASER2.png',
+    image: 'https://wiki.dreadcast.net/images/f/ff/FUSIL_LASER2.png',
     tech: 470,
     integrity: 145,
     type: '2handsShot',
@@ -1518,8 +1483,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '573',
     name: 'Gatling laser',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/0/0c/Gatling_Laser2.png/150px-Gatling_Laser2.png',
+    image: 'https://wiki.dreadcast.net/images/0/0c/Gatling_Laser2.png',
     tech: 260,
     integrity: 100,
     type: '2handsShot',
@@ -1579,8 +1543,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '575',
     name: 'V42J4',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/b/b6/V42J4_262px.png/150px-V42J4_262px.png',
+    image: 'https://wiki.dreadcast.net/images/b/b6/V42J4_262px.png',
     tech: 260,
     integrity: 120,
     type: '2handsShot',
@@ -1603,8 +1566,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '576',
     name: 'Runner',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/5/5e/Runner_262.png/150px-Runner_262.png',
+    image: 'https://wiki.dreadcast.net/images/5/5e/Runner_262.png',
     tech: 320,
     integrity: 90,
     type: '1handShot',
@@ -1623,8 +1585,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '577',
     name: 'Canon Anti-matériel',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/b/b8/Gatling_G1.png/150px-Gatling_G1.png',
+    image: 'https://wiki.dreadcast.net/images/b/b8/Gatling_G1.png',
     tech: 260,
     integrity: 100,
     type: '2handsShot',
@@ -1661,8 +1622,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '578',
     name: 'Fusil Sniper Laser',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/1/18/Fusilsniper.png/150px-Fusilsniper.png',
+    image: 'https://wiki.dreadcast.net/images/1/18/Fusilsniper.png',
     tech: 470,
     integrity: 145,
     type: '2handsShot',
@@ -1700,8 +1660,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '580',
     name: 'Lance-flammes',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/3/3e/LANCE-FLAME2.png/150px-LANCE-FLAME2.png',
+    image: 'https://wiki.dreadcast.net/images/3/3e/LANCE-FLAME2.png',
     tech: 0,
     integrity: 110,
     type: '2handsShot',
@@ -1752,9 +1711,8 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '582',
-    name: 'Arc électrique/Arc à positron',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/c/c7/Arc_positrons.png/150px-Arc_positrons.png',
+    name: 'Arc à positron',
+    image: 'https://wiki.dreadcast.net/images/c/c7/Arc_positrons.png',
     tech: 450,
     integrity: 150,
     type: '2handsShot',
@@ -1782,7 +1740,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '583',
-    name: 'Arc de contrôle/RedBow',
+    name: 'Arc de contrôle',
     image: 'https://wiki.dreadcast.net/images/7/7d/Arc_controle_bleu.png',
     tech: 460,
     integrity: 150,
@@ -1806,8 +1764,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '584',
     name: 'Arc à poulie',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/4/4a/Arc_a_poulie.png/150px-Arc_a_poulie.png',
+    image: 'https://wiki.dreadcast.net/images/4/4a/Arc_a_poulie.png',
     tech: 450,
     integrity: 180,
     type: '2handsShot',
@@ -1830,8 +1787,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '585',
     name: 'Pistaclou',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/2/21/PISTACLOUS262.png/150px-PISTACLOUS262.png',
+    image: 'https://wiki.dreadcast.net/images/2/21/PISTACLOUS262.png',
     tech: 80,
     integrity: 80,
     type: '1handShot',
@@ -1883,8 +1839,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '589',
     name: 'Railgun',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/c/c6/RAIL-GUN262.png/150px-RAIL-GUN262.png',
+    image: 'https://wiki.dreadcast.net/images/c/c6/RAIL-GUN262.png',
     tech: 260,
     integrity: 60,
     type: '2handsShot',
@@ -1897,8 +1852,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '590',
     name: 'Vibrolame',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/2/2e/Vibrolame.png/100px-Vibrolame.png',
+    image: 'https://wiki.dreadcast.net/images/2/2e/Vibrolame.png',
     tech: 360,
     integrity: 150,
     type: '1handShot',
@@ -1911,6 +1865,308 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
       {
         property: 'agility',
         value: 110,
+      },
+    ],
+  },
+  {
+    id: '591',
+    name: 'Dardepoing',
+    image: 'https://wiki.dreadcast.net/images/9/99/Dardepoing.png',
+    tech: 120,
+    integrity: 200,
+    type: '1handMelee',
+    effects: [
+      {
+        property: 'strength',
+        value: 5,
+      },
+    ],
+    minDamage: 20,
+    maxDamage: 38,
+    hitsPerRound: 1,
+    hands: 1,
+    reach: 0,
+  },
+  {
+    id: '592',
+    name: 'Gants Dreadball',
+    image: 'https://wiki.dreadcast.net/images/3/32/Gants_dreadball.png',
+    tech: 240,
+    integrity: 300,
+    type: '2handsMelee',
+    prerequisites: [
+      {
+        property: 'strength',
+        value: 50,
+      },
+    ],
+    effects: [
+      {
+        property: 'strength',
+        value: 5,
+      },
+    ],
+    minDamage: 38,
+    maxDamage: 70,
+    hitsPerRound: 1,
+    hands: 2,
+    reach: 0,
+  },
+  {
+    id: '593',
+    name: 'Gants de fer',
+    image: 'https://wiki.dreadcast.net/images/1/17/Gant-de-fer.png',
+    tech: 240,
+    integrity: 300,
+    type: '2handsMelee',
+    prerequisites: [
+      {
+        property: 'strength',
+        value: 50,
+      },
+    ],
+    effects: [
+      {
+        property: 'strength',
+        value: 5,
+      },
+    ],
+    minDamage: 38,
+    maxDamage: 70,
+    hitsPerRound: 1,
+    hands: 2,
+    reach: 0,
+  },
+  {
+    id: '594',
+    name: 'Golden Punch',
+    image: 'https://wiki.dreadcast.net/images/5/5f/Golden_punch.png',
+    tech: 0,
+    integrity: 300,
+    type: '2handsMelee',
+    effects: [
+      {
+        property: 'agility',
+        value: 20,
+      },
+    ],
+    minDamage: 3,
+    maxDamage: 7,
+    hitsPerRound: 1,
+    hands: 2,
+    reach: 0,
+  },
+  {
+    id: '595',
+    name: 'Gants techno sombres',
+    image: 'https://wiki.dreadcast.net/images/0/05/Gants_techno_sombres.png',
+    tech: 60,
+    integrity: 100,
+    type: '2handsMelee',
+    prerequisites: [
+      {
+        property: 'computing',
+        value: 150,
+      },
+      {
+        property: 'agility',
+        value: 130,
+      },
+    ],
+    effects: [
+      {
+        property: 'computing',
+        value: 10,
+      },
+    ],
+    minDamage: 2,
+    maxDamage: 6,
+    hitsPerRound: 1,
+    hands: 2,
+    reach: 0,
+  },
+  {
+    id: '596',
+    name: 'Bracelet A323',
+    image: 'https://wiki.dreadcast.net/images/9/96/Braclet_A323.png',
+    tech: 360,
+    integrity: 300,
+    type: '1handMelee',
+    minDamage: 21,
+    maxDamage: 31,
+    hitsPerRound: 1,
+    hands: 1,
+    reach: 0,
+  },
+  {
+    id: '597',
+    name: 'Épée A317N',
+    image: 'https://wiki.dreadcast.net/images/6/6c/A-317_SABRE_BLEU_262-PX.png',
+    tech: 460,
+    integrity: 300,
+    type: '2handsMelee',
+    minDamage: 34,
+    maxDamage: 66,
+    hitsPerRound: 1,
+    hands: 2,
+    reach: 0,
+  },
+  {
+    id: '598',
+    name: 'Épée A317P',
+    image: 'https://wiki.dreadcast.net/images/6/6c/A-317_SABRE_BLEU_262-PX.png',
+    tech: 60,
+    integrity: 300,
+    type: '2handsMelee',
+    minDamage: 34,
+    maxDamage: 66,
+    hitsPerRound: 1,
+    hands: 2,
+    reach: 0,
+    effects: [
+      {
+        property: 'robustness',
+        value: 40,
+      },
+      {
+        property: 'speed',
+        value: -2,
+      },
+    ],
+  },
+  {
+    id: '599',
+    name: 'Ironix',
+    image: 'https://wiki.dreadcast.net/images/1/13/Ironix.png',
+    tech: 180,
+    integrity: 120,
+    type: '2handsMelee',
+    minDamage: 50,
+    maxDamage: 78,
+    hitsPerRound: 1,
+    hands: 2,
+    reach: 0,
+    prerequisites: [
+      {
+        property: 'strength',
+        value: 120,
+      },
+      {
+        property: 'agility',
+        value: 110,
+      },
+    ],
+    effects: [
+      {
+        property: 'agility',
+        value: -5,
+      },
+    ],
+  },
+  {
+    id: '600',
+    name: 'Technohache',
+    image: 'https://wiki.dreadcast.net/images/c/c4/Hache_techno.png',
+    tech: 240,
+    integrity: 160,
+    type: '1handMelee',
+    minDamage: 22,
+    maxDamage: 34,
+    hitsPerRound: 1,
+    hands: 1,
+    reach: 0,
+    prerequisites: [
+      {
+        property: 'strength',
+        value: 60,
+      },
+      {
+        property: 'agility',
+        value: 120,
+      },
+    ],
+  },
+  {
+    id: '601',
+    name: 'Chaine cloutée',
+    image: 'https://wiki.dreadcast.net/images/f/fe/Chaine_cloutee.png',
+    tech: 320,
+    integrity: 140,
+    type: '1handMelee',
+    minDamage: 20,
+    maxDamage: 32,
+    hitsPerRound: 1,
+    hands: 1,
+    reach: 0,
+    prerequisites: [
+      {
+        property: 'agility',
+        value: 130,
+      },
+    ],
+  },
+  {
+    id: '602',
+    name: 'Gun A370',
+    image: 'https://wiki.dreadcast.net/images/9/9a/Gun_A370.png',
+    tech: 320,
+    integrity: 300,
+    type: '1handShot',
+    minDamage: 6,
+    maxDamage: 12,
+    hitsPerRound: 2,
+    hands: 1,
+    reach: 4,
+  },
+  {
+    id: '603',
+    name: 'Arc électrique',
+    image: 'https://wiki.dreadcast.net/images/c/cb/Arc_electrique.png',
+    tech: 450,
+    integrity: 150,
+    type: '2handsShot',
+    minDamage: 20,
+    maxDamage: 48,
+    hitsPerRound: 1,
+    hands: 2,
+    reach: 9,
+    prerequisites: [
+      {
+        property: 'agility',
+        value: 180,
+      },
+      {
+        property: 'perception',
+        value: 100,
+      },
+    ],
+    effects: [
+      {
+        property: 'perception',
+        value: 5,
+      },
+    ],
+  },
+  {
+    id: '604',
+    name: 'RedBow',
+    image: 'https://wiki.dreadcast.net/images/d/d9/Redbow.png',
+    tech: 460,
+    integrity: 150,
+    type: '2handsShot',
+    minDamage: 22,
+    maxDamage: 40,
+    hitsPerRound: 1,
+    hands: 2,
+    reach: 12,
+    prerequisites: [
+      {
+        property: 'agility',
+        value: 120,
+      },
+      {
+        property: 'perception',
+        value: 150,
       },
     ],
   },

@@ -3,7 +3,7 @@ import type { ItemResponseDto } from './item.dto';
 export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
   {
     id: '200',
-    name: 'Bas de robe néon/Bas de robe rouge',
+    name: 'Bas de robe néon',
     image: 'https://wiki.dreadcast.net/images/c/cf/Bas_de_robe_neon.png',
     tech: 300,
     integrity: 60,
@@ -22,6 +22,12 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
     tech: 350,
     integrity: 50,
     type: 'legs',
+    effects: [
+      {
+        property: 'stealth',
+        value: -10,
+      },
+    ],
   },
   {
     id: '202',
@@ -33,9 +39,8 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '203',
-    name: 'Collants Dermiques/Collants standard',
-    image:
-      'https://wiki.dreadcast.net/images/thumb/d/d4/Collants_dermiques.png/150px-Collants_dermiques.png',
+    name: 'Collants Dermiques',
+    image: 'https://wiki.dreadcast.net/images/d/d4/Collants_dermiques.png',
     tech: 320,
     integrity: 75,
     type: 'legs',
@@ -139,7 +144,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '208',
-    name: 'Jambières sanguinaires/Jambières Dreadball',
+    name: 'Jambières sanguinaires',
     image: 'https://wiki.dreadcast.net/images/c/cb/Jambieres_sanguinaires.png',
     tech: 330,
     integrity: 110,
@@ -223,7 +228,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '211',
-    name: 'Jean Lev/Jean Lev2/Jean Lev Black',
+    name: 'Jean Lev',
     image: 'https://wiki.dreadcast.net/images/2/2e/Jean.png',
     tech: 320,
     integrity: 80,
@@ -237,7 +242,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '212',
-    name: 'Jupe Hansen/Jupe Keÿlt/Jupe Plissée',
+    name: 'Jupe Hansen',
     image: 'https://wiki.dreadcast.net/images/b/b9/Jupe_hansen.png',
     tech: 280,
     integrity: 60,
@@ -351,7 +356,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '218',
-    name: 'Pantalon Bijela/Pantalon de Costume/Pantalon de Tailleur',
+    name: 'Pantalon Bijela',
     image: 'https://wiki.dreadcast.net/images/f/f4/Pantalon_Bijela.png',
     tech: 350,
     integrity: 70,
@@ -377,7 +382,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '220',
-    name: 'Pantalon Cyber/Pantalon de Chasseur/Pantalon Keynes Mills',
+    name: 'Pantalon Cyber',
     image: 'https://wiki.dreadcast.net/images/4/40/Pantalon_cyber.png',
     tech: 360,
     integrity: 90,
@@ -413,16 +418,15 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '222',
-    name: "Pantalons d'éveil",
-    image:
-      'https://wiki.dreadcast.net/images/thumb/e/e8/Pantalon_deveil_F.png/150px-Pantalon_deveil_F.png',
+    name: "Pantalons d'éveil (M)",
+    image: 'https://wiki.dreadcast.net/images/a/ab/Pantalon_deveil_H.png',
     tech: 0,
     integrity: 0,
     type: 'legs',
   },
   {
     id: '223',
-    name: 'Pantalon Eye/Pantalon militaire',
+    name: 'Pantalon Eye',
     image: 'https://wiki.dreadcast.net/images/7/76/Pantalon_eye.png',
     tech: 400,
     integrity: 90,
@@ -472,7 +476,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '226',
-    name: 'Short Boxe/Short Boxe Gold/Short Sport',
+    name: 'Short Boxe',
     image: 'https://wiki.dreadcast.net/images/d/d2/Short_boxe.png',
     tech: 350,
     integrity: 60,
@@ -490,8 +494,8 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '227',
-    name: 'Short Cyt/Short Hansen/Short Mahx',
-    image: 'https://wiki.dreadcast.net/images/d/d2/Short_boxe.png',
+    name: 'Short Cyt',
+    image: 'https://wiki.dreadcast.net/images/9/9d/Short_cyt.png',
     tech: 340,
     integrity: 65,
     type: 'legs',
@@ -548,7 +552,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '231',
-    name: 'String Sexy/String Ecureuil',
+    name: 'String Sexy',
     image: 'https://wiki.dreadcast.net/images/7/77/Stringsexy.png',
     tech: 250,
     integrity: 60,
@@ -596,7 +600,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '234',
-    name: 'Pantalon AXXXP/Pantalon AXXXT',
+    name: 'Pantalon AXXXP',
     image: 'https://wiki.dreadcast.net/images/8/8f/Pantalon_01.png',
     tech: 400,
     integrity: 300,
@@ -669,5 +673,283 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
         value: 6,
       },
     ],
+  },
+  {
+    id: '239',
+    name: 'Bas de robe rouge',
+    image: 'https://wiki.dreadcast.net/images/4/4d/Bas_robe_rouge.png',
+    tech: 300,
+    integrity: 60,
+    type: 'legs',
+    prerequisites: [
+      {
+        property: 'agility',
+        value: 60,
+      },
+    ],
+  },
+  {
+    id: '240',
+    name: 'Collants standard',
+    image: 'https://wiki.dreadcast.net/images/f/f1/Collants_standard.png',
+    tech: 320,
+    integrity: 75,
+    type: 'legs',
+    prerequisites: [
+      {
+        property: 'agility',
+        value: 10,
+      },
+      {
+        property: 'robustness',
+        value: 20,
+      },
+    ],
+    effects: [
+      {
+        property: 'agility',
+        value: 10,
+      },
+      {
+        property: 'robustness',
+        value: -2,
+      },
+    ],
+  },
+  {
+    id: '241',
+    name: 'Jambières Dreadball',
+    image: 'https://wiki.dreadcast.net/images/9/93/Jambieres_dreadball.png',
+    tech: 330,
+    integrity: 110,
+    type: 'legs',
+    prerequisites: [
+      {
+        property: 'strength',
+        value: 120,
+      },
+      {
+        property: 'robustness',
+        value: 50,
+      },
+    ],
+    effects: [
+      {
+        property: 'strength',
+        value: 16,
+      },
+      {
+        property: 'agility',
+        value: -4,
+      },
+      {
+        property: 'robustness',
+        value: -4,
+      },
+    ],
+  },
+  {
+    id: '242',
+    name: 'Jean Lev2',
+    image: 'https://wiki.dreadcast.net/images/2/27/Jean_rouge.png',
+    tech: 320,
+    integrity: 80,
+    type: 'legs',
+    effects: [
+      {
+        property: 'robustness',
+        value: 5,
+      },
+    ],
+  },
+  {
+    id: '243',
+    name: 'Jean Lev Black',
+    image: 'https://wiki.dreadcast.net/images/c/c3/Jean_noir.png',
+    tech: 320,
+    integrity: 80,
+    type: 'legs',
+    effects: [
+      {
+        property: 'robustness',
+        value: 5,
+      },
+    ],
+  },
+  {
+    id: '244',
+    name: 'Jupe Keÿlt',
+    image: 'https://wiki.dreadcast.net/images/3/33/Jupe_keylt.png',
+    tech: 280,
+    integrity: 60,
+    type: 'legs',
+    effects: [
+      {
+        property: 'health',
+        value: 15,
+      },
+    ],
+  },
+  {
+    id: '245',
+    name: 'Jupe Plissée',
+    image: 'https://wiki.dreadcast.net/images/2/2d/Jupe_plissee.png',
+    tech: 280,
+    integrity: 60,
+    type: 'legs',
+    effects: [
+      {
+        property: 'health',
+        value: 15,
+      },
+    ],
+  },
+  {
+    id: '246',
+    name: 'Pantalon de Costume',
+    image: 'https://wiki.dreadcast.net/images/0/0b/Pantalon_costume.png',
+    tech: 350,
+    integrity: 70,
+    type: 'legs',
+  },
+  {
+    id: '247',
+    name: 'Pantalon de Tailleur',
+    image: 'https://wiki.dreadcast.net/images/f/ff/Pantalon_tailleur.png',
+    tech: 350,
+    integrity: 70,
+    type: 'legs',
+  },
+  {
+    id: '248',
+    name: 'Pantalon de Chasseur',
+    image: 'https://wiki.dreadcast.net/images/7/7e/Pantalon_chasseur.png',
+    tech: 360,
+    integrity: 90,
+    type: 'legs',
+    effects: [
+      {
+        property: 'agility',
+        value: 4,
+      },
+      {
+        property: 'stealth',
+        value: 3,
+      },
+    ],
+  },
+  {
+    id: '249',
+    name: 'Pantalon Keynes Mills',
+    image: 'https://wiki.dreadcast.net/images/b/b8/Pantalon_Keynes_Mills.png',
+    tech: 360,
+    integrity: 90,
+    type: 'legs',
+    effects: [
+      {
+        property: 'agility',
+        value: 4,
+      },
+      {
+        property: 'stealth',
+        value: 3,
+      },
+    ],
+  },
+  {
+    id: '250',
+    name: "Pantalons d'éveil (F)",
+    image: 'https://wiki.dreadcast.net/images/e/e8/Pantalon_deveil_F.png',
+    tech: 0,
+    integrity: 0,
+    type: 'legs',
+  },
+  {
+    id: '251',
+    name: 'Pantalon militaire',
+    image: 'https://wiki.dreadcast.net/images/1/1c/Pantalon_militaire.png',
+    tech: 400,
+    integrity: 90,
+    type: 'legs',
+  },
+  {
+    id: '252',
+    name: 'Short Boxe Gold',
+    image: 'https://wiki.dreadcast.net/images/a/a5/Short_boxe_gold.png',
+    tech: 350,
+    integrity: 60,
+    type: 'legs',
+    effects: [
+      {
+        property: 'strength',
+        value: 2,
+      },
+      {
+        property: 'agility',
+        value: 2,
+      },
+    ],
+  },
+  {
+    id: '253',
+    name: 'Short Sport',
+    image: 'https://wiki.dreadcast.net/images/0/00/Short_sport.png',
+    tech: 350,
+    integrity: 60,
+    type: 'legs',
+    effects: [
+      {
+        property: 'strength',
+        value: 2,
+      },
+      {
+        property: 'agility',
+        value: 2,
+      },
+    ],
+  },
+  {
+    id: '254',
+    name: 'Short Hansen',
+    image: 'https://wiki.dreadcast.net/images/2/29/Short_hansen.png',
+    tech: 340,
+    integrity: 65,
+    type: 'legs',
+    effects: [
+      {
+        property: 'agility',
+        value: 6,
+      },
+    ],
+  },
+  {
+    id: '255',
+    name: 'Short Mahx',
+    image: 'https://wiki.dreadcast.net/images/d/d7/Short_mahx.png',
+    tech: 340,
+    integrity: 65,
+    type: 'legs',
+    effects: [
+      {
+        property: 'agility',
+        value: 6,
+      },
+    ],
+  },
+  {
+    id: '256',
+    name: 'String Ecureuil',
+    image: 'https://wiki.dreadcast.net/images/f/f2/Stringecureuil.png',
+    tech: 250,
+    integrity: 60,
+    type: 'legs',
+  },
+  {
+    id: '257',
+    name: 'Pantalon AXXXT',
+    image: 'https://wiki.dreadcast.net/images/8/8f/Pantalon_01.png',
+    tech: 400,
+    integrity: 300,
+    type: 'legs',
   },
 ];
