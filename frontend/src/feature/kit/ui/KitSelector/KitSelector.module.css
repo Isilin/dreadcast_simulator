@@ -52,6 +52,8 @@
     pointer-events: none;
     opacity: 0.6;
   }
+
+  composes: fadeInUp from '@/styles/animations.module.css';
 }
 
 .placeholder {

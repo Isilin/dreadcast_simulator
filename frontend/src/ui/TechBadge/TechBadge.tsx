@@ -1,4 +1,4 @@
-import styles from './tech-badge.module.css';
+import styles from './TechBadge.module.css';
 
 interface Props {
   value: number;

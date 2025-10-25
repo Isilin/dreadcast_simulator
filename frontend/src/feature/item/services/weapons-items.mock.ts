@@ -140,7 +140,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     effects: [
       {
         property: 'strength',
-        value: 5,
+        value: 8,
       },
     ],
     minDamage: 16,
@@ -279,7 +279,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
     effects: [
       {
         property: 'strength',
-        value: 10,
+        value: 15,
       },
     ],
     minDamage: 18,

@@ -3,7 +3,7 @@ import styles from './KitLabel.module.css';
 import { StatValues } from '@/domain';
 import type { Kit } from '@/feature/kit';
 import { EffectChip } from '@/ui/effect-chip';
-import { TechBadge } from '@/ui/tech-badge';
+import { TechBadge } from '@/ui/TechBadge';
 
 interface Props {
   kit: Kit;

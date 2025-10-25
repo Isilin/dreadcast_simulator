@@ -1,0 +1,8 @@
+.container {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  background: var(--color-bg);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+  z-index: 20;
+}

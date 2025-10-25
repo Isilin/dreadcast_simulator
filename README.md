@@ -92,6 +92,7 @@ Chaque contribution aide à maintenir et améliorer l'outil !
 - [ ] Version mobile responsive
 - [ ] Formules de stats avancées (encaissement, etc...)
 - [ ] Bonus d'armes
+- [ ] Mettre à jour les talents pour DCv4.14.10
 
 ## ❓ FAQ
 
