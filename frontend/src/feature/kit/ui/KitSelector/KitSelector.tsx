@@ -35,7 +35,7 @@ export const KitSelector = ({ spot }: Props) => {
         {noKits ? (
           <Card className={styles.card}>Choisir un kit</Card>
         ) : (
-          <div className={styles.content}>
+          <Card className={styles.content}>
             <div className={styles.names}>
               {kits?.map(
                 (k, i) =>
@@ -72,7 +72,7 @@ export const KitSelector = ({ spot }: Props) => {
                 {techTotal}
               </span>
             </div>
-          </div>
+          </Card>
         )}
       </Dialog.Trigger>
       <KitDialogSelector spot={spot} />

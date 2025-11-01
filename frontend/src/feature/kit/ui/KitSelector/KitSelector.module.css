@@ -31,7 +31,11 @@
 
 /* Contenu rempli */
 .content {
-  display: grid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  height: 160px;
   gap: 8px;
 }
 
