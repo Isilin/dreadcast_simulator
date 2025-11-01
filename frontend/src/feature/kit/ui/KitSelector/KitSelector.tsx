@@ -60,6 +60,7 @@ export const KitSelector = ({ spot }: Props) => {
                   <EffectChip
                     value={total}
                     tag={StatValues[stat as Stat].tag}
+                    name={StatValues[stat as Stat].label}
                     key={stat}
                   />
                 ))}

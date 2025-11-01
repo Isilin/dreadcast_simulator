@@ -20,6 +20,7 @@ export const KitLabel = ({ kit }: Props) => {
             key={e.property}
             value={e.value}
             tag={StatValues[e.property].tag}
+            name={StatValues[e.property].label}
           />
         ))}
       </div>
