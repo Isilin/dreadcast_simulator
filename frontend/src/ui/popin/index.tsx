@@ -6,18 +6,20 @@ import styles from './popin.module.css';
 interface Props {
   content: ReactNode;
   placement?: 'top' | 'bottom' | 'left' | 'right';
+  className?: string;
 }
 
 export const Popin = ({
   content,
   children,
   placement,
+  className,
 }: PropsWithChildren<Props>) => {
   return (
     <Tooltip.Root delay={100}>
       <Tooltip.Trigger
         render={(props: HTMLProps<HTMLHeadingElement>) => (
-          <span {...props}>{props.children}</span>
+          <span {...{ ...props, className }}>{props.children}</span>
         )}
       >
         {children}

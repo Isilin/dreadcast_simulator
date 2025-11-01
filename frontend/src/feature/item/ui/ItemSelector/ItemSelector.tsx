@@ -24,8 +24,12 @@ export const ItemSelector = ({ spot }: Props) => {
   };
   return (
     <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
-      <Dialog.Trigger className={styles.card}>
-        {items[spot] ? <ItemCard item={items[spot]} /> : 'Choisir un item'}
+      <Dialog.Trigger className={styles.wrapper}>
+        {items[spot] ? (
+          <ItemCard item={items[spot]} variant="slot" />
+        ) : (
+          <div className={styles.card}>Choisir un item</div>
+        )}
       </Dialog.Trigger>
       <ItemDialogSelector
         onItemSelect={onItemSelect}

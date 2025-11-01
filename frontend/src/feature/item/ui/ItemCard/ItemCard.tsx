@@ -4,6 +4,7 @@ import { StatValues } from '@/domain';
 import { useImplantsEffects } from '@/feature/implant';
 import { itemPrerequisitesMet, type Item } from '@/feature/item';
 import { useRaceStats } from '@/feature/profile';
+import { usePureStatSelector } from '@/feature/suit';
 import { EffectChip } from '@/ui/effect-chip';
 import { WarningIcon } from '@/ui/icons';
 import { Popin } from '@/ui/popin';
@@ -11,85 +12,104 @@ import { UiImage } from '@/ui/UiImage/UiImage';
 
 interface Props {
   item: Item;
+  variant?: 'list' | 'slot';
   onClick?: () => void;
 }
 
-// TODO mettre un spinner aussi pour le temps de chargement de l'aperçu de l'item
-
-export const ItemCard = ({ item, onClick }: Props) => {
+export const ItemCard = ({ item, variant = 'list', onClick }: Props) => {
   const raceStats = useRaceStats();
+  const pureStats = usePureStatSelector();
   const implantsEffects = useImplantsEffects();
   const prerequisitesOk = itemPrerequisitesMet(
     item,
     raceStats || {},
     implantsEffects,
   );
+  const {
+    name,
+    image,
+    integrity,
+    tech,
+    effects = [],
+    prerequisites = [],
+  } = item;
 
   return (
-    <article className={styles['item-card']} onClick={onClick}>
-      <div className={styles['item-head']}>
-        <Popin content={item.name}>
-          <h3 className={styles['item-title']}>
-            {!prerequisitesOk && <WarningIcon />}
-            {item.name}
-          </h3>
+    <article
+      className={[
+        styles.itemCard,
+        styles[variant],
+        prerequisitesOk ? '' : styles.invalid,
+      ].join(' ')}
+      onClick={onClick}
+      role="button"
+      aria-label={name}
+    >
+      {!prerequisitesOk && prerequisites.length > 0 && (
+        <Popin
+          className={styles.warningIcon}
+          content={
+            <>
+              <strong className={styles.prerequisitesTitle}>Prérequis</strong>
+              <ul className={styles.prerequisites}>
+                {prerequisites.map((prerequisite) => {
+                  const invalid =
+                    pureStats[prerequisite.property] < prerequisite.value;
+
+                  return (
+                    <li
+                      key={`prerequisite-` + prerequisite.property}
+                      className={invalid ? styles.invalid : ''}
+                    >
+                      <span className={styles.key}>{prerequisite.value}</span>
+                      <span className={styles.value}>
+                        {StatValues[prerequisite.property].tag}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </>
+          }
+        >
+          <WarningIcon />
         </Popin>
+      )}
+      <div className={styles.meta}>
+        <span className={styles.badge} title="Durabilité">
+          <span className={styles.key}>Durabilité :</span> {integrity}
+        </span>
+        <span className={styles.badge} title="Tech">
+          <span className={styles.key}>Tech :</span> {tech}
+        </span>
+      </div>
+      <div className={styles.thumbWrapper}>
         <UiImage
-          src={item.image}
-          alt={item.name}
-          wrapperClassName={styles['item-thumb']}
+          src={image}
+          alt={name}
+          wrapperClassName={styles.thumb}
           radius={8}
           fit="contain"
         />
       </div>
-      <dl className={styles['item-meta']}>
-        <div>
-          <dt>Durabilité :</dt>
-          <dd>{item.integrity}</dd>
-        </div>
-        <div>
-          <dt>Tech :</dt>
-          <dd>{item.tech}</dd>
-        </div>
-      </dl>
-      <ul className={styles['item-stats']}>
-        {item.prerequisites?.map((prerequisite) => {
-          const totalPrereq =
-            Number(
-              raceStats?.[prerequisite.property as keyof typeof raceStats],
-            ) ||
-            0 +
-              (Number(
-                implantsEffects?.[
-                  prerequisite.property as keyof typeof implantsEffects
-                ],
-              ) || 0);
-
-          return (
-            <li
-              key={`prerequisite-` + prerequisite.property}
-              className={
-                totalPrereq < prerequisite.value ? styles['invalid'] : ''
-              }
-            >
-              <span className={styles.key}>{prerequisite.value}</span>
-              <span className={styles.value}>
-                {StatValues[prerequisite.property].tag}
-              </span>
+      <header className={styles.head}>
+        <h3 className={styles.title} title={name}>
+          {name}
+        </h3>
+      </header>
+      {effects.length > 0 && (
+        <ul className={styles.effects}>
+          {effects.map((effect) => (
+            <li key={`effect-` + effect.property}>
+              <EffectChip
+                value={effect.value}
+                tag={StatValues[effect.property].tag}
+                name={StatValues[effect.property].label}
+              />
             </li>
-          );
-        })}
-      </ul>
-      <ul className={styles['item-stats']}>
-        {item.effects?.map((effect) => (
-          <li key={`effect-` + effect.property}>
-            <EffectChip
-              value={effect.value}
-              tag={StatValues[effect.property].tag}
-            />
-          </li>
-        ))}
-      </ul>
+          ))}
+        </ul>
+      )}
     </article>
   );
 };

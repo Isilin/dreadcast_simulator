@@ -22,13 +22,16 @@
   --radius: 14px;
   --gap: 16px;
   --small-gap: 8px;
+  --very-small-gap: 4px;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --font: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 
   @media (prefers-color-scheme: dark) {
     --color-blue: oklch(69% 50% 264deg);
     --color-red: oklch(80% 55% 31deg);
     --color-orange: oklch(78% 53% 70deg);
     --color-green: oklch(72% 48% 150deg);
+    --color-cyan: #00d4ff;
 
     --color-gray-50: oklch(17% 1% 264deg / 95%);
     --color-gray-100: oklch(28% 3% 264deg / 65%);

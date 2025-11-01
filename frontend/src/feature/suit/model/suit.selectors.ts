@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { computeStat } from './suit.rules';
+import { computeStat, computeStatWithoutItems } from './suit.rules';
 
 import { StatValues, type Stat } from '@/domain';
 import { useImplantsEffects } from '@/feature/implant';
@@ -33,6 +33,30 @@ export const useSuitSelector = () => {
         {} as Record<Stat, number>,
       ),
     [implantsEffects, itemEffects, items, kitsEffects, raceStats],
+  );
+
+  return stats;
+};
+
+export const usePureStatSelector = () => {
+  const raceStats = useRaceStats();
+  const implantsEffects = useImplantsEffects();
+
+  const stats = useMemo(
+    () =>
+      Object.keys(StatValues).reduce(
+        (acc, s) => {
+          const stat = s as Stat;
+          acc[stat] = computeStatWithoutItems(
+            stat,
+            raceStats || {},
+            implantsEffects,
+          );
+          return acc;
+        },
+        {} as Record<Stat, number>,
+      ),
+    [implantsEffects, raceStats],
   );
 
   return stats;
