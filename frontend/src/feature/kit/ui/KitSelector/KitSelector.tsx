@@ -7,6 +7,7 @@ import styles from './KitSelector.module.css';
 
 import { StatValues, type ItemSpot, type Stat } from '@/domain';
 import { useItemsState } from '@/feature/item';
+import { Card } from '@/ui/Card';
 import { EffectChip } from '@/ui/effect-chip';
 
 interface Props {
@@ -30,9 +31,9 @@ export const KitSelector = ({ spot }: Props) => {
 
   return (
     <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
-      <Dialog.Trigger className={styles.card} disabled={isDisable}>
+      <Dialog.Trigger className={styles.wrapper} disabled={isDisable}>
         {noKits ? (
-          <div className={styles.placeholder}>Choisir un kit</div>
+          <Card className={styles.card}>Choisir un kit</Card>
         ) : (
           <div className={styles.content}>
             <div className={styles.names}>

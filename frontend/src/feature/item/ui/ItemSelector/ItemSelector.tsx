@@ -8,6 +8,7 @@ import { ItemDialogSelector } from '../ItemDialogSelector';
 import styles from './ItemSelector.module.css';
 
 import { type ItemSpot } from '@/domain';
+import { Card } from '@/ui/Card';
 
 interface Props {
   spot: ItemSpot;
@@ -28,7 +29,7 @@ export const ItemSelector = ({ spot }: Props) => {
         {items[spot] ? (
           <ItemCard item={items[spot]} variant="slot" />
         ) : (
-          <div className={styles.card}>Choisir un item</div>
+          <Card className={styles.card}>Choisir un item</Card>
         )}
       </Dialog.Trigger>
       <ItemDialogSelector

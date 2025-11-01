@@ -1,0 +1,30 @@
+.card {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: var(--very-small-gap);
+  padding: var(--small-gap);
+  background-color: var(--color-gray-100);
+  border: 1px solid var(--color-gray-200);
+  border-radius: 0.375rem;
+  color: var(--color-gray-900);
+  font-family: var(--font);
+  transition:
+    transform 0.12s ease,
+    border-color 0.12s ease,
+    background-color 0.12s ease,
+    border 0.12s ease;
+  outline: none;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-gray-200);
+      cursor: pointer;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 12px 32px rgba(0, 212, 255, 0.2);
+      border-color: var(--color-cyan);
+    }
+  }
+
+  composes: fadeInUp from '@/styles/animations.module.css';
+}

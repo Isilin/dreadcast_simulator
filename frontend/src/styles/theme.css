@@ -24,7 +24,7 @@
   --small-gap: 8px;
   --very-small-gap: 4px;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  --font: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --font: monospace, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 
   @media (prefers-color-scheme: dark) {
     --color-blue: oklch(69% 50% 264deg);

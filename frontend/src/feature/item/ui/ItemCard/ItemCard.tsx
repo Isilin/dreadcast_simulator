@@ -5,6 +5,7 @@ import { useImplantsEffects } from '@/feature/implant';
 import { itemPrerequisitesMet, type Item } from '@/feature/item';
 import { useRaceStats } from '@/feature/profile';
 import { usePureStatSelector } from '@/feature/suit';
+import { Card } from '@/ui/Card';
 import { EffectChip } from '@/ui/effect-chip';
 import { WarningIcon } from '@/ui/icons';
 import { Popin } from '@/ui/popin';
@@ -35,7 +36,7 @@ export const ItemCard = ({ item, variant = 'list', onClick }: Props) => {
   } = item;
 
   return (
-    <article
+    <Card
       className={[
         styles.itemCard,
         styles[variant],
@@ -110,6 +111,6 @@ export const ItemCard = ({ item, variant = 'list', onClick }: Props) => {
           ))}
         </ul>
       )}
-    </article>
+    </Card>
   );
 };

@@ -1,5 +1,5 @@
 export const BUILDS_KEY = 'dreadcast.builds.v1';
-export const DEFAULT_SLOTS = 10;
+export const DEFAULT_SLOTS = 5;
 
 export interface BuildSnapshot {
   profile: unknown;
