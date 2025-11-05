@@ -486,7 +486,7 @@ export const MOCK_CHEST_KITS: KitResponseDto[] = [
     effects: [
       {
         property: 'computing',
-        value: 12,
+        value: 13,
       },
     ],
   },

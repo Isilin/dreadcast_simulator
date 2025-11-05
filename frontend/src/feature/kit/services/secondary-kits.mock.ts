@@ -365,7 +365,7 @@ export const MOCK_SECONDARY_KITS: KitResponseDto[] = [
     effects: [
       {
         property: 'computing',
-        value: 12,
+        value: 11,
       },
     ],
   },
