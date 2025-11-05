@@ -154,35 +154,35 @@ export const MOCK_CHEST_KITS: KitResponseDto[] = [
     effects: [
       {
         property: 'strength',
-        value: 6,
+        value: 8,
       },
       {
         property: 'agility',
-        value: 6,
+        value: 8,
       },
       {
         property: 'robustness',
-        value: 6,
+        value: 8,
       },
       {
         property: 'perception',
-        value: 6,
+        value: 8,
       },
       {
         property: 'stealth',
-        value: 6,
+        value: 8,
       },
       {
         property: 'computing',
-        value: 6,
+        value: 8,
       },
       {
         property: 'medicine',
-        value: 6,
+        value: 8,
       },
       {
         property: 'engineering',
-        value: 6,
+        value: 8,
       },
     ],
   },
