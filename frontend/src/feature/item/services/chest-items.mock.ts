@@ -538,9 +538,19 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     name: 'Chemisier',
     image:
       'https://www.dreadcast.net/images/objets/ASSETS_chemise_01_262-PX.png',
-    tech: 320,
+    tech: 350,
     integrity: 60,
     type: 'chest',
+    effects: [
+      {
+        property: 'agility',
+        value: 5,
+      },
+      {
+        property: 'robustness',
+        value: -5,
+      },
+    ],
   },
   {
     id: '130',
