@@ -11,7 +11,7 @@ import styles from './KitDialogSelector.module.css';
 
 import { type ItemSpot } from '@/domain';
 import { getItemTypes } from '@/feature/item';
-import { DeleteButton } from '@/ui/delete-button';
+import { DeleteButton } from '@/ui/DeleteButton';
 
 interface Props {
   spot: ItemSpot;

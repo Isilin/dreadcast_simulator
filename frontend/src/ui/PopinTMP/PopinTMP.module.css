@@ -1,12 +1,12 @@
 .content {
   box-sizing: border-box;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--font-size);
+  line-height: var(--font-size-xxl);
   display: flex;
   flex-direction: column;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.375rem;
-  background-color: canvas;
+  padding: var(--very-small-gap) var(--small-gap);
+  border-radius: var(--small-radius);
+  background-color: var(--color-gray-150);
   transform-origin: var(--transform-origin);
   transition:
     transform 150ms,

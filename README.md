@@ -93,6 +93,7 @@ Chaque contribution aide à maintenir et améliorer l'outil !
 - [ ] Formules de stats avancées (encaissement, etc...)
 - [ ] Bonus d'armes
 - [ ] Mettre à jour les talents pour DCv4.14.10
+- [ ] Prise en compte des drogues
 
 ## ❓ FAQ
 

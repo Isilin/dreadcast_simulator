@@ -67,7 +67,6 @@
 }
 .title {
   font-weight: 700;
-  font-family: var(--font);
   font-size: 0.98rem;
   white-space: nowrap;
   overflow: hidden;

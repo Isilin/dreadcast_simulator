@@ -2,7 +2,7 @@ import { NumberField } from '@base-ui-components/react';
 
 import styles from './KitNumber.module.css';
 
-import { CursorGrowIcon, MinusIcon, PlusIcon } from '@/ui/icons';
+import { CursorGrowIcon, MinusIcon, PlusIcon } from '@/ui/IconTMP';
 
 interface Props {
   value: number;

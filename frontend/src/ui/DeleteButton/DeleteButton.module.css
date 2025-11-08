@@ -1,0 +1,46 @@
+/* container de la ligne, adapte si tu as déjà une grille */
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto; /* ex: select | dec | value | controls */
+  gap: var(--small-gap);
+  align-items: center;
+}
+
+/* bouton delete rouge discret, néon/dark-friendly */
+.button {
+  all: unset;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius);
+  background: var(--color-red-dark);
+  border: 1px solid color-mix(in oklch, var(--color-red) 35%, transparent);
+  color: var(--color-red);
+  cursor: pointer;
+  transition:
+    transform 0.08s ease,
+    background-color 0.12s ease,
+    border-color 0.12s ease,
+    opacity 0.12s ease;
+
+  &:hover {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    background-color: rgba(255, 0, 0, 0.12);
+    border-color: color-mix(in oklch, var(--color-red) 55%, transparent);
+  }
+  &:active {
+    background-color: var(--color-gray-100);
+  }
+  &:focus-visible {
+    outline: 2px solid color-mix(in oklch, var(--color-red) 60%, white 40%);
+    outline-offset: 2px;
+  }
+}
+
+.button svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}

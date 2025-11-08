@@ -54,23 +54,23 @@
   background-color: var(--color-gray-150);
   position: sticky;
   z-index: 1;
-  padding: 16px;
+  padding: var(--gap);
 }
 
 .header {
-  border-bottom: 1px solid #eef2f8;
+  border-bottom: 1px solid var(--color-gray-850);
   top: 0;
 }
 
 .footer {
   position: relative;
-  border-top: 1px solid #eef2f8;
+  border-top: 1px solid var(--color-gray-850);
   justify-content: flex-end;
   bottom: 0;
 }
 
 .content {
-  font-size: 1rem;
+  font-size: var(--font-size-lg);
   color: var(--color-gray-600);
   display: flex;
   justify-content: center;

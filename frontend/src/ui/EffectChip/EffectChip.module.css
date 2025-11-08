@@ -1,7 +1,7 @@
 .chip {
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   padding: 5px 6px;
-  border-radius: 999px;
+  border-radius: var(--rounded-radius);
   line-height: 1rem;
   background: var(--color-gray-500);
   border: 1px solid var(--card-bd);

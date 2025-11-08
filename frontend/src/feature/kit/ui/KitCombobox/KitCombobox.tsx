@@ -6,7 +6,7 @@ import { KitLabel } from '../KitLabel';
 import styles from './KitCombobox.module.css';
 
 import type { ItemType } from '@/feature/item';
-import { CheckIcon, ChevronUpDownIcon } from '@/ui/icons';
+import { CheckIcon, ChevronUpDownIcon } from '@/ui/IconTMP';
 
 interface Props {
   type: ItemType[];

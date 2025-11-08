@@ -2,9 +2,10 @@ import styles from './IconBar.module.css';
 
 import kesslerLogo from '@/assets/kessler.png';
 import kofiLogo from '@/assets/kofi.png';
+import nomuraLogo from '@/assets/nomura.png';
 import vertigoLogo from '@/assets/vertigo.png';
-import { GithubIcon } from '@/ui/icons';
-import { UiImage } from '@/ui/UiImage/UiImage';
+import { GithubIcon } from '@/ui/IconTMP';
+import { UiImage } from '@/ui/UiImage';
 
 export const IconBar = () => (
   <div className={styles.iconBar}>
@@ -25,6 +26,14 @@ export const IconBar = () => (
       className={styles.iconLink}
     >
       <UiImage width={87} height={48} src={vertigoLogo} alt={'Logo Vertigo'} />
+    </a>
+    <a
+      href="https://www.dreadcast.net/Forum/2-157189-k24---essler-industries?1"
+      rel="noopener noreferrer"
+      aria-label="Nomura Incorporated"
+      className={styles.iconLink}
+    >
+      <UiImage width={71} height={48} src={nomuraLogo} alt={'Logo Nomura'} />
     </a>
     <a
       href="https://github.com/Isilin/dreadcast_simulator"

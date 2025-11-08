@@ -29,7 +29,6 @@
   font-weight: 600;
 }
 
-/* Contenu rempli */
 .content {
   display: flex;
   align-items: center;
@@ -37,20 +36,22 @@
   width: 180px;
   height: 160px;
   gap: 8px;
+
+  &.overTech,
+  &.missingTech {
+    opacity: 0.85;
+    box-shadow: 0 12px 32px oklch(62.793% 0.25768 29.223 / 0.158);
+    border-color: var(--color-red);
+  }
 }
 
-/* Noms concaténés */
 .names {
   display: flex;
   align-items: baseline;
   gap: 6px;
   flex-wrap: wrap;
-  font:
-    800 18px/1.05 system-ui,
-    -apple-system,
-    Segoe UI,
-    Roboto,
-    sans-serif;
+  font: 800 18px/1.05;
+  margin-bottom: var(--very-small-gap);
 }
 .name {
   white-space: nowrap;
@@ -65,20 +66,22 @@
   opacity: 0.5;
 }
 
-/* Tags (pills) */
 .effects {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  max-height: 90px;
+  overflow-y: auto;
 }
 
-/* Pied : Tech total */
 .footer {
   margin-top: 2px;
   display: flex;
   justify-content: flex-end;
   align-items: baseline;
-  margin-bottom: var(--gap);
+  position: absolute;
+  bottom: var(--small-gap);
+  right: var(--small-gap);
 }
 .techLabel {
   color: var(--muted);

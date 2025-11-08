@@ -1,9 +1,11 @@
 :root {
   --color-blue: oklch(69% 50% 264deg);
+  --color-red-dark: rgba(255, 0, 0, 0.12);
   --color-red: oklch(80% 55% 31deg);
   --color-orange: oklch(78% 53% 70deg);
   --color-green: oklch(72% 48% 150deg);
   --color-cyan: #00d4ff;
+  --color-cyan-light: rgba(0, 212, 255, 0.2);
 
   --color-gray-50: oklch(17% 1% 264deg / 95%);
   --color-gray-100: oklch(28% 3% 264deg / 65%);
@@ -15,6 +17,7 @@
   --color-gray-600: oklch(82% 4% 264deg / 80%);
   --color-gray-700: oklch(92% 4.5% 264deg / 80%);
   --color-gray-800: oklch(93% 3.5% 264deg / 85%);
+  --color-gray-850: #eef2f8;
   --color-gray-900: oklch(95% 2% 264deg / 90%);
   --color-gray-950: oklch(94% 1.5% 264deg / 95%);
 
@@ -23,10 +26,20 @@
   --text: #e5e7eb;
   --muted: #9aa4b2;
   --accent: #6c8cff; /* ta couleur principale */
-  --radius: 14px;
+  --small-radius: 6px;
+  --radius: 12px;
+  --rounded-radius: 999px;
   --gap: 16px;
   --small-gap: 8px;
   --very-small-gap: 4px;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  --font: monospace, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+
+  --font:
+    monospace, system-ui, -apple-system, Avenir, Segoe UI, Roboto, sans-serif;
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-xxl: 20px;
 }

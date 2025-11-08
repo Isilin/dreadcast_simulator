@@ -8,7 +8,7 @@ import styles from './KitSelector.module.css';
 import { StatValues, type ItemSpot, type Stat } from '@/domain';
 import { useItemsState } from '@/feature/item';
 import { Card } from '@/ui/Card';
-import { EffectChip } from '@/ui/effect-chip';
+import { EffectChip } from '@/ui/EffectChip';
 
 interface Props {
   spot: ItemSpot;
@@ -35,7 +35,7 @@ export const KitSelector = ({ spot }: Props) => {
         {noKits ? (
           <Card className={styles.card}>Choisir un kit</Card>
         ) : (
-          <Card className={styles.content}>
+          <Card className={[styles.content, techEval].join(' ')}>
             <div className={styles.names}>
               {kits?.map(
                 (k, i) =>

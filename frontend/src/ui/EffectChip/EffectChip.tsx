@@ -1,4 +1,4 @@
-import styles from './effect-chip.module.css';
+import styles from './EffectChip.module.css';
 
 interface Props {
   value: number;

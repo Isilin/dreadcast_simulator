@@ -6,9 +6,9 @@ import { itemPrerequisitesMet, type Item } from '@/feature/item';
 import { useRaceStats } from '@/feature/profile';
 import { usePureStatSelector } from '@/feature/suit';
 import { Card } from '@/ui/Card';
-import { EffectChip } from '@/ui/effect-chip';
-import { WarningIcon } from '@/ui/icons';
-import { Popin } from '@/ui/popin';
+import { EffectChip } from '@/ui/EffectChip/EffectChip';
+import { WarningIcon } from '@/ui/IconTMP';
+import { Popin } from '@/ui/PopinTMP/Popin';
 import { UiImage } from '@/ui/UiImage/UiImage';
 
 interface Props {

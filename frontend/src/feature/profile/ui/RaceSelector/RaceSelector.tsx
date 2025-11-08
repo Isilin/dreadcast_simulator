@@ -8,7 +8,7 @@ import {
   useRaces,
   type RaceType,
 } from '@/feature/profile';
-import { CheckIcon, ChevronUpDownIcon } from '@/ui/icons';
+import { CheckIcon, ChevronUpDownIcon } from '@/ui/IconTMP';
 
 export const RaceSelector = () => {
   const { race } = useProfileState();
