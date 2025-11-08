@@ -4,8 +4,7 @@ import kesslerLogo from '@/assets/kessler.png';
 import kofiLogo from '@/assets/kofi.png';
 import nomuraLogo from '@/assets/nomura.png';
 import vertigoLogo from '@/assets/vertigo.png';
-import { GithubIcon } from '@/ui/IconTMP';
-import { UiImage } from '@/ui/UiImage';
+import { GithubIcon, UiImage } from '@/ui';
 
 export const IconBar = () => (
   <div className={styles.iconBar}>

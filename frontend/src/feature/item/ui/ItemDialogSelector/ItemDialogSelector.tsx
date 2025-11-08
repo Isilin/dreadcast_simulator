@@ -4,7 +4,7 @@ import { ItemCard } from '../ItemCard';
 import styles from './ItemDialogSelector.module.css';
 
 import { useItems, type Item, type ItemType } from '@/feature/item';
-import { Modal } from '@/ui/Modal/Modal';
+import { Modal } from '@/ui';
 
 interface Props {
   type?: ItemType[];

@@ -8,7 +8,7 @@ import type { Implant } from '../../model/implant.types';
 import { ImplantIcon } from '../ImplantIcon';
 import styles from './ImplantSelector.module.css';
 
-import { CursorGrowIcon, MinusIcon, PlusIcon } from '@/ui/IconTMP';
+import { CursorGrowIcon, MinusIcon, PlusIcon } from '@/ui';
 
 interface Props {
   implant: Implant;

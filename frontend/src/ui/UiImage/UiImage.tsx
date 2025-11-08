@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 
 import { Fallback } from '../Fallback/Fallback';
-import { Spinner } from '../SpinnerTMP';
+import { Spinner } from '../Spinner';
 import { imageCache, prefetchImage } from './cache';
 import styles from './UiImage.module.css';
 

@@ -1,7 +1,7 @@
 import { Tooltip } from '@base-ui-components/react';
 import { type HTMLProps, type PropsWithChildren, type ReactNode } from 'react';
 
-import styles from './PopinTMP.module.css';
+import styles from './Popin.module.css';
 
 interface Props {
   content: ReactNode;

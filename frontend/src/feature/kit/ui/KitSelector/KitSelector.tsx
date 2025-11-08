@@ -7,8 +7,7 @@ import styles from './KitSelector.module.css';
 
 import { StatValues, type ItemSpot, type Stat } from '@/domain';
 import { useItemsState } from '@/feature/item';
-import { Card } from '@/ui/Card';
-import { EffectChip } from '@/ui/EffectChip';
+import { Card, EffectChip } from '@/ui';
 
 interface Props {
   spot: ItemSpot;

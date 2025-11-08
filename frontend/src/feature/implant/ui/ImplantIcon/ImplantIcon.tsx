@@ -2,7 +2,7 @@ import styles from './ImplantIcon.module.css';
 import { THUMBS } from './thumbs';
 
 import { type ImplantName, useImplantStatus } from '@/feature/implant';
-import { UiImage } from '@/ui/UiImage/UiImage';
+import { UiImage } from '@/ui';
 
 interface Props {
   implant: ImplantName;

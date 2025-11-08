@@ -1,6 +1,6 @@
 import styles from './DeleteButton.module.css';
 
-import { ClearIcon } from '@/ui/IconTMP';
+import { ClearIcon } from '@/ui';
 
 interface Props {
   onClick: () => void;

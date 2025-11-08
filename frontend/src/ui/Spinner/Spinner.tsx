@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 
-import styles from './SpinnerTMP.module.css';
+import styles from './Spinner.module.css';
 
 interface SpinnerProps {
   size?: number | string;
