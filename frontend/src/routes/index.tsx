@@ -3,9 +3,10 @@ import { createFileRoute } from '@tanstack/react-router';
 import { ImplantsButton } from '@/feature/implant';
 import { ItemSelector } from '@/feature/item';
 import { KitSelector } from '@/feature/kit';
+import { IconBar, TabsBar } from '@/feature/persistence/ui';
 import { GenderSelector, RaceSelector, Silhouette } from '@/feature/profile';
 import { Skills } from '@/feature/stats/skills';
-
+import { Footer } from '@/ui/Footer/Footer';
 import './App.css';
 
 export const Route = createFileRoute('/')({
@@ -112,6 +113,10 @@ function RouteComponent() {
         </div>
         <Silhouette />
       </div>
+      <Footer>
+        <TabsBar />
+        <IconBar />
+      </Footer>
     </div>
   );
 }

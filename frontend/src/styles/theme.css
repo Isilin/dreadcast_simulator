@@ -29,10 +29,11 @@
   --small-radius: 6px;
   --radius: 12px;
   --rounded-radius: 999px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+
   --gap: 16px;
   --small-gap: 8px;
   --very-small-gap: 4px;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 
   --font:
     monospace, system-ui, -apple-system, Avenir, Segoe UI, Roboto, sans-serif;

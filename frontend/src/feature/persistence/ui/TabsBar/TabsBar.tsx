@@ -2,14 +2,33 @@ import { Tabs } from '@base-ui-components/react';
 
 import styles from './TabsBar.module.css';
 
-export interface TabsBarProps {
-  active: string;
-  setActive: (value: string) => void;
-  slots: string[];
-  builds: Record<string, { savedAt?: number }>;
-}
+import { useImplantsDispatch, useImplantsState } from '@/feature/implant';
+import { useItemsDispatch, useItemsState } from '@/feature/item';
+import { useKitsDispatch, useKitsState } from '@/feature/kit';
+import { useBuildPersistence } from '@/feature/persistence/model/persitence.hook';
+import { usePRofileDispatch, useProfileState } from '@/feature/profile';
 
-export const TabsBar = ({ active, setActive, slots, builds }: TabsBarProps) => {
+export const TabsBar = () => {
+  const profile = useProfileState();
+  const profileDispatch = usePRofileDispatch();
+  const implants = useImplantsState();
+  const implantsDispatch = useImplantsDispatch();
+  const items = useItemsState();
+  const itemsDispatch = useItemsDispatch();
+  const kits = useKitsState();
+  const kitsDispatch = useKitsDispatch();
+
+  const { active, setActive, builds, slots } = useBuildPersistence({
+    profile,
+    implants,
+    items,
+    kits,
+    profileDispatch,
+    implantsDispatch,
+    itemsDispatch,
+    kitsDispatch,
+  });
+
   return (
     <Tabs.Root value={active} onValueChange={setActive} className={styles.root}>
       <Tabs.List className={styles.tabList}>

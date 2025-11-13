@@ -1,17 +1,15 @@
 .iconBar {
-  position: fixed;
-  top: 12px;
-  right: 12px;
   display: flex;
-  gap: 8px;
+  gap: var(--small-gap);
   z-index: 40;
+  margin-right: var(--small-gap);
 }
 
 .iconLink {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: var(--small-radius);
   color: var(--text);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
