@@ -2,6 +2,7 @@ export * from './Card';
 export * from './DeleteButton';
 export * from './EffectChip';
 export * from './Fallback';
+export * from './Footer';
 export * from './Icon';
 export * from './Modal';
 export * from './Popin';

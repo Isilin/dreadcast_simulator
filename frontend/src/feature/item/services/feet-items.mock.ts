@@ -363,7 +363,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '317',
-    name: 'Bottes A3XXXN',
+    name: 'Bottes AXXXN',
     image: 'https://wiki.dreadcast.net/images/7/7a/Bottes_A300.png',
     tech: 400,
     integrity: 300,
@@ -385,7 +385,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '318',
-    name: 'Bottes A3XXXP',
+    name: 'Bottes AXXXP',
     image: 'https://wiki.dreadcast.net/images/7/7a/Bottes_A300.png',
     tech: 350,
     integrity: 300,
@@ -407,7 +407,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '319',
-    name: 'Bottes A3XXXT',
+    name: 'Bottes AXXXT',
     image: 'https://wiki.dreadcast.net/images/7/7a/Bottes_A300.png',
     tech: 400,
     integrity: 300,
@@ -415,7 +415,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '320',
-    name: 'Bottes A3XXXO',
+    name: 'Bottes AXXXO',
     image: 'https://wiki.dreadcast.net/images/7/7a/Bottes_A300.png',
     tech: 320,
     integrity: 300,
@@ -433,7 +433,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '321',
-    name: 'Bottes A3XXXD',
+    name: 'Bottes AXXXD',
     image: 'https://wiki.dreadcast.net/images/7/7a/Bottes_A300.png',
     tech: 320,
     integrity: 300,

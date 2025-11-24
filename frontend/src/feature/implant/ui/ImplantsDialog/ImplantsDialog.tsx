@@ -22,7 +22,7 @@ export const ImplantsDialog = () => {
           implants?.map((i) => <ImplantSelector implant={i} key={i.name} />)}
       </Modal.Content>
       <Modal.Footer>
-        <Modal.Close>Close</Modal.Close>
+        <Modal.Close />
       </Modal.Footer>
     </Modal>
   );

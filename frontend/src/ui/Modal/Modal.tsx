@@ -14,9 +14,13 @@ export const Modal = ({ children }: PropsWithChildren<Props>) => {
   );
 };
 
-Modal.Close = Dialog.Close;
+Modal.Close = () => (
+  <Dialog.Close className={styles.close}>Fermer</Dialog.Close>
+);
 Modal.Description = Dialog.Description;
-Modal.Title = Dialog.Title;
+Modal.Title = ({ children }: PropsWithChildren) => (
+  <Dialog.Title className={styles.title}>{children}</Dialog.Title>
+);
 Modal.Header = ({ children }: PropsWithChildren) => {
   return <div className={styles.header}>{children}</div>;
 };

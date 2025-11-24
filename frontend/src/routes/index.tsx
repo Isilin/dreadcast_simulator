@@ -6,7 +6,7 @@ import { KitSelector } from '@/feature/kit';
 import { IconBar, TabsBar } from '@/feature/persistence/ui';
 import { GenderSelector, RaceSelector, Silhouette } from '@/feature/profile';
 import { Skills } from '@/feature/stats/skills';
-import { Footer } from '@/ui/Footer/Footer';
+import { Footer } from '@/ui';
 import './App.css';
 
 export const Route = createFileRoute('/')({

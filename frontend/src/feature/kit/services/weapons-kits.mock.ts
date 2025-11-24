@@ -454,7 +454,7 @@ export const MOCK_WEAPONS_KITS: KitResponseDto[] = [
   {
     id: '536',
     name: 'Elfique',
-    tech: 240,
+    tech: 230,
     type: '2handsShot',
     effects: [
       {

@@ -422,7 +422,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '426',
-    name: 'OVerboard',
+    name: 'Overboard',
     image: 'https://wiki.dreadcast.net/images/4/4d/HOVERBOARD262.png',
     tech: 240,
     integrity: 60,
@@ -444,7 +444,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '427',
-    name: 'Drone A3XXXN',
+    name: 'Drone AXXXN',
     image:
       'https://wiki.dreadcast.net/images/6/62/TENUE_A-317_DRONE_ROUGE_262-PX.png',
     tech: 350,
@@ -463,7 +463,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '428',
-    name: 'Drone A3XXXP',
+    name: 'Drone AXXXP',
     image:
       'https://wiki.dreadcast.net/images/6/62/TENUE_A-317_DRONE_ROUGE_262-PX.png',
     tech: 250,
@@ -478,7 +478,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '429',
-    name: 'Drone A3XXXT',
+    name: 'Drone AXXXT',
     image:
       'https://wiki.dreadcast.net/images/6/62/TENUE_A-317_DRONE_ROUGE_262-PX.png',
     tech: 240,
@@ -493,7 +493,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '430',
-    name: 'Drone A3XXXL',
+    name: 'Drone AXXXL',
     image:
       'https://wiki.dreadcast.net/images/6/62/TENUE_A-317_DRONE_ROUGE_262-PX.png',
     tech: 140,
@@ -508,7 +508,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '431',
-    name: 'Drone A3XXXJ',
+    name: 'Drone AXXXJ',
     image:
       'https://wiki.dreadcast.net/images/6/62/TENUE_A-317_DRONE_ROUGE_262-PX.png',
     tech: 160,
@@ -523,7 +523,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '432',
-    name: 'Drone A3XXXO',
+    name: 'Drone AXXXO',
     image:
       'https://wiki.dreadcast.net/images/6/62/TENUE_A-317_DRONE_ROUGE_262-PX.png',
     tech: 320,
@@ -538,7 +538,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   },
   {
     id: '433',
-    name: 'Drone A3XXXD',
+    name: 'Drone AXXXD',
     image:
       'https://wiki.dreadcast.net/images/6/62/TENUE_A-317_DRONE_ROUGE_262-PX.png',
     tech: 330,

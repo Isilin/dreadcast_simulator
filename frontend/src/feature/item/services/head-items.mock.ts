@@ -532,7 +532,7 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
     id: '30',
     name: 'Casque AXXXO',
     image: 'https://wiki.dreadcast.net/images/c/c2/Casque_A300.png',
-    tech: 400,
+    tech: 320,
     integrity: 300,
     type: 'head',
     effects: [
