@@ -771,8 +771,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     id: '142',
     name: 'Armure AXXXN',
     image: 'https://wiki.dreadcast.net/images/e/ef/Armure_A300.png',
-    tech: 200,
-    integrity: 350,
+    tech: 350,
+    integrity: 300,
     type: 'chest',
     effects: [
       {
@@ -789,8 +789,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     id: '143',
     name: 'Armure AXXXP',
     image: 'https://wiki.dreadcast.net/images/e/ef/Armure_A300.png',
-    tech: 200,
-    integrity: 400,
+    tech: 400,
+    integrity: 300,
     type: 'chest',
     effects: [
       {
@@ -807,16 +807,16 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     id: '144',
     name: 'Armure AXXXT',
     image: 'https://wiki.dreadcast.net/images/e/ef/Armure_A300.png',
-    tech: 200,
-    integrity: 400,
+    tech: 400,
+    integrity: 300,
     type: 'chest',
   },
   {
     id: '145',
     name: 'Armure AXXXL',
     image: 'https://wiki.dreadcast.net/images/e/ef/Armure_A300.png',
-    tech: 200,
-    integrity: 360,
+    tech: 360,
+    integrity: 300,
     type: 'chest',
     effects: [
       {
@@ -833,8 +833,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     id: '146',
     name: 'Armure AXXXJ',
     image: 'https://wiki.dreadcast.net/images/e/ef/Armure_A300.png',
-    tech: 200,
-    integrity: 340,
+    tech: 340,
+    integrity: 300,
     type: 'chest',
     effects: [
       {
@@ -847,8 +847,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     id: '147',
     name: 'Armure AXXXO',
     image: 'https://wiki.dreadcast.net/images/e/ef/Armure_A300.png',
-    tech: 200,
-    integrity: 320,
+    tech: 320,
+    integrity: 300,
     type: 'chest',
     effects: [
       {
@@ -865,8 +865,8 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     id: '148',
     name: 'Armure AXXXD',
     image: 'https://wiki.dreadcast.net/images/e/ef/Armure_A300.png',
-    tech: 200,
-    integrity: 320,
+    tech: 320,
+    integrity: 300,
     type: 'chest',
     effects: [
       {
