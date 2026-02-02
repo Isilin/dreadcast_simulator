@@ -14,7 +14,7 @@ export const ProfileProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <DispatchCtx.Provider value={actions}>
-      <StateCtx value={state}>{children}</StateCtx>
+      <StateCtx.Provider value={state}>{children}</StateCtx.Provider>
     </DispatchCtx.Provider>
   );
 };

@@ -12,7 +12,7 @@ export const useProfileState = (): ProfileState => {
   return state;
 };
 
-export const usePRofileDispatch = (): ReturnType<
+export const useProfileDispatch = (): ReturnType<
   typeof createProfilesActions
 > => {
   const dispatch = useContext(DispatchCtx);

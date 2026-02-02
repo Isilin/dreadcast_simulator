@@ -1,7 +1,6 @@
-<div align="center">
-  <img src="frontend/public/favicon.ico" alt="Dreadcast Simulator" height="64" />
-
 # Simulateur de Build Dreadcast
+
+![Dreadcast Simulator](frontend/public/favicon.ico)
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/Isilin/dreadcast_simulator/.github/workflows/copilot-setup-steps.yml?style=flat-square&label=Build)](https://github.com/Isilin/dreadcast_simulator/actions)
 [![Version](https://img.shields.io/github/v/release/Isilin/dreadcast_simulator?style=flat-square)](https://github.com/Isilin/dreadcast_simulator/releases)
@@ -14,8 +13,6 @@
 
 ![Animation montrant l'application en action](screenshots/main.png)
 
-</div>
-
 Un simulateur complet pour créer et optimiser vos builds de personnage sur [Dreadcast](https://dreadcast.net), le jeu de rôle cyberpunk francophone par navigateur. Testez différentes combinaisons d'implants, d'équipements et de kits pour maximiser les statistiques de votre personnage.
 
 > [!TIP]
@@ -25,11 +22,7 @@ Un simulateur complet pour créer et optimiser vos builds de personnage sur [Dre
 
 Le Simulateur de Build Dreadcast permet aux joueurs de planifier leurs personnages en explorant différentes combinaisons d'équipements et d'augmentations cybernétiques. L'application calcule automatiquement les statistiques finales et gère les prérequis, offrant une expérience fluide pour optimiser vos builds.
 
-<div align="center">
-  <img src="screenshots/implants.png" alt="Gestion des implants" width="400" />
-  <img src="screenshots/items.png" alt="Sélection des items" width="400" />
-  <img src="screenshots/kits.png" alt="Sélection des kits" width="400" />
-</div>
+![Gestion des implants](screenshots/implants.png) ![Sélection des items](screenshots/items.png) ![Sélection des kits](screenshots/kits.png)
 
 Cette application est construite avec des technologies modernes et suit une architecture feature-sliced pour une maintenabilité optimale.
 
@@ -114,7 +107,7 @@ yarn dev
 
 Le projet suit une architecture **feature-sliced design** pour une organisation claire :
 
-```
+```text
 src/
 ├── domain/          # Types partagés (Stat, ItemSpot, etc.)
 ├── feature/         # Fonctionnalités métier
@@ -183,25 +176,25 @@ Le projet inclut une configuration complète GitHub Copilot dans `.github/` :
 
 ### Prochaines versions
 
-**v1.1 - Améliorations UX**
+#### v1.1 - Améliorations UX
 
 - [ ] Mode sombre/clair
 - [ ] Version mobile responsive
 - [ ] Animations et transitions fluides
 
-**v1.2 - Fonctionnalités avancées**
+#### v1.2 - Fonctionnalités avancées
 
 - [ ] Partage de builds via URL
 - [ ] Comparaison de builds côte à côte
 - [ ] Suggestions d'optimisation automatiques
 
-**v1.3 - Mécaniques avancées**
+#### v1.3 - Mécaniques avancées
 
 - [ ] Formules de stats avancées (encaissement, etc.)
 - [ ] Bonus d'armes et modificateurs complexes
 - [ ] Support complet des drogues et effets temporaires
 
-**v2.0 - Backend et collaboration**
+#### v2.0 - Backend et collaboration
 
 - [ ] API backend pour persistance cloud
 - [ ] Comptes utilisateurs et builds partagés

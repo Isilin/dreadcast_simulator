@@ -6,11 +6,11 @@ import { useImplantsDispatch, useImplantsState } from '@/feature/implant';
 import { useItemsDispatch, useItemsState } from '@/feature/item';
 import { useKitsDispatch, useKitsState } from '@/feature/kit';
 import { useBuildPersistence } from '@/feature/persistence/model/persitence.hook';
-import { usePRofileDispatch, useProfileState } from '@/feature/profile';
+import { useProfileDispatch, useProfileState } from '@/feature/profile';
 
 export const TabsBar = () => {
   const profile = useProfileState();
-  const profileDispatch = usePRofileDispatch();
+  const profileDispatch = useProfileDispatch();
   const implants = useImplantsState();
   const implantsDispatch = useImplantsDispatch();
   const items = useItemsState();

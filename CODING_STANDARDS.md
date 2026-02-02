@@ -19,7 +19,7 @@ This document defines the coding standards and style guide for the Dreadcast Sim
 
 ### Directory Structure
 
-```
+```typescript
 feature/
   <feature-name>/
     index.ts          # Public exports only
