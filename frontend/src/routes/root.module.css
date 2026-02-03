@@ -1,0 +1,18 @@
+.rootLayout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: var(--gap);
+  border-bottom: 1px solid var(--card-bd);
+  background-color: var(--card-bg);
+  transition:
+    background-color 350ms ease-in-out,
+    border-color 350ms ease-in-out;
+}

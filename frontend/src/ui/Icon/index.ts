@@ -5,5 +5,7 @@ export * from './Clear.icon';
 export * from './CursorGrow.icon';
 export * from './Github.icon';
 export * from './Minus.icon';
+export * from './Moon.icon';
 export * from './Plus.icon';
+export * from './Sun.icon';
 export * from './Warning.icon';

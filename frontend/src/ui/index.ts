@@ -9,4 +9,5 @@ export * from './Modal';
 export * from './Popin';
 export * from './Spinner';
 export * from './TechBadge';
+export * from './ThemeToggle';
 export * from './UiImage';

@@ -44,3 +44,35 @@
   --font-size-xl: 18px;
   --font-size-xxl: 20px;
 }
+
+/* Light theme palette */
+:root[data-theme='light'] {
+  --color-blue: oklch(50% 48% 264deg);
+  --color-red-dark: rgba(220, 38, 38, 0.12);
+  --color-red: oklch(62% 52% 31deg);
+  --color-orange: oklch(64% 50% 70deg);
+  --color-green: oklch(54% 44% 150deg);
+  --color-cyan: #0369a1;
+  --color-cyan-light: rgba(3, 105, 161, 0.12);
+
+  --color-gray-50: oklch(98% 0.5% 264deg);
+  --color-gray-100: oklch(92% 1% 264deg);
+  --color-gray-150: rgb(250, 250, 252);
+  --color-gray-200: oklch(85% 1.5% 264deg);
+  --color-gray-300: oklch(78% 1.5% 264deg);
+  --color-gray-400: oklch(68% 1.5% 264deg);
+  --color-gray-500: oklch(55% 2% 264deg);
+  --color-gray-600: oklch(45% 2% 264deg);
+  --color-gray-700: oklch(35% 2% 264deg);
+  --color-gray-800: oklch(28% 2% 264deg);
+  --color-gray-850: #1a1a1f;
+  --color-gray-900: oklch(18% 1.5% 264deg);
+  --color-gray-950: oklch(12% 1% 264deg);
+
+  --card-bg: #ffffff;
+  --card-bd: #d0d0d8;
+  --text: #0f0f12;
+  --muted: #757584;
+  --accent: #4f46e5;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}

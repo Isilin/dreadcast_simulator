@@ -2,14 +2,19 @@
   isolation: isolate;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--text);
+  background-color: var(--color-gray-50);
   font-family: var(--font);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  transition:
+    background-color 350ms ease-in-out,
+    color 350ms ease-in-out,
+    border-color 350ms ease-in-out;
 }
 
 body {

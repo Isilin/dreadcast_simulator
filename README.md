@@ -178,7 +178,7 @@ Le projet inclut une configuration complète GitHub Copilot dans `.github/` :
 
 #### v1.1 - Améliorations UX
 
-- [ ] Mode sombre/clair
+- [x] Mode sombre/clair
 - [ ] Version mobile responsive
 - [ ] Animations et transitions fluides
 
