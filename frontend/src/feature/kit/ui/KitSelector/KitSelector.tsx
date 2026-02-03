@@ -18,7 +18,14 @@ export const KitSelector = memo(({ spot }: Props) => {
   const items = useItemsState();
   const limitTech = useMemo(() => items[spot]?.tech || 0, [items, spot]);
   const { kits, noKits, techCost, totalEffect } = useKitsOnSpot(spot);
-  const isDisable = useMemo(() => items[spot] === null, [items, spot]);
+  const isDisable = useMemo(
+    () =>
+      !items[spot] ||
+      (spot === 'rightArm' &&
+        items[spot].hands !== undefined &&
+        items[spot].hands >= 2),
+    [items, spot],
+  );
 
   const techTotal = useMemo(() => limitTech - techCost, [limitTech, techCost]);
   const techEval = useMemo(() => {
