@@ -13,6 +13,8 @@ import { ItemsProvider } from './feature/item';
 import { KitsProvider } from './feature/kit';
 import { ProfileProvider } from './feature/profile';
 import { routeTree } from './routeTree.gen';
+import { ErrorBoundary } from './ui';
+
 const router = createRouter({ routeTree });
 
 declare module '@tanstack/react-router' {
@@ -28,19 +30,21 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <Tooltip.Provider>
-          <ImplantsProvider>
-            <ItemsProvider>
-              <KitsProvider>
-                <ProfileProvider>
-                  <RouterProvider router={router} />
-                </ProfileProvider>
-              </KitsProvider>
-            </ItemsProvider>
-          </ImplantsProvider>
-        </Tooltip.Provider>
-      </QueryClientProvider>
+      <ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <Tooltip.Provider>
+            <ImplantsProvider>
+              <ItemsProvider>
+                <KitsProvider>
+                  <ProfileProvider>
+                    <RouterProvider router={router} />
+                  </ProfileProvider>
+                </KitsProvider>
+              </ItemsProvider>
+            </ImplantsProvider>
+          </Tooltip.Provider>
+        </QueryClientProvider>
+      </ErrorBoundary>
     </StrictMode>,
   );
 }

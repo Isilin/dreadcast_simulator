@@ -1,5 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 
+import './App.css';
+import styles from './index.module.css';
+
 import { ImplantsButton } from '@/feature/implant';
 import { ItemSelector } from '@/feature/item';
 import { KitSelector } from '@/feature/kit';
@@ -7,7 +10,6 @@ import { IconBar, TabsBar } from '@/feature/persistence/ui';
 import { GenderSelector, RaceSelector, Silhouette } from '@/feature/profile';
 import { Skills } from '@/feature/stats/skills';
 import { Footer } from '@/ui';
-import './App.css';
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
@@ -15,62 +17,23 @@ export const Route = createFileRoute('/')({
 
 function RouteComponent() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', gap: '8rem' }}>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
-          flex: '0 0 auto',
-          minWidth: '120px',
-        }}
-      >
+    <div className={styles.layout}>
+      <div className={styles.sidebar}>
         <GenderSelector />
         <RaceSelector />
         <Skills />
         <ImplantsButton />
       </div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
-          flex: '1 1 auto',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              gap: '16px',
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '16px',
-              }}
-            >
+      <div className={styles.mainContent}>
+        <div className={styles.equipmentSection}>
+          <div className={styles.equipmentGroup}>
+            <div className={styles.itemColumn}>
               <ItemSelector spot="head" />
               <ItemSelector spot="chest" />
               <ItemSelector spot="legs" />
               <ItemSelector spot="feet" />
             </div>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '16px',
-              }}
-            >
+            <div className={styles.kitColumn}>
               <KitSelector spot="head" />
               <KitSelector spot="chest" />
               <KitSelector spot="legs" />
@@ -78,33 +41,13 @@ function RouteComponent() {
             </div>
           </div>
 
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              gap: '16px',
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-end',
-                gap: '16px',
-              }}
-            >
+          <div className={styles.equipmentGroup}>
+            <div className={styles.weaponsGroup}>
               <KitSelector spot="leftArm" />
               <KitSelector spot="rightArm" />
               <KitSelector spot="secondary" />
             </div>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-end',
-                gap: '16px',
-              }}
-            >
+            <div className={styles.weaponsGroup}>
               <ItemSelector spot="leftArm" />
               <ItemSelector spot="rightArm" />
               <ItemSelector spot="secondary" />

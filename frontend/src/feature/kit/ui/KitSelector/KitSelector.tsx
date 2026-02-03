@@ -1,5 +1,5 @@
 import { Dialog } from '@base-ui-components/react';
-import { Fragment, useMemo, useState } from 'react';
+import { Fragment, memo, useMemo, useState } from 'react';
 
 import { useKitsOnSpot } from '../../model/kit.selectors';
 import { KitDialogSelector } from '../KitDialogSelector';
@@ -13,7 +13,7 @@ interface Props {
   spot: ItemSpot;
 }
 
-export const KitSelector = ({ spot }: Props) => {
+export const KitSelector = memo(({ spot }: Props) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const items = useItemsState();
   const limitTech = useMemo(() => items[spot]?.tech || 0, [items, spot]);
@@ -77,4 +77,4 @@ export const KitSelector = ({ spot }: Props) => {
       <KitDialogSelector spot={spot} />
     </Dialog.Root>
   );
-};
+});

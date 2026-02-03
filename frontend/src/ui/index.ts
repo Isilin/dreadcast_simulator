@@ -1,6 +1,7 @@
 export * from './Card';
 export * from './DeleteButton';
 export * from './EffectChip';
+export * from './ErrorBoundary';
 export * from './Fallback';
 export * from './Footer';
 export * from './Icon';

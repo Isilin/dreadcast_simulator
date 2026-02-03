@@ -1,0 +1,80 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: var(--color-gray-50);
+}
+
+.card {
+  max-width: 600px;
+  padding: 2rem;
+  background-color: var(--color-gray-100);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-red-700);
+}
+
+.message {
+  margin: 0 0 1.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-gray-900);
+}
+
+.details {
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--small-radius);
+}
+
+.summary {
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--color-gray-700);
+  user-select: none;
+}
+
+.summary:hover {
+  color: var(--color-gray-900);
+}
+
+.error {
+  margin: 0.5rem 0 0;
+  padding: 0.5rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  color: var(--color-red-600);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  background-color: var(--color-cyan);
+  border: none;
+  border-radius: var(--small-radius);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.button:hover {
+  background-color: var(--color-cyan-dark);
+}
+
+.button:active {
+  transform: translateY(1px);
+}

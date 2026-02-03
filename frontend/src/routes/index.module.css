@@ -1,0 +1,51 @@
+.layout {
+  display: flex;
+  flex-direction: row;
+  gap: 8rem;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 0 0 auto;
+  min-width: 120px;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1 1 auto;
+}
+
+.equipmentSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.equipmentGroup {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.itemColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.kitColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.weaponsGroup {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 16px;
+}
