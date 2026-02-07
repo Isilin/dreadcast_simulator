@@ -28,6 +28,7 @@ export const useSuitSelector = () => {
             implantsEffects,
             kitsEffects,
           );
+          if (stat === 'health' || stat === 'stamina') acc[stat] += 116; // Base health and stamina
           return acc;
         },
         {} as Record<Stat, number>,

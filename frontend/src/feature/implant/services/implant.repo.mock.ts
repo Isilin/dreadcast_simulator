@@ -64,7 +64,7 @@ const MOCK_IMPLANTS: ImplantResponseDto[] = [
   {
     name: 'Inépuisable',
     attributes: ['stamina'],
-    valuePerLevel: [39, 77, 114, 150, 185, 219, 252, 284, 315, 408],
+    valuePerLevel: [39, 77, 114, 150, 185, 219, 252, 284, 315, 345],
   },
   {
     name: "Peau d'argent",
