@@ -81,21 +81,6 @@ Performance isn't just a buzzword—it's the difference between a product people
 - Use `ErrorBoundary` to catch and handle errors gracefully.
 - Profile with React DevTools Profiler.
 
-#### Angular
-
-- Use OnPush change detection for components that don't need frequent updates.
-- Avoid complex expressions in templates; move logic to the component class.
-- Use `trackBy` in `ngFor` for efficient list rendering.
-- Lazy load modules and components with the Angular Router.
-- Profile with Angular DevTools.
-
-#### Vue
-
-- Use computed properties over methods in templates for caching.
-- Use `v-show` vs `v-if` appropriately (`v-show` is better for toggling visibility frequently).
-- Lazy load components and routes with Vue Router.
-- Profile with Vue Devtools.
-
 ### Common Frontend Pitfalls
 
 - Loading large JS bundles on initial page load.
@@ -164,30 +149,6 @@ Performance isn't just a buzzword—it's the difference between a product people
 - Use streams for large file or network data processing.
 - Profile with `clinic.js`, `node --inspect`, or Chrome DevTools.
 
-#### Python
-
-- Use built-in data structures (`dict`, `set`, `deque`) for speed.
-- Profile with `cProfile`, `line_profiler`, or `Py-Spy`.
-- Use `multiprocessing` or `asyncio` for parallelism.
-- Avoid GIL bottlenecks in CPU-bound code; use C extensions or subprocesses.
-- Use `lru_cache` for memoization.
-
-#### Java
-
-- Use efficient collections (`ArrayList`, `HashMap`, etc.).
-- Profile with VisualVM, JProfiler, or YourKit.
-- Use thread pools (`Executors`) for concurrency.
-- Tune JVM options for heap and garbage collection (`-Xmx`, `-Xms`, `-XX:+UseG1GC`).
-- Use `CompletableFuture` for async programming.
-
-#### .NET
-
-- Use `async/await` for I/O-bound operations.
-- Use `Span<T>` and `Memory<T>` for efficient memory access.
-- Profile with dotTrace, Visual Studio Profiler, or PerfView.
-- Pool objects and connections where appropriate.
-- Use `IAsyncEnumerable<T>` for streaming data.
-
 ### Common Backend Pitfalls
 
 - Synchronous/blocking I/O in web servers.
@@ -236,14 +197,6 @@ Performance isn't just a buzzword—it's the difference between a product people
 - **Cache Query Results:** Use Redis or Memcached for frequently accessed queries.
 - **Write-Through/Write-Behind:** Choose the right strategy for your consistency needs.
 - **Sharding:** Distribute data across multiple servers for scalability.
-
-### NoSQL Databases
-
-- **Design for Access Patterns:** Model your data for the queries you need.
-- **Avoid Hot Partitions:** Distribute writes/reads evenly.
-- **Unbounded Growth:** Watch for unbounded arrays or documents.
-- **Sharding and Replication:** Use for scalability and availability.
-- **Consistency Models:** Understand eventual vs strong consistency and choose appropriately.
 
 ### Common Database Pitfalls
 
@@ -357,22 +310,7 @@ SELECT * FROM users WHERE email = 'user@example.com';
 SELECT id, name FROM users WHERE email = 'user@example.com';
 ```
 
-### Example 3: Caching Expensive Computation in Python
-
-```python
-# BAD: Recomputes result every time
-result = expensive_function(x)
-
-# GOOD: Cache result
-from functools import lru_cache
-
-@lru_cache(maxsize=128)
-def expensive_function(x):
-    ...
-result = expensive_function(x)
-```
-
-### Example 4: Lazy Loading Images in HTML
+### Example 3: Lazy Loading Images in HTML
 
 ```html
 <!-- BAD: Loads all images immediately -->
@@ -382,7 +320,7 @@ result = expensive_function(x)
 <img src="large-image.jpg" loading="lazy" />
 ```
 
-### Example 5: Asynchronous I/O in Node.js
+### Example 4: Asynchronous I/O in Node.js
 
 ```javascript
 // BAD: Blocking file read
@@ -395,21 +333,7 @@ fs.readFile('file.txt', (err, data) => {
 });
 ```
 
-### Example 6: Profiling a Python Function
-
-```python
-import cProfile
-import pstats
-
-def slow_function():
-    ...
-
-cProfile.run('slow_function()', 'profile.stats')
-p = pstats.Stats('profile.stats')
-p.sort_stats('cumulative').print_stats(10)
-```
-
-### Example 7: Using Redis for Caching in Node.js
+### Example 5: Using Redis for Caching in Node.js
 
 ```javascript
 const redis = require('redis');
@@ -439,19 +363,8 @@ function getCachedData(key, fetchFunction) {
 - [PostgreSQL Performance Optimization](https://wiki.postgresql.org/wiki/Performance_Optimization)
 - [MySQL Performance Tuning](https://dev.mysql.com/doc/refman/8.0/en/optimization.html)
 - [Node.js Performance Best Practices](https://nodejs.org/en/docs/guides/simple-profiling/)
-- [Python Performance Tips](https://docs.python.org/3/library/profile.html)
-- [Java Performance Tuning](https://www.oracle.com/java/technologies/javase/performance.html)
-- [.NET Performance Guide](https://learn.microsoft.com/en-us/dotnet/standard/performance/)
 - [WebPageTest](https://www.webpagetest.org/)
 - [Lighthouse](https://developers.google.com/web/tools/lighthouse)
-- [Prometheus](https://prometheus.io/)
-- [Grafana](https://grafana.com/)
-- [k6 Load Testing](https://k6.io/)
-- [Gatling](https://gatling.io/)
-- [Locust](https://locust.io/)
-- [OpenTelemetry](https://opentelemetry.io/)
-- [Jaeger](https://www.jaegertracing.io/)
-- [Zipkin](https://zipkin.io/)
 
 ---
 
