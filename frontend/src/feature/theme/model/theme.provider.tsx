@@ -1,13 +1,17 @@
 import type { ReactNode } from 'react';
 import { useLayoutEffect, useMemo, useReducer } from 'react';
 
-import { initializeTheme, persistTheme } from '../services/theme.repo';
 import {
   createThemeActions,
   initialState,
   themeReducer,
 } from './theme.actions';
 import { ThemeDispatchContext, ThemeStateContext } from './theme.contexts';
+
+import {
+  initializeTheme,
+  persistTheme,
+} from '@/feature/theme/services/theme.repo';
 
 interface ThemeProviderProps {
   children: ReactNode;
