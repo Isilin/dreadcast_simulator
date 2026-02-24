@@ -1079,4 +1079,12 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
       },
     ],
   },
+  {
+    id: '58',
+    name: 'Casque Méta',
+    image: 'https://wiki.dreadcast.net/images/f/f7/Casque_meta.png',
+    tech: 380,
+    integrity: 90,
+    type: 'head',
+  },
 ];
