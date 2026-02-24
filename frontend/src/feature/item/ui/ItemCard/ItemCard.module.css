@@ -95,6 +95,7 @@
 .prerequisites li {
   display: flex;
   justify-content: space-around;
+  color: var(--color-red);
 }
 
 li:not(.invalid) .key {
@@ -102,7 +103,7 @@ li:not(.invalid) .key {
 }
 li:not(.invalid) .value {
   font-weight: 600;
-  color: #6c8cff;
+  color: #9aa4b2;
 }
 
 .effects {
