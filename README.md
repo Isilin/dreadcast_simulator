@@ -181,6 +181,7 @@ Le projet inclut une configuration complète GitHub Copilot dans `.github/` :
 - [x] Mode sombre/clair
 - [ ] Version mobile responsive
 - [ ] Animations et transitions fluides
+- [x] Bonus d'armes
 
 #### v1.2 - Fonctionnalités avancées
 
@@ -191,7 +192,7 @@ Le projet inclut une configuration complète GitHub Copilot dans `.github/` :
 #### v1.3 - Mécaniques avancées
 
 - [ ] Formules de stats avancées (encaissement, etc.)
-- [ ] Bonus d'armes et modificateurs complexes
+- [ ] Modificateurs complexes
 - [ ] Support complet des drogues et effets temporaires
 
 #### v2.0 - Backend et collaboration

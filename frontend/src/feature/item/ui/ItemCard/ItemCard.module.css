@@ -57,14 +57,6 @@
   filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
 }
 
-.head {
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 1fr auto;
-  align-items: start;
-  text-align: center;
-  gap: var(--small-gap);
-}
 .title {
   font-weight: 700;
   font-size: 0.98rem;
@@ -72,6 +64,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline;
+  text-align: center;
+  margin: 0.5rem 0;
 }
 
 .warningIcon {
@@ -113,8 +107,10 @@ li:not(.invalid) .value {
 
 .effects {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  justify-content: flex-start;
   gap: var(--small-gap);
   margin: 0;
   padding: 0;
@@ -122,5 +118,6 @@ li:not(.invalid) .value {
 }
 .effects li {
   display: flex;
+  flex-shrink: 0;
   justify-content: space-around;
 }

@@ -7,6 +7,7 @@
   border: 1px solid var(--card-bd);
   color: var(--text);
   box-shadow: var(--shadow);
+  height: 1rem;
 
   &.positive {
     color: var(--color-green);

@@ -89,11 +89,9 @@ export const ItemCard = ({ item, variant = 'list', onClick }: Props) => {
           fit="contain"
         />
       </div>
-      <header className={styles.head}>
-        <h3 className={styles.title} title={name}>
-          {name}
-        </h3>
-      </header>
+      <h3 className={styles.title} title={name}>
+        {name}
+      </h3>
       {effects.length > 0 && (
         <ul className={styles.effects}>
           {effects.map((effect) => (
