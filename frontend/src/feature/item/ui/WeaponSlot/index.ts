@@ -1,0 +1,1 @@
+export { WeaponSlot } from './WeaponSlot';

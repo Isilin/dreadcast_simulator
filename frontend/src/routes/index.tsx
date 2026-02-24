@@ -4,7 +4,7 @@ import './App.css';
 import styles from './index.module.css';
 
 import { ImplantsButton } from '@/feature/implant';
-import { ItemSelector } from '@/feature/item';
+import { ItemSelector, WeaponSlot } from '@/feature/item';
 import { KitSelector } from '@/feature/kit';
 import { IconBar, TabsBar } from '@/feature/persistence/ui';
 import { GenderSelector, RaceSelector, Silhouette } from '@/feature/profile';
@@ -48,8 +48,8 @@ function RouteComponent() {
               <KitSelector spot="secondary" />
             </div>
             <div className={styles.weaponsGroup}>
-              <ItemSelector spot="leftArm" />
-              <ItemSelector spot="rightArm" />
+              <WeaponSlot spot="leftArm" />
+              <WeaponSlot spot="rightArm" />
               <ItemSelector spot="secondary" />
             </div>
           </div>

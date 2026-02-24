@@ -11,6 +11,9 @@ const HAND_WEAPONS = [
   '2handsShot',
 ] as const;
 
+export const isWeaponType = (type: ItemType): boolean =>
+  HAND_WEAPONS.includes(type as (typeof HAND_WEAPONS)[number]);
+
 /**
  * Gets the opposite arm spot when using two-handed weapons
  */
@@ -34,7 +37,7 @@ export const getOtherHand = (
 export const itemMatchsSpot = (type: ItemType, spot: ItemSpot): boolean => {
   return (
     type === spot ||
-    (HAND_WEAPONS.includes(type as (typeof HAND_WEAPONS)[number]) &&
+    (isWeaponType(type) &&
       ARM_SPOTS.includes(spot as (typeof ARM_SPOTS)[number]))
   );
 };
