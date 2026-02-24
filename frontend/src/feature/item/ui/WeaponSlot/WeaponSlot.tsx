@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 
 import { DamageBonus } from '../DamageBonus';
 import { ItemSelector } from '../ItemSelector';
@@ -11,15 +11,10 @@ interface Props {
 }
 
 export const WeaponSlot = memo(({ spot }: Props) => {
-  const isWeaponSpot = useMemo(
-    () => spot === 'leftArm' || spot === 'rightArm',
-    [spot],
-  );
-
   return (
     <div className={styles.wrapper}>
       <ItemSelector spot={spot} />
-      {isWeaponSpot && <DamageBonus spot={spot} />}
+      <DamageBonus spot={spot} />
     </div>
   );
 });

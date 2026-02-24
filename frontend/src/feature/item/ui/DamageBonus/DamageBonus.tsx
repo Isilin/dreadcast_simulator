@@ -39,10 +39,6 @@ export const DamageBonus = memo(({ spot }: Props) => {
     dispatch.setDamageBonus(spot, bonus);
   };
 
-  if (!items[spot]) {
-    return null;
-  }
-
   return (
     <div className={styles.wrapper}>
       <label className={styles.label}>Dégâts</label>
