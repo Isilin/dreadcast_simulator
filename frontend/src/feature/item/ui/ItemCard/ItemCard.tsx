@@ -1,11 +1,11 @@
+import { PrerequisitePopin } from '../PrerequisitePopin';
 import styles from './ItemCard.module.css';
 
 import { StatValues } from '@/domain';
 import { useImplantsEffects } from '@/feature/implant';
 import { itemPrerequisitesMet, type Item } from '@/feature/item';
 import { useRaceStats } from '@/feature/profile';
-import { usePureStatSelector } from '@/feature/suit';
-import { Card, EffectChip, Popin, UiImage, WarningIcon } from '@/ui';
+import { Card, EffectChip, UiImage } from '@/ui';
 
 interface Props {
   item: Item;
@@ -15,7 +15,6 @@ interface Props {
 
 export const ItemCard = ({ item, variant = 'list', onClick }: Props) => {
   const raceStats = useRaceStats();
-  const pureStats = usePureStatSelector();
   const implantsEffects = useImplantsEffects();
   const prerequisitesOk = itemPrerequisitesMet(
     item,
@@ -40,34 +39,7 @@ export const ItemCard = ({ item, variant = 'list', onClick }: Props) => {
       aria-label={name}
     >
       {!prerequisitesOk && prerequisites.length > 0 && (
-        <Popin
-          className={styles.warningIcon}
-          content={
-            <>
-              <strong className={styles.prerequisitesTitle}>Prérequis</strong>
-              <ul className={styles.prerequisites}>
-                {prerequisites.map((prerequisite) => {
-                  const invalid =
-                    pureStats[prerequisite.property] < prerequisite.value;
-
-                  return (
-                    <li
-                      key={`prerequisite-` + prerequisite.property}
-                      data-invalid={invalid}
-                    >
-                      <span className={styles.key}>{prerequisite.value}</span>
-                      <span className={styles.value}>
-                        {StatValues[prerequisite.property].tag}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </>
-          }
-        >
-          <WarningIcon />
-        </Popin>
+        <PrerequisitePopin item={item} />
       )}
       <div className={styles.meta}>
         <span className={styles.badge} title="Durabilité">
