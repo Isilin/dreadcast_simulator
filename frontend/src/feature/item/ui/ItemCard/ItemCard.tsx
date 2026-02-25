@@ -33,11 +33,8 @@ export const ItemCard = ({ item, variant = 'list', onClick }: Props) => {
 
   return (
     <Card
-      className={[
-        styles.itemCard,
-        styles[variant],
-        prerequisitesOk ? '' : styles.invalid,
-      ].join(' ')}
+      className={`${styles.itemCard} ${styles[variant]}`}
+      data-invalid={!prerequisitesOk}
       onClick={onClick}
       role="button"
       aria-label={name}
@@ -56,7 +53,7 @@ export const ItemCard = ({ item, variant = 'list', onClick }: Props) => {
                   return (
                     <li
                       key={`prerequisite-` + prerequisite.property}
-                      className={invalid ? styles.invalid : ''}
+                      data-invalid={invalid}
                     >
                       <span className={styles.key}>{prerequisite.value}</span>
                       <span className={styles.value}>

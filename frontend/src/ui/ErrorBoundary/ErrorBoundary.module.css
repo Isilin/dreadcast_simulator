@@ -43,10 +43,10 @@
   font-weight: 500;
   color: var(--color-gray-700);
   user-select: none;
-}
 
-.summary:hover {
-  color: var(--color-gray-900);
+  &:hover {
+    color: var(--color-gray-900);
+  }
 }
 
 .error {
@@ -69,12 +69,12 @@
   border-radius: var(--small-radius);
   cursor: pointer;
   transition: background-color 0.2s ease;
-}
 
-.button:hover {
-  background-color: var(--color-cyan-dark);
-}
+  &:hover {
+    background-color: var(--color-cyan-dark);
+  }
 
-.button:active {
-  transform: translateY(1px);
+  &:active {
+    transform: translateY(1px);
+  }
 }

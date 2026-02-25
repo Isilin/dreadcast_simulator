@@ -37,8 +37,8 @@
   height: 160px;
   gap: 8px;
 
-  &.overTech,
-  &.missingTech {
+  &[data-tech-status='over'],
+  &[data-tech-status='missing'] {
     opacity: 0.85;
     box-shadow: 0 12px 32px oklch(62.793% 0.25768 29.223 / 0.158);
     border-color: var(--color-red);
@@ -91,13 +91,11 @@
   color: var(--accent);
   font: 800 16px/1 system-ui;
 
-  &.missingTech {
+  &[data-tech-status='missing'],
+  &[data-tech-status='over'] {
     color: var(--color-red);
   }
-  &.overTech {
-    color: var(--color-red);
-  }
-  &.perfectTech {
+  &[data-tech-status='perfect'] {
     color: var(--color-green);
   }
 }

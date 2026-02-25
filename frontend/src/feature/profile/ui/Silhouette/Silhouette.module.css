@@ -21,11 +21,17 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-}
 
-.silhouetteOutline .pulse {
-  animation: outlinePulse 2.8s ease-in-out infinite;
-  transform-origin: 50% 50%;
+  & .pulse {
+    animation: outlinePulse 2.8s ease-in-out infinite;
+    transform-origin: 50% 50%;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+      opacity: 0.5;
+      transform: none;
+    }
+  }
 }
 
 @keyframes outlinePulse {
@@ -37,13 +43,5 @@
   50% {
     opacity: 0.5;
     transform: scale(1.01);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .silhouetteOutline .pulse {
-    animation: none;
-    opacity: 0.5;
-    transform: none;
   }
 }

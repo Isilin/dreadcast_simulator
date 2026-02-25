@@ -130,13 +130,8 @@ export const UiImage = ({
               fetchPriority={fetchPriority}
               onLoad={handleLoad}
               onError={handleError}
-              className={[
-                styles.img,
-                loaded ? styles.visible : styles.hidden,
-                className,
-              ]
-                .filter(Boolean)
-                .join(' ')}
+              className={[styles.img, className].filter(Boolean).join(' ')}
+              data-loaded={loaded}
               style={{ objectFit: fit, borderRadius: radius }}
             />
           </picture>
@@ -156,13 +151,8 @@ export const UiImage = ({
             onLoad={handleLoad}
             onError={handleError}
             onMouseEnter={() => prefetchImage(src)}
-            className={[
-              styles.img,
-              loaded ? styles.visible : styles.hidden,
-              className,
-            ]
-              .filter(Boolean)
-              .join(' ')}
+            className={[styles.img, className].filter(Boolean).join(' ')}
+            data-loaded={loaded}
             style={{ objectFit: fit, borderRadius: radius }}
           />
         )

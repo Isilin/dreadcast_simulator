@@ -37,10 +37,10 @@
     outline: 2px solid color-mix(in oklch, var(--color-red) 60%, white 40%);
     outline-offset: 2px;
   }
-}
 
-.button svg {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
+  & svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
 }

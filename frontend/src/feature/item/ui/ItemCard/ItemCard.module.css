@@ -1,5 +1,5 @@
 .itemCard {
-  &.invalid {
+  &[data-invalid='true'] {
     opacity: 0.85;
     box-shadow: 0 12px 32px oklch(77.194% 0.17376 64.545 / 0.158);
     border-color: var(--color-orange);
@@ -91,17 +91,18 @@
   flex-direction: column;
   font-size: 0.65rem;
   margin-bottom: var(--small-gap);
-}
-.prerequisites li {
-  display: flex;
-  justify-content: space-around;
-  color: var(--color-red);
+
+  & li {
+    display: flex;
+    justify-content: space-around;
+    color: var(--color-red);
+  }
 }
 
-li:not(.invalid) .key {
+li:not([data-invalid='true']) .key {
   color: #9aa4b2;
 }
-li:not(.invalid) .value {
+li:not([data-invalid='true']) .value {
   font-weight: 600;
   color: #9aa4b2;
 }
@@ -116,9 +117,10 @@ li:not(.invalid) .value {
   margin: 0;
   padding: 0;
   list-style: none;
-}
-.effects li {
-  display: flex;
-  flex-shrink: 0;
-  justify-content: space-around;
+
+  & li {
+    display: flex;
+    flex-shrink: 0;
+    justify-content: space-around;
+  }
 }

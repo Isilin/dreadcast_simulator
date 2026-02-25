@@ -9,15 +9,15 @@
   box-shadow: var(--shadow);
   height: 1rem;
 
-  &.positive {
+  &[data-value-type='positive'] {
     color: var(--color-green);
   }
 
-  &.negative {
+  &[data-value-type='negative'] {
     color: var(--color-red);
   }
 
-  &.neutral {
+  &[data-value-type='neutral'] {
     color: var(--color-blue);
   }
 }

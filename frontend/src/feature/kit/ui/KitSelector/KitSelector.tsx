@@ -28,11 +28,11 @@ export const KitSelector = memo(({ spot }: Props) => {
   );
 
   const techTotal = useMemo(() => limitTech - techCost, [limitTech, techCost]);
-  const techEval = useMemo(() => {
-    if (techTotal > 40) return styles.missingTech;
-    if (techTotal < 0) return styles.overTech;
-    if (techTotal === 0) return styles.perfectTech;
-    return '';
+  const techStatus = useMemo(() => {
+    if (techTotal > 40) return 'missing';
+    if (techTotal < 0) return 'over';
+    if (techTotal === 0) return 'perfect';
+    return 'normal';
   }, [techTotal]);
 
   return (
@@ -41,7 +41,7 @@ export const KitSelector = memo(({ spot }: Props) => {
         {noKits ? (
           <Card className={styles.card}>Choisir un kit</Card>
         ) : (
-          <Card className={[styles.content, techEval].join(' ')}>
+          <Card className={styles.content} data-tech-status={techStatus}>
             <div className={styles.names}>
               {kits?.map(
                 (k, i) =>
@@ -74,7 +74,7 @@ export const KitSelector = memo(({ spot }: Props) => {
             </div>
             <div className={styles.footer}>
               <span className={styles.techLabel}>Tech :</span>
-              <span className={`${styles.techValue} ${techEval}`}>
+              <span className={styles.techValue} data-tech-status={techStatus}>
                 {techTotal}
               </span>
             </div>

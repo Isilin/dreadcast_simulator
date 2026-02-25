@@ -29,7 +29,8 @@ export const ThemeToggle = () => {
     >
       <div className={styles.switchTrack}>
         <div
-          className={`${styles.switchThumb} ${isDark ? styles.isDark : styles.isLight}`}
+          className={styles.switchThumb}
+          data-theme={isDark ? 'dark' : 'light'}
         >
           <div className={styles.iconWrapper}>
             {isDark ? <MoonIcon /> : <SunIcon />}
