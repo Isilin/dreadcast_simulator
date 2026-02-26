@@ -6,6 +6,22 @@
   z-index: -1;
 }
 
+@media (max-width: 1199px) {
+  .silhouetteContainer {
+    width: 500px;
+    height: 500px;
+    opacity: 0.25;
+  }
+}
+
+@media (max-width: 768px) {
+  .silhouetteContainer {
+    width: 280px;
+    height: 280px;
+    opacity: 0.15;
+  }
+}
+
 .silhouetteFill {
   position: absolute;
   inset: 0;

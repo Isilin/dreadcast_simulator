@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root {
   isolation: isolate;
 
@@ -20,6 +26,5 @@
 body {
   margin: 0;
   display: flex;
-  min-width: 960px;
   min-height: 100vh;
 }

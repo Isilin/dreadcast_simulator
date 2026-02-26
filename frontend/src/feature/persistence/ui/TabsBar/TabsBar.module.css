@@ -13,6 +13,14 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
+@media (max-width: 768px) {
+  .tabList {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+}
+
 .tab {
   padding: 6px 18px;
   border-radius: 8px;

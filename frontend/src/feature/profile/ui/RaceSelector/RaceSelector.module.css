@@ -35,6 +35,13 @@
   }
 }
 
+@media (max-width: 768px) {
+  .Select {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
 .SelectIcon {
   display: flex;
 }

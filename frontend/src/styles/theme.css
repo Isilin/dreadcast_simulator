@@ -35,6 +35,15 @@
   --small-gap: 8px;
   --very-small-gap: 4px;
 
+  /* Breakpoints */
+  --breakpoint-mobile: 768px;
+  --breakpoint-tablet: 1199px;
+
+  /* Responsive spacing */
+  --gap-mobile: 8px;
+  --gap-tablet: 16px;
+  --gap-desktop: 16px;
+
   --font:
     monospace, system-ui, -apple-system, Avenir, Segoe UI, Roboto, sans-serif;
   --font-size-xs: 10px;

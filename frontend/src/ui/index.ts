@@ -4,6 +4,7 @@ export * from './EffectChip';
 export * from './ErrorBoundary';
 export * from './Fallback';
 export * from './Footer';
+export * from './HamburgerButton';
 export * from './Icon';
 export * from './Modal';
 export * from './Popin';

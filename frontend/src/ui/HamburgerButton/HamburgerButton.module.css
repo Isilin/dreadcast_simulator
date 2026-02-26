@@ -1,0 +1,56 @@
+.button {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1001;
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-bd);
+  border-radius: var(--small-radius);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+
+.button:hover {
+  background: var(--color-gray-100);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.line {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.open .line:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.open .line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.open .line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+@media (max-width: 1199px) {
+  .button {
+    display: flex;
+  }
+}

@@ -6,6 +6,12 @@
   color: var(--color-gray-900);
 }
 
+@media (max-width: 768px) {
+  .RadioGroup {
+    flex-wrap: wrap;
+  }
+}
+
 .Caption {
   font-weight: 500;
 }

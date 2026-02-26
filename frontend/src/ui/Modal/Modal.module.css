@@ -46,6 +46,31 @@
   }
 }
 
+@media (max-width: 768px) {
+  .popup {
+    width: 100vw;
+    max-width: 100%;
+    max-height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    top: 0;
+    left: 0;
+    transform: none;
+  }
+
+  .popup[data-starting-style],
+  .popup[data-ending-style] {
+    transform: none;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+  .popup {
+    width: 90vw;
+    max-width: 700px;
+  }
+}
+
 .header,
 .footer {
   display: flex;

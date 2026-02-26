@@ -20,3 +20,17 @@
   white-space: nowrap;
   border: 0;
 }
+
+/* Classe pour garantir une taille tactile minimum (Apple/Android guidelines) */
+.touchTarget {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* Désactive le double-tap zoom sur les éléments interactifs */
+button,
+a,
+[role='button'],
+[role='link'] {
+  touch-action: manipulation;
+}

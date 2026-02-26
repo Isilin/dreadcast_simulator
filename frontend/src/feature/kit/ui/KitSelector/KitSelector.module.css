@@ -22,6 +22,20 @@
   height: 160px;
 }
 
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+    min-height: 140px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+  .card {
+    width: 160px;
+    height: 140px;
+  }
+}
+
 .placeholder {
   align-self: center;
   justify-self: center;
@@ -31,6 +45,7 @@
 
 .content {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 180px;
@@ -42,6 +57,20 @@
     opacity: 0.85;
     box-shadow: 0 12px 32px oklch(62.793% 0.25768 29.223 / 0.158);
     border-color: var(--color-red);
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    width: 100%;
+    min-height: 140px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+  .content {
+    width: 160px;
+    height: 140px;
   }
 }
 
