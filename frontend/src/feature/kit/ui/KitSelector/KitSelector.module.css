@@ -98,6 +98,8 @@
 .effects {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  gap: var(--small-gap);
   gap: 6px;
   max-height: 90px;
   overflow-y: auto;

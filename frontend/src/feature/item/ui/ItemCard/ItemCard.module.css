@@ -85,7 +85,7 @@
   text-overflow: ellipsis;
   display: inline;
   text-align: center;
-  margin: 0.5rem 0;
+  margin: 0;
 }
 
 .effects {
@@ -94,6 +94,7 @@
   overflow-x: auto;
   overflow-y: hidden;
   justify-content: flex-start;
+  align-items: center;
   gap: var(--small-gap);
   margin: 0;
   padding: 0;

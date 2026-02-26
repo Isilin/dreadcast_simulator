@@ -1,4 +1,6 @@
 .chip {
+  display: inline-flex;
+  align-items: center;
   font-size: var(--font-size-sm);
   padding: 5px 6px;
   border-radius: var(--rounded-radius);
@@ -7,7 +9,6 @@
   border: 1px solid var(--card-bd);
   color: var(--text);
   box-shadow: var(--shadow);
-  height: 1rem;
 
   &[data-value-type='positive'] {
     color: var(--color-green);

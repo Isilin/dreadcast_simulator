@@ -16,4 +16,5 @@
   flex-direction: row;
   gap: var(--small-gap);
   flex-wrap: wrap;
+  align-items: center;
 }
