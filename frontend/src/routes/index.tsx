@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useState } from 'react';
 
 import './App.css';
 import styles from './index.module.css';
@@ -10,40 +9,22 @@ import { KitSelector } from '@/feature/kit';
 import { IconBar, TabsBar } from '@/feature/persistence/ui';
 import { GenderSelector, RaceSelector, Silhouette } from '@/feature/profile';
 import { Skills } from '@/feature/stats/skills';
-import { Footer, HamburgerButton } from '@/ui';
+import { Footer, Sidebar } from '@/ui';
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const handleToggleSidebar = () => {
-    setIsSidebarOpen((prev) => !prev);
-  };
-
-  const handleCloseSidebar = () => {
-    setIsSidebarOpen(false);
-  };
-
   return (
     <>
-      <HamburgerButton isOpen={isSidebarOpen} onClick={handleToggleSidebar} />
-      <div
-        className={`${styles.backdrop} ${isSidebarOpen ? styles.open : ''}`}
-        onClick={handleCloseSidebar}
-        aria-hidden="true"
-      />
       <div className={styles.layout}>
-        <div
-          className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ''}`}
-        >
+        <Sidebar>
           <GenderSelector />
           <RaceSelector />
           <Skills />
           <ImplantsButton />
-        </div>
+        </Sidebar>
         <div className={styles.mainContent}>
           <div className={styles.equipmentSection}>
             {/* Desktop/Tablet: colonnes item et kit séparées */}

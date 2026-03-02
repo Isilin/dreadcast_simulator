@@ -173,23 +173,20 @@ Le projet inclut une configuration complète GitHub Copilot dans `.github/` :
 - [x] Système d'équipement et de kits
 - [x] Sauvegarde locale de builds
 - [x] Calcul automatique des statistiques
-
-### Prochaines versions
-
-#### v1.1 - Améliorations UX
-
 - [x] Mode sombre/clair
 - [x] Version mobile responsive
 - [x] Animations et transitions fluides
 - [x] Bonus d'armes
 
-#### v1.2 - Fonctionnalités avancées
+### Prochaines versions
+
+#### v1.1 - Fonctionnalités avancées
 
 - [ ] Partage de builds via URL
 - [ ] Comparaison de builds côte à côte
 - [ ] Suggestions d'optimisation automatiques
 
-#### v1.3 - Mécaniques avancées
+#### v1.2 - Mécaniques avancées
 
 - [ ] Formules de stats avancées (encaissement, etc.)
 - [ ] Modificateurs complexes

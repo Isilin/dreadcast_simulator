@@ -9,7 +9,8 @@ export function HamburgerButton({ isOpen, onClick }: HamburgerButtonProps) {
   return (
     <button
       type="button"
-      className={`${styles.button} ${isOpen ? styles.open : ''}`}
+      className={styles.button}
+      data-open={isOpen}
       onClick={onClick}
       aria-label={isOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
       aria-expanded={isOpen}

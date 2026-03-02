@@ -8,6 +8,7 @@ export * from './HamburgerButton';
 export * from './Icon';
 export * from './Modal';
 export * from './Popin';
+export * from './Sidebar';
 export * from './Spinner';
 export * from './TechBadge';
 export * from './ThemeToggle';
