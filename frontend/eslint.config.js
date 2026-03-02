@@ -71,6 +71,10 @@ export default tseslint.config([
       'import/no-unresolved': 'off',
       'jsx-a11y/anchor-is-valid': 'warn',
       'prettier/prettier': 'warn',
+      'react-refresh/only-export-components': [
+        'off',
+        { allowConstantExport: true },
+      ],
     },
     settings: {
       react: {
