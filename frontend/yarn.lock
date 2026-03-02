@@ -855,7 +855,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:9.39.3, @eslint/js@npm:^9.39.3":
+"@eslint/js@npm:9.39.3":
   version: 9.39.3
   resolution: "@eslint/js@npm:9.39.3"
   checksum: 10c0/df1c70d6681c8daf4a3c86dfac159fcd98a73c4620c4fbe2be6caab1f30a34c7de0ad88ab0e81162376d2cde1a2eed1c32eff5f917ca369870930a51f8e818f1
@@ -1521,33 +1521,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/eslint-plugin-jsx-a11y@npm:^6":
-  version: 6.10.0
-  resolution: "@types/eslint-plugin-jsx-a11y@npm:6.10.0"
-  dependencies:
-    "@types/eslint": "npm:*"
-  checksum: 10c0/ec494e0ea56a0a10140316a74463eb8a6ac5ed02d7408ef91444f7c0c9bc875866a9d0be7a761f1631ea543c2413b1db947bf7cb1df9d936171e5d82f71c6772
-  languageName: node
-  linkType: hard
-
-"@types/eslint@npm:*":
-  version: 9.6.1
-  resolution: "@types/eslint@npm:9.6.1"
-  dependencies:
-    "@types/estree": "npm:*"
-    "@types/json-schema": "npm:*"
-  checksum: 10c0/69ba24fee600d1e4c5abe0df086c1a4d798abf13792d8cfab912d76817fe1a894359a1518557d21237fbaf6eda93c5ab9309143dee4c59ef54336d1b3570420e
-  languageName: node
-  linkType: hard
-
-"@types/estree@npm:*, @types/estree@npm:1.0.8, @types/estree@npm:^1.0.6":
+"@types/estree@npm:1.0.8, @types/estree@npm:^1.0.6":
   version: 1.0.8
   resolution: "@types/estree@npm:1.0.8"
   checksum: 10c0/39d34d1afaa338ab9763f37ad6066e3f349444f9052b9676a7cc0252ef9485a41c6d81c9c4e0d26e9077993354edf25efc853f3224dd4b447175ef62bdcc86a5
   languageName: node
   linkType: hard
 
-"@types/json-schema@npm:*, @types/json-schema@npm:^7.0.15":
+"@types/json-schema@npm:^7.0.15":
   version: 7.0.15
   resolution: "@types/json-schema@npm:7.0.15"
   checksum: 10c0/a996a745e6c5d60292f36731dd41341339d4eeed8180bb09226e5c8d23759067692b1d88e5d91d72ee83dfc00d3aca8e7bd43ea120516c17922cbcb7c3e252db
@@ -2357,12 +2338,10 @@ __metadata:
   resolution: "dreadcast_simulator@workspace:."
   dependencies:
     "@base-ui/react": "npm:1.2.0"
-    "@eslint/js": "npm:^9.39.3"
     "@tanstack/eslint-plugin-query": "npm:^5.91.4"
     "@tanstack/react-query": "npm:^5.90.21"
     "@tanstack/react-router": "npm:^1.163.3"
     "@tanstack/router-plugin": "npm:^1.164.0"
-    "@types/eslint-plugin-jsx-a11y": "npm:^6"
     "@types/node": "npm:^24.11.0"
     "@types/react": "npm:^19.2.14"
     "@types/react-dom": "npm:^19.2.3"
@@ -2381,7 +2360,6 @@ __metadata:
     prettier: "npm:^3.8.1"
     react: "npm:^19.2.4"
     react-dom: "npm:^19.2.4"
-    supports-color: "npm:^10.2.2"
     typescript: "npm:~5.9.3"
     typescript-eslint: "npm:^8.56.1"
     vite: "npm:^7.3.1"
@@ -5115,13 +5093,6 @@ __metadata:
   version: 3.1.1
   resolution: "strip-json-comments@npm:3.1.1"
   checksum: 10c0/9681a6257b925a7fa0f285851c0e613cc934a50661fa7bb41ca9cbbff89686bb4a0ee366e6ecedc4daafd01e83eee0720111ab294366fe7c185e935475ebcecd
-  languageName: node
-  linkType: hard
-
-"supports-color@npm:^10.2.2":
-  version: 10.2.2
-  resolution: "supports-color@npm:10.2.2"
-  checksum: 10c0/fb28dd7e0cdf80afb3f2a41df5e068d60c8b4f97f7140de2eaed5b42e075d82a0e980b20a2c0efd2b6d73cfacb55555285d8cc719fa0472220715aefeaa1da7c
   languageName: node
   linkType: hard
 
