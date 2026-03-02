@@ -1,7 +1,6 @@
 import { Select } from '@base-ui/react';
 
-import type { Kit } from '../../model';
-import { useKits } from '../../services';
+import { useKits, type Kit } from '../..';
 import { KitLabel } from '../KitLabel';
 import styles from './KitCombobox.module.css';
 
@@ -11,7 +10,7 @@ import { CheckIcon, ChevronUpDownIcon } from '@/ui';
 interface Props {
   type: ItemType[];
   kit: Kit;
-  onChange: (kit: Kit) => void;
+  onChange: (kit: Kit | null) => void;
 }
 
 export const KitCombobox = ({ type, kit, onChange }: Props) => {

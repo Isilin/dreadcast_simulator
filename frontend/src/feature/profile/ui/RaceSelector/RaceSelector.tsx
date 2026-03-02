@@ -17,7 +17,9 @@ export const RaceSelector = () => {
 
   const raceItems = races?.map((r) => ({ label: r.type, value: r.type }));
 
-  const handleChange = (value: RaceType) => {
+  const handleChange = (value: RaceType | null) => {
+    if (value === null) return;
+
     const race = races?.find((r) => r.type === value);
     if (race) setRace(race.type);
   };

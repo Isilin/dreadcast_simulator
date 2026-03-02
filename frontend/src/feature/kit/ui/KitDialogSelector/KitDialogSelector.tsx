@@ -36,9 +36,9 @@ export const KitDialogSelector = ({ spot }: Props) => {
                   <KitCombobox
                     type={types}
                     kit={kit}
-                    onChange={(newKit: Kit) =>
-                      dispatch.setKit(spot, index, newKit)
-                    }
+                    onChange={(newKit: Kit | null) => {
+                      if (newKit !== null) dispatch.setKit(spot, index, newKit);
+                    }}
                   />
                   <KitNumber
                     value={number}
