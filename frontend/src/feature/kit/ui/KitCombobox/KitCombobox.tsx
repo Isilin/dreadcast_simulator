@@ -1,4 +1,4 @@
-import { Select } from '@base-ui-components/react';
+import { Select } from '@base-ui/react';
 
 import type { Kit } from '../../model';
 import { useKits } from '../../services';

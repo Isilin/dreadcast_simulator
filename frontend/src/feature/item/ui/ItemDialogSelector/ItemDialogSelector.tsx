@@ -1,4 +1,4 @@
-import { Dialog } from '@base-ui-components/react';
+import { Dialog } from '@base-ui/react';
 
 import { ItemCard } from '../ItemCard';
 

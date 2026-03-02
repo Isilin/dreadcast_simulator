@@ -1,4 +1,4 @@
-import { Field, Radio, RadioGroup } from '@base-ui-components/react';
+import { Field, Radio, RadioGroup } from '@base-ui/react';
 
 import styles from './GenderSelector.module.css';
 

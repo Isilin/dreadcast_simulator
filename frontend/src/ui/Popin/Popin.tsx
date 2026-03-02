@@ -1,4 +1,4 @@
-import { Tooltip } from '@base-ui-components/react';
+import { Tooltip } from '@base-ui/react';
 import { type HTMLProps, type PropsWithChildren, type ReactNode } from 'react';
 
 import styles from './Popin.module.css';
@@ -16,7 +16,7 @@ export const Popin = ({
   className,
 }: PropsWithChildren<Props>) => {
   return (
-    <Tooltip.Root delay={100}>
+    <Tooltip.Root>
       <Tooltip.Trigger
         render={(props: HTMLProps<HTMLHeadingElement>) => (
           <span {...{ ...props, className }}>{props.children}</span>

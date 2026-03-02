@@ -1,4 +1,4 @@
-import { Tooltip } from '@base-ui-components/react';
+import { Tooltip } from '@base-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { StrictMode } from 'react';

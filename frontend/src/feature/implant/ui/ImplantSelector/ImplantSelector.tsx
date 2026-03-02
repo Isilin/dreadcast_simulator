@@ -1,4 +1,4 @@
-import { Field, NumberField } from '@base-ui-components/react';
+import { Field, NumberField } from '@base-ui/react';
 
 import {
   useImplantsDispatch,

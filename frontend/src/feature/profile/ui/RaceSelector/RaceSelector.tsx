@@ -1,4 +1,4 @@
-import { Field, Select } from '@base-ui-components/react';
+import { Field, Select } from '@base-ui/react';
 
 import styles from './RaceSelector.module.css';
 

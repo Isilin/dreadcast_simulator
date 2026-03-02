@@ -1,4 +1,4 @@
-import { Tabs } from '@base-ui-components/react';
+import { Tabs } from '@base-ui/react';
 
 import styles from './TabsBar.module.css';
 

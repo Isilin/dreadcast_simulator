@@ -1,4 +1,4 @@
-import { Dialog } from '@base-ui-components/react';
+import { Dialog } from '@base-ui/react';
 import { useState } from 'react';
 
 import { ImplantsCounter } from '../ImplantsCounter';
