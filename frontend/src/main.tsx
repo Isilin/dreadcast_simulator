@@ -9,11 +9,6 @@ import '@/styles/helpers.css';
 import '@/styles/theme.css';
 import './index.css';
 
-import { DrugsProvider } from './feature/drug';
-import { ImplantsProvider } from './feature/implant';
-import { ItemsProvider } from './feature/item';
-import { KitsProvider } from './feature/kit';
-import { ProfileProvider } from './feature/profile';
 import { routeTree } from './routeTree.gen';
 import { ErrorBoundary } from './ui';
 
@@ -42,17 +37,7 @@ if (!rootElement.innerHTML) {
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
           <Tooltip.Provider>
-            <DrugsProvider>
-              <ImplantsProvider>
-                <ItemsProvider>
-                  <KitsProvider>
-                    <ProfileProvider>
-                      <RouterProvider router={router} />
-                    </ProfileProvider>
-                  </KitsProvider>
-                </ItemsProvider>
-              </ImplantsProvider>
-            </DrugsProvider>
+            <RouterProvider router={router} />
           </Tooltip.Provider>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>

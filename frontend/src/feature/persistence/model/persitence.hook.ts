@@ -11,50 +11,42 @@ import {
   writeBuilds,
 } from '../services/persistence.service';
 
-import type { DrugsState } from '@/feature/drug';
-import { initialState as drugsInitialState } from '@/feature/drug/model/drug.actions';
-import type { ImplantsState } from '@/feature/implant';
-import { initialState as implantsInitialState } from '@/feature/implant/model/implant.actions';
-import type { Item, ItemsState } from '@/feature/item';
-import { initialState as itemsInitialState } from '@/feature/item/model/item.actions';
-import type { Kit, KitsState } from '@/feature/kit';
-import { initialState as kitsInitialState } from '@/feature/kit/model/kit.actions';
-import type { ProfileState } from '@/feature/profile';
-import { initialState as profileInitialState } from '@/feature/profile/model/profile.actions';
+import {
+  useDrugStore,
+  initialState as drugsInitialState,
+} from '@/feature/drug/model/drug.store';
+import {
+  useImplantStore,
+  initialState as implantsInitialState,
+} from '@/feature/implant/model/implant.store';
+import type { Item } from '@/feature/item';
+import {
+  useItemStore,
+  initialState as itemsInitialState,
+} from '@/feature/item/model/item.store';
+import type { Kit } from '@/feature/kit';
+import {
+  useKitStore,
+  initialState as kitsInitialState,
+} from '@/feature/kit/model/kit.store';
+import {
+  useProfileStore,
+  initialState as profileInitialState,
+} from '@/feature/profile/model/profile.store';
 
 interface HookParams {
-  profile: ProfileState;
-  implants: ImplantsState;
-  items: ItemsState;
-  kits: KitsState;
-  drug: DrugsState;
   allItems: Item[] | undefined;
   allKits: Kit[] | undefined;
-  profileDispatch: { replaceProfile: (profile: ProfileState) => void };
-  implantsDispatch: { replaceImplants: (implants: ImplantsState) => void };
-  itemsDispatch: { replaceItems: (items: ItemsState) => void };
-  kitsDispatch: { replaceKits: (kits: KitsState) => void };
-  drugsDispatch: { replaceDrug: (state: DrugsState) => void };
 }
 
-export function useBuildPersistence({
-  profile,
-  implants,
-  items,
-  kits,
-  drug,
-  allItems,
-  allKits,
-  profileDispatch,
-  implantsDispatch,
-  itemsDispatch,
-  kitsDispatch,
-  drugsDispatch,
-}: HookParams) {
+export function useBuildPersistence({ allItems, allKits }: HookParams) {
   const [active, setActive] = useState<string>('1');
   const [builds, setBuilds] = useState<Record<string, BuildSnapshot>>({});
   const isRestoringRef = useRef(false);
   const timerRef = useRef<number | null>(null);
+  const activeRef = useRef(active);
+  // Keep a mutable ref so the stable subscribe callback always reads the latest active slot
+  activeRef.current = active;
 
   useEffect(() => {
     setBuilds(readBuilds());
@@ -66,77 +58,89 @@ export function useBuildPersistence({
     return arr;
   }, []);
 
+  // Restore a build when the active slot or loaded data changes
   useEffect(() => {
     if (!allItems || !allKits) return;
     isRestoringRef.current = true;
     const b = readBuilds()[active];
     if (b) {
-      profileDispatch.replaceProfile(b.profile);
-      implantsDispatch.replaceImplants(b.implants);
-      itemsDispatch.replaceItems(restoreItems(b.items, allItems));
-      kitsDispatch.replaceKits(restoreKits(b.kits, allKits));
-      drugsDispatch.replaceDrug(b.drug ?? drugsInitialState);
+      useProfileStore.getState().replaceProfile(b.profile);
+      useImplantStore.getState().replaceImplants(b.implants);
+      useItemStore.getState().replaceItems(restoreItems(b.items, allItems));
+      useKitStore.getState().replaceKits(restoreKits(b.kits, allKits));
+      useDrugStore.getState().replaceDrug(b.drug ?? drugsInitialState);
     } else {
-      profileDispatch.replaceProfile(profileInitialState);
-      implantsDispatch.replaceImplants(implantsInitialState);
-      itemsDispatch.replaceItems(itemsInitialState);
-      kitsDispatch.replaceKits(kitsInitialState);
-      drugsDispatch.replaceDrug(drugsInitialState);
+      useProfileStore.getState().replaceProfile(profileInitialState);
+      useImplantStore.getState().replaceImplants(implantsInitialState);
+      useItemStore.getState().replaceItems(itemsInitialState);
+      useKitStore.getState().replaceKits(kitsInitialState);
+      useDrugStore.getState().replaceDrug(drugsInitialState);
     }
     setTimeout(() => {
       isRestoringRef.current = false;
     }, 0);
-  }, [
-    active,
-    allItems,
-    allKits,
-    drugsDispatch,
-    implantsDispatch,
-    itemsDispatch,
-    kitsDispatch,
-    profileDispatch,
-  ]);
+  }, [active, allItems, allKits]);
 
+  // Auto-save whenever any feature store changes (debounced)
   useEffect(() => {
-    if (isRestoringRef.current) return;
-    const saved = readBuilds()[active] as BuildSnapshot | undefined;
-    const serializedItems = serializeItems(items);
-    const serializedKits = serializeKits(kits);
-    const savedComparable = saved
-      ? JSON.stringify({
-          profile: saved.profile,
-          implants: saved.implants,
-          items: saved.items,
-          kits: saved.kits,
-          drug: saved.drug,
-        })
-      : null;
-    const currentComparable = JSON.stringify({
-      profile,
-      implants,
-      items: serializedItems,
-      kits: serializedKits,
-      drug,
-    });
-    if (savedComparable === currentComparable) return;
-    if (timerRef.current) window.clearTimeout(timerRef.current);
-    timerRef.current = window.setTimeout(() => {
-      const toWrite: BuildSnapshot = {
+    const doSave = () => {
+      if (isRestoringRef.current) return;
+      const profile = useProfileStore.getState().profile;
+      const implants = useImplantStore.getState().implants;
+      const items = useItemStore.getState().items;
+      const kits = useKitStore.getState().kits;
+      const drug = useDrugStore.getState().drug;
+      const current = activeRef.current;
+
+      const saved = readBuilds()[current] as BuildSnapshot | undefined;
+      const serializedItems = serializeItems(items);
+      const serializedKits = serializeKits(kits);
+      const savedComparable = saved
+        ? JSON.stringify({
+            profile: saved.profile,
+            implants: saved.implants,
+            items: saved.items,
+            kits: saved.kits,
+            drug: saved.drug,
+          })
+        : null;
+      const currentComparable = JSON.stringify({
         profile,
         implants,
         items: serializedItems,
         kits: serializedKits,
         drug,
-        savedAt: Date.now(),
-      };
-      const next = { ...readBuilds(), [active]: toWrite };
-      writeBuilds(next);
-      setBuilds(next);
-    }, 250);
+      });
+      if (savedComparable === currentComparable) return;
+      if (timerRef.current) window.clearTimeout(timerRef.current);
+      timerRef.current = window.setTimeout(() => {
+        const toWrite: BuildSnapshot = {
+          profile,
+          implants,
+          items: serializedItems,
+          kits: serializedKits,
+          drug,
+          savedAt: Date.now(),
+        };
+        const next = { ...readBuilds(), [current]: toWrite };
+        writeBuilds(next);
+        setBuilds(next);
+      }, 250);
+    };
+
+    const unsubscribers = [
+      useProfileStore.subscribe(doSave),
+      useImplantStore.subscribe(doSave),
+      useItemStore.subscribe(doSave),
+      useKitStore.subscribe(doSave),
+      useDrugStore.subscribe(doSave),
+    ];
+
     return () => {
+      unsubscribers.forEach((fn) => fn());
       if (timerRef.current) window.clearTimeout(timerRef.current);
     };
-  }, [active, drug, implants, items, kits, profile]);
+  }, []);
 
   return { active, setActive, builds, slots };
 }
