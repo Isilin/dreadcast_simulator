@@ -10,7 +10,7 @@ import styles from './KitDialogSelector.module.css';
 
 import { type ItemSpot } from '@/domain';
 import { getItemTypes } from '@/feature/item';
-import { DeleteButton, Modal } from '@/ui';
+import { DeleteButton, Modal, Spinner } from '@/ui';
 
 interface Props {
   spot: ItemSpot;
@@ -20,7 +20,11 @@ export const KitDialogSelector = ({ spot }: Props) => {
   const types = useMemo(() => getItemTypes(spot), [spot]);
   const { kits } = useKitsOnSpot(spot);
   const dispatch = useKitsDispatch();
-  const { data: allKits } = useKits(types);
+  const {
+    data: allKits,
+    status: kitsStatus,
+    error: kitsError,
+  } = useKits(types);
 
   return (
     <Modal>
@@ -53,7 +57,9 @@ export const KitDialogSelector = ({ spot }: Props) => {
               ))}
             </ul>
           )}
-          {allKits && (
+          {kitsStatus === 'error' && <p>{kitsError.message}</p>}
+          {kitsStatus === 'pending' && <Spinner />}
+          {kitsStatus === 'success' && allKits && (
             <button
               className={styles.addButton}
               onClick={() => dispatch.addKit(spot, allKits[0], true)}

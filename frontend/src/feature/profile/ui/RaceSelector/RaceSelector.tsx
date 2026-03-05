@@ -13,7 +13,7 @@ import { CheckIcon, ChevronUpDownIcon } from '@/ui';
 export const RaceSelector = () => {
   const { race } = useProfileState();
   const { setRace } = useProfileDispatch();
-  const { data: races } = useRaces();
+  const { data: races, status } = useRaces();
 
   const raceItems = races?.map((r) => ({ label: r.type, value: r.type }));
 
@@ -32,7 +32,10 @@ export const RaceSelector = () => {
         value={race || 'Humain'}
         onValueChange={handleChange}
       >
-        <Select.Trigger className={styles.Select}>
+        <Select.Trigger
+          className={styles.Select}
+          disabled={status === 'pending'}
+        >
           <Select.Value />
           <Select.Icon className={styles.SelectIcon}>
             <ChevronUpDownIcon />
