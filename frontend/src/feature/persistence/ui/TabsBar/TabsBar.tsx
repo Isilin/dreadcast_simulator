@@ -1,12 +1,12 @@
 import { Tabs } from '@base-ui/react';
 
 import styles from './TabsBar.module.css';
+import { useBuildPersistence } from '../../model';
 
 import { useDrugsDispatch, useDrugsState } from '@/feature/drug';
 import { useImplantsDispatch, useImplantsState } from '@/feature/implant';
 import { useItems, useItemsDispatch, useItemsState } from '@/feature/item';
 import { useKits, useKitsDispatch, useKitsState } from '@/feature/kit';
-import { useBuildPersistence } from '@/feature/persistence/model/persitence.hook';
 import { useProfileDispatch, useProfileState } from '@/feature/profile';
 
 export const TabsBar = () => {

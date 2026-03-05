@@ -5,9 +5,9 @@ import styles from './index.module.css';
 
 import { DrugsButton } from '@/feature/drug';
 import { ImplantsButton } from '@/feature/implant';
-import { IconBar, TabsBar } from '@/feature/persistence/ui';
+import { IconBar, TabsBar } from '@/feature/persistence';
 import { GenderSelector, RaceSelector, Silhouette } from '@/feature/profile';
-import { Skills } from '@/feature/stats/skills';
+import { Skills } from '@/feature/stats';
 import { Footer, Sidebar, SlotPair } from '@/ui';
 
 export const Route = createFileRoute('/')({
