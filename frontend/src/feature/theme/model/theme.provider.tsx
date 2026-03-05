@@ -1,68 +1,30 @@
 import type { ReactNode } from 'react';
-import { useLayoutEffect, useMemo, useReducer } from 'react';
+import { useLayoutEffect } from 'react';
 
-import {
-  createThemeActions,
-  initialState,
-  themeReducer,
-} from './theme.actions';
-import { ThemeDispatchContext, ThemeStateContext } from './theme.contexts';
-
-import {
-  initializeTheme,
-  persistTheme,
-} from '@/feature/theme/services/theme.repo';
+import { useThemeDispatch } from './theme.hooks';
 
 interface ThemeProviderProps {
   children: ReactNode;
 }
 
 /**
- * Provider component for theme management.
- * Handles theme initialization, persistence, and system preference synchronization.
- *
- * Features:
- * - Detects and applies system theme preference on mount using useLayoutEffect (no flash)
- * - Persists user's theme choice to localStorage
- * - Listens for system theme changes and updates accordingly
- * - Wraps actions in useMemo to prevent unnecessary re-renders
- *
- * Uses useLayoutEffect to ensure theme is applied before browser paint,
- * preventing flash of wrong theme color.
+ * Thin provider that wires up the system theme preference listener.
+ * Theme state is managed by the Zustand store (theme.store.ts) and initialized
+ * eagerly at module load — no flash of wrong theme possible.
  */
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [state, dispatch] = useReducer(themeReducer, initialState);
-  const actions = useMemo(() => createThemeActions(dispatch), [dispatch]);
+  const { setTheme } = useThemeDispatch();
 
-  // Apply theme synchronously before paint to prevent flash
-  useLayoutEffect(() => {
-    const initialTheme = initializeTheme();
-    actions.initTheme(initialTheme);
-  }, [actions]);
-
-  // Persist theme to localStorage whenever it changes
-  useLayoutEffect(() => {
-    persistTheme(state.current);
-  }, [state]);
-
-  // Listen for system theme preference changes
   useLayoutEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     const handleChange = (e: MediaQueryListEvent) => {
-      const newTheme = e.matches ? 'dark' : 'light';
-      actions.setTheme(newTheme);
+      setTheme(e.matches ? 'dark' : 'light');
     };
 
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
-  }, [actions]);
+  }, [setTheme]);
 
-  return (
-    <ThemeDispatchContext.Provider value={actions}>
-      <ThemeStateContext.Provider value={state}>
-        {children}
-      </ThemeStateContext.Provider>
-    </ThemeDispatchContext.Provider>
-  );
+  return <>{children}</>;
 };

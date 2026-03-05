@@ -3,40 +3,16 @@ import { Tabs } from '@base-ui/react';
 import styles from './TabsBar.module.css';
 import { useBuildPersistence } from '../../model';
 
-import { useDrugsDispatch, useDrugsState } from '@/feature/drug';
-import { useImplantsDispatch, useImplantsState } from '@/feature/implant';
-import { useItems, useItemsDispatch, useItemsState } from '@/feature/item';
-import { useKits, useKitsDispatch, useKitsState } from '@/feature/kit';
-import { useProfileDispatch, useProfileState } from '@/feature/profile';
+import { useItems } from '@/feature/item';
+import { useKits } from '@/feature/kit';
 
 export const TabsBar = () => {
-  const profile = useProfileState();
-  const profileDispatch = useProfileDispatch();
-  const implants = useImplantsState();
-  const implantsDispatch = useImplantsDispatch();
-  const items = useItemsState();
-  const itemsDispatch = useItemsDispatch();
-  const kits = useKitsState();
-  const kitsDispatch = useKitsDispatch();
-  const drug = useDrugsState();
-  const drugsDispatch = useDrugsDispatch();
-
   const { data: allItems } = useItems();
   const { data: allKits } = useKits();
 
   const { active, setActive, builds, slots } = useBuildPersistence({
-    profile,
-    implants,
-    items,
-    kits,
-    drug,
     allItems,
     allKits,
-    profileDispatch,
-    implantsDispatch,
-    itemsDispatch,
-    kitsDispatch,
-    drugsDispatch,
   });
 
   return (

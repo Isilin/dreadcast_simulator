@@ -25,10 +25,8 @@ feature/
     index.ts          # Public exports only
     model/            # State management
       *.types.ts      # TypeScript interfaces, const enums
-      *.actions.ts    # Reducer, actions, initialState
-      *.contexts.ts   # React contexts (StateCtx, DispatchCtx)
-      *.provider.tsx  # Provider with useReducer + useMemo
-      *.hooks.ts      # useFeatureState(), useFeatureDispatch()
+      *.store.ts      # Zustand store: state + actions + initialState
+      *.hooks.ts      # useFeatureState(), useFeatureDispatch() (thin wrappers)
       *.rules.ts      # Business logic functions
       *.selectors.ts  # Derived state computations
     services/         # Data fetching
@@ -122,29 +120,41 @@ export type Action =
 - Separate concerns: presentation vs. logic components
 - Extract complex logic into custom hooks
 
-### Context Pattern (Required)
+### Zustand Store Pattern (Required)
 
 ```typescript
-// ✅ Correct - Separate State and Dispatch contexts for performance
-export const ImplantsProvider = ({ children }: PropsWithChildren) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const actions = useMemo(() => createImplantsActions(dispatch), [dispatch]);
+// ✅ Correct - Zustand store with state + actions + initialState
+import { create } from 'zustand';
+import { useShallow } from 'zustand/react/shallow';
 
-  return (
-    <DispatchCtx.Provider value={actions}>
-      <StateCtx.Provider value={state}>{children}</StateCtx.Provider>
-    </DispatchCtx.Provider>
+interface ImplantStore {
+  implants: ImplantsState;
+  setImplant: (name: ImplantName, level: number) => void;
+  replaceImplants: (state: ImplantsState) => void;
+}
+
+export const initialState: ImplantsState = { /* ... */ };
+
+export const useImplantStore = create<ImplantStore>((set) => ({
+  implants: initialState,
+  setImplant: (name, level) =>
+    set((s) => ({ implants: { ...s.implants, [name]: level } })),
+  replaceImplants: (implants) => set({ implants }),
+}));
+
+// Dispatch hook uses useShallow for stable action references
+export const useImplantsActions = () =>
+  useImplantStore(
+    useShallow((s) => ({ setImplant: s.setImplant, replaceImplants: s.replaceImplants })),
   );
-};
+```
 
-// Hook with proper error handling
-export const useImplantsState = (): ImplantsState => {
-  const state = useContext(StateCtx);
-  if (!state) {
-    throw new Error('Missing ImplantsProvider');
-  }
-  return state;
-};
+```typescript
+// ✅ Correct - Thin hook wrappers over the store
+export const useImplantsState = (): ImplantsState =>
+  useImplantStore((s) => s.implants);
+
+export const useImplantsDispatch = () => useImplantsActions();
 ```
 
 ### CSS Modules Pattern (Required)
@@ -210,23 +220,24 @@ import { Card } from '@/ui';
 
 ## 7. State Management Standards
 
-### Reducer Pattern (Required)
+### Zustand Store Pattern (Required)
 
-- Use `useReducer` for complex state logic
-- Define actions as discriminated unions
-- Implement pure reducer functions
-- Use action creators wrapped in `useMemo`
+- Use Zustand (`create<StoreType>`) for all feature state
+- Define state fields and actions in the same store
+- Export `initialState` as a named constant for use in persistence and tests
+- Use `useShallow` from `zustand/react/shallow` for dispatch hooks that return objects
+- Expose thin hook wrappers (`useFeatureState`, `useFeatureDispatch`) over the store
 
-### Context Usage
+### Cross-Store Access
 
-- Split State and Dispatch contexts for performance
-- Validate context exists in custom hooks
-- Provide meaningful error messages for missing providers
+- Access store state imperatively outside React with `useXxxStore.getState()`
+- Subscribe to store changes with `useXxxStore.subscribe(callback)` for side effects
+- No React Provider wrapping required; stores are module-level singletons
 
 ### State Shape
 
 - Use normalized state structures when appropriate
-- Prefer immutable updates with spread operators
+- Prefer immutable updates with spread operators inside `set()`
 - Use `Record<K, V>` for key-value state mappings
 
 ## 8. Data Layer Standards

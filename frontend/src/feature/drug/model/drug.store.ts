@@ -1,0 +1,29 @@
+import { create } from 'zustand';
+import { useShallow } from 'zustand/react/shallow';
+
+import type { DrugsState } from './drug.types';
+
+interface DrugStore {
+  drug: DrugsState;
+  selectDrug: (id: string) => void;
+  deselectDrug: () => void;
+  replaceDrug: (state: DrugsState) => void;
+}
+
+export const initialState: DrugsState = null;
+
+export const useDrugStore = create<DrugStore>((set) => ({
+  drug: initialState,
+  selectDrug: (id) => set({ drug: id }),
+  deselectDrug: () => set({ drug: null }),
+  replaceDrug: (drug) => set({ drug }),
+}));
+
+export const useDrugsActions = () =>
+  useDrugStore(
+    useShallow((s) => ({
+      selectDrug: s.selectDrug,
+      deselectDrug: s.deselectDrug,
+      replaceDrug: s.replaceDrug,
+    })),
+  );
