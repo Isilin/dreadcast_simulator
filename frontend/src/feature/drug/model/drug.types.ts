@@ -6,3 +6,5 @@ export interface Drug {
   image: string;
   sideEffects: StatModifier[];
 }
+
+export type DrugsState = string | null;

@@ -3,6 +3,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import './App.css';
 import styles from './index.module.css';
 
+import { DrugsButton } from '@/feature/drug';
 import { ImplantsButton } from '@/feature/implant';
 import { IconBar, TabsBar } from '@/feature/persistence/ui';
 import { GenderSelector, RaceSelector, Silhouette } from '@/feature/profile';
@@ -22,6 +23,7 @@ function RouteComponent() {
           <RaceSelector />
           <Skills />
           <ImplantsButton />
+          <DrugsButton />
         </Sidebar>
         <div className={styles.mainContent}>
           <div className={styles.equipmentSection}>

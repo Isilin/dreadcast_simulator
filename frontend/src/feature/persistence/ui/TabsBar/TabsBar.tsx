@@ -2,6 +2,7 @@ import { Tabs } from '@base-ui/react';
 
 import styles from './TabsBar.module.css';
 
+import { useDrugsDispatch, useDrugsState } from '@/feature/drug';
 import { useImplantsDispatch, useImplantsState } from '@/feature/implant';
 import { useItems, useItemsDispatch, useItemsState } from '@/feature/item';
 import { useKits, useKitsDispatch, useKitsState } from '@/feature/kit';
@@ -17,6 +18,8 @@ export const TabsBar = () => {
   const itemsDispatch = useItemsDispatch();
   const kits = useKitsState();
   const kitsDispatch = useKitsDispatch();
+  const drug = useDrugsState();
+  const drugsDispatch = useDrugsDispatch();
 
   const { data: allItems } = useItems();
   const { data: allKits } = useKits();
@@ -26,12 +29,14 @@ export const TabsBar = () => {
     implants,
     items,
     kits,
+    drug,
     allItems,
     allKits,
     profileDispatch,
     implantsDispatch,
     itemsDispatch,
     kitsDispatch,
+    drugsDispatch,
   });
 
   return (
