@@ -1,0 +1,42 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--small-gap);
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  cursor: pointer;
+  list-style: none;
+  transition: background 0.15s, border-color 0.15s;
+  min-width: 120px;
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.card[data-active] {
+  border-color: var(--color-blue);
+  background: rgba(var(--color-blue-rgb, 0, 128, 255), 0.12);
+}
+
+.name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.image {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.effects {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+}

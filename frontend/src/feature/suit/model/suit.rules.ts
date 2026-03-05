@@ -32,12 +32,14 @@ export const computeStat = (
   itemEffects: Record<Stat, number>,
   implantsEffects: Record<Stat, number>,
   kitsEffects: Record<Stat, number>,
+  drugsEffects: Record<Stat, number>,
 ): number => {
   return (
     (raceStats[stat as Skill] ?? 0) +
     implantsEffects[stat] +
     itemEffects[stat] +
-    kitsEffects[stat] -
+    kitsEffects[stat] +
+    drugsEffects[stat] -
     computeRightArmPenalty(items, stat)
   );
 };

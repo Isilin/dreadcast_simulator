@@ -11,6 +11,8 @@ import {
   writeBuilds,
 } from '../services/persistence.service';
 
+import type { DrugsState } from '@/feature/drug';
+import { initialState as drugsInitialState } from '@/feature/drug/model/drug.actions';
 import type { ImplantsState } from '@/feature/implant';
 import { initialState as implantsInitialState } from '@/feature/implant/model/implant.actions';
 import type { Item, ItemsState } from '@/feature/item';
@@ -25,12 +27,14 @@ interface HookParams {
   implants: ImplantsState;
   items: ItemsState;
   kits: KitsState;
+  drug: DrugsState;
   allItems: Item[] | undefined;
   allKits: Kit[] | undefined;
   profileDispatch: { replaceProfile: (profile: ProfileState) => void };
   implantsDispatch: { replaceImplants: (implants: ImplantsState) => void };
   itemsDispatch: { replaceItems: (items: ItemsState) => void };
   kitsDispatch: { replaceKits: (kits: KitsState) => void };
+  drugsDispatch: { replaceDrug: (state: DrugsState) => void };
 }
 
 export function useBuildPersistence({
@@ -38,12 +42,14 @@ export function useBuildPersistence({
   implants,
   items,
   kits,
+  drug,
   allItems,
   allKits,
   profileDispatch,
   implantsDispatch,
   itemsDispatch,
   kitsDispatch,
+  drugsDispatch,
 }: HookParams) {
   const [active, setActive] = useState<string>('1');
   const [builds, setBuilds] = useState<Record<string, BuildSnapshot>>({});
@@ -69,11 +75,13 @@ export function useBuildPersistence({
       implantsDispatch.replaceImplants(b.implants);
       itemsDispatch.replaceItems(restoreItems(b.items, allItems));
       kitsDispatch.replaceKits(restoreKits(b.kits, allKits));
+      drugsDispatch.replaceDrug(b.drug ?? drugsInitialState);
     } else {
       profileDispatch.replaceProfile(profileInitialState);
       implantsDispatch.replaceImplants(implantsInitialState);
       itemsDispatch.replaceItems(itemsInitialState);
       kitsDispatch.replaceKits(kitsInitialState);
+      drugsDispatch.replaceDrug(drugsInitialState);
     }
     setTimeout(() => {
       isRestoringRef.current = false;
@@ -82,6 +90,7 @@ export function useBuildPersistence({
     active,
     allItems,
     allKits,
+    drugsDispatch,
     implantsDispatch,
     itemsDispatch,
     kitsDispatch,
@@ -99,6 +108,7 @@ export function useBuildPersistence({
           implants: saved.implants,
           items: saved.items,
           kits: saved.kits,
+          drug: saved.drug,
         })
       : null;
     const currentComparable = JSON.stringify({
@@ -106,6 +116,7 @@ export function useBuildPersistence({
       implants,
       items: serializedItems,
       kits: serializedKits,
+      drug,
     });
     if (savedComparable === currentComparable) return;
     if (timerRef.current) window.clearTimeout(timerRef.current);
@@ -115,6 +126,7 @@ export function useBuildPersistence({
         implants,
         items: serializedItems,
         kits: serializedKits,
+        drug,
         savedAt: Date.now(),
       };
       const next = { ...readBuilds(), [active]: toWrite };
@@ -124,7 +136,7 @@ export function useBuildPersistence({
     return () => {
       if (timerRef.current) window.clearTimeout(timerRef.current);
     };
-  }, [active, implants, items, kits, profile]);
+  }, [active, drug, implants, items, kits, profile]);
 
   return { active, setActive, builds, slots };
 }

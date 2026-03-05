@@ -1,10 +1,11 @@
 import { ItemSpotValue, type ItemSpot } from '@/domain';
+import type { DrugsState } from '@/feature/drug';
 import type { ImplantsState } from '@/feature/implant';
 import type { DamageBonusType, Item, ItemsState } from '@/feature/item';
 import type { Kit, KitSelection, KitsState } from '@/feature/kit';
 import type { ProfileState } from '@/feature/profile';
 
-export const BUILDS_KEY = 'dreadcast.builds.v2';
+export const BUILDS_KEY = 'dreadcast.builds.v3';
 export const DEFAULT_SLOTS = 5;
 
 export interface SerializedItem {
@@ -26,6 +27,7 @@ export interface BuildSnapshot {
   implants: ImplantsState;
   items: SerializedItemsSnapshot;
   kits: SerializedKitsSnapshot;
+  drug: DrugsState;
   savedAt?: number;
 }
 

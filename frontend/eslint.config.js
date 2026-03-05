@@ -1,5 +1,6 @@
 import eslintPlugin from '@typescript-eslint/eslint-plugin';
 import eslintParser from '@typescript-eslint/parser';
+import queryPlugin from '@tanstack/eslint-plugin-query';
 import importPlugin from 'eslint-plugin-import';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import prettierPlugin from 'eslint-plugin-prettier';
@@ -18,6 +19,7 @@ const __dirname = dirname(__filename);
 export default tseslint.config([
   globalIgnores(['dist']),
   reactRefresh.configs.recommended,
+  ...queryPlugin.configs['flat/recommended'],
   {
     files: ['src/**/*.{ts,tsx,js,jsx}'],
     languageOptions: {
