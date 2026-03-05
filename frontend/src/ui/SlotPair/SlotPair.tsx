@@ -1,9 +1,10 @@
 import { memo } from 'react';
 
+import styles from './SlotPair.module.css';
+
 import type { ItemSpot } from '@/domain';
 import { ItemSelector, WeaponSlot } from '@/feature/item';
 import { KitSelector } from '@/feature/kit';
-import styles from './SlotPair.module.css';
 
 interface Props {
   spot: ItemSpot;
