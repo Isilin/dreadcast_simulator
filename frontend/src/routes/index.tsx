@@ -2,13 +2,12 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import './App.css';
 import styles from './index.module.css';
-import { SlotPair } from './SlotPair';
 
 import { ImplantsButton } from '@/feature/implant';
 import { IconBar, TabsBar } from '@/feature/persistence/ui';
 import { GenderSelector, RaceSelector, Silhouette } from '@/feature/profile';
 import { Skills } from '@/feature/stats/skills';
-import { Footer, Sidebar } from '@/ui';
+import { Footer, Sidebar, SlotPair } from '@/ui';
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,

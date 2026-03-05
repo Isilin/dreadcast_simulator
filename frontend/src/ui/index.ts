@@ -9,6 +9,7 @@ export * from './Icon';
 export * from './Modal';
 export * from './Popin';
 export * from './Sidebar';
+export * from './SlotPair';
 export * from './Spinner';
 export * from './TechBadge';
 export * from './ThemeToggle';
