@@ -3,8 +3,8 @@ import { Tabs } from '@base-ui/react';
 import styles from './TabsBar.module.css';
 
 import { useImplantsDispatch, useImplantsState } from '@/feature/implant';
-import { useItemsDispatch, useItemsState } from '@/feature/item';
-import { useKitsDispatch, useKitsState } from '@/feature/kit';
+import { useItems, useItemsDispatch, useItemsState } from '@/feature/item';
+import { useKits, useKitsDispatch, useKitsState } from '@/feature/kit';
 import { useBuildPersistence } from '@/feature/persistence/model/persitence.hook';
 import { useProfileDispatch, useProfileState } from '@/feature/profile';
 
@@ -18,11 +18,16 @@ export const TabsBar = () => {
   const kits = useKitsState();
   const kitsDispatch = useKitsDispatch();
 
+  const { data: allItems } = useItems();
+  const { data: allKits } = useKits();
+
   const { active, setActive, builds, slots } = useBuildPersistence({
     profile,
     implants,
     items,
     kits,
+    allItems,
+    allKits,
     profileDispatch,
     implantsDispatch,
     itemsDispatch,

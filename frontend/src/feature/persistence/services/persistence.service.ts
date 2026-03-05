@@ -1,18 +1,87 @@
+import { ItemSpotValue, type ItemSpot } from '@/domain';
 import type { ImplantsState } from '@/feature/implant';
-import type { ItemsState } from '@/feature/item';
-import type { KitsState } from '@/feature/kit';
+import type { DamageBonusType, Item, ItemsState } from '@/feature/item';
+import type { Kit, KitSelection, KitsState } from '@/feature/kit';
 import type { ProfileState } from '@/feature/profile';
 
-export const BUILDS_KEY = 'dreadcast.builds.v1';
+export const BUILDS_KEY = 'dreadcast.builds.v2';
 export const DEFAULT_SLOTS = 5;
+
+export interface SerializedItem {
+  id: string;
+  damageBonus?: DamageBonusType;
+}
+
+export type SerializedItemsSnapshot = Record<ItemSpot, SerializedItem | null>;
+
+export interface SerializedKitSelection {
+  id: string;
+  number: number;
+}
+
+export type SerializedKitsSnapshot = Record<ItemSpot, SerializedKitSelection[]>;
 
 export interface BuildSnapshot {
   profile: ProfileState;
   implants: ImplantsState;
-  items: ItemsState;
-  kits: KitsState;
+  items: SerializedItemsSnapshot;
+  kits: SerializedKitsSnapshot;
   savedAt?: number;
 }
+
+export const serializeItems = (state: ItemsState): SerializedItemsSnapshot =>
+  Object.fromEntries(
+    ItemSpotValue.map((spot) => {
+      const item = state[spot];
+      return [
+        spot,
+        item ? { id: item.id, damageBonus: item.damageBonus } : null,
+      ];
+    }),
+  ) as SerializedItemsSnapshot;
+
+export const serializeKits = (state: KitsState): SerializedKitsSnapshot =>
+  Object.fromEntries(
+    ItemSpotValue.map((spot) => [
+      spot,
+      state[spot].map((ks) => ({ id: ks.kit.id, number: ks.number })),
+    ]),
+  ) as SerializedKitsSnapshot;
+
+export const restoreItems = (
+  snapshot: SerializedItemsSnapshot,
+  allItems: Item[],
+): ItemsState =>
+  Object.fromEntries(
+    ItemSpotValue.map((spot) => {
+      const s = snapshot[spot];
+      if (!s) return [spot, null];
+      const fullItem = allItems.find((item) => item.id === s.id) ?? null;
+      if (!fullItem) return [spot, null];
+      return [
+        spot,
+        s.damageBonus !== undefined
+          ? { ...fullItem, damageBonus: s.damageBonus }
+          : fullItem,
+      ];
+    }),
+  ) as ItemsState;
+
+export const restoreKits = (
+  snapshot: SerializedKitsSnapshot,
+  allKits: Kit[],
+): KitsState =>
+  Object.fromEntries(
+    ItemSpotValue.map((spot) => [
+      spot,
+      snapshot[spot]
+        .map((sk): KitSelection | null => {
+          const fullKit = allKits.find((kit) => kit.id === sk.id) ?? null;
+          return fullKit ? { kit: fullKit, number: sk.number } : null;
+        })
+        .filter((ks): ks is KitSelection => ks !== null),
+    ]),
+  ) as KitsState;
 
 export const readBuilds = (): Record<string, BuildSnapshot> => {
   try {
