@@ -2,10 +2,9 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import './App.css';
 import styles from './index.module.css';
+import { SlotPair } from './SlotPair';
 
 import { ImplantsButton } from '@/feature/implant';
-import { ItemSelector, WeaponSlot } from '@/feature/item';
-import { KitSelector } from '@/feature/kit';
 import { IconBar, TabsBar } from '@/feature/persistence/ui';
 import { GenderSelector, RaceSelector, Silhouette } from '@/feature/profile';
 import { Skills } from '@/feature/stats/skills';
@@ -27,74 +26,17 @@ function RouteComponent() {
         </Sidebar>
         <div className={styles.mainContent}>
           <div className={styles.equipmentSection}>
-            {/* Desktop/Tablet: colonnes item et kit séparées */}
-            <div className={`${styles.equipmentGroup} ${styles.bodySlots}`}>
-              <div className={styles.itemColumn}>
-                <ItemSelector spot="head" />
-                <ItemSelector spot="chest" />
-                <ItemSelector spot="legs" />
-                <ItemSelector spot="feet" />
-              </div>
-              <div className={styles.kitColumn}>
-                <KitSelector spot="head" />
-                <KitSelector spot="chest" />
-                <KitSelector spot="legs" />
-                <KitSelector spot="feet" />
-              </div>
+            <div className={styles.bodySlots}>
+              <SlotPair spot="head" />
+              <SlotPair spot="chest" />
+              <SlotPair spot="legs" />
+              <SlotPair spot="feet" />
             </div>
 
-            {/* Mobile: slots groupés (item + kit par ligne) */}
-            <div
-              className={`${styles.equipmentGroup} ${styles.bodySlotsMobile}`}
-            >
-              <div className={styles.slotPair}>
-                <ItemSelector spot="head" />
-                <KitSelector spot="head" />
-              </div>
-              <div className={styles.slotPair}>
-                <ItemSelector spot="chest" />
-                <KitSelector spot="chest" />
-              </div>
-              <div className={styles.slotPair}>
-                <ItemSelector spot="legs" />
-                <KitSelector spot="legs" />
-              </div>
-              <div className={styles.slotPair}>
-                <ItemSelector spot="feet" />
-                <KitSelector spot="feet" />
-              </div>
-            </div>
-
-            {/* Desktop/Tablet: colonnes armes séparées */}
-            <div className={`${styles.equipmentGroup} ${styles.weaponSlots}`}>
-              <div className={styles.weaponsGroup}>
-                <KitSelector spot="leftArm" />
-                <KitSelector spot="rightArm" />
-                <KitSelector spot="secondary" />
-              </div>
-              <div className={styles.weaponsGroup}>
-                <WeaponSlot spot="leftArm" />
-                <WeaponSlot spot="rightArm" />
-                <ItemSelector spot="secondary" />
-              </div>
-            </div>
-
-            {/* Mobile: armes groupées (kit + weapon/item par ligne) */}
-            <div
-              className={`${styles.equipmentGroup} ${styles.weaponSlotsMobile}`}
-            >
-              <div className={styles.slotPair}>
-                <KitSelector spot="leftArm" />
-                <WeaponSlot spot="leftArm" />
-              </div>
-              <div className={styles.slotPair}>
-                <KitSelector spot="rightArm" />
-                <WeaponSlot spot="rightArm" />
-              </div>
-              <div className={styles.slotPair}>
-                <KitSelector spot="secondary" />
-                <ItemSelector spot="secondary" />
-              </div>
+            <div className={styles.weaponSlots}>
+              <SlotPair spot="leftArm" reversed />
+              <SlotPair spot="rightArm" reversed />
+              <SlotPair spot="secondary" reversed />
             </div>
           </div>
           <Silhouette />

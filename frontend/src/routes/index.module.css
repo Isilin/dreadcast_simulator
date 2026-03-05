@@ -25,29 +25,17 @@
   justify-content: space-between;
 }
 
-.equipmentGroup {
-  display: flex;
-  flex-direction: row;
+.bodySlots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
 
-.itemColumn {
-  display: flex;
-  flex-direction: column;
+.weaponSlots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 16px;
-}
-
-.kitColumn {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.weaponsGroup {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 16px;
+  align-content: end;
 }
 
 .backdrop {
@@ -55,19 +43,7 @@
 }
 
 /* Affichage conditionnel: desktop/tablet vs mobile */
-.bodySlotsMobile,
-.weaponSlotsMobile {
-  display: none;
-}
-
-.slotPair {
-  display: flex;
-  flex-direction: row;
-  gap: var(--gap-mobile);
-  align-items: stretch;
-}
-
-/* Desktop - sidebar plus large pour éviter les retours à la ligne */
+.backdrop {
 @media (min-width: 1200px) {
   .sidebar {
     width: 220px;
@@ -127,44 +103,14 @@
   /* Cacher la version desktop et afficher la version mobile */
   .bodySlots,
   .weaponSlots {
-    display: none;
-  }
-
-  .bodySlotsMobile,
-  .weaponSlotsMobile {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-  }
-
-  .slotPair {
-    display: flex;
-    flex-direction: row;
     gap: var(--gap-mobile);
-  }
-
-  .slotPair > * {
-    flex: 1;
-    min-width: 0;
   }
 
   .equipmentSection {
     flex-direction: column;
     gap: 1.5rem;
-  }
-
-  .equipmentGroup {
-    flex-direction: column;
-    gap: var(--gap-mobile);
-  }
-
-  .itemColumn,
-  .kitColumn {
-    gap: var(--gap-mobile);
-  }
-
-  .weaponsGroup {
-    gap: var(--gap-mobile);
   }
 }
 
