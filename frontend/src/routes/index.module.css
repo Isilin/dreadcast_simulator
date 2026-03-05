@@ -43,7 +43,6 @@
 }
 
 /* Affichage conditionnel: desktop/tablet vs mobile */
-.backdrop {
 @media (min-width: 1200px) {
   .sidebar {
     width: 220px;
