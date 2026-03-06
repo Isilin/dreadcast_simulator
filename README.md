@@ -177,6 +177,7 @@ Le projet inclut une configuration complète GitHub Copilot dans `.github/` :
 - [x] Version mobile responsive
 - [x] Animations et transitions fluides
 - [x] Bonus d'armes
+- [x] Ajout des drogues
 
 ### Prochaines versions
 
@@ -194,7 +195,6 @@ Le projet inclut une configuration complète GitHub Copilot dans `.github/` :
 
 #### v2.0 - Backend et collaboration
 
-- [ ] API backend pour persistance cloud
 - [ ] Comptes utilisateurs et builds partagés
 - [ ] Classements et builds de la communauté
 

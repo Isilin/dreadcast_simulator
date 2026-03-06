@@ -1,9 +1,9 @@
 import styles from './IconBar.module.css';
 
-import kesslerLogo from '@/assets/kessler.png';
-import kofiLogo from '@/assets/kofi.png';
-import nomuraLogo from '@/assets/nomura.png';
-import vertigoLogo from '@/assets/vertigo.png';
+import kesslerLogo from '@/assets/kessler.webp';
+import kofiLogo from '@/assets/kofi.webp';
+import nomuraLogo from '@/assets/nomura.webp';
+import vertigoLogo from '@/assets/vertigo.webp';
 import { GithubIcon, UiImage } from '@/ui';
 
 export const IconBar = () => (
