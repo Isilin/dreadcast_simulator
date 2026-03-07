@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 
 import { useImplants } from '../services';
-import { useImplantsState } from './implant.hooks';
 import {
   computeImplantStatus,
   computeImplantsCount,
   computeImplantsEffects,
   computeImplantsStatus,
 } from './implant.rules';
+import { useImplantsState } from './implant.store';
 import type { ImplantName } from './implant.types';
 
 export const useImplantsCount = () => {

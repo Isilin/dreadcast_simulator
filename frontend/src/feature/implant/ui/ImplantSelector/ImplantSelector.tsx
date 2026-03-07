@@ -1,9 +1,9 @@
 import { Field, NumberField } from '@base-ui/react';
 
 import {
-  useImplantsDispatch,
+  useImplantsActions,
   useImplantsState,
-} from '../../model/implant.hooks';
+} from '../../model/implant.store';
 import type { Implant } from '../../model/implant.types';
 import { ImplantIcon } from '../ImplantIcon';
 import styles from './ImplantSelector.module.css';
@@ -16,7 +16,7 @@ interface Props {
 
 export const ImplantSelector = ({ implant }: Props) => {
   const implantations = useImplantsState();
-  const { setImplant } = useImplantsDispatch();
+  const { setImplant } = useImplantsActions();
   const currentImplant = implantations[implant.name];
 
   return (

@@ -15,6 +15,11 @@ interface ImplantStore {
   replaceImplants: (state: ImplantsState) => void;
 }
 
+export type ImplantsActions = Pick<
+  ImplantStore,
+  'setImplant' | 'increaseImplant' | 'decreaseImplant' | 'replaceImplants'
+>;
+
 export const initialState: ImplantsState = Object.fromEntries(
   ImplantNameValues.map((name) => [name, 0]),
 ) as ImplantsState;
@@ -30,7 +35,10 @@ export const useImplantStore = create<ImplantStore>((set) => ({
   replaceImplants: (implants) => set({ implants }),
 }));
 
-export const useImplantsActions = () =>
+export const useImplantsState = (): ImplantsState =>
+  useImplantStore((s) => s.implants);
+
+export const useImplantsActions = (): ImplantsActions =>
   useImplantStore(
     useShallow((s) => ({
       setImplant: s.setImplant,
