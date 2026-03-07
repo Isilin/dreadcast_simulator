@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { useLayoutEffect } from 'react';
 
-import { useThemeDispatch } from './theme.hooks';
+import { useThemeActions } from './theme.store';
 
 interface ThemeProviderProps {
   children: ReactNode;
@@ -13,7 +13,7 @@ interface ThemeProviderProps {
  * eagerly at module load — no flash of wrong theme possible.
  */
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const { setTheme } = useThemeDispatch();
+  const { setTheme } = useThemeActions();
 
   useLayoutEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');

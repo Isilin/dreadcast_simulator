@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { useShallow } from 'zustand/react/shallow';
 
-import { STORAGE_KEY } from './theme.types';
 import type { Theme, ThemeState } from './theme.types';
+import { STORAGE_KEY } from './theme.types';
 
 import { getStoredTheme } from '@/feature/theme/model/theme.rules';
 import {
@@ -35,7 +35,7 @@ export const useThemeStore = create<ThemeStore>((set, get) => ({
   },
 }));
 
-export const useThemeStateValues = (): ThemeState =>
+export const useThemeState = (): ThemeState =>
   useThemeStore(
     useShallow((s) => ({
       current: s.current,
@@ -43,7 +43,12 @@ export const useThemeStateValues = (): ThemeState =>
     })),
   );
 
-export const useThemeActionsValues = (): ThemeActions =>
+export const useThemeActions = (): ThemeActions =>
   useThemeStore(
     useShallow((s) => ({ setTheme: s.setTheme, toggleTheme: s.toggleTheme })),
   );
+
+export const useTheme = (): { state: ThemeState; actions: ThemeActions } => ({
+  state: useThemeState(),
+  actions: useThemeActions(),
+});
