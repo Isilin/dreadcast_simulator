@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-import type { DrugResponseDto } from './lib/drug.types';
+import type { DrugResponseDto } from './lib/drug.types.ts';
 
 const supabase = createClient(
   process.env.SUPABASE_URL || '',
