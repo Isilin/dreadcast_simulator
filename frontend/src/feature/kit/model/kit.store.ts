@@ -14,6 +14,11 @@ interface KitStore {
   replaceKits: (state: KitsState) => void;
 }
 
+export type KitsActions = Pick<
+  KitStore,
+  'addKit' | 'setKit' | 'deleteKit' | 'setKitNumber' | 'replaceKits'
+>;
+
 export const initialState: KitsState = Object.fromEntries(
   ItemSpotValue.map((name) => [name, [] as KitSelection[]]),
 ) as KitsState;
@@ -59,7 +64,9 @@ export const useKitStore = create<KitStore>((set) => ({
   replaceKits: (kits) => set({ kits }),
 }));
 
-export const useKitsActions = () =>
+export const useKitsState = (): KitsState => useKitStore((s) => s.kits);
+
+export const useKitsActions = (): KitsActions =>
   useKitStore(
     useShallow((s) => ({
       addKit: s.addKit,

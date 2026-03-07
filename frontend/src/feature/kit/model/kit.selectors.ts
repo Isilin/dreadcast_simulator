@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 
-import { useKitsState } from './kit.hooks';
 import {
   computeSpotTechCost,
   computeSpotTotalEffect,
   computeTotalEffects,
 } from './kit.rules';
+import { useKitsState } from './kit.store';
 
 import { type ItemSpot } from '@/domain';
 

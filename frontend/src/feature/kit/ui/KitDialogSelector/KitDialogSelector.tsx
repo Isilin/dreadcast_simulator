@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 
 import type { Kit } from '../../model';
-import { useKitsDispatch } from '../../model/kit.hooks';
 import { useKitsOnSpot } from '../../model/kit.selectors';
+import { useKitsActions } from '../../model/kit.store';
 import { useKits } from '../../services';
 import { KitCombobox } from '../KitCombobox';
 import { KitNumber } from '../KitNumber';
@@ -19,7 +19,7 @@ interface Props {
 export const KitDialogSelector = ({ spot }: Props) => {
   const types = useMemo(() => getItemTypes(spot), [spot]);
   const { kits } = useKitsOnSpot(spot);
-  const dispatch = useKitsDispatch();
+  const actions = useKitsActions();
   const {
     data: allKits,
     status: kitsStatus,
@@ -41,17 +41,17 @@ export const KitDialogSelector = ({ spot }: Props) => {
                     type={types}
                     kit={kit}
                     onChange={(newKit: Kit | null) => {
-                      if (newKit !== null) dispatch.setKit(spot, index, newKit);
+                      if (newKit !== null) actions.setKit(spot, index, newKit);
                     }}
                   />
                   <KitNumber
                     value={number}
                     onChange={(newNumber) =>
-                      dispatch.setKitNumber(spot, index, newNumber)
+                      actions.setKitNumber(spot, index, newNumber)
                     }
                   />
                   <DeleteButton
-                    onClick={() => dispatch.deleteKit(spot, index)}
+                    onClick={() => actions.deleteKit(spot, index)}
                   />
                 </li>
               ))}
@@ -62,7 +62,7 @@ export const KitDialogSelector = ({ spot }: Props) => {
           {kitsStatus === 'success' && allKits && (
             <button
               className={styles.addButton}
-              onClick={() => dispatch.addKit(spot, allKits[0], true)}
+              onClick={() => actions.addKit(spot, allKits[0], true)}
             >
               +
             </button>
