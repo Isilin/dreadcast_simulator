@@ -1,8 +1,7 @@
 node_modules
 dist
 build
+*.lock
+*.log
 coverage
-.yarn
-.next
-out
-public/**/*.min.js
+public/assets
