@@ -1,6 +1,6 @@
 import type { VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-import type { DrugResponseDto } from './drug.types';
+import type { DrugResponseDto } from './drug.types.ts';
 
 export const createDrugClient = () =>
   createClient(

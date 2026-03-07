@@ -5,7 +5,7 @@ import {
   setCacheHeaders,
   handleDrugError,
   typeDrug,
-} from '../lib/drug.api';
+} from '../lib/drug.api.ts';
 
 const supabase = createDrugClient();
 

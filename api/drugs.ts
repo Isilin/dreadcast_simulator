@@ -4,9 +4,8 @@ import {
   DRUG_SELECT_QUERY,
   setCacheHeaders,
   handleDrugError,
-  typeDrug,
-} from './lib/drug.api';
-import type { DrugResponseDto } from './lib/drug.types';
+} from './lib/drug.api.ts';
+import type { DrugResponseDto } from './lib/drug.types.ts';
 
 const supabase = createDrugClient();
 
