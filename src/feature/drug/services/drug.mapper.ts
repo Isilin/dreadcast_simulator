@@ -1,5 +1,6 @@
-import type { DrugResponseDto } from '@/lib/drug.types';
 import type { Drug } from '../model/drug.types';
+
+import type { DrugResponseDto } from '@/lib/drug.types';
 
 export const toDomain = (dto: DrugResponseDto): Drug => ({
   id: dto.id,

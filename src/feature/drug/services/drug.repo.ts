@@ -1,6 +1,7 @@
-import type { DrugResponseDto } from '@/lib/drug.types';
 import { toDomain } from './drug.mapper';
 import type { Drug } from '../model/drug.types';
+
+import type { DrugResponseDto } from '@/lib/drug.types';
 
 export async function fetchDrugs(): Promise<Drug[]> {
   const response = await fetch('/api/drugs', {
