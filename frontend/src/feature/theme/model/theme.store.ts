@@ -1,14 +1,10 @@
 import { create } from 'zustand';
 import { useShallow } from 'zustand/react/shallow';
 
+import { initializeTheme, persistTheme } from '../services/theme.repo';
+import { getStoredTheme } from './theme.rules';
 import type { Theme, ThemeState } from './theme.types';
 import { STORAGE_KEY } from './theme.types';
-
-import { getStoredTheme } from '@/feature/theme/model/theme.rules';
-import {
-  initializeTheme,
-  persistTheme,
-} from '@/feature/theme/services/theme.repo';
 
 export interface ThemeActions {
   setTheme: (theme: Theme) => void;

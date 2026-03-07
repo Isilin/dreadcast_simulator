@@ -1,6 +1,6 @@
+import type { Item, ItemType } from '../model/item.types';
 import { fetchItemsMock } from './item.repo.mock';
 
-import type { Item, ItemType } from '@/feature/item';
 import { USE_MOCK } from '@/utils/use-mock';
 
 export async function fetchItems(type?: ItemType[]): Promise<Item[]> {

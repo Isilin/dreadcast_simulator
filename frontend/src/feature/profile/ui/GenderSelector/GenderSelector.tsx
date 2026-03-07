@@ -1,12 +1,8 @@
 import { Field, Radio, RadioGroup } from '@base-ui/react';
 
+import { useProfileActions, useProfileState } from '../../model/profile.store';
+import type { Gender } from '../../model/profile.types';
 import styles from './GenderSelector.module.css';
-
-import {
-  useProfileActions,
-  useProfileState,
-  type Gender,
-} from '@/feature/profile';
 
 export const GenderSelector = () => {
   const { gender } = useProfileState();

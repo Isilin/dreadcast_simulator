@@ -1,3 +1,5 @@
+import type { ImplantName } from '../../model/implant.types';
+
 import aideDeCamp from '@/assets/implant/aide de camp.webp';
 import brute from '@/assets/implant/brute.webp';
 import chameau from '@/assets/implant/chameau.webp';
@@ -28,7 +30,6 @@ import tireurDelite from "@/assets/implant/tireur d'élite.webp";
 import urgentiste from '@/assets/implant/urgentiste.webp';
 import eclaireur from '@/assets/implant/éclaireur.webp';
 import econome from '@/assets/implant/économe.webp';
-import type { ImplantName } from '@/feature/implant';
 
 export const THUMBS: Record<ImplantName, string> = {
   Génie: genie,

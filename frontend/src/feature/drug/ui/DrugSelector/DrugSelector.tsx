@@ -1,7 +1,8 @@
+import { useDrugActions, useDrugId } from '../../model/drug.store';
+import type { Drug } from '../../model/drug.types';
 import styles from './DrugSelector.module.css';
 
 import { StatValues, type Stat } from '@/domain';
-import { useDrugActions, useDrugId, type Drug } from '@/feature/drug';
 import { EffectChip, UiImage } from '@/ui';
 
 interface Props {

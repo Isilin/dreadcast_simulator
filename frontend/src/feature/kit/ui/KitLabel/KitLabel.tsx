@@ -1,7 +1,7 @@
+import type { Kit } from '../../model/kit.types';
 import styles from './KitLabel.module.css';
 
 import { StatValues } from '@/domain';
-import type { Kit } from '@/feature/kit';
 import { EffectChip, TechBadge } from '@/ui';
 
 interface Props {

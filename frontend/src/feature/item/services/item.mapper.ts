@@ -1,6 +1,5 @@
+import type { Item } from '../model/item.types';
 import type { ItemResponseDto } from './item.dto';
-
-import type { Item } from '@/feature/item';
 
 export const toDomain = (dto: ItemResponseDto): Item => ({
   id: dto.id,

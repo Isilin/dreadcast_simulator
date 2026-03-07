@@ -1,13 +1,10 @@
 import { Field, Select } from '@base-ui/react';
 
+import { useProfileActions, useProfileState } from '../../model/profile.store';
+import type { RaceType } from '../../model/profile.types';
+import { useRaces } from '../../services';
 import styles from './RaceSelector.module.css';
 
-import {
-  useProfileActions,
-  useProfileState,
-  useRaces,
-  type RaceType,
-} from '@/feature/profile';
 import { CheckIcon, ChevronUpDownIcon } from '@/ui';
 
 export const RaceSelector = () => {

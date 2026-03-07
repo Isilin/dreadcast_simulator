@@ -1,9 +1,10 @@
+import { itemPrerequisitesMet } from '../../model/item.rules';
+import type { Item } from '../../model/item.types';
 import { PrerequisitePopin } from '../PrerequisitePopin';
 import styles from './ItemCard.module.css';
 
 import { StatValues } from '@/domain';
 import { useImplantsEffects } from '@/feature/implant';
-import { itemPrerequisitesMet, type Item } from '@/feature/item';
 import { useRaceStats } from '@/feature/profile';
 import { Card, EffectChip, UiImage } from '@/ui';
 

@@ -1,7 +1,7 @@
+import type { Item } from '../../model/item.types';
 import styles from './PrerequisitePopin.module.css';
 
 import { StatValues } from '@/domain';
-import { type Item } from '@/feature/item';
 import { usePureStatSelector } from '@/feature/suit';
 import { Popin, WarningIcon } from '@/ui';
 

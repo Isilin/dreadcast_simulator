@@ -1,7 +1,8 @@
+import { useImplantStatus } from '../../model/implant.selectors';
+import type { ImplantName } from '../../model/implant.types';
 import styles from './ImplantIcon.module.css';
 import { THUMBS } from './thumbs';
 
-import { type ImplantName, useImplantStatus } from '@/feature/implant';
 import { UiImage } from '@/ui';
 
 interface Props {

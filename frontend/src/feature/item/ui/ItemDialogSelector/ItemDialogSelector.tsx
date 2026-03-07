@@ -1,8 +1,9 @@
 import { Dialog } from '@base-ui/react';
 
+import type { Item, ItemType } from '../../model/item.types';
+import { useItems } from '../../services';
 import { ItemCard } from '../ItemCard';
 
-import { useItems, type Item, type ItemType } from '@/feature/item';
 import { Modal, Spinner } from '@/ui';
 
 interface Props {

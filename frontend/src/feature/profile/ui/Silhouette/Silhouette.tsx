@@ -1,5 +1,6 @@
 import { useMemo, type CSSProperties } from 'react';
 
+import { useProfileState } from '../../model/profile.store';
 import styles from './Silhouette.module.css';
 
 import androidFemale from '@/assets/silhouette/androide_f.webp';
@@ -24,7 +25,6 @@ import trollFemale from '@/assets/silhouette/troll_f.webp';
 import trollMale from '@/assets/silhouette/troll_m.webp';
 import vautourFemale from '@/assets/silhouette/vautour_f.webp';
 import vautourMale from '@/assets/silhouette/vautour_m.webp';
-import { useProfileState } from '@/feature/profile';
 
 export const Silhouette = () => {
   const { gender, race } = useProfileState();
