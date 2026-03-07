@@ -1,18 +1,16 @@
 import styles from './DrugSelector.module.css';
-import { useDrugsDispatch, useDrugsState } from '../../model/drug.hooks';
-import type { Drug } from '../../model/drug.types';
 
 import { StatValues, type Stat } from '@/domain';
-import { EffectChip } from '@/ui';
-import { UiImage } from '@/ui';
+import { useDrugActions, useDrugId, type Drug } from '@/feature/drug';
+import { EffectChip, UiImage } from '@/ui';
 
 interface Props {
   drug: Drug;
 }
 
 export const DrugSelector = ({ drug }: Props) => {
-  const selectedId = useDrugsState();
-  const { selectDrug, deselectDrug } = useDrugsDispatch();
+  const selectedId = useDrugId();
+  const { selectDrug, deselectDrug } = useDrugActions();
   const isActive = selectedId === drug.id;
 
   const handleClick = () => {

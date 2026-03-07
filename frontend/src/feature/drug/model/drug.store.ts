@@ -10,6 +10,11 @@ interface DrugStore {
   replaceDrug: (state: DrugsState) => void;
 }
 
+export type DrugActions = Pick<
+  DrugStore,
+  'selectDrug' | 'deselectDrug' | 'replaceDrug'
+>;
+
 export const initialState: DrugsState = null;
 
 export const useDrugStore = create<DrugStore>((set) => ({
@@ -19,7 +24,9 @@ export const useDrugStore = create<DrugStore>((set) => ({
   replaceDrug: (drug) => set({ drug }),
 }));
 
-export const useDrugsActions = () =>
+export const useDrugId = (): DrugsState => useDrugStore((s) => s.drug);
+
+export const useDrugActions = (): DrugActions =>
   useDrugStore(
     useShallow((s) => ({
       selectDrug: s.selectDrug,
