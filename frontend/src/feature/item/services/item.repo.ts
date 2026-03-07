@@ -1,5 +1,5 @@
-import type { Item, ItemType } from '../model/item.types';
 import { fetchItemsMock } from './item.repo.mock';
+import type { Item, ItemType } from '../model/item.types';
 
 import { USE_MOCK } from '@/utils/use-mock';
 

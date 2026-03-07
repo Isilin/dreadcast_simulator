@@ -1,7 +1,7 @@
-import { useImplantStatus } from '../../model/implant.selectors';
-import type { ImplantName } from '../../model/implant.types';
 import styles from './ImplantIcon.module.css';
 import { THUMBS } from './thumbs';
+import { useImplantStatus } from '../../model/implant.selectors';
+import type { ImplantName } from '../../model/implant.types';
 
 import { UiImage } from '@/ui';
 

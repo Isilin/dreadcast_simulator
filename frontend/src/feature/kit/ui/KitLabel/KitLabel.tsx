@@ -1,5 +1,5 @@
-import type { Kit } from '../../model/kit.types';
 import styles from './KitLabel.module.css';
+import type { Kit } from '../../model/kit.types';
 
 import { StatValues } from '@/domain';
 import { EffectChip, TechBadge } from '@/ui';

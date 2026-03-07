@@ -1,7 +1,7 @@
 import { useMemo, type CSSProperties } from 'react';
 
-import { useProfileState } from '../../model/profile.store';
 import styles from './Silhouette.module.css';
+import { useProfileState } from '../../model/profile.store';
 
 import androidFemale from '@/assets/silhouette/androide_f.webp';
 import androidMale from '@/assets/silhouette/androide_m.webp';

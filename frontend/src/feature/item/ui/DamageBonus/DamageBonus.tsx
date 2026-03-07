@@ -1,8 +1,8 @@
 import { memo, useMemo } from 'react';
 
+import styles from './DamageBonus.module.css';
 import { useItemsActions, useItemsState } from '../../model/item.store';
 import { DAMAGE_BONUS_VALUES } from '../../model/item.types';
-import styles from './DamageBonus.module.css';
 
 import type { ItemSpot } from '@/domain';
 

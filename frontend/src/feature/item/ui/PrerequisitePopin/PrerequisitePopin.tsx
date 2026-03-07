@@ -1,5 +1,5 @@
-import type { Item } from '../../model/item.types';
 import styles from './PrerequisitePopin.module.css';
+import type { Item } from '../../model/item.types';
 
 import { StatValues } from '@/domain';
 import { usePureStatSelector } from '@/feature/suit';

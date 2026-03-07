@@ -1,7 +1,7 @@
-import type { Implant } from '../model/implant.types';
 import type { ImplantResponseDto } from './implant.dto';
 import { toDomain } from './implant.mapper';
 import { implantArrayResponseSchema } from './implant.schema';
+import type { Implant } from '../model/implant.types';
 
 import { sleep } from '@/utils/sleep';
 

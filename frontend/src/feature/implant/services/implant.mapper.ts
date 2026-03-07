@@ -1,5 +1,5 @@
-import type { Implant } from '../model/implant.types';
 import type { ImplantResponseDto } from './implant.dto';
+import type { Implant } from '../model/implant.types';
 
 export const toDomain = (dto: ImplantResponseDto): Implant => ({
   name: dto.name,

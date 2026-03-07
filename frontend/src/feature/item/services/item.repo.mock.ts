@@ -1,4 +1,3 @@
-import type { Item, ItemType } from '../model/item.types';
 import { MOCK_CHEST_ITEMS } from './chest-items.mock';
 import { MOCK_FEET_ITEMS } from './feet-items.mock';
 import { MOCK_HEAD_ITEMS } from './head-items.mock';
@@ -7,6 +6,7 @@ import { itemArrayResponseSchema } from './item.schema';
 import { MOCK_LEGS_ITEMS } from './legs-items.mock';
 import { MOCK_SECONDARY_ITEMS } from './secondary-items.mock';
 import { MOCK_WEAPONS_ITEMS } from './weapons-items.mock';
+import type { Item, ItemType } from '../model/item.types';
 
 import { sleep } from '@/utils/sleep';
 
