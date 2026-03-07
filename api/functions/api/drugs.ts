@@ -1,6 +1,37 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-import type { DrugResponseDto } from '../../lib/drug.types';
+
+type StatModifierResponseDto = {
+  property:
+    | 'strength'
+    | 'agility'
+    | 'robustness'
+    | 'perception'
+    | 'stealth'
+    | 'computing'
+    | 'medicine'
+    | 'engineering'
+    | 'health'
+    | 'stamina'
+    | 'integrity'
+    | 'speed'
+    | 'raceDamage'
+    | 'hitRating'
+    | 'teamHeal'
+    | 'cacDamage'
+    | 'criticalCacChance'
+    | 'criticalCacDamage'
+    | 'hitDamages'
+    | 'criticalHitDamage';
+  value: number;
+};
+
+type DrugResponseDto = {
+  id: string;
+  name: string;
+  image: string;
+  stat_modifier: StatModifierResponseDto[];
+};
 
 const supabase = createClient(
   process.env.SUPABASE_URL || '',
