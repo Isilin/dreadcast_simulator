@@ -17,4 +17,13 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://dreadcast-simulator-kappa.vercel.app',
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
 });
