@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-import type { DrugResponseDto } from './lib/drug.types.ts';
+import type { DrugResponseDto } from '../lib/drug.types.ts';
 
 const supabase = createClient(
   process.env.SIMULATOR_SUPABASE_URL || '',
@@ -12,9 +12,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  const { id } = req.query;
+
+  if (!id || typeof id !== 'string') {
+    return res.status(400).json({ error: 'Drug ID is required' });
+  }
+
   try {
-    const query = req.query.query as string | undefined;
-    let drugsQuery = supabase
+    const { data: drug, error } = await supabase
       .from('drug')
       .select(
         `
@@ -26,21 +31,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           value
         )
       `,
-      );
-
-    if (query && query.trim()) {
-      drugsQuery = drugsQuery.ilike('name', `%${query}%`);
-    }
-
-    const { data: drugs, error } = await drugsQuery.order('id', {
-      ascending: true,
-    });
+      )
+      .eq('id', id)
+      .single();
 
     if (error) {
+      if (error.code === 'PGRST116') {
+        return res.status(404).json({ error: 'Drug not found' });
+      }
       return res.status(500).json({ error: error.message });
     }
 
-    const typedDrugs = (drugs as DrugResponseDto[]) || [];
+    const typedDrug = (drug as DrugResponseDto) || null;
+
+    if (!typedDrug) {
+      return res.status(404).json({ error: 'Drug not found' });
+    }
 
     res.setHeader(
       'Cache-Control',
@@ -48,7 +54,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     );
     res.setHeader('Content-Type', 'application/json');
 
-    return res.status(200).json(typedDrugs);
+    return res.status(200).json(typedDrug);
   } catch (error) {
     return res.status(500).json({
       error: error instanceof Error ? error.message : 'Unknown error',
