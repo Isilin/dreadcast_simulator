@@ -3,7 +3,7 @@ import { memo, useMemo } from 'react';
 import styles from './DamageBonus.module.css';
 
 import type { ItemSpot } from '@/domain';
-import { useItemsDispatch, useItemsState } from '@/feature/item';
+import { useItemsActions, useItemsState } from '@/feature/item';
 import { DAMAGE_BONUS_VALUES } from '@/feature/item/model/item.types';
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const DamageBonus = memo(({ spot }: Props) => {
-  const dispatch = useItemsDispatch();
+  const actions = useItemsActions();
   const items = useItemsState();
 
   const hasTwoHandedWeapon = useMemo(
@@ -36,7 +36,7 @@ export const DamageBonus = memo(({ spot }: Props) => {
       e.target.value,
       10,
     ) as (typeof DAMAGE_BONUS_VALUES)[number];
-    dispatch.setDamageBonus(spot, bonus);
+    actions.setDamageBonus(spot, bonus);
   };
 
   return (

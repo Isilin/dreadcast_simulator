@@ -14,6 +14,11 @@ interface ItemStore {
   setDamageBonus: (spot: ItemSpot, bonus: DamageBonusType) => void;
 }
 
+export type ItemsActions = Pick<
+  ItemStore,
+  'setItem' | 'resetItem' | 'replaceItems' | 'setDamageBonus'
+>;
+
 export const initialState: ItemsState = Object.fromEntries(
   ItemSpotValue.map((name) => [name, null]),
 ) as ItemsState;
@@ -52,7 +57,9 @@ export const useItemStore = create<ItemStore>((set) => ({
     }),
 }));
 
-export const useItemsActions = () =>
+export const useItemsState = (): ItemsState => useItemStore((s) => s.items);
+
+export const useItemsActions = (): ItemsActions =>
   useItemStore(
     useShallow((s) => ({
       setItem: s.setItem,

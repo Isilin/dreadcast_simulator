@@ -1,7 +1,7 @@
 import { Dialog } from '@base-ui/react';
 import { memo, useState } from 'react';
 
-import { getItemTypes, useItemsDispatch, useItemsState } from '../../model';
+import { getItemTypes, useItemsActions, useItemsState } from '../../model';
 import type { Item } from '../../model/item.types';
 import { ItemCard } from '../ItemCard';
 import { ItemDialogSelector } from '../ItemDialogSelector';
@@ -15,12 +15,12 @@ interface Props {
 }
 
 export const ItemSelector = memo(({ spot }: Props) => {
-  const dispatch = useItemsDispatch();
+  const actions = useItemsActions();
   const items = useItemsState();
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const onItemSelect = (item: Item) => {
-    dispatch.setItem(spot, item);
+    actions.setItem(spot, item);
     setDialogOpen(false);
   };
   return (
