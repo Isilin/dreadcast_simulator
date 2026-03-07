@@ -5,5 +5,5 @@ export const toDomain = (dto: DrugResponseDto): Drug => ({
   id: dto.id,
   name: dto.name,
   image: dto.image,
-  sideEffects: dto.sideEffects,
+  sideEffects: dto.stat_modifier,
 });

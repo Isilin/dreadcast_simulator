@@ -4,5 +4,5 @@ export interface DrugResponseDto {
   id: string;
   name: string;
   image: string;
-  sideEffects: StatModifierResponseDto[];
+  stat_modifier: StatModifierResponseDto[];
 }
