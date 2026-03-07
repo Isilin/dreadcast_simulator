@@ -3,8 +3,8 @@ import { createClient } from '@supabase/supabase-js';
 import type { DrugResponseDto } from './lib/drug.types.ts';
 
 const supabase = createClient(
-  process.env.SUPABASE_URL || '',
-  process.env.SUPABASE_ANON_KEY || '',
+  process.env.SIMULATOR_SUPABASE_URL || '',
+  process.env.NEXT_PUBLIC_SIMULATOR_SUPABASE_ANON_KEY || '',
 );
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
