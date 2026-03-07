@@ -1,3 +1,5 @@
+import type { KeyboardEvent } from 'react';
+
 import styles from './DrugSelector.module.css';
 import { useDrugActions, useDrugId } from '../../model/drug.store';
 import type { Drug } from '../../model/drug.types';
@@ -22,6 +24,13 @@ export const DrugSelector = ({ drug }: Props) => {
     }
   };
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLLIElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleClick();
+    }
+  };
+
   return (
     <li
       className={styles.card}
@@ -30,22 +39,34 @@ export const DrugSelector = ({ drug }: Props) => {
       role="checkbox"
       aria-checked={isActive}
       tabIndex={0}
-      onKeyDown={(e) =>
-        e.key === 'Enter' || e.key === ' ' ? handleClick() : undefined
-      }
+      onKeyDown={handleKeyDown}
     >
-      <span className={styles.name}>{drug.name}</span>
-      <UiImage src={drug.image} alt={drug.name} className={styles.image} />
-      <div className={styles.effects}>
-        {drug.sideEffects.map((effect) => (
-          <EffectChip
-            key={effect.property}
-            value={effect.value}
-            tag={StatValues[effect.property as Stat].tag}
-            name={StatValues[effect.property as Stat].label}
-          />
-        ))}
+      <div className={styles.thumbWrapper}>
+        <UiImage
+          src={drug.image}
+          alt={drug.name}
+          className={styles.image}
+          wrapperClassName={styles.thumb}
+          radius={8}
+          fit="contain"
+        />
       </div>
+
+      <h3 className={styles.title} title={drug.name}>
+        {drug.name}
+      </h3>
+
+      <ul className={styles.effects}>
+        {drug.sideEffects.map((effect) => (
+          <li key={`${effect.property}-${effect.value}`}>
+            <EffectChip
+              value={effect.value}
+              tag={StatValues[effect.property as Stat].tag}
+              name={StatValues[effect.property as Stat].label}
+            />
+          </li>
+        ))}
+      </ul>
     </li>
   );
 };

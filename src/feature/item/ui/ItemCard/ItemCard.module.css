@@ -20,7 +20,6 @@
   .itemCard {
     &.slot,
     &.list {
-      width: 100%;
       min-height: 140px;
     }
   }
@@ -30,7 +29,6 @@
   .itemCard {
     &.slot,
     &.list {
-      width: 160px;
       height: 140px;
     }
   }

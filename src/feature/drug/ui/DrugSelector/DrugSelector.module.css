@@ -1,44 +1,101 @@
 .card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--small-gap);
-  padding: 8px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 10px;
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: var(--very-small-gap);
+  padding: var(--small-gap);
+  background-color: var(--color-gray-100);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--small-radius);
+  color: var(--color-gray-900);
   cursor: pointer;
   list-style: none;
   transition:
-    background 0.15s,
-    border-color 0.15s;
-  min-width: 120px;
+    transform 0.12s ease,
+    border-color 0.12s ease,
+    background-color 0.12s ease,
+    box-shadow 0.12s ease;
+  width: 180px;
+  height: 160px;
+  outline: none;
 }
 
 .card:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background-color: var(--color-gray-200);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px var(--color-cyan-light);
+  border-color: var(--color-cyan);
 }
 
 .card[data-active] {
-  border-color: var(--color-blue);
-  background: rgba(var(--color-blue-rgb, 0, 128, 255), 0.12);
+  border-color: var(--color-cyan);
+  box-shadow: 0 12px 32px var(--color-cyan-light);
+  background-color: var(--color-gray-200);
 }
 
-.name {
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-align: center;
+.card:focus-visible {
+  border-color: var(--color-cyan);
+  box-shadow: 0 0 0 2px var(--color-cyan-light);
+}
+
+.thumbWrapper {
+  margin-top: var(--gap);
+  display: grid;
+  place-items: center;
+  height: 64px;
+}
+
+.thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
 }
 
 .image {
-  width: 60px;
-  height: 60px;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 0.98rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  margin: 0;
 }
 
 .effects {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  justify-content: flex-start;
   align-items: center;
+  gap: var(--small-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  & li {
+    display: flex;
+    flex-shrink: 0;
+    justify-content: space-around;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    min-height: 140px;
+    height: auto;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+  .card {
+    height: 140px;
+  }
 }

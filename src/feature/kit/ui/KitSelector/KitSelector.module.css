@@ -24,14 +24,12 @@
 
 @media (max-width: 768px) {
   .card {
-    width: 100%;
     min-height: 140px;
   }
 }
 
 @media (min-width: 769px) and (max-width: 1199px) {
   .card {
-    width: 160px;
     height: 140px;
   }
 }
@@ -62,14 +60,12 @@
 
 @media (max-width: 768px) {
   .content {
-    width: 100%;
     min-height: 140px;
   }
 }
 
 @media (min-width: 769px) and (max-width: 1199px) {
   .content {
-    width: 160px;
     height: 140px;
   }
 }
