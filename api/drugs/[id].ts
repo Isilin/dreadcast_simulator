@@ -5,9 +5,7 @@ import {
   setCacheHeaders,
   handleDrugError,
   typeDrug,
-} from '../lib/drug.api.ts';
-
-const supabase = createDrugClient();
+} from '../lib/drug.api';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {
@@ -21,6 +19,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    const supabase = createDrugClient();
     const { data: drug, error } = await supabase
       .from('drug')
       .select(DRUG_SELECT_QUERY)

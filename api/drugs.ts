@@ -4,10 +4,8 @@ import {
   DRUG_SELECT_QUERY,
   setCacheHeaders,
   handleDrugError,
-} from './lib/drug.api.ts';
-import type { DrugResponseDto } from './lib/drug.types.ts';
-
-const supabase = createDrugClient();
+} from './lib/drug.api';
+import type { DrugResponseDto } from './lib/drug.types';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {
@@ -15,6 +13,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    const supabase = createDrugClient();
     const query = req.query.query as string | undefined;
     let drugsQuery = supabase.from('drug').select(DRUG_SELECT_QUERY);
 
