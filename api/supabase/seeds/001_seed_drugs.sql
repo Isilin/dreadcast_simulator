@@ -2,15 +2,15 @@
 
 -- Insertion des drugs
 INSERT INTO drug (id, name, image) VALUES
-  ('0', 'Caducée', 'http://www.dreadcast.net/images/objets/caducee.png'),
-  ('1', 'Condor', 'http://www.dreadcast.net/images/objets/condor.png'),
-  ('2', 'Filias', 'http://www.dreadcast.net/images/objets/filias.png'),
-  ('3', 'Pasorel', 'http://www.dreadcast.net/images/objets/pasorel.png'),
-  ('4', 'Arkalion', 'http://www.dreadcast.net/images/objets/arkalion.png'),
-  ('5', 'IR-2H', 'http://www.dreadcast.net/images/objets/ir2h.png'),
-  ('6', 'Tartare', 'http://www.dreadcast.net/images/objets/tartare.png'),
-  ('7', 'Oxylion', 'http://www.dreadcast.net/images/objets/oxylion.png'),
-  ('8', 'Vulcain', 'http://www.dreadcast.net/images/objets/vulcain.png')
+  ('0', 'Caducée', '/assets/drugs/caducee.webp'),
+  ('1', 'Condor', '/assets/drugs/condor.webp'),
+  ('2', 'Filias', '/assets/drugs/filias.webp'),
+  ('3', 'Pasorel', '/assets/drugs/pasorel.webp'),
+  ('4', 'Arkalion', '/assets/drugs/arkalion.webp'),
+  ('5', 'IR-2H', '/assets/drugs/ir2h.webp'),
+  ('6', 'Tartare', '/assets/drugs/tartare.webp'),
+  ('7', 'Oxylion', '/assets/drugs/oxylion.webp'),
+  ('8', 'Vulcain', '/assets/drugs/vulcain.webp')
 ON CONFLICT (id) DO NOTHING;
 
 -- Insertion des modificateurs de stats pour Caducée
