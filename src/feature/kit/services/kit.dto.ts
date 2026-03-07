@@ -1,4 +1,4 @@
-import type { StatModifierResponseDto } from '@/data/stats.dto';
+import type { StatModifierResponseDto } from '@/lib/stats.types';
 
 export interface KitResponseDto {
   id: string;

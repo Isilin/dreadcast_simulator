@@ -1,4 +1,4 @@
-import type { DrugResponseDto } from './drug.dto';
+import type { DrugResponseDto } from '@/lib/drug.types';
 import { toDomain } from './drug.mapper';
 import type { Drug } from '../model/drug.types';
 
