@@ -3,14 +3,14 @@ import { Field, Radio, RadioGroup } from '@base-ui/react';
 import styles from './GenderSelector.module.css';
 
 import {
-  useProfileDispatch,
+  useProfileActions,
   useProfileState,
   type Gender,
 } from '@/feature/profile';
 
 export const GenderSelector = () => {
   const { gender } = useProfileState();
-  const { setGender } = useProfileDispatch();
+  const { setGender } = useProfileActions();
 
   return (
     <Field.Root>

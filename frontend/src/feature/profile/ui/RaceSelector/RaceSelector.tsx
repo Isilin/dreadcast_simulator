@@ -3,7 +3,7 @@ import { Field, Select } from '@base-ui/react';
 import styles from './RaceSelector.module.css';
 
 import {
-  useProfileDispatch,
+  useProfileActions,
   useProfileState,
   useRaces,
   type RaceType,
@@ -12,7 +12,7 @@ import { CheckIcon, ChevronUpDownIcon } from '@/ui';
 
 export const RaceSelector = () => {
   const { race } = useProfileState();
-  const { setRace } = useProfileDispatch();
+  const { setRace } = useProfileActions();
   const { data: races, status } = useRaces();
 
   const raceItems = races?.map((r) => ({ label: r.type, value: r.type }));

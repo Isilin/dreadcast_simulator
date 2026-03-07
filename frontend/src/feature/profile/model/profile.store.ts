@@ -10,6 +10,11 @@ interface ProfileStore {
   replaceProfile: (state: ProfileState) => void;
 }
 
+export type ProfileActions = Pick<
+  ProfileStore,
+  'setGender' | 'setRace' | 'replaceProfile'
+>;
+
 export const initialState: ProfileState = {
   race: 'Humain',
   gender: 'male',
@@ -22,7 +27,10 @@ export const useProfileStore = create<ProfileStore>((set) => ({
   replaceProfile: (profile) => set({ profile }),
 }));
 
-export const useProfileActions = () =>
+export const useProfileState = (): ProfileState =>
+  useProfileStore((s) => s.profile);
+
+export const useProfileActions = (): ProfileActions =>
   useProfileStore(
     useShallow((s) => ({
       setGender: s.setGender,
