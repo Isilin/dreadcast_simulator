@@ -5,7 +5,7 @@ export const MOCK_DRUGS: DrugResponseDto[] = [
     id: '0',
     name: 'Caducée',
     image: 'http://www.dreadcast.net/images/objets/caducee.png',
-    sideEffects: [
+    stat_modifier: [
       { property: 'medicine', value: 20 },
       { property: 'perception', value: -60 },
     ],
@@ -14,7 +14,7 @@ export const MOCK_DRUGS: DrugResponseDto[] = [
     id: '1',
     name: 'Condor',
     image: 'http://www.dreadcast.net/images/objets/condor.png',
-    sideEffects: [
+    stat_modifier: [
       { property: 'computing', value: 20 },
       { property: 'robustness', value: -60 },
     ],
@@ -23,7 +23,7 @@ export const MOCK_DRUGS: DrugResponseDto[] = [
     id: '2',
     name: 'Filias',
     image: 'http://www.dreadcast.net/images/objets/filias.png',
-    sideEffects: [
+    stat_modifier: [
       { property: 'stealth', value: 20 },
       { property: 'perception', value: -60 },
     ],
@@ -32,7 +32,7 @@ export const MOCK_DRUGS: DrugResponseDto[] = [
     id: '3',
     name: 'Pasorel',
     image: 'http://www.dreadcast.net/images/objets/pasorel.png',
-    sideEffects: [
+    stat_modifier: [
       { property: 'stealth', value: 20 },
       { property: 'perception', value: -60 },
     ],
@@ -41,7 +41,7 @@ export const MOCK_DRUGS: DrugResponseDto[] = [
     id: '4',
     name: 'Arkalion',
     image: 'http://www.dreadcast.net/images/objets/arkalion.png',
-    sideEffects: [
+    stat_modifier: [
       { property: 'perception', value: 20 },
       { property: 'robustness', value: -60 },
     ],
@@ -50,7 +50,7 @@ export const MOCK_DRUGS: DrugResponseDto[] = [
     id: '5',
     name: 'IR-2H',
     image: 'http://www.dreadcast.net/images/objets/ir2h.png',
-    sideEffects: [
+    stat_modifier: [
       { property: 'strength', value: 20 },
       { property: 'robustness', value: -60 },
     ],
@@ -59,7 +59,7 @@ export const MOCK_DRUGS: DrugResponseDto[] = [
     id: '6',
     name: 'Tartare',
     image: 'http://www.dreadcast.net/images/objets/tartare.png',
-    sideEffects: [
+    stat_modifier: [
       { property: 'robustness', value: 20 },
       { property: 'stealth', value: -60 },
     ],
@@ -68,7 +68,7 @@ export const MOCK_DRUGS: DrugResponseDto[] = [
     id: '7',
     name: 'Oxylion',
     image: 'http://www.dreadcast.net/images/objets/oxylion.png',
-    sideEffects: [
+    stat_modifier: [
       { property: 'agility', value: 15 },
       { property: 'perception', value: 15 },
       { property: 'computing', value: -60 },
@@ -80,7 +80,7 @@ export const MOCK_DRUGS: DrugResponseDto[] = [
     id: '8',
     name: 'Vulcain',
     image: 'http://www.dreadcast.net/images/objets/vulcain.png',
-    sideEffects: [
+    stat_modifier: [
       { property: 'strength', value: 15 },
       { property: 'agility', value: 15 },
       { property: 'computing', value: -60 },
