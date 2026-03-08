@@ -1,6 +1,8 @@
 /* Desktop : display:contents expose les enfants directement dans la grille parente */
 .slotPair {
-  display: contents;
+  display: flex;
+  flex-direction: row;
+  gap: var(--gap-desktop);
 }
 
 @media (max-width: 768px) {

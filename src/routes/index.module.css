@@ -27,14 +27,14 @@
 
 .bodySlots {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  grid-template-columns: 1fr;
+  gap: var(--gap-desktop);
 }
 
 .weaponSlots {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  grid-template-columns: 1fr;
+  gap: var(--gap-desktop);
   align-content: end;
 }
 

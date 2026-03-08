@@ -3,6 +3,7 @@
   display: block;
   overflow: visible;
   position: relative;
+  width: fit-content;
 
   &:disabled {
     background-color: oklch(20% 0.015 264 / 0.35);
