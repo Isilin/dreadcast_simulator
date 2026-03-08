@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { computeStat, computeStatWithoutItems } from './suit.rules';
 
 import { StatValues, type Stat } from '@/domain';
-import { useDrugsEffects } from '@/feature/drug';
+import { useDrugEffects } from '@/feature/drug';
 import { useImplantsEffects } from '@/feature/implant';
 import { useItemsEffect, useItemsState } from '@/feature/item';
 import { useKitsEffects } from '@/feature/kit';
@@ -15,7 +15,7 @@ export const useSuitSelector = () => {
   const itemEffects = useItemsEffect();
   const implantsEffects = useImplantsEffects();
   const kitsEffects = useKitsEffects();
-  const drugsEffects = useDrugsEffects();
+  const drugEffects = useDrugEffects();
 
   const stats = useMemo(
     () =>
@@ -29,14 +29,14 @@ export const useSuitSelector = () => {
             itemEffects,
             implantsEffects,
             kitsEffects,
-            drugsEffects,
+            drugEffects,
           );
           if (stat === 'health' || stat === 'stamina') acc[stat] += 116; // Base health and stamina
           return acc;
         },
         {} as Record<Stat, number>,
       ),
-    [drugsEffects, implantsEffects, itemEffects, items, kitsEffects, raceStats],
+    [drugEffects, implantsEffects, itemEffects, items, kitsEffects, raceStats],
   );
 
   return stats;
