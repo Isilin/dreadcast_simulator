@@ -3,7 +3,7 @@ import z from 'zod';
 export const itemResponseDtoSchema = z.object({
   id: z.string(),
   name: z.string(),
-  image: z.url(),
+  image: z.string(),
   tech: z.number().min(0),
   integrity: z.number().min(0),
   type: z.enum([

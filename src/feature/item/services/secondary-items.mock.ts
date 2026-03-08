@@ -626,7 +626,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '438',
     name: 'Diamant jaune',
-    image: 'https://wiki.dreadcast.net/images/0/01/Diamant_jaune.png/',
+    image: '/assets/items/',
     tech: 0,
     integrity: 50,
     type: 'secondary',

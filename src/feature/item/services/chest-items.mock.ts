@@ -254,7 +254,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '112',
     name: 'Cosmo',
-    image: 'https://www.dreadcast.net/images/objets/COSMO2.png',
+    image: '/assets/items/COSMO2.webp',
     tech: 400,
     integrity: 110,
     type: 'chest',
@@ -536,8 +536,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '129',
     name: 'Chemisier',
-    image:
-      'https://www.dreadcast.net/images/objets/ASSETS_chemise_01_262-PX.png',
+    image: '/assets/items/ASSETS_chemise_01_262-PX.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -579,7 +578,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '133',
     name: 'Veste Médicale (H)',
-    image: 'https://www.dreadcast.net/images/objets/medecin-torse-homme.png',
+    image: '/assets/items/medecin-torse-homme.webp',
     tech: 320,
     integrity: 60,
     type: 'chest',
@@ -635,8 +634,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '136',
     name: 'Exo Buste de Chantier (H)',
-    image:
-      'https://www.dreadcast.net/images/objets/exosquelette-torse-homme.png',
+    image: '/assets/items/exosquelette-torse-homme.webp',
     tech: 360,
     integrity: 120,
     type: 'chest',
@@ -651,7 +649,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '137',
     name: 'Combinaison TECH4',
-    image: 'https://www.dreadcast.net/images/objets/COMBINAISON_TECH-4.png',
+    image: '/assets/items/COMBINAISON_TECH-4.webp',
     tech: 200,
     integrity: 100,
     type: 'chest',
@@ -882,7 +880,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '149',
     name: 'Chemise',
-    image: 'https://www.dreadcast.net/images/objets/CHEMISE_262px.png',
+    image: '/assets/items/CHEMISE_262px.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -900,7 +898,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '150',
     name: 'Blouson bleu',
-    image: 'https://www.dreadcast.net/images/objets/blouson_bleu.png',
+    image: '/assets/items/blouson_bleu.webp',
     tech: 350,
     integrity: 100,
     type: 'chest',
@@ -914,7 +912,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '151',
     name: 'Blouson rouge',
-    image: 'https://www.dreadcast.net/images/objets/blouson_rouge.png',
+    image: '/assets/items/blouson_rouge.webp',
     tech: 350,
     integrity: 100,
     type: 'chest',
@@ -928,7 +926,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '152',
     name: 'Blouson vert',
-    image: 'https://www.dreadcast.net/images/objets/blouson_vert.png',
+    image: '/assets/items/blouson_vert.webp',
     tech: 350,
     integrity: 100,
     type: 'chest',
@@ -957,7 +955,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '154',
     name: 'Cosmopolitain',
-    image: 'https://www.dreadcast.net/images/objets/trench_marron.png',
+    image: '/assets/items/trench_marron.webp',
     tech: 400,
     integrity: 110,
     type: 'chest',
@@ -975,7 +973,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '155',
     name: 'Cosmo étanche',
-    image: 'https://www.dreadcast.net/images/objets/trench_gris.png',
+    image: '/assets/items/trench_gris.webp',
     tech: 400,
     integrity: 110,
     type: 'chest',
@@ -993,7 +991,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '156',
     name: 'Cosmo velour',
-    image: 'https://www.dreadcast.net/images/objets/trench_bleu.png',
+    image: '/assets/items/trench_bleu.webp',
     tech: 400,
     integrity: 110,
     type: 'chest',
@@ -1011,7 +1009,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '157',
     name: 'Manteau Anapurnol bleu',
-    image: 'https://www.dreadcast.net/images/objets/manteau_fourrure_1.png',
+    image: '/assets/items/manteau_fourrure_1.webp',
     tech: 400,
     integrity: 110,
     type: 'chest',
@@ -1029,7 +1027,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '158',
     name: 'Manteau Anapurnol',
-    image: 'https://www.dreadcast.net/images/objets/manteau_fourrure_2.png',
+    image: '/assets/items/manteau_fourrure_2.webp',
     tech: 400,
     integrity: 110,
     type: 'chest',
@@ -1486,7 +1484,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '184',
     name: 'Veste Médicale (F)',
-    image: 'https://www.dreadcast.net/images/objets/medecin-torse-femme.png',
+    image: '/assets/items/medecin-torse-femme.webp',
     tech: 320,
     integrity: 60,
     type: 'chest',
@@ -1505,7 +1503,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '185',
     name: 'Cyber-Veste (H)',
-    image: 'https://www.dreadcast.net/images/objets/decker-torse-homme.png',
+    image: '/assets/items/decker-torse-homme.webp',
     tech: 320,
     integrity: 90,
     type: 'chest',
@@ -1524,7 +1522,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '186',
     name: 'Cyber-Veste (F)',
-    image: 'https://www.dreadcast.net/images/objets/decker-torse-femme.png',
+    image: '/assets/items/decker-torse-femme.webp',
     tech: 320,
     integrity: 90,
     type: 'chest',
@@ -1543,8 +1541,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '187',
     name: 'Exo Buste de Chantier (F)',
-    image:
-      'https://www.dreadcast.net/images/objets/exosquelette-torse-femme.png',
+    image: '/assets/items/exosquelette-torse-femme.webp',
     tech: 360,
     integrity: 120,
     type: 'chest',
