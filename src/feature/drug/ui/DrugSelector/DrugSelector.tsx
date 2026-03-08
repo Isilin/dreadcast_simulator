@@ -13,15 +13,11 @@ interface Props {
 
 export const DrugSelector = ({ drug }: Props) => {
   const selectedId = useDrugId();
-  const { selectDrug, deselectDrug } = useDrugActions();
+  const { toggleDrug } = useDrugActions();
   const isActive = selectedId === drug.id;
 
   const handleClick = () => {
-    if (isActive) {
-      deselectDrug();
-    } else {
-      selectDrug(drug.id);
-    }
+    toggleDrug(drug.id);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLLIElement>) => {
