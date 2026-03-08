@@ -4,7 +4,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '100',
     name: 'Armure ancienne',
-    image: 'https://wiki.dreadcast.net/images/8/88/Armure-ancienne_HD.png',
+    image: '/assets/items/Armure-ancienne_HD.webp',
     tech: 350,
     integrity: 150,
     type: 'chest',
@@ -36,7 +36,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '101',
     name: 'Armure dermique',
-    image: 'https://wiki.dreadcast.net/images/1/19/ARMURE_DERMIQUE_HD.png',
+    image: '/assets/items/ARMURE_DERMIQUE_HD.webp',
     tech: 350,
     integrity: 150,
     type: 'chest',
@@ -54,7 +54,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '102',
     name: 'Armure de dreadball',
-    image: 'https://wiki.dreadcast.net/images/1/19/Armure_dreadball.png',
+    image: '/assets/items/Armure_dreadball.webp',
     tech: 330,
     integrity: 135,
     type: 'chest',
@@ -82,7 +82,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '103',
     name: 'Armure tactique SI',
-    image: 'https://wiki.dreadcast.net/images/4/4c/Armure_tactique_SI.png',
+    image: '/assets/items/Armure_tactique_SI.webp',
     tech: 300,
     integrity: 135,
     type: 'chest',
@@ -106,7 +106,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '104',
     name: 'Cuirasse',
-    image: 'https://wiki.dreadcast.net/images/1/10/Cuirasse_en_titane.png',
+    image: '/assets/items/Cuirasse_en_titane.webp',
     tech: 400,
     integrity: 250,
     type: 'chest',
@@ -134,7 +134,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '105',
     name: 'Cuirasse en cristal',
-    image: 'https://wiki.dreadcast.net/images/9/91/Cuirasse_cristal2.png',
+    image: '/assets/items/Cuirasse_cristal2.webp',
     tech: 380,
     integrity: 220,
     type: 'chest',
@@ -152,7 +152,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '106',
     name: 'Kevlar',
-    image: 'https://wiki.dreadcast.net/images/d/d4/ASSETS_KEVLAR_262-PX.png',
+    image: '/assets/items/ASSETS_KEVLAR_262-PX.webp',
     tech: 350,
     integrity: 150,
     type: 'chest',
@@ -176,7 +176,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '107',
     name: 'Armure ø-MED-001',
-    image: 'https://wiki.dreadcast.net/images/e/ec/ASU_ARMURE_MEDIC_262px.png',
+    image: '/assets/items/ASU_ARMURE_MEDIC_262px.webp',
     tech: 320,
     integrity: 180,
     type: 'chest',
@@ -194,7 +194,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '108',
     name: 'Armure ø-ING-001',
-    image: 'https://wiki.dreadcast.net/images/7/7a/ASU_ARMURE_INGE_262px.png',
+    image: '/assets/items/ASU_ARMURE_INGE_262px.webp',
     tech: 360,
     integrity: 200,
     type: 'chest',
@@ -208,7 +208,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '109',
     name: 'Armure ø-INF-001',
-    image: 'https://wiki.dreadcast.net/images/4/44/ASU_ARMURE_INF_262px.png',
+    image: '/assets/items/ASU_ARMURE_INF_262px.webp',
     tech: 320,
     integrity: 220,
     type: 'chest',
@@ -222,7 +222,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '110',
     name: 'Armure ø-FO-001',
-    image: 'https://wiki.dreadcast.net/images/f/f9/ASU_ARMURE_COMBAT_262.png',
+    image: '/assets/items/ASU_ARMURE_COMBAT_262.webp',
     tech: 350,
     integrity: 200,
     type: 'chest',
@@ -240,7 +240,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '111',
     name: 'Blouson noir',
-    image: 'https://wiki.dreadcast.net/images/2/2a/Blouson_noir.png',
+    image: '/assets/items/Blouson_noir.webp',
     tech: 350,
     integrity: 100,
     type: 'chest',
@@ -272,7 +272,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '113',
     name: 'Costume',
-    image: 'https://wiki.dreadcast.net/images/e/e0/Costume_3.png',
+    image: '/assets/items/Costume_3.webp',
     tech: 200,
     integrity: 60,
     type: 'chest',
@@ -287,7 +287,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     id: '114',
     name: 'Veste de cérémonie',
     image:
-      'https://wiki.dreadcast.net/images/5/50/Veste_de_C%C3%A9r%C3%A9monie.png',
+      '/assets/items/Veste_de_Cérémonie.webp',
     tech: 320,
     integrity: 80,
     type: 'chest',
@@ -305,7 +305,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '115',
     name: 'Veste en cuir',
-    image: 'https://wiki.dreadcast.net/images/6/6b/Blouson_cuir.png',
+    image: '/assets/items/Blouson_cuir.webp',
     tech: 350,
     integrity: 120,
     type: 'chest',
@@ -329,7 +329,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '116',
     name: 'Tailleur Bijela',
-    image: 'https://wiki.dreadcast.net/images/2/23/Tailleur_Bijela.png',
+    image: '/assets/items/Tailleur_Bijela.webp',
     tech: 200,
     integrity: 90,
     type: 'chest',
@@ -343,7 +343,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '117',
     name: 'Trench-coat',
-    image: 'https://wiki.dreadcast.net/images/1/13/TRENCH-COAT2.png',
+    image: '/assets/items/TRENCH-COAT2.webp',
     tech: 360,
     integrity: 120,
     type: 'chest',
@@ -371,7 +371,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '118',
     name: 'Veste Muyang',
-    image: 'https://wiki.dreadcast.net/images/3/31/Veste_muyang.png',
+    image: '/assets/items/Veste_muyang.webp',
     tech: 250,
     integrity: 60,
     type: 'chest',
@@ -389,7 +389,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '119',
     name: 'Manteau Muyang',
-    image: 'https://wiki.dreadcast.net/images/6/63/Manteau_muyang.png',
+    image: '/assets/items/Manteau_muyang.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -403,7 +403,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '120',
     name: 'Costume Buss',
-    image: 'https://wiki.dreadcast.net/images/9/95/Costumebuss.png',
+    image: '/assets/items/Costumebuss.webp',
     tech: 200,
     integrity: 60,
     type: 'chest',
@@ -417,7 +417,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '121',
     name: 'Robe rubanée',
-    image: 'https://wiki.dreadcast.net/images/2/20/Robe_ruban%C3%A9e.png',
+    image: '/assets/items/Robe_rubanée.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -431,7 +431,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '122',
     name: 'Robe carbone',
-    image: 'https://wiki.dreadcast.net/images/b/bf/Robe_carbone.png',
+    image: '/assets/items/Robe_carbone.webp',
     tech: 350,
     integrity: 150,
     type: 'chest',
@@ -455,7 +455,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '123',
     name: 'Robe fendue',
-    image: 'https://wiki.dreadcast.net/images/a/a7/Robe_fendue.png',
+    image: '/assets/items/Robe_fendue.webp',
     tech: 250,
     integrity: 65,
     type: 'chest',
@@ -473,7 +473,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '124',
     name: 'Haut de Robe rouge',
-    image: 'https://wiki.dreadcast.net/images/5/58/Robe-longue-haut.png',
+    image: '/assets/items/Robe-longue-haut.webp',
     tech: 300,
     integrity: 60,
     type: 'chest',
@@ -487,7 +487,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '125',
     name: 'Soutien Gorge connecté',
-    image: 'https://wiki.dreadcast.net/images/d/dd/Soutien_gorge_connecte.png',
+    image: '/assets/items/Soutien_gorge_connecte.webp',
     tech: 400,
     integrity: 100,
     type: 'chest',
@@ -501,7 +501,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '126',
     name: 'Soutien Gorge sexy',
-    image: 'https://wiki.dreadcast.net/images/3/38/Soutien_gorge_sexy.png',
+    image: '/assets/items/Soutien_gorge_sexy.webp',
     tech: 250,
     integrity: 60,
     type: 'chest',
@@ -510,7 +510,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     id: '127',
     name: "Chemise d'éveil (F)",
     image:
-      'https://wiki.dreadcast.net/images/a/ac/Chemise_%C3%A9veil_femme.png',
+      '/assets/items/Chemise_éveil_femme.webp',
     tech: 0,
     integrity: 0,
     type: 'chest',
@@ -518,7 +518,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '128',
     name: 'Débardeur',
-    image: 'https://wiki.dreadcast.net/images/4/4b/Debardeur_homme.png',
+    image: '/assets/items/Debardeur_homme.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -555,7 +555,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '130',
     name: 'Sweat',
-    image: 'https://wiki.dreadcast.net/images/b/bc/Sweat.png',
+    image: '/assets/items/Sweat.webp',
     tech: 400,
     integrity: 80,
     type: 'chest',
@@ -563,7 +563,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '131',
     name: 'Tenue de Taulard',
-    image: 'https://wiki.dreadcast.net/images/b/bb/Tenuetaulard.png',
+    image: '/assets/items/Tenuetaulard.webp',
     tech: 120,
     integrity: 15,
     type: 'chest',
@@ -571,7 +571,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '132',
     name: 'Tenue de Prisonnier',
-    image: 'https://wiki.dreadcast.net/images/f/f0/34tenue_prisonnier.png',
+    image: '/assets/items/34tenue_prisonnier.webp',
     tech: 320,
     integrity: 60,
     type: 'chest',
@@ -598,7 +598,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '134',
     name: 'Blouse Blanche',
-    image: 'https://wiki.dreadcast.net/images/a/a9/Blouse.png',
+    image: '/assets/items/Blouse.webp',
     tech: 250,
     integrity: 80,
     type: 'chest',
@@ -616,7 +616,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '135',
     name: 'Cyber Veste',
-    image: 'https://wiki.dreadcast.net/images/a/a0/COSTUME_HACKER_262px.png',
+    image: '/assets/items/COSTUME_HACKER_262px.webp',
     tech: 320,
     integrity: 90,
     type: 'chest',
@@ -678,7 +678,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '138',
     name: 'Combinaison TECH5',
-    image: 'https://wiki.dreadcast.net/images/5/5a/CombiTECH5.png',
+    image: '/assets/items/CombiTECH5.webp',
     tech: 200,
     integrity: 150,
     type: 'chest',
@@ -704,7 +704,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '139',
     name: 'Uniforme de police',
-    image: 'https://wiki.dreadcast.net/images/3/3c/Uniforme-police.png',
+    image: '/assets/items/Uniforme-police.webp',
     tech: 0,
     integrity: 300,
     type: 'chest',
@@ -730,7 +730,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '140',
     name: 'Armure technologique',
-    image: 'https://wiki.dreadcast.net/images/6/61/Armure-techno.png',
+    image: '/assets/items/Armure-techno.webp',
     tech: 400,
     integrity: 120,
     type: 'chest',
@@ -748,7 +748,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '141',
     name: 'Combinaison Squelette',
-    image: 'https://wiki.dreadcast.net/images/4/44/Combinaisonsquelette.png',
+    image: '/assets/items/Combinaisonsquelette.webp',
     tech: 400,
     integrity: 130,
     type: 'chest',
@@ -770,7 +770,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '142',
     name: 'Armure AXXXN',
-    image: 'https://wiki.dreadcast.net/images/e/ef/Armure_A300.png',
+    image: '/assets/items/Armure_A300.webp',
     tech: 350,
     integrity: 300,
     type: 'chest',
@@ -788,7 +788,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '143',
     name: 'Armure AXXXP',
-    image: 'https://wiki.dreadcast.net/images/e/ef/Armure_A300.png',
+    image: '/assets/items/Armure_A300.webp',
     tech: 400,
     integrity: 300,
     type: 'chest',
@@ -806,7 +806,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '144',
     name: 'Armure AXXXT',
-    image: 'https://wiki.dreadcast.net/images/e/ef/Armure_A300.png',
+    image: '/assets/items/Armure_A300.webp',
     tech: 400,
     integrity: 300,
     type: 'chest',
@@ -814,7 +814,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '145',
     name: 'Armure AXXXL',
-    image: 'https://wiki.dreadcast.net/images/e/ef/Armure_A300.png',
+    image: '/assets/items/Armure_A300.webp',
     tech: 360,
     integrity: 300,
     type: 'chest',
@@ -832,7 +832,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '146',
     name: 'Armure AXXXJ',
-    image: 'https://wiki.dreadcast.net/images/e/ef/Armure_A300.png',
+    image: '/assets/items/Armure_A300.webp',
     tech: 340,
     integrity: 300,
     type: 'chest',
@@ -846,7 +846,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '147',
     name: 'Armure AXXXO',
-    image: 'https://wiki.dreadcast.net/images/e/ef/Armure_A300.png',
+    image: '/assets/items/Armure_A300.webp',
     tech: 320,
     integrity: 300,
     type: 'chest',
@@ -864,7 +864,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '148',
     name: 'Armure AXXXD',
-    image: 'https://wiki.dreadcast.net/images/e/ef/Armure_A300.png',
+    image: '/assets/items/Armure_A300.webp',
     tech: 320,
     integrity: 300,
     type: 'chest',
@@ -943,7 +943,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     id: '153',
     name: 'Veste décontractée',
     image:
-      'https://wiki.dreadcast.net/images/4/44/Veste_d%C3%A9contract%C3%A9e.png',
+      '/assets/items/Veste_décontractée.webp',
     tech: 350,
     integrity: 100,
     type: 'chest',
@@ -1048,7 +1048,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     id: '159',
     name: "Veste Rad' (M)",
     image:
-      'https://wiki.dreadcast.net/images/8/81/Vestecuir_radioactive_homme.png',
+      '/assets/items/Vestecuir_radioactive_homme.webp',
     tech: 400,
     integrity: 110,
     type: 'chest',
@@ -1067,7 +1067,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     id: '160',
     name: "Veste Rad' (F)",
     image:
-      'https://wiki.dreadcast.net/images/8/8d/Vestecuir_radioactive_femme.png',
+      '/assets/items/Vestecuir_radioactive_femme.webp',
     tech: 400,
     integrity: 110,
     type: 'chest',
@@ -1085,7 +1085,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '161',
     name: 'Tailleur',
-    image: 'https://wiki.dreadcast.net/images/4/4b/Costume_femme.png',
+    image: '/assets/items/Costume_femme.webp',
     tech: 200,
     integrity: 60,
     type: 'chest',
@@ -1099,7 +1099,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '162',
     name: 'Veste en cuir noir',
-    image: 'https://wiki.dreadcast.net/images/e/ef/Blouson_motard.png',
+    image: '/assets/items/Blouson_motard.webp',
     tech: 350,
     integrity: 120,
     type: 'chest',
@@ -1123,7 +1123,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '163',
     name: 'Veste en cuir rouge',
-    image: 'https://wiki.dreadcast.net/images/0/03/Blouson_cuir-rouge.png',
+    image: '/assets/items/Blouson_cuir-rouge.webp',
     tech: 350,
     integrity: 120,
     type: 'chest',
@@ -1147,7 +1147,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '164',
     name: 'Gros cuir',
-    image: 'https://wiki.dreadcast.net/images/4/45/Groscuir.png',
+    image: '/assets/items/Groscuir.webp',
     tech: 350,
     integrity: 120,
     type: 'chest',
@@ -1171,7 +1171,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '165',
     name: 'Robe noire',
-    image: 'https://wiki.dreadcast.net/images/8/86/Robe_sexy-1-noire.png',
+    image: '/assets/items/Robe_sexy-1-noire.webp',
     tech: 250,
     integrity: 65,
     type: 'chest',
@@ -1189,7 +1189,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '166',
     name: 'Haut de Robe néon',
-    image: 'https://wiki.dreadcast.net/images/3/3b/Robe-class-or-haut.png',
+    image: '/assets/items/Robe-class-or-haut.webp',
     tech: 300,
     integrity: 60,
     type: 'chest',
@@ -1203,7 +1203,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '167',
     name: 'Mini Robe',
-    image: 'https://wiki.dreadcast.net/images/6/66/Mini_Robe.png',
+    image: '/assets/items/Mini_Robe.webp',
     tech: 300,
     integrity: 60,
     type: 'chest',
@@ -1217,7 +1217,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '168',
     name: 'Soutien Gorge Écureuil',
-    image: 'https://wiki.dreadcast.net/images/8/8f/Soutiengorgeecureuil.png',
+    image: '/assets/items/Soutiengorgeecureuil.webp',
     tech: 250,
     integrity: 60,
     type: 'chest',
@@ -1226,7 +1226,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
     id: '169',
     name: "Chemise d'éveil (M)",
     image:
-      'https://wiki.dreadcast.net/images/9/99/Chemise_%C3%A9veil_homme.png',
+      '/assets/items/Chemise_éveil_homme.webp',
     tech: 0,
     integrity: 0,
     type: 'chest',
@@ -1234,7 +1234,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '170',
     name: 'Débardeur Femme',
-    image: 'https://wiki.dreadcast.net/images/4/47/DEBARDEUR_FEMME.png',
+    image: '/assets/items/DEBARDEUR_FEMME.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -1252,7 +1252,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '171',
     name: 'Débardeur Rascal',
-    image: 'https://wiki.dreadcast.net/images/8/8c/Debardeur_rascal.png',
+    image: '/assets/items/Debardeur_rascal.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -1270,7 +1270,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '172',
     name: 'Débardeur Squidzilla',
-    image: 'https://wiki.dreadcast.net/images/e/e7/Squidzilla.png',
+    image: '/assets/items/Squidzilla.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -1288,7 +1288,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '173',
     name: 'Débardeur C.Com',
-    image: 'https://wiki.dreadcast.net/images/3/3c/Ccom.png',
+    image: '/assets/items/Ccom.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -1306,7 +1306,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '174',
     name: 'Débardeur Utopia',
-    image: 'https://wiki.dreadcast.net/images/d/d2/Utopia.png',
+    image: '/assets/items/Utopia.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -1324,7 +1324,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '175',
     name: 'Débardeur Engrenage',
-    image: 'https://wiki.dreadcast.net/images/c/c6/D-engrenage.png',
+    image: '/assets/items/D-engrenage.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -1342,7 +1342,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '176',
     name: 'Débardeur Otis',
-    image: 'https://wiki.dreadcast.net/images/d/d7/Otis.png',
+    image: '/assets/items/Otis.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -1360,7 +1360,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '177',
     name: 'Débardeur 3.14',
-    image: 'https://wiki.dreadcast.net/images/9/9b/Debardeur_pi.png',
+    image: '/assets/items/Debardeur_pi.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -1378,7 +1378,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '178',
     name: 'Débardeur Onix',
-    image: 'https://wiki.dreadcast.net/images/5/5d/Debardeur_onix.png',
+    image: '/assets/items/Debardeur_onix.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -1396,7 +1396,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '179',
     name: 'Débardeur Sénéchal',
-    image: 'https://wiki.dreadcast.net/images/8/8b/Debardeur_senechal.png',
+    image: '/assets/items/Debardeur_senechal.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -1414,7 +1414,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '180',
     name: 'T-shirt de Dreadball (H)',
-    image: 'https://wiki.dreadcast.net/images/4/40/T-shirt_dreadball.png',
+    image: '/assets/items/T-shirt_dreadball.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -1432,7 +1432,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '181',
     name: 'T-shirt de Dreadball (F)',
-    image: 'https://wiki.dreadcast.net/images/a/ad/T-shirt_dreadball_femme.png',
+    image: '/assets/items/T-shirt_dreadball_femme.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -1450,7 +1450,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '182',
     name: 'T-shirt de grand fan',
-    image: 'https://wiki.dreadcast.net/images/a/ab/Tshirt_de_grand_fan.png',
+    image: '/assets/items/Tshirt_de_grand_fan.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -1468,7 +1468,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '183',
     name: 'Débardeur long',
-    image: 'https://wiki.dreadcast.net/images/7/76/DEBARDEUR_LONG.png',
+    image: '/assets/items/DEBARDEUR_LONG.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -1559,7 +1559,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '188',
     name: 'Veste à Poches (H)',
-    image: 'https://wiki.dreadcast.net/images/5/57/Mecano-torse_homme.png',
+    image: '/assets/items/Mecano-torse_homme.webp',
     tech: 360,
     integrity: 120,
     type: 'chest',
@@ -1574,7 +1574,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '189',
     name: 'Veste à Poches (F)',
-    image: 'https://wiki.dreadcast.net/images/4/47/Mecano-torse-femme.png',
+    image: '/assets/items/Mecano-torse-femme.webp',
     tech: 360,
     integrity: 120,
     type: 'chest',
@@ -1589,7 +1589,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '190',
     name: 'T-shirt de fan',
-    image: 'https://wiki.dreadcast.net/images/6/6f/T-SHIRT-FAN262.png',
+    image: '/assets/items/T-SHIRT-FAN262.webp',
     tech: 350,
     integrity: 60,
     type: 'chest',
@@ -1603,7 +1603,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '191',
     name: 'Armure tactique SR',
-    image: 'https://wiki.dreadcast.net/images/8/84/Armure_tactique_SR.png',
+    image: '/assets/items/Armure_tactique_SR.webp',
     tech: 300,
     integrity: 135,
     type: 'chest',
@@ -1627,7 +1627,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '192',
     name: 'Uniforme de frelon',
-    image: 'https://wiki.dreadcast.net/images/a/af/Uniforme_de_frelon.png',
+    image: '/assets/items/Uniforme_de_frelon.webp',
     tech: 0,
     integrity: 300,
     type: 'chest',
@@ -1653,7 +1653,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '193',
     name: 'Cuir Rouge',
-    image: 'https://wiki.dreadcast.net/images/0/03/Blouson_cuir-rouge.png',
+    image: '/assets/items/Blouson_cuir-rouge.webp',
     tech: 350,
     integrity: 100,
     type: 'chest',

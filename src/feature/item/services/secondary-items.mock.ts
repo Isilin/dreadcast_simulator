@@ -4,7 +4,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '400',
     name: 'Anneau Imperial',
-    image: 'https://wiki.dreadcast.net/images/4/42/Anneau_imperial.png',
+    image: '/assets/items/Anneau_imperial.webp',
     tech: 0,
     integrity: 600,
     type: 'secondary',
@@ -12,7 +12,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '401',
     name: 'Bague saphir pourpre',
-    image: 'https://wiki.dreadcast.net/images/4/4c/Bague_saphir_pourpre.png',
+    image: '/assets/items/Bague_saphir_pourpre.webp',
     tech: 0,
     integrity: 50,
     type: 'secondary',
@@ -20,7 +20,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '402',
     name: 'Boite à outils',
-    image: 'https://wiki.dreadcast.net/images/8/86/Boite_a_outils.png',
+    image: '/assets/items/Boite_a_outils.webp',
     tech: 0,
     integrity: 70,
     type: 'secondary',
@@ -34,7 +34,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '403',
     name: 'Bracelet',
-    image: 'https://wiki.dreadcast.net/images/3/33/Bracelet.png',
+    image: '/assets/items/Bracelet.webp',
     tech: 0,
     integrity: 40,
     type: 'secondary',
@@ -42,7 +42,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '404',
     name: 'Ceinture',
-    image: 'https://wiki.dreadcast.net/images/b/b8/Ceinture.png',
+    image: '/assets/items/Ceinture.webp',
     tech: 360,
     integrity: 50,
     type: 'secondary',
@@ -50,7 +50,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '405',
     name: 'Ceinture titane',
-    image: 'https://wiki.dreadcast.net/images/c/c3/Ceinture_titane.png',
+    image: '/assets/items/Ceinture_titane.webp',
     tech: 400,
     integrity: 100,
     type: 'secondary',
@@ -58,7 +58,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '406',
     name: 'Chaîne',
-    image: 'https://wiki.dreadcast.net/images/5/5c/Chaine.png',
+    image: '/assets/items/Chaine.webp',
     tech: 300,
     integrity: 80,
     type: 'secondary',
@@ -82,7 +82,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '407',
     name: 'Cibleur',
-    image: 'https://wiki.dreadcast.net/images/e/ea/Cibleur.png',
+    image: '/assets/items/Cibleur.webp',
     tech: 240,
     integrity: 30,
     type: 'secondary',
@@ -104,7 +104,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '408',
     name: 'Collier en cuir',
-    image: 'https://wiki.dreadcast.net/images/0/03/Collier_en_cuir.png',
+    image: '/assets/items/Collier_en_cuir.webp',
     tech: 300,
     integrity: 80,
     type: 'secondary',
@@ -128,7 +128,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '409',
     name: "Collier tech'",
-    image: 'https://wiki.dreadcast.net/images/a/a5/Collier_tech.png',
+    image: '/assets/items/Collier_tech.webp',
     tech: 330,
     integrity: 120,
     type: 'secondary',
@@ -152,7 +152,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '410',
     name: 'Pendentif Cristal',
-    image: 'https://wiki.dreadcast.net/images/9/99/Cravate.png',
+    image: '/assets/items/Cravate.webp',
     tech: 360,
     integrity: 60,
     type: 'secondary',
@@ -160,7 +160,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '411',
     name: 'Déflecteur',
-    image: 'https://wiki.dreadcast.net/images/3/3f/Deflecteur.png',
+    image: '/assets/items/Deflecteur.webp',
     tech: 250,
     integrity: 150,
     type: 'secondary',
@@ -180,7 +180,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '412',
     name: 'Epaulettes',
-    image: 'https://wiki.dreadcast.net/images/a/af/Epaulettes.png',
+    image: '/assets/items/Epaulettes.webp',
     tech: 350,
     integrity: 100,
     type: 'secondary',
@@ -198,7 +198,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '413',
     name: 'Epaulettes en Cristal',
-    image: 'https://wiki.dreadcast.net/images/a/af/Epaulettes.png',
+    image: '/assets/items/Epaulettes.webp',
     tech: 380,
     integrity: 120,
     type: 'secondary',
@@ -212,7 +212,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '414',
     name: 'Jetpack E1',
-    image: 'https://wiki.dreadcast.net/images/3/3a/JET_PACK_262px.png',
+    image: '/assets/items/JET_PACK_262px.webp',
     tech: 220,
     integrity: 40,
     type: 'secondary',
@@ -240,7 +240,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '415',
     name: 'Lunettes Cyber',
-    image: 'https://wiki.dreadcast.net/images/2/2a/Lunettes_cyber.png',
+    image: '/assets/items/Lunettes_cyber.webp',
     tech: 160,
     integrity: 40,
     type: 'secondary',
@@ -260,7 +260,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '416',
     name: 'Lunettes Cyber 2.0',
-    image: 'https://wiki.dreadcast.net/images/b/b9/Lunettes_cyber_2.0.png',
+    image: '/assets/items/Lunettes_cyber_2.0.webp',
     tech: 160,
     integrity: 60,
     type: 'secondary',
@@ -274,7 +274,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '417',
     name: 'Lunettes de soleil',
-    image: 'https://wiki.dreadcast.net/images/6/61/Lunettes_de_soleil.png',
+    image: '/assets/items/Lunettes_de_soleil.webp',
     tech: 90,
     integrity: 20,
     type: 'secondary',
@@ -289,7 +289,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     id: '418',
     name: 'Lunettes de vision nocturne',
     image:
-      'https://wiki.dreadcast.net/images/8/81/Lunettes_de_vision_nocturne.png',
+      '/assets/items/Lunettes_de_vision_nocturne.webp',
     tech: 240,
     integrity: 50,
     type: 'secondary',
@@ -303,7 +303,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '419',
     name: 'Cache-oeil',
-    image: 'https://wiki.dreadcast.net/images/7/7f/Cache-oeil.png',
+    image: '/assets/items/Cache-oeil.webp',
     tech: 400,
     integrity: 60,
     type: 'secondary',
@@ -317,7 +317,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '420',
     name: 'Mitaines',
-    image: 'https://wiki.dreadcast.net/images/1/13/Mitaines.png',
+    image: '/assets/items/Mitaines.webp',
     tech: 360,
     integrity: 50,
     type: 'secondary',
@@ -331,7 +331,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '421',
     name: "Module d'invisibilité",
-    image: 'https://wiki.dreadcast.net/images/b/b5/Module_dinvisibilite.png',
+    image: '/assets/items/Module_dinvisibilite.webp',
     tech: 140,
     integrity: 50,
     type: 'secondary',
@@ -351,7 +351,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '422',
     name: 'Nucléodeck',
-    image: 'https://wiki.dreadcast.net/images/e/ec/Nucleodeck.png',
+    image: '/assets/items/Nucleodeck.webp',
     tech: 320,
     integrity: 60,
     type: 'secondary',
@@ -375,7 +375,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '423',
     name: 'Parapactum',
-    image: 'https://wiki.dreadcast.net/images/f/f0/Parapactum.png',
+    image: '/assets/items/Parapactum.webp',
     tech: 320,
     integrity: 60,
     type: 'secondary',
@@ -389,7 +389,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '424',
     name: 'Trousse de secours',
-    image: 'https://wiki.dreadcast.net/images/9/92/Trousse_de_secours.png',
+    image: '/assets/items/Trousse_de_secours.webp',
     tech: 320,
     integrity: 780,
     type: 'secondary',
@@ -409,7 +409,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '425',
     name: 'Monocle',
-    image: 'https://wiki.dreadcast.net/images/0/00/Monocle.png',
+    image: '/assets/items/Monocle.webp',
     tech: 240,
     integrity: 80,
     type: 'secondary',
@@ -423,7 +423,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '426',
     name: 'Overboard',
-    image: 'https://wiki.dreadcast.net/images/4/4d/HOVERBOARD262.png',
+    image: '/assets/items/HOVERBOARD262.webp',
     tech: 240,
     integrity: 60,
     type: 'secondary',
@@ -446,7 +446,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     id: '427',
     name: 'Drone AXXXN',
     image:
-      'https://wiki.dreadcast.net/images/6/62/TENUE_A-317_DRONE_ROUGE_262-PX.png',
+      '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
     tech: 350,
     integrity: 300,
     type: 'secondary',
@@ -465,7 +465,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     id: '428',
     name: 'Drone AXXXP',
     image:
-      'https://wiki.dreadcast.net/images/6/62/TENUE_A-317_DRONE_ROUGE_262-PX.png',
+      '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
     tech: 250,
     integrity: 300,
     type: 'secondary',
@@ -480,7 +480,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     id: '429',
     name: 'Drone AXXXT',
     image:
-      'https://wiki.dreadcast.net/images/6/62/TENUE_A-317_DRONE_ROUGE_262-PX.png',
+      '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
     tech: 240,
     integrity: 300,
     type: 'secondary',
@@ -495,7 +495,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     id: '430',
     name: 'Drone AXXXL',
     image:
-      'https://wiki.dreadcast.net/images/6/62/TENUE_A-317_DRONE_ROUGE_262-PX.png',
+      '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
     tech: 140,
     integrity: 300,
     type: 'secondary',
@@ -510,7 +510,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     id: '431',
     name: 'Drone AXXXJ',
     image:
-      'https://wiki.dreadcast.net/images/6/62/TENUE_A-317_DRONE_ROUGE_262-PX.png',
+      '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
     tech: 160,
     integrity: 300,
     type: 'secondary',
@@ -525,7 +525,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     id: '432',
     name: 'Drone AXXXO',
     image:
-      'https://wiki.dreadcast.net/images/6/62/TENUE_A-317_DRONE_ROUGE_262-PX.png',
+      '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
     tech: 320,
     integrity: 300,
     type: 'secondary',
@@ -540,7 +540,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
     id: '433',
     name: 'Drone AXXXD',
     image:
-      'https://wiki.dreadcast.net/images/6/62/TENUE_A-317_DRONE_ROUGE_262-PX.png',
+      '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
     tech: 330,
     integrity: 300,
     type: 'secondary',
@@ -558,7 +558,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '434',
     name: 'Celeris A',
-    image: 'https://wiki.dreadcast.net/images/5/54/Overlongboard_5.png',
+    image: '/assets/items/Overlongboard_5.webp',
     tech: 220,
     integrity: 70,
     type: 'secondary',
@@ -590,7 +590,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '435',
     name: 'Cape',
-    image: 'https://wiki.dreadcast.net/images/5/54/Overlongboard_5.png',
+    image: '/assets/items/Overlongboard_5.webp',
     tech: 360,
     integrity: 50,
     type: 'secondary',
@@ -604,7 +604,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '436',
     name: 'Vaychette Noir',
-    image: 'https://wiki.dreadcast.net/images/8/88/Vaychette_noir.png',
+    image: '/assets/items/Vaychette_noir.webp',
     tech: 350,
     integrity: 40,
     type: 'secondary',
@@ -618,7 +618,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '437',
     name: 'Anneau Rebelle',
-    image: 'https://wiki.dreadcast.net/images/1/1c/Anneau_rebelle.png',
+    image: '/assets/items/Anneau_rebelle.webp',
     tech: 0,
     integrity: 600,
     type: 'secondary',
@@ -634,7 +634,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '439',
     name: 'Anneau Or',
-    image: 'https://wiki.dreadcast.net/images/9/9a/Anneau_or.png',
+    image: '/assets/items/Anneau_or.webp',
     tech: 0,
     integrity: 50,
     type: 'secondary',
@@ -642,7 +642,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '440',
     name: 'Bague Emeraude',
-    image: 'https://wiki.dreadcast.net/images/9/97/Bague_emeraude.png',
+    image: '/assets/items/Bague_emeraude.webp',
     tech: 0,
     integrity: 50,
     type: 'secondary',
@@ -650,7 +650,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '441',
     name: 'Chevalière Argent',
-    image: 'https://wiki.dreadcast.net/images/f/f0/Chevaliere_argent.png',
+    image: '/assets/items/Chevaliere_argent.webp',
     tech: 0,
     integrity: 50,
     type: 'secondary',
@@ -658,7 +658,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '442',
     name: 'Bracelet Lux',
-    image: 'https://wiki.dreadcast.net/images/3/33/Bracelet.png',
+    image: '/assets/items/Bracelet.webp',
     tech: 0,
     integrity: 40,
     type: 'secondary',
@@ -666,7 +666,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '443',
     name: 'Bracelet impérial',
-    image: 'https://wiki.dreadcast.net/images/a/ad/Bracelet_lux.png',
+    image: '/assets/items/Bracelet_lux.webp',
     tech: 0,
     integrity: 40,
     type: 'secondary',
@@ -674,7 +674,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '444',
     name: 'Ceinture féminine',
-    image: 'https://wiki.dreadcast.net/images/5/5e/Ceinture_feminine.png',
+    image: '/assets/items/Ceinture_feminine.webp',
     tech: 360,
     integrity: 50,
     type: 'secondary',
@@ -682,7 +682,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '445',
     name: 'Holster',
-    image: 'https://wiki.dreadcast.net/images/8/8d/Holster.png',
+    image: '/assets/items/Holster.webp',
     tech: 360,
     integrity: 50,
     type: 'secondary',
@@ -690,7 +690,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '446',
     name: 'Collier Cyber',
-    image: 'https://wiki.dreadcast.net/images/d/dc/Collier_Cyber.png',
+    image: '/assets/items/Collier_Cyber.webp',
     tech: 330,
     integrity: 120,
     type: 'secondary',
@@ -714,7 +714,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '447',
     name: 'Cravate',
-    image: 'https://wiki.dreadcast.net/images/9/99/Cravate.png',
+    image: '/assets/items/Cravate.webp',
     tech: 360,
     integrity: 60,
     type: 'secondary',
@@ -722,7 +722,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '448',
     name: 'Jetpack F1',
-    image: 'https://wiki.dreadcast.net/images/c/c1/JET_PACK_V2_262px.png',
+    image: '/assets/items/JET_PACK_V2_262px.webp',
     tech: 220,
     integrity: 40,
     type: 'secondary',
@@ -750,7 +750,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '449',
     name: 'Lunettes rétro',
-    image: 'https://wiki.dreadcast.net/images/5/54/Lunettes_retro.png',
+    image: '/assets/items/Lunettes_retro.webp',
     tech: 90,
     integrity: 20,
     type: 'secondary',
@@ -764,7 +764,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '450',
     name: 'Gants Dentelles',
-    image: 'https://wiki.dreadcast.net/images/e/eb/Gants_dentelle.png',
+    image: '/assets/items/Gants_dentelle.webp',
     tech: 360,
     integrity: 50,
     type: 'secondary',
@@ -778,7 +778,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '451',
     name: 'Over-A370',
-    image: 'https://wiki.dreadcast.net/images/4/40/Over-A370.png',
+    image: '/assets/items/Over-A370.webp',
     tech: 240,
     integrity: 60,
     type: 'secondary',
@@ -800,7 +800,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '452',
     name: 'Vaychette Original',
-    image: 'https://wiki.dreadcast.net/images/d/dd/Vaychette_original.png',
+    image: '/assets/items/Vaychette_original.webp',
     tech: 350,
     integrity: 40,
     type: 'secondary',
@@ -814,7 +814,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '453',
     name: 'Celeris K',
-    image: 'https://wiki.dreadcast.net/images/5/54/Overlongboard_5.png',
+    image: '/assets/items/Overlongboard_5.webp',
     tech: 220,
     integrity: 70,
     type: 'secondary',
@@ -846,7 +846,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '454',
     name: 'Celeris X',
-    image: 'https://wiki.dreadcast.net/images/e/e7/Overlongboard_1.png',
+    image: '/assets/items/Overlongboard_1.webp',
     tech: 220,
     integrity: 70,
     type: 'secondary',
@@ -878,7 +878,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '455',
     name: 'Celeris W',
-    image: 'https://wiki.dreadcast.net/images/2/20/Overlongboard_4.png',
+    image: '/assets/items/Overlongboard_4.webp',
     tech: 220,
     integrity: 70,
     type: 'secondary',
@@ -910,7 +910,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '456',
     name: 'Celeris Z',
-    image: 'https://wiki.dreadcast.net/images/7/70/Overlongboard_2.png',
+    image: '/assets/items/Overlongboard_2.webp',
     tech: 220,
     integrity: 70,
     type: 'secondary',
