@@ -1,4 +1,4 @@
-export type StatModifierResponseDto = {
+export interface StatModifierResponseDto {
   property:
     | 'strength'
     | 'agility'
@@ -21,7 +21,7 @@ export type StatModifierResponseDto = {
     | 'hitDamages'
     | 'criticalHitDamage';
   value: number;
-};
+}
 
 export interface DrugResponseDto {
   id: string;

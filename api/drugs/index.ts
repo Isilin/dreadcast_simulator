@@ -1,11 +1,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+
 import {
   createDrugClient,
   DRUG_SELECT_QUERY,
   setCacheHeaders,
   handleDrugError,
-} from './lib/drug.api.ts';
-import type { DrugResponseDto } from './lib/drug.types.ts';
+} from '../../lib/drug.api.ts';
+import type { DrugResponseDto } from '../../lib/drug.types.ts';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {

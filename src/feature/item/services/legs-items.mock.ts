@@ -110,8 +110,7 @@ export const MOCK_LEGS_ITEMS: ItemResponseDto[] = [
   {
     id: '206',
     name: 'Exo-Jambières de chantier',
-    image:
-      '/assets/items/Exo-jambieres_de_chantier.webp',
+    image: '/assets/items/Exo-jambieres_de_chantier.webp',
     tech: 340,
     integrity: 120,
     type: 'legs',

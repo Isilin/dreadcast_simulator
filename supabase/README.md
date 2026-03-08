@@ -5,7 +5,7 @@ Ce répertoire contient tous les schémas et seeds pour la base de données Drea
 ## Structure
 
 ```text
-api/supabase/
+supabase/
 ├── schemas/     # Définitions des types, tables, indexes et RLS policies
 └── seeds/       # Données initiales pour peupler la DB
 ```

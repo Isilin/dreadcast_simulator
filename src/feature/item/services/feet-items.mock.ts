@@ -170,8 +170,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '308',
     name: 'Chaussures à talons',
-    image:
-      '/assets/items/ASSETS_Chaussures_a_talons_262-PX.webp',
+    image: '/assets/items/ASSETS_Chaussures_a_talons_262-PX.webp',
     tech: 340,
     integrity: 60,
     type: 'feet',
@@ -209,8 +208,7 @@ export const MOCK_FEET_ITEMS: ItemResponseDto[] = [
   {
     id: '310',
     name: 'Bottes',
-    image:
-      '/assets/items/ASSETS_Bottes-Militaires_262-PX.webp',
+    image: '/assets/items/ASSETS_Bottes-Militaires_262-PX.webp',
     tech: 330,
     integrity: 100,
     type: 'feet',

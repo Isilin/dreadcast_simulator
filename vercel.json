@@ -5,7 +5,7 @@
   "framework": "vite",
   "functions": {
     "api/**/*.ts": {
-      "includeFiles": "api/lib/**"
+      "includeFiles": "lib/**"
     }
   },
   "rewrites": [

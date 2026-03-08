@@ -288,8 +288,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '418',
     name: 'Lunettes de vision nocturne',
-    image:
-      '/assets/items/Lunettes_de_vision_nocturne.webp',
+    image: '/assets/items/Lunettes_de_vision_nocturne.webp',
     tech: 240,
     integrity: 50,
     type: 'secondary',
@@ -445,8 +444,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '427',
     name: 'Drone AXXXN',
-    image:
-      '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
+    image: '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
     tech: 350,
     integrity: 300,
     type: 'secondary',
@@ -464,8 +462,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '428',
     name: 'Drone AXXXP',
-    image:
-      '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
+    image: '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
     tech: 250,
     integrity: 300,
     type: 'secondary',
@@ -479,8 +476,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '429',
     name: 'Drone AXXXT',
-    image:
-      '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
+    image: '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
     tech: 240,
     integrity: 300,
     type: 'secondary',
@@ -494,8 +490,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '430',
     name: 'Drone AXXXL',
-    image:
-      '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
+    image: '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
     tech: 140,
     integrity: 300,
     type: 'secondary',
@@ -509,8 +504,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '431',
     name: 'Drone AXXXJ',
-    image:
-      '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
+    image: '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
     tech: 160,
     integrity: 300,
     type: 'secondary',
@@ -524,8 +518,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '432',
     name: 'Drone AXXXO',
-    image:
-      '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
+    image: '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
     tech: 320,
     integrity: 300,
     type: 'secondary',
@@ -539,8 +532,7 @@ export const MOCK_SECONDARY_ITEMS: ItemResponseDto[] = [
   {
     id: '433',
     name: 'Drone AXXXD',
-    image:
-      '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
+    image: '/assets/items/TENUE_A-317_DRONE_ROUGE_262-PX.webp',
     tech: 330,
     integrity: 300,
     type: 'secondary',

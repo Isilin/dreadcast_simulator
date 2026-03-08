@@ -892,8 +892,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '542',
     name: 'Rouleau en poly tétra fluoro éthylène',
-    image:
-      '/assets/items/ROULEAU-PATISSERIE_262px.webp',
+    image: '/assets/items/ROULEAU-PATISSERIE_262px.webp',
     tech: 150,
     integrity: 300,
     type: '1handMelee',
@@ -906,8 +905,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '543',
     name: 'Rouleau à Pâtisserie',
-    image:
-      '/assets/items/ROULEAU-PATISSERIE_262px.webp',
+    image: '/assets/items/ROULEAU-PATISSERIE_262px.webp',
     tech: 80,
     integrity: 100,
     type: '1handMelee',
@@ -1374,8 +1372,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '566',
     name: 'Gun A 317',
-    image:
-      '/assets/items/A-317_REVOLVER_MAGNUS_BLEU_262-PX.webp',
+    image: '/assets/items/A-317_REVOLVER_MAGNUS_BLEU_262-PX.webp',
     tech: 320,
     integrity: 300,
     type: '1handShot',
@@ -1388,8 +1385,7 @@ export const MOCK_WEAPONS_ITEMS: ItemResponseDto[] = [
   {
     id: '567',
     name: 'Fusil A 317 T',
-    image:
-      '/assets/items/A-317_FUSIL_D_ASSAULT_GRIPPIN_ROUGE_262-PX.webp',
+    image: '/assets/items/A-317_FUSIL_D_ASSAULT_GRIPPIN_ROUGE_262-PX.webp',
     tech: 470,
     integrity: 300,
     type: '2handsShot',

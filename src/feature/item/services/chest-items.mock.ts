@@ -286,8 +286,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '114',
     name: 'Veste de cérémonie',
-    image:
-      '/assets/items/Veste_de_Cérémonie.webp',
+    image: '/assets/items/Veste_de_Cérémonie.webp',
     tech: 320,
     integrity: 80,
     type: 'chest',
@@ -509,8 +508,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '127',
     name: "Chemise d'éveil (F)",
-    image:
-      '/assets/items/Chemise_éveil_femme.webp',
+    image: '/assets/items/Chemise_éveil_femme.webp',
     tech: 0,
     integrity: 0,
     type: 'chest',
@@ -940,8 +938,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '153',
     name: 'Veste décontractée',
-    image:
-      '/assets/items/Veste_décontractée.webp',
+    image: '/assets/items/Veste_décontractée.webp',
     tech: 350,
     integrity: 100,
     type: 'chest',
@@ -1045,8 +1042,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '159',
     name: "Veste Rad' (M)",
-    image:
-      '/assets/items/Vestecuir_radioactive_homme.webp',
+    image: '/assets/items/Vestecuir_radioactive_homme.webp',
     tech: 400,
     integrity: 110,
     type: 'chest',
@@ -1064,8 +1060,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '160',
     name: "Veste Rad' (F)",
-    image:
-      '/assets/items/Vestecuir_radioactive_femme.webp',
+    image: '/assets/items/Vestecuir_radioactive_femme.webp',
     tech: 400,
     integrity: 110,
     type: 'chest',
@@ -1223,8 +1218,7 @@ export const MOCK_CHEST_ITEMS: ItemResponseDto[] = [
   {
     id: '169',
     name: "Chemise d'éveil (M)",
-    image:
-      '/assets/items/Chemise_éveil_homme.webp',
+    image: '/assets/items/Chemise_éveil_homme.webp',
     tech: 0,
     integrity: 0,
     type: 'chest',

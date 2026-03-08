@@ -40,8 +40,7 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '3',
     name: 'Cagoule Tech4',
-    image:
-      '/assets/items/COMBINAISON_TECH-4_CASQUE.webp',
+    image: '/assets/items/COMBINAISON_TECH-4_CASQUE.webp',
     tech: 330,
     integrity: 100,
     type: 'head',
@@ -621,8 +620,7 @@ export const MOCK_HEAD_ITEMS: ItemResponseDto[] = [
   {
     id: '36',
     name: 'Combinaison Tech5',
-    image:
-      '/assets/items/COMBINAISON_TECH-5_CASQUE262.webp',
+    image: '/assets/items/COMBINAISON_TECH-5_CASQUE262.webp',
     tech: 330,
     integrity: 150,
     type: 'head',
