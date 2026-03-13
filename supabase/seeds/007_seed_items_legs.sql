@@ -59,7 +59,8 @@ INSERT INTO item (id, name, image, tech, integrity, type, min_damage, max_damage
   ('254', 'Short Hansen', '/assets/items/Short_hansen.webp', 340, 65, 'legs'::item_type, NULL, NULL, NULL, NULL, NULL, NULL),
   ('255', 'Short Mahx', '/assets/items/Short_mahx.webp', 340, 65, 'legs'::item_type, NULL, NULL, NULL, NULL, NULL, NULL),
   ('256', 'String Ecureuil', '/assets/items/Stringecureuil.webp', 250, 60, 'legs'::item_type, NULL, NULL, NULL, NULL, NULL, NULL),
-  ('257', 'Pantalon AXXXT', '/assets/items/Pantalon_01.webp', 400, 300, 'legs'::item_type, NULL, NULL, NULL, NULL, NULL, NULL)
+  ('257', 'Pantalon AXXXT', '/assets/items/Pantalon_01.webp', 400, 300, 'legs'::item_type, NULL, NULL, NULL, NULL, NULL, NULL),
+  ('258', 'Baggy A323', '/assets/items/Bagy_A323.webp', 400, 300, 'legs'::item_type, NULL, NULL, NULL, NULL, NULL, NULL)
 ON CONFLICT (id) DO NOTHING;
 
 -- Insertion des prérequis

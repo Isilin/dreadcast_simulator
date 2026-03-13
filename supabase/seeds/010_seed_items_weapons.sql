@@ -106,7 +106,8 @@ INSERT INTO item (id, name, image, tech, integrity, type, min_damage, max_damage
   ('601', 'Chaine cloutée', '/assets/items/Chaine_cloutee.webp', 320, 140, '1handMelee'::item_type, 20, 32, NULL, 1, 0, 1),
   ('602', 'Gun A370', '/assets/items/Gun_A370.webp', 320, 300, '1handShot'::item_type, 6, 12, NULL, 1, 4, 2),
   ('603', 'Arc électrique', '/assets/items/Arc_electrique.webp', 450, 150, '2handsShot'::item_type, 20, 48, NULL, 2, 9, 1),
-  ('604', 'RedBow', '/assets/items/Redbow.webp', 460, 150, '2handsShot'::item_type, 22, 40, NULL, 2, 12, 1)
+  ('604', 'RedBow', '/assets/items/Redbow.webp', 460, 150, '2handsShot'::item_type, 22, 40, NULL, 2, 12, 1),
+  ('605', 'Bouclier A370', '/assets/items/Bouclier-A370.webp', 60, 200, '2handsMelee'::item_type, 34, 66, NULL, 2, 0, 1)
 ON CONFLICT (id) DO NOTHING;
 
 -- Insertion des prérequis
@@ -259,5 +260,7 @@ INSERT INTO item_effect (item_id, property, value) VALUES
   ('598', 'robustness'::stat_property, 40),
   ('598', 'speed'::stat_property, -2),
   ('599', 'agility'::stat_property, -5),
-  ('603', 'perception'::stat_property, 5)
+  ('603', 'perception'::stat_property, 5),
+  ('605', 'robustness'::stat_property, 40),
+  ('605', 'speed'::stat_property, -2)
 ON CONFLICT DO NOTHING;
