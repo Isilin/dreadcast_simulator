@@ -1,20 +1,66 @@
+import { KIT_REPOSITORY_ERROR_CODE, KitRepositoryError } from './kit.errors';
+import { toDomain } from './kit.mapper';
+import { kitArrayResponseSchema, kitResponseDtoSchema } from './kit.schema';
 import type { Kit } from '../model';
-import { fetchKitsMock } from './kit.repo.mock';
 
-import { USE_MOCK } from '@/utils/use-mock';
+import { GET } from '@/utils/http';
+import { validatePayload } from '@/utils/validation';
 
-export async function fetchKits(
+export const fetchKits = async (
   type?: Kit['type'] | Array<Kit['type']>,
-): Promise<Kit[]> {
-  if (USE_MOCK) {
-    return fetchKitsMock(type);
+  signal?: AbortSignal,
+): Promise<Kit[]> => {
+  const params = new URLSearchParams();
+  if (type) {
+    const types = Array.isArray(type) ? type : [type];
+    if (types.length > 0) {
+      params.set('type', types.join(','));
+    }
   }
 
-  // Version “réelle” (plus tard)
-  // const json = await api.get('kits').json();
-  // const validated = kitArraySchema.parse(json);
-  // return validated.map(toDomain);
+  const url = `/api/kits${params.toString() ? `?${params.toString()}` : ''}`;
+  const response = await GET(url, signal);
 
-  // Pour l’instant, on renvoie le mock par défaut
-  return fetchKitsMock(type);
-}
+  if (!response.ok) {
+    throw new KitRepositoryError({
+      code: KIT_REPOSITORY_ERROR_CODE.FETCH_KITS_FAILED,
+      message: 'Impossible de recuperer la liste des kits.',
+      status: response.status,
+    });
+  }
+
+  const payload: unknown = await response.json();
+  const kits = validatePayload({
+    schema: kitArrayResponseSchema,
+    payload,
+    errorCode: KIT_REPOSITORY_ERROR_CODE.INVALID_KITS_PAYLOAD,
+    errorMessage: 'Le format des kits recus est invalide.',
+  });
+
+  return kits.map(toDomain);
+};
+
+export const fetchKitById = async (
+  id: string,
+  signal?: AbortSignal,
+): Promise<Kit> => {
+  const response = await GET(`/api/kits/${encodeURIComponent(id)}`, signal);
+
+  if (!response.ok) {
+    throw new KitRepositoryError({
+      code: KIT_REPOSITORY_ERROR_CODE.FETCH_KIT_FAILED,
+      message: `Impossible de recuperer le kit ${id}.`,
+      status: response.status,
+    });
+  }
+
+  const payload: unknown = await response.json();
+  const kit = validatePayload({
+    schema: kitResponseDtoSchema,
+    payload,
+    errorCode: KIT_REPOSITORY_ERROR_CODE.INVALID_KIT_PAYLOAD,
+    errorMessage: `Le format du kit ${id} est invalide.`,
+  });
+
+  return toDomain(kit);
+};
