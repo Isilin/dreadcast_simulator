@@ -1,15 +1,15 @@
-import type { ImplantResponseDto } from './implant.dto';
+import type { ImplantResponseDto } from './implant.schema';
 import type { Implant } from '../model/implant.types';
 
 export const toDomain = (dto: ImplantResponseDto): Implant => ({
   name: dto.name,
-  levelMax: dto.valuePerLevel.length,
-  attributes: dto.attributes,
-  valuePerLevel: dto.valuePerLevel,
-});
-
-export const toDTO = (implant: Implant): ImplantResponseDto => ({
-  name: implant.name,
-  attributes: implant.attributes,
-  valuePerLevel: implant.valuePerLevel,
+  levelMax: dto.level_max,
+  attributes: dto.implant_attribute.map((item) => item.attribute),
+  valuePerLevel: Array.from({ length: dto.level_max }, (_, index) => {
+    const level = index + 1;
+    const valueForLevel = dto.implant_value.find(
+      (item) => item.level === level,
+    );
+    return valueForLevel?.value ?? 0;
+  }),
 });
