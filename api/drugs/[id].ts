@@ -4,7 +4,9 @@ import { DRUG_SELECT_QUERY, typeDrug } from '../../lib/drug.api.ts';
 import {
   doCreateClient,
   handleError,
-  setCacheHeaders,
+  handleSupabaseError,
+  requireStringParam,
+  sendJson,
 } from '../../lib/helper.api.ts';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -12,11 +14,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { id } = req.query;
-
-  if (!id || typeof id !== 'string') {
-    return res.status(400).json({ error: 'Drug ID is required' });
-  }
+  const id = requireStringParam(req.query.id, res, 'Drug ID is required');
+  if (!id) return;
 
   try {
     const supabase = doCreateClient();
@@ -26,12 +25,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .eq('id', id)
       .single();
 
-    if (error) {
-      if (error.code === 'PGRST116') {
-        return res.status(404).json({ error: 'Drug not found' });
-      }
-      return res.status(500).json({ error: error.message });
-    }
+    if (error) return handleSupabaseError(res, error, 'Drug not found');
 
     const typedDrug = typeDrug(drug);
 
@@ -39,8 +33,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(404).json({ error: 'Drug not found' });
     }
 
-    setCacheHeaders(res);
-    return res.status(200).json(typedDrug);
+    return sendJson(res, typedDrug);
   } catch (error) {
     return handleError(res, error);
   }

@@ -1,10 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import {
-  doCreateClient,
-  handleError,
-  setCacheHeaders,
-} from '../../lib/helper.api.ts';
+import { doCreateClient, handleError, sendJson } from '../../lib/helper.api.ts';
 import { RACE_SELECT_QUERY } from '../../lib/race.api.ts';
 import type { RaceResponseDto } from '../../lib/race.types.ts';
 
@@ -26,8 +22,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const typedRaces = (races as RaceResponseDto[]) || [];
 
-    setCacheHeaders(res);
-    return res.status(200).json(typedRaces);
+    return sendJson(res, typedRaces);
   } catch (error) {
     return handleError(res, error);
   }

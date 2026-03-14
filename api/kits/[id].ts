@@ -3,7 +3,9 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import {
   doCreateClient,
   handleError,
-  setCacheHeaders,
+  handleSupabaseError,
+  requireStringParam,
+  sendJson,
 } from '../../lib/helper.api.ts';
 import { KIT_SELECT_QUERY, typeKit } from '../../lib/kit.api.ts';
 
@@ -12,11 +14,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { id } = req.query;
-
-  if (!id || typeof id !== 'string') {
-    return res.status(400).json({ error: 'Kit ID is required' });
-  }
+  const id = requireStringParam(req.query.id, res, 'Kit ID is required');
+  if (!id) return;
 
   try {
     const supabase = doCreateClient();
@@ -26,12 +25,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .eq('id', id)
       .single();
 
-    if (error) {
-      if (error.code === 'PGRST116') {
-        return res.status(404).json({ error: 'Kit not found' });
-      }
-      return res.status(500).json({ error: error.message });
-    }
+    if (error) return handleSupabaseError(res, error, 'Kit not found');
 
     const typedKit = typeKit(kit);
 
@@ -39,8 +33,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(404).json({ error: 'Kit not found' });
     }
 
-    setCacheHeaders(res);
-    return res.status(200).json(typedKit);
+    return sendJson(res, typedKit);
   } catch (error) {
     return handleError(res, error);
   }

@@ -2,11 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 import { DRUG_SELECT_QUERY } from '../../lib/drug.api.ts';
 import type { DrugResponseDto } from '../../lib/drug.types.ts';
-import {
-  doCreateClient,
-  handleError,
-  setCacheHeaders,
-} from '../../lib/helper.api.ts';
+import { doCreateClient, handleError, sendJson } from '../../lib/helper.api.ts';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {
@@ -32,8 +28,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const typedDrugs = (drugs as DrugResponseDto[]) || [];
 
-    setCacheHeaders(res);
-    return res.status(200).json(typedDrugs);
+    return sendJson(res, typedDrugs);
   } catch (error) {
     return handleError(res, error);
   }

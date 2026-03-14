@@ -3,7 +3,9 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import {
   doCreateClient,
   handleError,
-  setCacheHeaders,
+  handleSupabaseError,
+  requireStringParam,
+  sendJson,
 } from '../../lib/helper.api.ts';
 import { IMPLANT_SELECT_QUERY, typeImplant } from '../../lib/implant.api.ts';
 
@@ -12,11 +14,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name } = req.query;
-
-  if (!name || typeof name !== 'string') {
-    return res.status(400).json({ error: 'Implant name is required' });
-  }
+  const name = requireStringParam(
+    req.query.name,
+    res,
+    'Implant name is required',
+  );
+  if (!name) return;
 
   try {
     const supabase = doCreateClient();
@@ -26,12 +29,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .eq('name', name)
       .single();
 
-    if (error) {
-      if (error.code === 'PGRST116') {
-        return res.status(404).json({ error: 'Implant not found' });
-      }
-      return res.status(500).json({ error: error.message });
-    }
+    if (error) return handleSupabaseError(res, error, 'Implant not found');
 
     const typedImplant = typeImplant(implant);
 
@@ -39,8 +37,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(404).json({ error: 'Implant not found' });
     }
 
-    setCacheHeaders(res);
-    return res.status(200).json(typedImplant);
+    return sendJson(res, typedImplant);
   } catch (error) {
     return handleError(res, error);
   }

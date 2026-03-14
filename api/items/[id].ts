@@ -3,7 +3,9 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import {
   doCreateClient,
   handleError,
-  setCacheHeaders,
+  handleSupabaseError,
+  requireStringParam,
+  sendJson,
 } from '../../lib/helper.api.ts';
 import { ITEM_SELECT_QUERY, typeItem } from '../../lib/item.api.ts';
 
@@ -12,11 +14,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { id } = req.query;
-
-  if (!id || typeof id !== 'string') {
-    return res.status(400).json({ error: 'Item ID is required' });
-  }
+  const id = requireStringParam(req.query.id, res, 'Item ID is required');
+  if (!id) return;
 
   try {
     const supabase = doCreateClient();
@@ -26,12 +25,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .eq('id', id)
       .single();
 
-    if (error) {
-      if (error.code === 'PGRST116') {
-        return res.status(404).json({ error: 'Item not found' });
-      }
-      return res.status(500).json({ error: error.message });
-    }
+    if (error) return handleSupabaseError(res, error, 'Item not found');
 
     const typedItem = typeItem(item);
 
@@ -39,8 +33,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(404).json({ error: 'Item not found' });
     }
 
-    setCacheHeaders(res);
-    return res.status(200).json(typedItem);
+    return sendJson(res, typedItem);
   } catch (error) {
     return handleError(res, error);
   }

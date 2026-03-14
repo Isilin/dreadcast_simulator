@@ -1,10 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import {
-  doCreateClient,
-  handleError,
-  setCacheHeaders,
-} from '../../lib/helper.api.ts';
+import { doCreateClient, handleError, sendJson } from '../../lib/helper.api.ts';
 import { KIT_SELECT_QUERY } from '../../lib/kit.api.ts';
 import type { KitResponseDto } from '../../lib/kit.types.ts';
 
@@ -39,8 +35,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const typedKits = (kits as KitResponseDto[]) || [];
 
-    setCacheHeaders(res);
-    return res.status(200).json(typedKits);
+    return sendJson(res, typedKits);
   } catch (error) {
     return handleError(res, error);
   }

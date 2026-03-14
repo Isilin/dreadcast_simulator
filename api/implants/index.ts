@@ -1,10 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import {
-  doCreateClient,
-  handleError,
-  setCacheHeaders,
-} from '../../lib/helper.api.ts';
+import { doCreateClient, handleError, sendJson } from '../../lib/helper.api.ts';
 import { IMPLANT_SELECT_QUERY } from '../../lib/implant.api.ts';
 import type { ImplantResponseDto } from '../../lib/implant.types.ts';
 
@@ -32,8 +28,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const typedImplants = (implants as ImplantResponseDto[]) || [];
 
-    setCacheHeaders(res);
-    return res.status(200).json(typedImplants);
+    return sendJson(res, typedImplants);
   } catch (error) {
     return handleError(res, error);
   }

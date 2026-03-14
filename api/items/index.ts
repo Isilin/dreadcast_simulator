@@ -1,10 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import {
-  doCreateClient,
-  handleError,
-  setCacheHeaders,
-} from '../../lib/helper.api.ts';
+import { doCreateClient, handleError, sendJson } from '../../lib/helper.api.ts';
 import { ITEM_SELECT_QUERY } from '../../lib/item.api.ts';
 import type { ItemResponseDto } from '../../lib/item.types.ts';
 
@@ -39,8 +35,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const typedItems = (items as ItemResponseDto[]) || [];
 
-    setCacheHeaders(res);
-    return res.status(200).json(typedItems);
+    return sendJson(res, typedItems);
   } catch (error) {
     return handleError(res, error);
   }
