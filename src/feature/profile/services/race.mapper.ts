@@ -1,5 +1,5 @@
 import type { Race } from '../model';
-import type { RaceResponseDto } from './race.dto';
+import type { RaceResponseDto } from './race.schema';
 
 export const toDomain = (race: RaceResponseDto): Race => ({
   type: race.type,
@@ -13,18 +13,4 @@ export const toDomain = (race: RaceResponseDto): Race => ({
   engineering: race.engineering,
   health: race.health,
   stamina: race.stamina,
-});
-
-export const toDTO = (race: Race): RaceResponseDto => ({
-  type: race.type,
-  strength: race.strength ?? 0,
-  agility: race.agility ?? 0,
-  robustness: race.robustness ?? 0,
-  perception: race.perception ?? 0,
-  stealth: race.stealth ?? 0,
-  computing: race.computing ?? 0,
-  medicine: race.medicine ?? 0,
-  engineering: race.engineering ?? 0,
-  health: race.health ?? 0,
-  stamina: race.stamina ?? 0,
 });

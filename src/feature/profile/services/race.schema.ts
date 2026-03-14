@@ -27,3 +27,5 @@ export const raceResponseDtoSchema = z.object({
 });
 
 export const raceArrayResponseSchema = z.array(raceResponseDtoSchema);
+
+export type RaceResponseDto = z.infer<typeof raceResponseDtoSchema>;

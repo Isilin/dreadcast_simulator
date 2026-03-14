@@ -1,19 +1,54 @@
 import type { Race } from '../model';
-import { fetchRacesMock } from './race.repo.mock';
+import { RACE_REPOSITORY_ERROR_CODE, RaceRepositoryError } from './race.errors';
+import { toDomain } from './race.mapper';
+import { raceArrayResponseSchema, raceResponseDtoSchema } from './race.schema';
 
-import { USE_MOCK } from '@/utils/use-mock';
+import { GET } from '@/utils/http';
+import { validatePayload } from '@/utils/validation';
 
-export async function fetchRaces(): Promise<Race[]> {
-  if (USE_MOCK) {
-    return fetchRacesMock();
+export const fetchRaces = async (signal?: AbortSignal): Promise<Race[]> => {
+  const response = await GET('/api/races', signal);
+
+  if (!response.ok) {
+    throw new RaceRepositoryError({
+      code: RACE_REPOSITORY_ERROR_CODE.FETCH_RACES_FAILED,
+      message: 'Impossible de recuperer la liste des races.',
+      status: response.status,
+    });
   }
 
-  // Version “réelle” (plus tard)
-  // const json = await api.get('races').json();
-  // const validated = raceArraySchema.parse(json);
-  // return validated.map(toDomain);
+  const payload: unknown = await response.json();
+  const races = validatePayload({
+    schema: raceArrayResponseSchema,
+    payload,
+    errorCode: RACE_REPOSITORY_ERROR_CODE.INVALID_RACES_PAYLOAD,
+    errorMessage: 'Le format des races recues est invalide.',
+  });
 
-  // Pour l’instant, on renvoie le mock par défaut
+  return races.map(toDomain);
+};
 
-  return fetchRacesMock();
-}
+export const fetchRaceByType = async (
+  type: string,
+  signal?: AbortSignal,
+): Promise<Race> => {
+  const response = await GET(`/api/races/${encodeURIComponent(type)}`, signal);
+
+  if (!response.ok) {
+    throw new RaceRepositoryError({
+      code: RACE_REPOSITORY_ERROR_CODE.FETCH_RACE_FAILED,
+      message: `Impossible de recuperer la race ${type}.`,
+      status: response.status,
+    });
+  }
+
+  const payload: unknown = await response.json();
+  const race = validatePayload({
+    schema: raceResponseDtoSchema,
+    payload,
+    errorCode: RACE_REPOSITORY_ERROR_CODE.INVALID_RACE_PAYLOAD,
+    errorMessage: `Le format de la race ${type} est invalide.`,
+  });
+
+  return toDomain(race);
+};
