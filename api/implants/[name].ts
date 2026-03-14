@@ -1,46 +1,46 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import { DRUG_SELECT_QUERY, typeDrug } from '../../lib/drug.api.ts';
 import {
   doCreateClient,
   handleError,
   setCacheHeaders,
 } from '../../lib/helper.api.ts';
+import { IMPLANT_SELECT_QUERY, typeImplant } from '../../lib/implant.api.ts';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { id } = req.query;
+  const { name } = req.query;
 
-  if (!id || typeof id !== 'string') {
-    return res.status(400).json({ error: 'Drug ID is required' });
+  if (!name || typeof name !== 'string') {
+    return res.status(400).json({ error: 'Implant name is required' });
   }
 
   try {
     const supabase = doCreateClient();
-    const { data: drug, error } = await supabase
-      .from('drug')
-      .select(DRUG_SELECT_QUERY)
-      .eq('id', id)
+    const { data: implant, error } = await supabase
+      .from('implant')
+      .select(IMPLANT_SELECT_QUERY)
+      .eq('name', name)
       .single();
 
     if (error) {
       if (error.code === 'PGRST116') {
-        return res.status(404).json({ error: 'Drug not found' });
+        return res.status(404).json({ error: 'Implant not found' });
       }
       return res.status(500).json({ error: error.message });
     }
 
-    const typedDrug = typeDrug(drug);
+    const typedImplant = typeImplant(implant);
 
-    if (!typedDrug) {
-      return res.status(404).json({ error: 'Drug not found' });
+    if (!typedImplant) {
+      return res.status(404).json({ error: 'Implant not found' });
     }
 
     setCacheHeaders(res);
-    return res.status(200).json(typedDrug);
+    return res.status(200).json(typedImplant);
   } catch (error) {
     return handleError(res, error);
   }

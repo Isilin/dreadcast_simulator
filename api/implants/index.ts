@@ -1,12 +1,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import { DRUG_SELECT_QUERY } from '../../lib/drug.api.ts';
-import type { DrugResponseDto } from '../../lib/drug.types.ts';
 import {
   doCreateClient,
   handleError,
   setCacheHeaders,
 } from '../../lib/helper.api.ts';
+import { IMPLANT_SELECT_QUERY } from '../../lib/implant.api.ts';
+import type { ImplantResponseDto } from '../../lib/implant.types.ts';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {
@@ -16,13 +16,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const supabase = doCreateClient();
     const query = req.query.query as string | undefined;
-    let drugsQuery = supabase.from('drug').select(DRUG_SELECT_QUERY);
+    let implantQuery = supabase.from('implant').select(IMPLANT_SELECT_QUERY);
 
     if (query && query.trim()) {
-      drugsQuery = drugsQuery.ilike('name', `%${query}%`);
+      implantQuery = implantQuery.ilike('name', `%${query}%`);
     }
 
-    const { data: drugs, error } = await drugsQuery.order('id', {
+    const { data: implants, error } = await implantQuery.order('name', {
       ascending: true,
     });
 
@@ -30,10 +30,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: error.message });
     }
 
-    const typedDrugs = (drugs as DrugResponseDto[]) || [];
+    const typedImplants = (implants as ImplantResponseDto[]) || [];
 
     setCacheHeaders(res);
-    return res.status(200).json(typedDrugs);
+    return res.status(200).json(typedImplants);
   } catch (error) {
     return handleError(res, error);
   }
