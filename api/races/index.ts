@@ -1,6 +1,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import { doCreateClient, handleError, sendJson } from '../../lib/helper.api.js';
+import {
+  doCreateClient,
+  getOptionalStringParam,
+  handleError,
+  handleSupabaseError,
+  sendJson,
+} from '../../lib/helper.api.js';
 import { RACE_SELECT_QUERY } from '../../lib/race.api.js';
 import type { RaceResponseDto } from '../../lib/race.types.js';
 
@@ -11,6 +17,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const supabase = doCreateClient();
+    const type = getOptionalStringParam(req.query.type);
+
+    if (type) {
+      const { data: race, error } = await supabase
+        .from('race')
+        .select(RACE_SELECT_QUERY)
+        .eq('type', type)
+        .single();
+
+      if (error) {
+        return handleSupabaseError(res, error, 'Race not found');
+      }
+
+      return sendJson(res, race as RaceResponseDto);
+    }
+
     const { data: races, error } = await supabase
       .from('race')
       .select(RACE_SELECT_QUERY)

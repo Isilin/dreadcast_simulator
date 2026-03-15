@@ -32,7 +32,10 @@ export const fetchRaceByType = async (
   type: string,
   signal?: AbortSignal,
 ): Promise<Race> => {
-  const response = await GET(`/api/races/${encodeURIComponent(type)}`, signal);
+  const response = await GET(
+    `/api/races?type=${encodeURIComponent(type)}`,
+    signal,
+  );
 
   if (!response.ok) {
     throw new RaceRepositoryError({

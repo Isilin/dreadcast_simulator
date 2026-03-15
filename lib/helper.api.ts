@@ -86,3 +86,22 @@ export const requireStringParam = (
   }
   return param;
 };
+
+export const getOptionalStringParam = (
+  param: string | string[] | undefined,
+): string | undefined => {
+  if (typeof param === 'string') {
+    const value = param.trim();
+    return value.length > 0 ? value : undefined;
+  }
+
+  if (Array.isArray(param)) {
+    const firstValue = param.find(
+      (entry) => typeof entry === 'string' && entry.trim().length > 0,
+    );
+
+    return firstValue?.trim();
+  }
+
+  return undefined;
+};

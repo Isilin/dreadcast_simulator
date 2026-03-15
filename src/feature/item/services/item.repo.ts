@@ -41,7 +41,7 @@ export const fetchItemById = async (
   id: string,
   signal?: AbortSignal,
 ): Promise<Item> => {
-  const response = await GET(`/api/items/${encodeURIComponent(id)}`, signal);
+  const response = await GET(`/api/items?id=${encodeURIComponent(id)}`, signal);
 
   if (!response.ok) {
     throw new ItemRepositoryError({

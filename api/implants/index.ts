@@ -1,6 +1,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import { doCreateClient, handleError, sendJson } from '../../lib/helper.api.js';
+import {
+  doCreateClient,
+  getOptionalStringParam,
+  handleError,
+  handleSupabaseError,
+  sendJson,
+} from '../../lib/helper.api.js';
 import { IMPLANT_SELECT_QUERY } from '../../lib/implant.api.js';
 import type { ImplantResponseDto } from '../../lib/implant.types.js';
 
@@ -11,7 +17,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const supabase = doCreateClient();
-    const query = req.query.query as string | undefined;
+    const query = getOptionalStringParam(req.query.query);
+    const name = getOptionalStringParam(req.query.name);
+
+    if (name) {
+      const { data: implant, error } = await supabase
+        .from('implant')
+        .select(IMPLANT_SELECT_QUERY)
+        .eq('name', name)
+        .single();
+
+      if (error) {
+        return handleSupabaseError(res, error, 'Implant not found');
+      }
+
+      return sendJson(res, implant as ImplantResponseDto);
+    }
+
     let implantQuery = supabase.from('implant').select(IMPLANT_SELECT_QUERY);
 
     if (query && query.trim()) {

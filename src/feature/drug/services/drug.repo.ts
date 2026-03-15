@@ -38,7 +38,7 @@ export const fetchDrugById = async (
   id: string,
   signal?: AbortSignal,
 ): Promise<Drug> => {
-  const response = await GET(`/api/drugs/${id}`, signal);
+  const response = await GET(`/api/drugs?id=${encodeURIComponent(id)}`, signal);
 
   if (!response.ok) {
     throw new DrugRepositoryError({

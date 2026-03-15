@@ -45,7 +45,7 @@ export const fetchImplantByName = async (
   signal?: AbortSignal,
 ): Promise<Implant> => {
   const response = await GET(
-    `/api/implants/${encodeURIComponent(name)}`,
+    `/api/implants?name=${encodeURIComponent(name)}`,
     signal,
   );
 

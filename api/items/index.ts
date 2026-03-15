@@ -1,6 +1,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import { doCreateClient, handleError, sendJson } from '../../lib/helper.api.js';
+import {
+  doCreateClient,
+  getOptionalStringParam,
+  handleError,
+  handleSupabaseError,
+  sendJson,
+} from '../../lib/helper.api.js';
 import { ITEM_SELECT_QUERY } from '../../lib/item.api.js';
 import type { ItemResponseDto } from '../../lib/item.types.js';
 
@@ -11,8 +17,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const supabase = doCreateClient();
-    const query = req.query.query as string | undefined;
-    const typeParam = req.query.type as string | undefined;
+    const query = getOptionalStringParam(req.query.query);
+    const typeParam = getOptionalStringParam(req.query.type);
+    const id = getOptionalStringParam(req.query.id);
+
+    if (id) {
+      const { data: item, error } = await supabase
+        .from('item')
+        .select(ITEM_SELECT_QUERY)
+        .eq('id', id)
+        .single();
+
+      if (error) {
+        return handleSupabaseError(res, error, 'Item not found');
+      }
+
+      return sendJson(res, item as ItemResponseDto);
+    }
 
     let itemsQuery = supabase.from('item').select(ITEM_SELECT_QUERY);
 

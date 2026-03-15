@@ -44,7 +44,7 @@ export const fetchKitById = async (
   id: string,
   signal?: AbortSignal,
 ): Promise<Kit> => {
-  const response = await GET(`/api/kits/${encodeURIComponent(id)}`, signal);
+  const response = await GET(`/api/kits?id=${encodeURIComponent(id)}`, signal);
 
   if (!response.ok) {
     throw new KitRepositoryError({
