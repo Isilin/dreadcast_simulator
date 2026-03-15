@@ -8,8 +8,8 @@ export const Route = createRootRoute({
   component: () => (
     <AuthBootstrap>
       <ThemeProvider>
-        <AuthAccessButton />
         <ThemeToggle />
+        <AuthAccessButton />
         <Outlet />
       </ThemeProvider>
     </AuthBootstrap>

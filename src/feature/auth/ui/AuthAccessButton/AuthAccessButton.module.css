@@ -1,7 +1,7 @@
 .button {
   position: fixed;
   top: 16px;
-  right: 84px;
+  right: 16px;
   z-index: 1000;
   box-sizing: border-box;
   display: flex;
