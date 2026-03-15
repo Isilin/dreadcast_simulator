@@ -6,8 +6,8 @@ import {
   handleSupabaseError,
   requireStringParam,
   sendJson,
-} from '../../lib/helper.api';
-import { IMPLANT_SELECT_QUERY, typeImplant } from '../../lib/implant.api';
+} from '../../lib/helper.api.js';
+import { IMPLANT_SELECT_QUERY, typeImplant } from '../../lib/implant.api.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {

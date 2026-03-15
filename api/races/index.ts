@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import { doCreateClient, handleError, sendJson } from '../../lib/helper.api';
-import { RACE_SELECT_QUERY } from '../../lib/race.api';
-import type { RaceResponseDto } from '../../lib/race.types';
+import { doCreateClient, handleError, sendJson } from '../../lib/helper.api.js';
+import { RACE_SELECT_QUERY } from '../../lib/race.api.js';
+import type { RaceResponseDto } from '../../lib/race.types.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {

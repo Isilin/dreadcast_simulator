@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import { doCreateClient, handleError, sendJson } from '../../lib/helper.api';
-import { IMPLANT_SELECT_QUERY } from '../../lib/implant.api';
-import type { ImplantResponseDto } from '../../lib/implant.types';
+import { doCreateClient, handleError, sendJson } from '../../lib/helper.api.js';
+import { IMPLANT_SELECT_QUERY } from '../../lib/implant.api.js';
+import type { ImplantResponseDto } from '../../lib/implant.types.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {

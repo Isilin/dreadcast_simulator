@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
 
-import { doCreateClient, handleError } from '../../lib/helper.api';
+import { doCreateClient, handleError } from '../../lib/helper.api.js';
 
 const loginSchema = z.object({
   email: z.email(),

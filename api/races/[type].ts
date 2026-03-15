@@ -6,8 +6,8 @@ import {
   handleSupabaseError,
   requireStringParam,
   sendJson,
-} from '../../lib/helper.api';
-import { RACE_SELECT_QUERY, typeRace } from '../../lib/race.api';
+} from '../../lib/helper.api.js';
+import { RACE_SELECT_QUERY, typeRace } from '../../lib/race.api.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {

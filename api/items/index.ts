@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import { doCreateClient, handleError, sendJson } from '../../lib/helper.api';
-import { ITEM_SELECT_QUERY } from '../../lib/item.api';
-import type { ItemResponseDto } from '../../lib/item.types';
+import { doCreateClient, handleError, sendJson } from '../../lib/helper.api.js';
+import { ITEM_SELECT_QUERY } from '../../lib/item.api.js';
+import type { ItemResponseDto } from '../../lib/item.types.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {

@@ -6,8 +6,8 @@ import {
   handleSupabaseError,
   requireStringParam,
   sendJson,
-} from '../../lib/helper.api';
-import { KIT_SELECT_QUERY, typeKit } from '../../lib/kit.api';
+} from '../../lib/helper.api.js';
+import { KIT_SELECT_QUERY, typeKit } from '../../lib/kit.api.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {
