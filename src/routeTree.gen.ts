@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ConnexionRouteImport } from './routes/connexion'
+import { Route as AbonnementRouteImport } from './routes/abonnement'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ConnexionRoute = ConnexionRouteImport.update({
   id: '/connexion',
   path: '/connexion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AbonnementRoute = AbonnementRouteImport.update({
+  id: '/abonnement',
+  path: '/abonnement',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/abonnement': typeof AbonnementRoute
   '/connexion': typeof ConnexionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/abonnement': typeof AbonnementRoute
   '/connexion': typeof ConnexionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/abonnement': typeof AbonnementRoute
   '/connexion': typeof ConnexionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/connexion'
+  fullPaths: '/' | '/abonnement' | '/connexion'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/connexion'
-  id: '__root__' | '/' | '/connexion'
+  to: '/' | '/abonnement' | '/connexion'
+  id: '__root__' | '/' | '/abonnement' | '/connexion'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AbonnementRoute: typeof AbonnementRoute
   ConnexionRoute: typeof ConnexionRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/connexion'
       fullPath: '/connexion'
       preLoaderRoute: typeof ConnexionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/abonnement': {
+      id: '/abonnement'
+      path: '/abonnement'
+      fullPath: '/abonnement'
+      preLoaderRoute: typeof AbonnementRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AbonnementRoute: AbonnementRoute,
   ConnexionRoute: ConnexionRoute,
 }
 export const routeTree = rootRouteImport

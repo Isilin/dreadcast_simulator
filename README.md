@@ -44,6 +44,12 @@ Cette application est construite avec des technologies modernes et suit une arch
 - **Authentification**
   - Connexion via endpoint serverless `/api/auth/login` (utilisateur/email + mot de passe)
   - Redirection automatique vers la page de connexion si la session est absente
+  - Menu compte connecte avec acces a la page `abonnement` et deconnexion
+
+- **Abonnements**
+  - Page SaaS dediee aux plans: 1 an (50.000¢), 6 ans (250.000¢), 12 ans (450.000¢), Illimite (800.000¢)
+  - Enregistrement de chaque abonnement avec date de debut et date de fin
+  - API serverless `/api/subscriptions` securisee via jeton Supabase
 
 - **Données du jeu**
   - Basé sur les mécaniques officielles de Dreadcast

@@ -1,11 +1,44 @@
 import { createClient } from '@supabase/supabase-js';
-import type { VercelResponse } from '@vercel/node';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-export const doCreateClient = () =>
-  createClient(
-    process.env.SIMULATOR_SUPABASE_URL || '',
-    process.env.NEXT_PUBLIC_SIMULATOR_SUPABASE_ANON_KEY || '',
-  );
+const supabaseUrl =
+  process.env.SIMULATOR_SUPABASE_URL ||
+  process.env.NEXT_PUBLIC_SIMULATOR_SUPABASE_URL ||
+  '';
+const supabaseAnonKey =
+  process.env.SIMULATOR_SUPABASE_ANON_KEY ||
+  process.env.NEXT_PUBLIC_SIMULATOR_SUPABASE_ANON_KEY ||
+  '';
+
+export const doCreateClient = () => createClient(supabaseUrl, supabaseAnonKey);
+
+export const doCreateClientWithAuth = (accessToken: string) =>
+  createClient(supabaseUrl, supabaseAnonKey, {
+    global: {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  });
+
+export const requireBearerToken = (
+  req: VercelRequest,
+  res: VercelResponse,
+): string | null => {
+  const authorizationHeader = req.headers.authorization;
+  if (!authorizationHeader) {
+    res.status(401).json({ error: 'Utilisateur non authentifie.' });
+    return null;
+  }
+
+  const [scheme, token] = authorizationHeader.split(' ');
+  if (scheme?.toLowerCase() !== 'bearer' || !token) {
+    res.status(401).json({ error: "Jeton d'authentification invalide." });
+    return null;
+  }
+
+  return token;
+};
 
 export const setCacheHeaders = (res: VercelResponse): void => {
   res.setHeader(

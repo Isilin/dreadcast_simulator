@@ -1,0 +1,137 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 6rem 1rem 2rem;
+  color: var(--text);
+}
+
+.hero {
+  margin-bottom: 2rem;
+}
+
+.overline {
+  display: inline-block;
+  margin: 0;
+  padding: 0.25rem 0.625rem;
+  border: 1px solid var(--card-bd);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.title {
+  margin: 0.75rem 0 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.subtitle {
+  margin: 0.75rem 0 0;
+  max-width: 70ch;
+  color: var(--color-gray-700);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.1rem;
+  border-radius: 0.9rem;
+  border: 1px solid var(--card-bd);
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(0, 180, 140, 0.18),
+      transparent 45%
+    ),
+    var(--card-bg);
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.cardPrice {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.cardMeta {
+  margin: 0;
+  color: var(--color-gray-700);
+}
+
+.cta {
+  border: 0;
+  border-radius: 0.65rem;
+  padding: 0.75rem 1rem;
+  background: var(--accent);
+  color: var(--color-gray-900);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cta:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.history {
+  margin-top: 2rem;
+  padding: 1.1rem;
+  border-radius: 0.9rem;
+  border: 1px solid var(--card-bd);
+  background: var(--card-bg);
+}
+
+.historyTitle {
+  margin: 0;
+}
+
+.activeBox {
+  display: grid;
+  gap: 0.25rem;
+  margin-top: 0.8rem;
+  padding: 0.8rem;
+  border-radius: 0.6rem;
+  background-color: rgba(0, 180, 140, 0.12);
+}
+
+.info {
+  margin: 0.8rem 0 0;
+}
+
+.error {
+  margin-top: 1rem;
+  color: var(--danger);
+}
+
+.list {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.listItem {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.65rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--card-bd);
+  background: var(--color-gray-100);
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding-top: 5.2rem;
+  }
+}

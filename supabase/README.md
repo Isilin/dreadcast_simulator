@@ -42,6 +42,11 @@ Les schémas doivent être exécutés dans l'ordre pour respecter les dépendanc
 -- Tables Kit
 013_table_kit.sql                -- Table des kits
 014_table_kit_effect.sql         -- Effets des kits sur les stats
+
+-- Tables Abonnement
+015_table_subscription.sql       -- Abonnements utilisateur relies a auth.users
+016_table_subscription_plan.sql  -- Plans abonnement dynamiques
+017_subscription_plan_fk.sql     -- Cle etrangere subscription.plan_code -> subscription_plan.code
 ```
 
 ### 2. Seeds (dans l'ordre numérique)
@@ -74,19 +79,22 @@ Les seeds peuvent être exécutés après les schémas :
 014_seed_kits_feet.sql           -- 32 kits de pieds
 015_seed_kits_secondary.sql      -- 32 kits secondaires
 016_seed_kits_weapons.sql        -- 40 kits d'armes
+
+-- Plans d'abonnement
+017_seed_subscription_plans.sql  -- Plans d'abonnement dynamiques
 ```
 
 ## Statistiques
 
 ### Schemas
 
-- **14 fichiers** de schémas SQL
+- **17 fichiers** de schémas SQL
 - 3 enums (stat_property, item_type, race_type)
-- 11 tables avec indexes et RLS policies
+- 13 tables avec indexes et RLS policies
 
 ### Seeds
 
-- **16 fichiers** de seeds SQL
+- **17 fichiers** de seeds SQL
 - 13 drogues + modificateurs
 - 11 races
 - 30 implants + ~200 valeurs par niveau
