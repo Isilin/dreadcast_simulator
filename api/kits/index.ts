@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import { doCreateClient, handleError, sendJson } from '../../lib/helper.api.ts';
-import { KIT_SELECT_QUERY } from '../../lib/kit.api.ts';
-import type { KitResponseDto } from '../../lib/kit.types.ts';
+import { doCreateClient, handleError, sendJson } from '../../lib/helper.api';
+import { KIT_SELECT_QUERY } from '../../lib/kit.api';
+import type { KitResponseDto } from '../../lib/kit.types';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {

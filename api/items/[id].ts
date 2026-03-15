@@ -6,8 +6,8 @@ import {
   handleSupabaseError,
   requireStringParam,
   sendJson,
-} from '../../lib/helper.api.ts';
-import { ITEM_SELECT_QUERY, typeItem } from '../../lib/item.api.ts';
+} from '../../lib/helper.api';
+import { ITEM_SELECT_QUERY, typeItem } from '../../lib/item.api';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {

@@ -1,13 +1,13 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import { DRUG_SELECT_QUERY, typeDrug } from '../../lib/drug.api.ts';
+import { DRUG_SELECT_QUERY, typeDrug } from '../../lib/drug.api';
 import {
   doCreateClient,
   handleError,
   handleSupabaseError,
   requireStringParam,
   sendJson,
-} from '../../lib/helper.api.ts';
+} from '../../lib/helper.api';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {

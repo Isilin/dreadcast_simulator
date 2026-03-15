@@ -1,5 +1,5 @@
 import { useNavigate } from '@tanstack/react-router';
-import { useState, type FormEvent } from 'react';
+import { useState, type SubmitEvent } from 'react';
 
 import styles from './LoginForm.module.css';
 
@@ -19,7 +19,7 @@ export const LoginForm = () => {
 
   const authConfigured = isAuthConfigured();
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const emailValue = email.trim();
