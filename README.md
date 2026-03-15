@@ -41,6 +41,10 @@ Cette application est construite avec des technologies modernes et suit une arch
   - Validation automatique des prérequis
   - Interface intuitive avec aperçu des modifications
 
+- **Authentification**
+  - Connexion via endpoint serverless `/api/auth/login` (utilisateur/email + mot de passe)
+  - Redirection automatique vers la page de connexion si la session est absente
+
 - **Données du jeu**
   - Basé sur les mécaniques officielles de Dreadcast
   - Implants, équipements et kits à jour
@@ -74,6 +78,26 @@ yarn dev
 ```
 
 Ouvrez [http://localhost:5173](http://localhost:5173) dans votre navigateur.
+
+### Variables d'environnement (auth Supabase)
+
+Le frontend accepte maintenant l'un des deux formats ci-dessous dans `.env.local`.
+
+Format Vite :
+
+```bash
+VITE_SUPABASE_URL=https://votre-projet.supabase.co
+VITE_SUPABASE_ANON_KEY=votre_cle_anon
+```
+
+Format Vercel/NEXT_PUBLIC (déjà présent sur ton projet) :
+
+```bash
+NEXT_PUBLIC_SIMULATOR_SUPABASE_URL=https://votre-projet.supabase.co
+NEXT_PUBLIC_SIMULATOR_SUPABASE_ANON_KEY=votre_cle_anon
+```
+
+Sans ces variables, la page de connexion s'affichera mais la connexion sera désactivée.
 
 ### Option 3: Environnement de développement
 
