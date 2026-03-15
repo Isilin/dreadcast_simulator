@@ -1,1 +1,1 @@
-export { SlotPair } from './SlotPair';
+export * from './SlotPair';
