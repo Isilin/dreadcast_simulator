@@ -127,6 +127,8 @@ yarn dev
 ### Stack technologique
 
 - **Frontend**: React 19 + TypeScript pour une expérience utilisateur moderne
+- **Backend**: NestJS 11 + TypeScript avec Fastify pour une API REST performante
+- **Base de données**: Supabase (PostgreSQL) via le client `@supabase/supabase-js`
 - **Routage**: TanStack Router pour la navigation côté client
 - **Gestion d'état**: TanStack Query + Architecture reducer/context personnalisée
 - **Styling**: CSS Modules avec variables CSS pour le theming
@@ -138,15 +140,29 @@ yarn dev
 Le projet suit une architecture **feature-sliced design** pour une organisation claire :
 
 ```text
-src/
-├── domain/          # Types partagés (Stat, ItemSpot, etc.)
-├── feature/         # Fonctionnalités métier
-│   ├── implant/     # Gestion des implants
-│   ├── item/        # Gestion des équipements
-│   ├── kit/         # Gestion des kits
-│   └── profile/     # Profil du personnage
-├── ui/              # Composants réutilisables
-└── styles/          # Styles globaux et thème
+src/                       # Frontend React
+├── domain/                # Types partagés (Stat, ItemSpot, etc.)
+├── feature/               # Fonctionnalités métier
+│   ├── implant/           # Gestion des implants
+│   ├── item/              # Gestion des équipements
+│   ├── kit/               # Gestion des kits
+│   └── profile/           # Profil du personnage
+├── ui/                    # Composants réutilisables
+└── styles/                # Styles globaux et thème
+
+backend/                   # Backend NestJS
+└── src/
+    ├── main.ts            # Point d'entrée (Fastify)
+    ├── app.module.ts      # Module racine
+    ├── supabase/          # Service Supabase partagé (global)
+    ├── implants/          # GET /api/implants
+    ├── items/             # GET /api/items
+    ├── kits/              # GET /api/kits
+    ├── drugs/             # GET /api/drugs
+    ├── races/             # GET /api/races
+    ├── auth/              # POST /api/auth/login
+    ├── subscriptions/     # GET/POST /api/subscriptions
+    └── subscription-plans/# GET /api/subscription-plans
 ```
 
 Chaque fonctionnalité est organisée selon le pattern `model/services/ui` :
@@ -164,7 +180,45 @@ Chaque fonctionnalité est organisée selon le pattern `model/services/ui` :
 
 ## Développement
 
-### Scripts disponibles
+### Backend NestJS
+
+```bash
+# Dans le répertoire backend/
+cd backend
+npm install
+
+# Copier et configurer les variables d'environnement
+cp .env.example .env
+# Éditez .env avec vos clés Supabase
+
+npm run start:dev     # Serveur de développement (port 3000)
+npm run build         # Build de production
+npm run start:prod    # Démarrer en production
+```
+
+#### Endpoints API
+
+| Méthode | Endpoint                    | Auth requise | Description                    |
+| ------- | --------------------------- | ------------ | ------------------------------ |
+| GET     | `/api/implants`             | Non          | Liste/recherche d'implants     |
+| GET     | `/api/items`                | Non          | Liste/recherche d'items        |
+| GET     | `/api/kits`                 | Non          | Liste/recherche de kits        |
+| GET     | `/api/drugs`                | Non          | Liste/recherche de drogues     |
+| GET     | `/api/races`                | Non          | Liste des races                |
+| POST    | `/api/auth/login`           | Non          | Connexion (email + mot de passe)|
+| GET     | `/api/subscriptions`        | Bearer token | Abonnements de l'utilisateur   |
+| POST    | `/api/subscriptions`        | Bearer token | Créer un abonnement            |
+| GET     | `/api/subscription-plans`   | Bearer token | Plans d'abonnement disponibles |
+
+#### Variables d'environnement backend
+
+```bash
+SIMULATOR_SUPABASE_URL=https://votre-projet.supabase.co
+SIMULATOR_SUPABASE_ANON_KEY=votre_cle_anon
+PORT=3000  # optionnel, défaut 3000
+```
+
+### Scripts frontend disponibles
 
 ```bash
 yarn dev          # Serveur de développement (port 5173)
