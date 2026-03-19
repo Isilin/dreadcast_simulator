@@ -52,20 +52,9 @@
   position: absolute;
   bottom: var(--small-gap);
   right: var(--small-gap);
+  gap: var(--very-small-gap);
 }
 .techLabel {
   color: var(--muted);
   font: 700 12px/1 system-ui;
-}
-.techValue {
-  color: var(--accent);
-  font: 800 16px/1 system-ui;
-
-  &[data-tech-status='missing'],
-  &[data-tech-status='over'] {
-    color: var(--color-red);
-  }
-  &[data-tech-status='perfect'] {
-    color: var(--color-green);
-  }
 }

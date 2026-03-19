@@ -20,15 +20,6 @@ export const computeImplantsCount = (state: Record<string, number>): number =>
 export type ImplantsStatus = 'perfect' | 'error' | 'incomplete';
 
 /**
- * Computes the overall implants installation status
- */
-export const computeImplantsStatus = (count: number): ImplantsStatus => {
-  if (count === MAX_IMPLANTS) return 'perfect';
-  if (count > MAX_IMPLANTS) return 'error';
-  return 'incomplete';
-};
-
-/**
  * Checks if a specific implant is active
  */
 export const computeImplantStatus = (

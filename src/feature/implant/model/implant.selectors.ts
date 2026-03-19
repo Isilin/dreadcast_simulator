@@ -5,7 +5,6 @@ import {
   computeImplantStatus,
   computeImplantsCount,
   computeImplantsEffects,
-  computeImplantsStatus,
 } from './implant.rules';
 import { useImplantsState } from './implant.store';
 import type { ImplantName } from './implant.types';
@@ -13,11 +12,6 @@ import type { ImplantName } from './implant.types';
 export const useImplantsCount = () => {
   const state = useImplantsState();
   return useMemo(() => computeImplantsCount(state), [state]);
-};
-
-export const useImplantsStatus = () => {
-  const count = useImplantsCount();
-  return useMemo(() => computeImplantsStatus(count), [count]);
 };
 
 export const useImplantStatus = (name: ImplantName) => {

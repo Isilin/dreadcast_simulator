@@ -11,6 +11,7 @@ export * from './Popin';
 export * from './Sidebar';
 export * from './SlotPair';
 export * from './Spinner';
+export * from './StatusCounterBadge';
 export * from './TechBadge';
 export * from './ThemeToggle';
 export * from './UiImage';

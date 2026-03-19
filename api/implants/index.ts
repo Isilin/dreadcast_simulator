@@ -40,7 +40,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       implantQuery = implantQuery.ilike('name', `%${query}%`);
     }
 
-    const { data: implants, error } = await implantQuery.order('name', {
+    const { data: implants, error } = await implantQuery.order('id', {
       ascending: true,
     });
 

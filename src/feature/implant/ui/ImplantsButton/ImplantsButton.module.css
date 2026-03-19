@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--small-gap);
+  gap: var(--very-small-gap);
   height: 2.5rem;
   width: 200px;
   padding: 0 0.875rem;

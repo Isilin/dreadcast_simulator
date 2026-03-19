@@ -1,0 +1,20 @@
+.badge {
+  color: var(--accent);
+  font: 600 16px/1 system-ui;
+
+  &[data-status='error'] {
+    color: var(--color-red);
+  }
+
+  &[data-status='info'] {
+    color: var(--color-green);
+  }
+
+  &[data-status='warning'] {
+    color: var(--color-orange);
+  }
+
+  &[data-status='default'] {
+    color: var(--color-blue);
+  }
+}

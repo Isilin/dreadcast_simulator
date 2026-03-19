@@ -8,6 +8,7 @@ import styles from './KitSelector.module.css';
 import { StatValues, type ItemSpot, type Stat } from '@/domain';
 import { useItemsState } from '@/feature/item';
 import { Card, EffectChip } from '@/ui';
+import { StatusCounterBadge } from '@/ui/StatusCounterBadge';
 
 interface Props {
   spot: ItemSpot;
@@ -79,9 +80,11 @@ export const KitSelector = memo(({ spot }: Props) => {
             </div>
             <div className={styles.footer}>
               <span className={styles.techLabel}>Tech :</span>
-              <span className={styles.techValue} data-tech-status={techStatus}>
-                {techTotal}
-              </span>
+              <StatusCounterBadge
+                value={techTotal}
+                maxValue={limitTech}
+                variant="invoice"
+              />
             </div>
           </Card>
         )}

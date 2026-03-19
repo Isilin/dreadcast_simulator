@@ -1,18 +1,21 @@
-import { useImplants } from '../../services';
-import { ImplantsCounter } from '../ImplantsCounter';
-import { ImplantSelector } from '../ImplantSelector';
+import { MAX_IMPLANTS, useImplantsCount } from '../..';
 import { ImplantsListSkeleton } from './ImplantsListSkeleton';
+import { useImplants } from '../../services';
+import { ImplantSelector } from '../ImplantSelector';
 
 import { Modal } from '@/ui';
+import { StatusCounterBadge } from '@/ui/StatusCounterBadge';
 
 export const ImplantsDialog = () => {
   const { data: implants, status, error } = useImplants();
+  const implantsCount = useImplantsCount();
 
   return (
     <Modal>
       <Modal.Header>
         <Modal.Title>
-          Choisissez vos implants <ImplantsCounter />
+          Choisissez vos implants{' '}
+          <StatusCounterBadge value={implantsCount} maxValue={MAX_IMPLANTS} />
         </Modal.Title>
       </Modal.Header>
       <Modal.Content>
