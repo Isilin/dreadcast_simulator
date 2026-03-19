@@ -157,8 +157,11 @@ src/                       # Frontend React
 └── styles/                # Styles globaux et thème
 
 backend/                   # Backend NestJS
+├── api/
+│   └── index.ts           # Point d'entrée Vercel (Express adapter)
+├── vercel.json            # Configuration de déploiement Vercel
 └── src/
-    ├── main.ts            # Point d'entrée (Fastify)
+    ├── main.ts            # Point d'entrée local (Fastify)
     ├── app.module.ts      # Module racine
     ├── supabase/          # Service Supabase partagé (global)
     ├── implants/          # GET /api/implants
@@ -200,6 +203,26 @@ cp .env.example .env
 npm run start:dev     # Serveur de développement (port 3000)
 npm run build         # Build de production
 npm run start:prod    # Démarrer en production
+```
+
+#### Déploiement sur Vercel (backend)
+
+Le backend possède sa propre configuration Vercel dans `backend/vercel.json`. Pour déployer :
+
+1. Créer un **nouveau projet Vercel** pointant sur le dossier `backend/` (ou sur le dépôt avec le "Root Directory" configuré à `backend`)
+2. Configurer les variables d'environnement dans l'interface Vercel :
+
+   ```
+   SIMULATOR_SUPABASE_URL = https://votre-projet.supabase.co
+   SIMULATOR_SUPABASE_ANON_KEY = votre_cle_anon
+   ```
+
+3. Vercel déploiera automatiquement via `backend/api/index.ts` (adaptateur Express + NestJS)
+
+Pour utiliser le backend déployé avec le frontend en développement local, ajoutez dans `.env.local` (à la racine du projet) :
+
+```bash
+VITE_API_URL=https://votre-backend.vercel.app
 ```
 
 #### Endpoints API

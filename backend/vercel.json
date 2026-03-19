@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "api/index.ts"
+    }
+  ],
+  "env": {
+    "SIMULATOR_SUPABASE_URL": "@simulator_supabase_url",
+    "SIMULATOR_SUPABASE_ANON_KEY": "@simulator_supabase_anon_key"
+  }
+}

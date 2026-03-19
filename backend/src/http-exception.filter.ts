@@ -5,13 +5,13 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { FastifyReply } from 'fastify';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const reply = ctx.getResponse<FastifyReply>();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const reply = ctx.getResponse<any>();
 
     if (exception instanceof HttpException) {
       const status = exception.getStatus();
