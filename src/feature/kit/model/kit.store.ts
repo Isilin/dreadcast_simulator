@@ -10,13 +10,19 @@ interface KitStore {
   addKit: (spot: ItemSpot, kit: Kit, force?: boolean) => void;
   setKit: (spot: ItemSpot, index: number, kit: Kit) => void;
   deleteKit: (spot: ItemSpot, index: number) => void;
+  resetKits: (spot: ItemSpot) => void;
   setKitNumber: (spot: ItemSpot, index: number, number: number) => void;
   replaceKits: (state: KitsState) => void;
 }
 
 export type KitsActions = Pick<
   KitStore,
-  'addKit' | 'setKit' | 'deleteKit' | 'setKitNumber' | 'replaceKits'
+  | 'addKit'
+  | 'setKit'
+  | 'deleteKit'
+  | 'resetKits'
+  | 'setKitNumber'
+  | 'replaceKits'
 >;
 
 export const initialState: KitsState = Object.fromEntries(
@@ -54,6 +60,7 @@ export const useKitStore = create<KitStore>((set) => ({
         kits: { ...s.kits, [spot]: slot.filter((_, i) => i !== index) },
       };
     }),
+  resetKits: (spot) => set((s) => ({ kits: { ...s.kits, [spot]: [] } })),
   setKitNumber: (spot, index, number) =>
     set((s) => {
       const slot = s.kits[spot];
@@ -72,6 +79,7 @@ export const useKitsActions = (): KitsActions =>
       addKit: s.addKit,
       setKit: s.setKit,
       deleteKit: s.deleteKit,
+      resetKits: s.resetKits,
       setKitNumber: s.setKitNumber,
       replaceKits: s.replaceKits,
     })),
