@@ -1,5 +1,6 @@
 import { Dialog } from '@base-ui/react';
 
+import { useItemsState } from '../../model';
 import type { Item, ItemType } from '../../model/item.types';
 import { useItems } from '../../services';
 import { ItemCard } from '../ItemCard';
@@ -9,11 +10,12 @@ import { Modal, Spinner } from '@/ui';
 interface Props {
   type?: ItemType[];
   onItemSelect: (item: Item) => void;
+  selected: Item | null;
 }
 
 // TODO : allow to deselect item
 // TODO : remove kits on deselect
-export const ItemDialogSelector = ({ onItemSelect, type }: Props) => {
+export const ItemDialogSelector = ({ onItemSelect, type, selected }: Props) => {
   const { data: items, status, error } = useItems(type);
 
   return (
@@ -30,6 +32,7 @@ export const ItemDialogSelector = ({ onItemSelect, type }: Props) => {
               key={item.id}
               item={item}
               onClick={() => onItemSelect(item)}
+              selected={selected?.id === item.id}
             />
           ))}
       </Modal.Content>

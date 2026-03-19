@@ -1,8 +1,11 @@
 :root {
   --color-blue: oklch(69% 50% 264deg);
+  --color-blue-light: oklch(72.657% 0.14154 262.142 / 0.158);
   --color-red-dark: rgba(255, 0, 0, 0.12);
   --color-red: oklch(80% 55% 31deg);
+  --color-red-light: oklch(77.867% 0.12433 32.099 / 0.158);
   --color-orange: oklch(78% 53% 70deg);
+  --color-orange-light: oklch(77.194% 0.17376 64.545 / 0.158);
   --color-green: oklch(72% 48% 150deg);
   --color-cyan: #00d4ff;
   --color-cyan-light: rgba(0, 212, 255, 0.2);
@@ -57,9 +60,12 @@
 /* Light theme palette */
 :root[data-theme='light'] {
   --color-blue: oklch(50% 48% 264deg);
+  --color-blue-light: oklch(50% 48% 264deg / 0.158);
   --color-red-dark: rgba(220, 38, 38, 0.12);
   --color-red: oklch(62% 52% 31deg);
+  --color-red-light: oklch(62% 52% 31deg / 0.158);
   --color-orange: oklch(64% 50% 70deg);
+  --color-orange-light: oklch(64% 50% 70deg / 0.158);
   --color-green: oklch(54% 44% 150deg);
   --color-cyan: #0369a1;
   --color-cyan-light: rgba(3, 105, 161, 0.12);

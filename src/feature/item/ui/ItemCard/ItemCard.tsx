@@ -1,7 +1,7 @@
+import styles from './ItemCard.module.css';
 import { itemPrerequisitesMet } from '../../model/item.rules';
 import type { Item } from '../../model/item.types';
 import { PrerequisitePopin } from '../PrerequisitePopin';
-import styles from './ItemCard.module.css';
 
 import { StatValues } from '@/domain';
 import { useImplantsEffects } from '@/feature/implant';
@@ -12,9 +12,15 @@ interface Props {
   item: Item;
   variant?: 'list' | 'slot';
   onClick?: () => void;
+  selected?: boolean;
 }
 
-export const ItemCard = ({ item, variant = 'list', onClick }: Props) => {
+export const ItemCard = ({
+  item,
+  variant = 'list',
+  onClick,
+  selected,
+}: Props) => {
   const raceStats = useRaceStats();
   const implantsEffects = useImplantsEffects();
   const prerequisitesOk = itemPrerequisitesMet(
@@ -33,11 +39,10 @@ export const ItemCard = ({ item, variant = 'list', onClick }: Props) => {
 
   return (
     <Card
-      className={`${styles.itemCard} ${styles[variant]}`}
-      data-invalid={!prerequisitesOk}
+      variant={variant}
+      state={prerequisitesOk ? (selected ? 'info' : 'default') : 'error'}
       onClick={onClick}
-      role="button"
-      aria-label={name}
+      label={name}
     >
       {!prerequisitesOk && prerequisites.length > 0 && (
         <PrerequisitePopin item={item} />

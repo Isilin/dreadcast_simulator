@@ -29,19 +29,24 @@ export const KitSelector = memo(({ spot }: Props) => {
 
   const techTotal = useMemo(() => limitTech - techCost, [limitTech, techCost]);
   const techStatus = useMemo(() => {
-    if (techTotal > 40) return 'missing';
-    if (techTotal < 0) return 'over';
-    if (techTotal === 0) return 'perfect';
-    return 'normal';
+    if (techTotal > 40) return 'warning';
+    if (techTotal < 0) return 'error';
+    if (techTotal === 0) return 'info';
+    return 'default';
   }, [techTotal]);
 
   return (
     <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
       <Dialog.Trigger className={styles.wrapper} disabled={isDisable}>
         {noKits ? (
-          <Card className={styles.card}>Choisir un kit</Card>
+          <Card
+            className={styles.card}
+            state={isDisable ? 'disable' : 'default'}
+          >
+            Choisir un kit
+          </Card>
         ) : (
-          <Card className={styles.content} data-tech-status={techStatus}>
+          <Card state={techStatus}>
             <div className={styles.names}>
               {kits?.map(
                 (k, i) =>

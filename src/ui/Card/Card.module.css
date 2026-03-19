@@ -1,7 +1,8 @@
 .card {
-  position: relative;
-  display: grid;
-  grid-template-rows: auto auto 1fr;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: var(--very-small-gap);
   padding: var(--small-gap);
   background-color: var(--color-gray-100);
@@ -26,4 +27,59 @@
   }
 
   composes: fadeInUp from '@/styles/animations.module.css';
+
+  &[data-state='error'] {
+    opacity: 0.85;
+    box-shadow: 0 12px 32px var(--color-red-light);
+    border-color: var(--color-red);
+  }
+
+  &[data-state='warning'] {
+    opacity: 0.85;
+    box-shadow: 0 12px 32px var(--color-orange-light);
+    border-color: var(--color-orange);
+  }
+
+  &[data-state='info'] {
+    opacity: 0.85;
+    box-shadow: 0 12px 32px var(--color-blue-light);
+    border-color: var(--color-blue);
+  }
+
+  &[data-state='disable'] {
+    background-color: oklch(20% 0.015 264 / 0.35);
+    border-color: oklch(24% 0.02 264 / 0.5);
+    color: oklch(80% 0 264 / 0.5);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  &[data-variant='slot'] {
+    width: 180px;
+    height: 180px;
+  }
+
+  &[data-variant='list'] {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .itemCard {
+    &.slot,
+    &.list {
+      min-height: 140px;
+    }
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+  .itemCard {
+    &.slot,
+    &.list {
+      height: 140px;
+    }
+  }
 }

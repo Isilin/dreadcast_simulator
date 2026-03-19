@@ -4,35 +4,6 @@
   overflow: visible;
   position: relative;
   width: fit-content;
-
-  &:disabled {
-    background-color: oklch(20% 0.015 264 / 0.35);
-    border-color: oklch(24% 0.02 264 / 0.5);
-    color: oklch(80% 0 264 / 0.5);
-    cursor: not-allowed;
-    pointer-events: none;
-    opacity: 0.6;
-  }
-}
-
-.card {
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  width: 180px;
-  height: 160px;
-}
-
-@media (max-width: 768px) {
-  .card {
-    min-height: 140px;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1199px) {
-  .card {
-    height: 140px;
-  }
 }
 
 .placeholder {
@@ -40,35 +11,6 @@
   justify-self: center;
   color: var(--muted);
   font-weight: 600;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 180px;
-  height: 160px;
-  gap: 8px;
-
-  &[data-tech-status='over'],
-  &[data-tech-status='missing'] {
-    opacity: 0.85;
-    box-shadow: 0 12px 32px oklch(62.793% 0.25768 29.223 / 0.158);
-    border-color: var(--color-red);
-  }
-}
-
-@media (max-width: 768px) {
-  .content {
-    min-height: 140px;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1199px) {
-  .content {
-    height: 140px;
-  }
 }
 
 .names {

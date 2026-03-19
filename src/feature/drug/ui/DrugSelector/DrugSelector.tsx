@@ -1,11 +1,9 @@
-import type { KeyboardEvent } from 'react';
-
 import styles from './DrugSelector.module.css';
 import { useDrugActions, useDrugId } from '../../model/drug.store';
 import type { Drug } from '../../model/drug.types';
 
 import { StatValues, type Stat } from '@/domain';
-import { EffectChip, UiImage } from '@/ui';
+import { Card, EffectChip, UiImage } from '@/ui';
 
 interface Props {
   drug: Drug;
@@ -20,23 +18,8 @@ export const DrugSelector = ({ drug }: Props) => {
     toggleDrug(drug.id);
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLLIElement>) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      handleClick();
-    }
-  };
-
   return (
-    <li
-      className={styles.card}
-      data-active={isActive || undefined}
-      onClick={handleClick}
-      role="checkbox"
-      aria-checked={isActive}
-      tabIndex={0}
-      onKeyDown={handleKeyDown}
-    >
+    <Card onClick={handleClick} state={isActive ? 'info' : 'default'}>
       <div className={styles.thumbWrapper}>
         <UiImage
           src={drug.image}
@@ -63,6 +46,6 @@ export const DrugSelector = ({ drug }: Props) => {
           </li>
         ))}
       </ul>
-    </li>
+    </Card>
   );
 };

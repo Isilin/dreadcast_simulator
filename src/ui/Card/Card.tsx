@@ -1,14 +1,38 @@
-import type { HTMLAttributes, PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
 import style from './Card.module.css';
 
+interface Props {
+  onClick?: () => void;
+  id?: string;
+  label?: string;
+  className?: string;
+  style?: React.CSSProperties;
+  state?: 'disable' | 'error' | 'warning' | 'default' | 'info';
+  variant?: 'slot' | 'list';
+}
+
 export const Card = ({
+  onClick,
+  id,
+  label,
+  className = '',
+  style: inlineStyle,
+  state = 'default',
+  variant = 'slot',
   children,
-  className,
-  ...others
-}: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
+}: PropsWithChildren<Props>) => {
   return (
-    <article className={`${style.card} ${className}`} {...others}>
+    <article
+      id={id}
+      aria-label={label}
+      className={`${style.card} ${className}`}
+      style={inlineStyle}
+      onClick={onClick}
+      role={onClick ? 'button' : undefined}
+      data-variant={variant}
+      data-state={state}
+    >
       {children}
     </article>
   );

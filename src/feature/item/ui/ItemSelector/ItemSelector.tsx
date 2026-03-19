@@ -35,6 +35,7 @@ export const ItemSelector = memo(({ spot }: Props) => {
       <ItemDialogSelector
         onItemSelect={onItemSelect}
         type={getItemTypes(spot)}
+        selected={items[spot]}
       />
     </Dialog.Root>
   );
