@@ -1,7 +1,11 @@
-import { Tooltip } from '@base-ui/react';
-import { type HTMLProps, type PropsWithChildren, type ReactNode } from 'react';
+import { type PropsWithChildren, type ReactNode } from 'react';
 
-import styles from './Popin.module.css';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { cn } from '@/lib/utils';
 
 interface Props {
   content: ReactNode;
@@ -16,19 +20,11 @@ export const Popin = ({
   className,
 }: PropsWithChildren<Props>) => {
   return (
-    <Tooltip.Root>
-      <Tooltip.Trigger
-        render={(props: HTMLProps<HTMLHeadingElement>) => (
-          <span {...{ ...props, className }}>{props.children}</span>
-        )}
-      >
-        {children}
-      </Tooltip.Trigger>
-      <Tooltip.Portal>
-        <Tooltip.Positioner sideOffset={10} side={placement}>
-          <Tooltip.Popup className={styles.content}>{content}</Tooltip.Popup>
-        </Tooltip.Positioner>
-      </Tooltip.Portal>
-    </Tooltip.Root>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span className={cn(className)}>{children}</span>
+      </TooltipTrigger>
+      <TooltipContent side={placement}>{content}</TooltipContent>
+    </Tooltip>
   );
 };

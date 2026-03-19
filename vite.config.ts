@@ -1,4 +1,5 @@
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 import { defineConfig } from 'vite';
@@ -7,6 +8,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
   plugins: [
+    tailwindcss(),
     tanstackRouter({
       target: 'react',
       autoCodeSplitting: true,

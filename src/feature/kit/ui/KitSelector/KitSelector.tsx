@@ -1,10 +1,10 @@
-import { Dialog } from '@base-ui/react';
 import { Fragment, memo, useMemo, useState } from 'react';
 
 import { useKitsOnSpot } from '../../model/kit.selectors';
 import { KitDialogSelector } from '../KitDialogSelector';
 import styles from './KitSelector.module.css';
 
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { StatValues, type ItemSpot, type Stat } from '@/domain';
 import { useItemsState } from '@/feature/item';
 import { Card, EffectChip } from '@/ui';
@@ -37,8 +37,8 @@ export const KitSelector = memo(({ spot }: Props) => {
   }, [techTotal]);
 
   return (
-    <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
-      <Dialog.Trigger className={styles.wrapper} disabled={isDisable}>
+    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+      <DialogTrigger className={styles.wrapper} disabled={isDisable}>
         {noKits ? (
           <Card
             className={styles.card}
@@ -88,8 +88,8 @@ export const KitSelector = memo(({ spot }: Props) => {
             </div>
           </Card>
         )}
-      </Dialog.Trigger>
+      </DialogTrigger>
       <KitDialogSelector spot={spot} />
-    </Dialog.Root>
+    </Dialog>
   );
 });

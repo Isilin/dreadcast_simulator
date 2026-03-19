@@ -1,8 +1,7 @@
-import { Tabs } from '@base-ui/react';
-
 import styles from './TabsBar.module.css';
 import { useBuildPersistence } from '../../model';
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useItems } from '@/feature/item';
 import { useKits } from '@/feature/kit';
 
@@ -16,32 +15,24 @@ export const TabsBar = () => {
   });
 
   return (
-    <Tabs.Root value={active} onValueChange={setActive} className={styles.root}>
-      <Tabs.List className={styles.tabList}>
+    <Tabs value={active} onValueChange={setActive} className={styles.root}>
+      <TabsList className={styles.tabList}>
         {slots.map((s) => (
-          <Tabs.Tab
-            key={s}
-            value={s}
-            className={
-              active === s
-                ? `${styles.tab} ${styles.active}`
-                : `${styles.tab} ${styles.inactive}`
-            }
-          >
+          <TabsTrigger key={s} value={s} className={styles.tab}>
             {s}
-          </Tabs.Tab>
+          </TabsTrigger>
         ))}
-      </Tabs.List>
+      </TabsList>
       {slots.map((s) => (
-        <Tabs.Panel key={s} value={s} className={styles.panel}>
+        <TabsContent key={s} value={s} className={styles.panel}>
           {builds[s]?.savedAt ? (
             new Date(builds[s].savedAt!).toLocaleString()
           ) : (
             <span style={{ opacity: 0.5 }}>Empty</span>
           )}
-        </Tabs.Panel>
+        </TabsContent>
       ))}
-    </Tabs.Root>
+    </Tabs>
   );
 };
 

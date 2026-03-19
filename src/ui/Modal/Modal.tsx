@@ -1,32 +1,34 @@
-import { Dialog } from '@base-ui/react';
 import type { PropsWithChildren } from 'react';
 
-import styles from './Modal.module.css';
+import { Button } from '@/components/ui/button';
+import {
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
-interface Props {}
-
-export const Modal = ({ children }: PropsWithChildren<Props>) => {
-  return (
-    <Dialog.Portal>
-      <Dialog.Backdrop className={styles.backdrop} />
-      <Dialog.Popup className={styles.popup}>{children}</Dialog.Popup>
-    </Dialog.Portal>
-  );
+export const Modal = ({ children }: PropsWithChildren) => {
+  return <DialogContent showCloseButton={false}>{children}</DialogContent>;
 };
 
 Modal.Close = () => (
-  <Dialog.Close className={styles.close}>Fermer</Dialog.Close>
+  <DialogClose asChild>
+    <Button variant="outline">Fermer</Button>
+  </DialogClose>
 );
-Modal.Description = Dialog.Description;
+Modal.Description = DialogDescription;
 Modal.Title = ({ children }: PropsWithChildren) => (
-  <Dialog.Title className={styles.title}>{children}</Dialog.Title>
+  <DialogTitle>{children}</DialogTitle>
 );
-Modal.Header = ({ children }: PropsWithChildren) => {
-  return <div className={styles.header}>{children}</div>;
-};
-Modal.Footer = ({ children }: PropsWithChildren) => {
-  return <div className={styles.footer}>{children}</div>;
-};
-Modal.Content = ({ children }: PropsWithChildren) => {
-  return <div className={styles.content}>{children}</div>;
-};
+Modal.Header = ({ children }: PropsWithChildren) => (
+  <DialogHeader>{children}</DialogHeader>
+);
+Modal.Footer = ({ children }: PropsWithChildren) => (
+  <DialogFooter>{children}</DialogFooter>
+);
+Modal.Content = ({ children }: PropsWithChildren) => (
+  <div className="overflow-y-auto max-h-[60vh]">{children}</div>
+);

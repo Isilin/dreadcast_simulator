@@ -1,4 +1,3 @@
-import { Tooltip } from '@base-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
@@ -9,6 +8,7 @@ import '@/styles/helpers.css';
 import '@/styles/theme.css';
 import './index.css';
 
+import { TooltipProvider } from './components/ui/tooltip';
 import { routeTree } from './routeTree.gen';
 import { ErrorBoundary } from './ui';
 
@@ -36,9 +36,9 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
-          <Tooltip.Provider>
+          <TooltipProvider>
             <RouterProvider router={router} />
-          </Tooltip.Provider>
+          </TooltipProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </ErrorBoundary>

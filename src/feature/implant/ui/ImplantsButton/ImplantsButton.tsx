@@ -1,4 +1,3 @@
-import { Dialog } from '@base-ui/react';
 import { useState } from 'react';
 
 import { MAX_IMPLANTS, useImplantsCount } from '../..';
@@ -18,6 +17,6 @@ export const ImplantsButton = () => {
         <StatusCounterBadge value={implantsCount} maxValue={MAX_IMPLANTS} />
       </Dialog.Trigger>
       <ImplantsDialog />
-    </Dialog.Root>
+    </Dialog>
   );
 };

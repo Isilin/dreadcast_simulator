@@ -1,4 +1,3 @@
-import { Dialog } from '@base-ui/react';
 import { memo, useState } from 'react';
 
 import { getItemTypes, useItemsActions, useItemsState } from '../../model';
@@ -7,6 +6,7 @@ import { ItemCard } from '../ItemCard';
 import { ItemDialogSelector } from '../ItemDialogSelector';
 import styles from './ItemSelector.module.css';
 
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { type ItemSpot } from '@/domain';
 import { useKitsActions } from '@/feature/kit';
 import { Card } from '@/ui';
@@ -30,19 +30,19 @@ export const ItemSelector = memo(({ spot }: Props) => {
     }
   };
   return (
-    <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
-      <Dialog.Trigger className={styles.wrapper}>
+    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+      <DialogTrigger className={styles.wrapper}>
         {items[spot] ? (
           <ItemCard item={items[spot]} variant="slot" />
         ) : (
           <Card className={styles.card}>Choisir un item</Card>
         )}
-      </Dialog.Trigger>
+      </DialogTrigger>
       <ItemDialogSelector
         onItemSelect={onItemSelect}
         type={getItemTypes(spot)}
         selected={items[spot]}
       />
-    </Dialog.Root>
+    </Dialog>
   );
 });

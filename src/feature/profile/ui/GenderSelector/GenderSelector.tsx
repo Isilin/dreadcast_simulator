@@ -1,36 +1,34 @@
-import { Field, Radio, RadioGroup } from '@base-ui/react';
-
-import styles from './GenderSelector.module.css';
 import { useProfileActions, useProfileState } from '../../model/profile.store';
 import type { Gender } from '../../model/profile.types';
+
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 export const GenderSelector = () => {
   const { gender } = useProfileState();
   const { setGender } = useProfileActions();
 
   return (
-    <Field.Root>
-      <Field.Label>Genre</Field.Label>
+    <div className="flex flex-col gap-1.5">
+      <Label>Genre</Label>
       <RadioGroup
-        defaultValue="male"
-        className={styles.RadioGroup}
         value={gender}
         onValueChange={(value) => setGender(value as Gender)}
+        className="flex gap-4"
       >
-        <label className={styles.Item}>
-          <Radio.Root value="male" className={styles.Radio}>
-            <Radio.Indicator className={styles.Indicator} />
-          </Radio.Root>
-          Male ♂
-        </label>
-
-        <label className={styles.Item}>
-          <Radio.Root value="female" className={styles.Radio}>
-            <Radio.Indicator className={styles.Indicator} />
-          </Radio.Root>
-          Femelle ♀
-        </label>
+        <div className="flex items-center gap-2">
+          <RadioGroupItem value="male" id="gender-male" />
+          <Label htmlFor="gender-male" className="cursor-pointer font-normal">
+            Male ♂
+          </Label>
+        </div>
+        <div className="flex items-center gap-2">
+          <RadioGroupItem value="female" id="gender-female" />
+          <Label htmlFor="gender-female" className="cursor-pointer font-normal">
+            Femelle ♀
+          </Label>
+        </div>
       </RadioGroup>
-    </Field.Root>
+    </div>
   );
 };

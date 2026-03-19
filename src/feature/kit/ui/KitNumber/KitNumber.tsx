@@ -1,8 +1,4 @@
-import { NumberField } from '@base-ui/react';
-
-import styles from './KitNumber.module.css';
-
-import { CursorGrowIcon, MinusIcon, PlusIcon } from '@/ui';
+import { NumberInput } from '@/components/ui/number-input';
 
 interface Props {
   value: number;
@@ -10,31 +6,5 @@ interface Props {
 }
 
 export const KitNumber = ({ value, onChange }: Props) => {
-  return (
-    <NumberField.Root
-      value={value}
-      onValueChange={(value) => onChange(value || 0)}
-      min={0}
-      className={styles.Field}
-    >
-      <NumberField.ScrubArea className={styles.ScrubArea}>
-        <NumberField.ScrubAreaCursor className={styles.ScrubAreaCursor}>
-          <CursorGrowIcon />
-        </NumberField.ScrubAreaCursor>
-      </NumberField.ScrubArea>
-
-      <NumberField.Group className={styles.Group}>
-        <NumberField.Decrement
-          className={styles.Decrement}
-          disabled={value <= 0}
-        >
-          <MinusIcon />
-        </NumberField.Decrement>
-        <NumberField.Input className={styles.Input} />
-        <NumberField.Increment className={styles.Increment}>
-          <PlusIcon />
-        </NumberField.Increment>
-      </NumberField.Group>
-    </NumberField.Root>
-  );
+  return <NumberInput value={value} onChange={onChange} min={0} />;
 };

@@ -1,3 +1,76 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted-bg);
+  --color-muted-foreground: var(--muted-fg);
+  --color-accent-ui: var(--accent-ui);
+  --color-accent-ui-foreground: var(--accent-ui-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: var(--font);
+  --font-mono: var(--font);
+}
+
+/* Shadcn semantic tokens — dark by default */
+:root {
+  --background: #111418;
+  --foreground: #e5e7eb;
+  --card: #111418;
+  --card-foreground: #e5e7eb;
+  --popover: #151922;
+  --popover-foreground: #e5e7eb;
+  --primary: #6c8cff;
+  --primary-foreground: #0f0f12;
+  --secondary: oklch(31% 3% 264deg / 80%);
+  --secondary-foreground: #e5e7eb;
+  --muted-bg: oklch(28% 3% 264deg / 65%);
+  --muted-fg: #9aa4b2;
+  --accent-ui: oklch(35% 3% 264deg / 80%);
+  --accent-ui-foreground: #e5e7eb;
+  --destructive: oklch(60% 55% 31deg);
+  --border: #1e2430;
+  --input: #1e2430;
+  --ring: #6c8cff;
+}
+
+/* Light theme override */
+:root[data-theme='light'] {
+  --background: #ffffff;
+  --foreground: #0f0f12;
+  --card: #ffffff;
+  --card-foreground: #0f0f12;
+  --popover: #ffffff;
+  --popover-foreground: #0f0f12;
+  --primary: #4f46e5;
+  --primary-foreground: #ffffff;
+  --secondary: oklch(85% 1.5% 264deg);
+  --secondary-foreground: #0f0f12;
+  --muted-bg: oklch(92% 1% 264deg);
+  --muted-fg: #757584;
+  --accent-ui: oklch(85% 1.5% 264deg);
+  --accent-ui-foreground: #0f0f12;
+  --destructive: oklch(57% 52% 31deg);
+  --border: #d0d0d8;
+  --input: #d0d0d8;
+  --ring: #4f46e5;
+}
+
 *,
 *::before,
 *::after {

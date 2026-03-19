@@ -1,62 +1,45 @@
-import { Field, Select } from '@base-ui/react';
-
-import styles from './RaceSelector.module.css';
 import { useProfileActions, useProfileState } from '../../model/profile.store';
 import type { RaceType } from '../../model/profile.types';
 import { useRaces } from '../../services';
 
-import { CheckIcon, ChevronUpDownIcon } from '@/ui';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 export const RaceSelector = () => {
   const { race } = useProfileState();
   const { setRace } = useProfileActions();
   const { data: races, status } = useRaces();
 
-  const raceItems = races?.map((r) => ({ label: r.type, value: r.type }));
-
-  const handleChange = (value: RaceType | null) => {
-    if (value === null) return;
-
-    const race = races?.find((r) => r.type === value);
-    if (race) setRace(race.type);
+  const handleChange = (value: string) => {
+    const found = races?.find((r) => r.type === value);
+    if (found) setRace(found.type as RaceType);
   };
 
   return (
-    <Field.Root>
-      <Field.Label>Race</Field.Label>
-      <Select.Root
-        items={raceItems}
+    <div className="flex flex-col gap-1.5">
+      <Label>Race</Label>
+      <Select
         value={race || 'Humain'}
         onValueChange={handleChange}
+        disabled={status === 'pending'}
       >
-        <Select.Trigger
-          className={styles.Select}
-          disabled={status === 'pending'}
-        >
-          <Select.Value />
-          <Select.Icon className={styles.SelectIcon}>
-            <ChevronUpDownIcon />
-          </Select.Icon>
-        </Select.Trigger>
-        <Select.Portal>
-          <Select.Positioner className={styles.Positioner} sideOffset={8}>
-            <Select.ScrollUpArrow className={styles.ScrollArrow} />
-            <Select.Popup className={styles.Popup}>
-              {raceItems?.map(({ label, value }) => (
-                <Select.Item key={label} value={value} className={styles.Item}>
-                  <Select.ItemIndicator className={styles.ItemIndicator}>
-                    <CheckIcon className={styles.ItemIndicatorIcon} />
-                  </Select.ItemIndicator>
-                  <Select.ItemText className={styles.ItemText}>
-                    {label}
-                  </Select.ItemText>
-                </Select.Item>
-              ))}
-            </Select.Popup>
-            <Select.ScrollDownArrow className={styles.ScrollArrow} />
-          </Select.Positioner>
-        </Select.Portal>
-      </Select.Root>
-    </Field.Root>
+        <SelectTrigger className="w-full">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {races?.map((r) => (
+            <SelectItem key={r.type} value={r.type}>
+              {r.type}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 };

@@ -1,4 +1,3 @@
-import { Dialog } from '@base-ui/react';
 import { useState } from 'react';
 
 import { useDrugId } from '../../model/drug.store';
@@ -18,6 +17,6 @@ export const DrugsButton = () => {
         <StatusCounterBadge value={selectedDrug ? 1 : 0} maxValue={1} />
       </Dialog.Trigger>
       <DrugsDialog />
-    </Dialog.Root>
+    </Dialog>
   );
 };

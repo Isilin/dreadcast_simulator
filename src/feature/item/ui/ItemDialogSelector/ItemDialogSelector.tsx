@@ -1,5 +1,3 @@
-import { Dialog } from '@base-ui/react';
-
 import type { Item, ItemType } from '../../model/item.types';
 import { useItems } from '../../services';
 import { ItemCard } from '../ItemCard';
@@ -18,7 +16,7 @@ export const ItemDialogSelector = ({ onItemSelect, type, selected }: Props) => {
   return (
     <Modal>
       <Modal.Header>
-        <Dialog.Title>Choisissez un item</Dialog.Title>
+        <Modal.Title>Choisissez un item</Modal.Title>
       </Modal.Header>
       <Modal.Content>
         {status === 'error' && <p>{error.message}</p>}

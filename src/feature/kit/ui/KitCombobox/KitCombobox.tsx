@@ -1,11 +1,14 @@
-import { Select } from '@base-ui/react';
-
 import { useKits, type Kit } from '../..';
 import { KitLabel } from '../KitLabel';
-import styles from './KitCombobox.module.css';
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import type { ItemType } from '@/feature/item';
-import { CheckIcon, ChevronUpDownIcon } from '@/ui';
 
 interface Props {
   type: ItemType[];
@@ -16,33 +19,25 @@ interface Props {
 export const KitCombobox = ({ type, kit, onChange }: Props) => {
   const { data } = useKits(type);
 
+  const handleValueChange = (value: string) => {
+    const found = data?.find((k) => String(k.id) === value) ?? null;
+    onChange(found);
+  };
+
   return (
-    <Select.Root value={kit} onValueChange={(k) => onChange(k)}>
-      <Select.Trigger className={styles.Select}>
-        <Select.Value>{(k) => <KitLabel kit={k} />}</Select.Value>
-        <Select.Icon className={styles.SelectIcon}>
-          <ChevronUpDownIcon />
-        </Select.Icon>
-      </Select.Trigger>
-      <Select.Portal>
-        <Select.Backdrop />
-        <Select.Positioner className={styles.Positioner} sideOffset={8}>
-          <Select.ScrollUpArrow className={styles.ScrollArrow} />
-          <Select.Popup className={styles.Popup}>
-            {data?.map((k) => (
-              <Select.Item key={k.id} value={k} className={styles.Item}>
-                <Select.ItemIndicator className={styles.ItemIndicator}>
-                  <CheckIcon className={styles.ItemIndicatorIcon} />
-                </Select.ItemIndicator>
-                <Select.ItemText className={styles.ItemText}>
-                  <KitLabel kit={k} />
-                </Select.ItemText>
-              </Select.Item>
-            ))}
-          </Select.Popup>
-          <Select.ScrollDownArrow className={styles.ScrollArrow} />
-        </Select.Positioner>
-      </Select.Portal>
-    </Select.Root>
+    <Select value={String(kit.id)} onValueChange={handleValueChange}>
+      <SelectTrigger className="w-full">
+        <SelectValue>
+          <KitLabel kit={kit} />
+        </SelectValue>
+      </SelectTrigger>
+      <SelectContent>
+        {data?.map((k) => (
+          <SelectItem key={k.id} value={String(k.id)}>
+            <KitLabel kit={k} />
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 };
