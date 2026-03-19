@@ -25,7 +25,7 @@ export class ImplantsService {
       dbQuery = dbQuery.ilike('name', `%${query}%`);
     }
 
-    const { data, error } = await dbQuery.order('name', { ascending: true });
+    const { data, error } = await dbQuery.order('id', { ascending: true });
 
     if (error) {
       throw new Error(error.message);

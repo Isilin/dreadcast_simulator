@@ -105,6 +105,12 @@ NEXT_PUBLIC_SIMULATOR_SUPABASE_ANON_KEY=votre_cle_anon
 
 Sans ces variables, la page de connexion s'affichera mais la connexion sera désactivée.
 
+Pour développer localement contre le backend NestJS au lieu de Vercel, ajoutez :
+
+```bash
+VITE_API_URL=http://localhost:3000
+```
+
 ### Option 3: Environnement de développement
 
 Pour les développeurs souhaitant contribuer :
