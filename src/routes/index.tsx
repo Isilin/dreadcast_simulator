@@ -9,8 +9,9 @@ import { IconBar, TabsBar } from '@/feature/persistence';
 import { GenderSelector, RaceSelector, Silhouette } from '@/feature/profile';
 import { Skills } from '@/feature/stats';
 import { Footer, Sidebar, SlotPair } from '@/ui';
+import Routes from '@/utils/routes';
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute(Routes.home)({
   component: RouteComponent,
 });
 

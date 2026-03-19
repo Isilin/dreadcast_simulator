@@ -1,13 +1,14 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
 import { LoginForm, requireAuthenticatedSession } from '@/feature/auth';
+import Routes from '@/utils/routes';
 
-export const Route = createFileRoute('/connexion')({
+export const Route = createFileRoute(Routes.connexion)({
   beforeLoad: async () => {
     const isAuthenticated = await requireAuthenticatedSession();
 
     if (isAuthenticated) {
-      throw redirect({ to: '/' });
+      throw redirect({ to: Routes.home });
     }
   },
   component: ConnexionPage,
