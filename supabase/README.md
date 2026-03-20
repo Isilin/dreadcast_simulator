@@ -86,6 +86,9 @@ Les seeds peuvent être exécutés après les schémas :
 
 -- Plans d'abonnement
 017_seed_subscription_plans.sql  -- Plans d'abonnement dynamiques
+
+-- MaJ v15
+018_seed_items_v15.sql          -- 1 item weapon de soin + 10 kits
 ```
 
 ## Statistiques
@@ -98,12 +101,12 @@ Les seeds peuvent être exécutés après les schémas :
 
 ### Seeds
 
-- **17 fichiers** de seeds SQL
+- **18 fichiers** de seeds SQL
 - 13 drogues + modificateurs
 - 11 races
 - 30 implants + ~200 valeurs par niveau
-- **405 items** au total (head: 58, chest: 94, legs: 58, feet: 33, secondary: 57, weapons: 105)
-- **200 kits** au total (32 par catégorie × 5 + 40 weapons)
+- **406 items** au total (head: 58, chest: 94, legs: 58, feet: 33, secondary: 57, weapons: 106)
+- **210 kits** au total (head: 34, chest: 34, legs: 34, feet: 34, secondary: 34, weapons: 40)
 
 ## Génération automatique
 
@@ -136,7 +139,8 @@ Indexes optimisés sur :
 
 - Clés étrangères
 - Colonnes de recherche fréquentes (type, tech, etc.)
-- Colonnes de tri- Unique constraints pour éviter les doublons
+- Colonnes de tri
+- Contraintes d'unicité pour éviter les doublons
 
 ## Utilisation avec Supabase
 
