@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
 
-import { doCreateClient, handleError } from '../../lib/helper.api.js';
-import type { SharedBuildResponseDto } from '../../lib/shared.types.js';
+import { doCreateClient, handleError } from '../../lib/helper.api.ts';
+import type { SharedBuildResponseDto } from '../../lib/shared.types.ts';
 
 const idSchema = z.uuid();
 
