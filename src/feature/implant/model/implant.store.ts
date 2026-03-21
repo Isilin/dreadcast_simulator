@@ -7,6 +7,8 @@ import {
   type ImplantsState,
 } from './implant.types';
 
+import { getBuildReadOnlyMode } from '@/utils/build-read-only';
+
 interface ImplantStore {
   implants: ImplantsState;
   setImplant: (name: ImplantName, level: number) => void;
@@ -26,12 +28,27 @@ export const initialState: ImplantsState = Object.fromEntries(
 
 export const useImplantStore = create<ImplantStore>((set) => ({
   implants: initialState,
-  setImplant: (name, level) =>
-    set((s) => ({ implants: { ...s.implants, [name]: level } })),
-  increaseImplant: (name) =>
-    set((s) => ({ implants: { ...s.implants, [name]: s.implants[name] + 1 } })),
-  decreaseImplant: (name) =>
-    set((s) => ({ implants: { ...s.implants, [name]: s.implants[name] - 1 } })),
+  setImplant: (name, level) => {
+    if (getBuildReadOnlyMode()) {
+      return;
+    }
+
+    set((s) => ({ implants: { ...s.implants, [name]: level } }));
+  },
+  increaseImplant: (name) => {
+    if (getBuildReadOnlyMode()) {
+      return;
+    }
+
+    set((s) => ({ implants: { ...s.implants, [name]: s.implants[name] + 1 } }));
+  },
+  decreaseImplant: (name) => {
+    if (getBuildReadOnlyMode()) {
+      return;
+    }
+
+    set((s) => ({ implants: { ...s.implants, [name]: s.implants[name] - 1 } }));
+  },
   replaceImplants: (implants) => set({ implants }),
 }));
 

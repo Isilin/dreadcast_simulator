@@ -3,6 +3,8 @@ import { useShallow } from 'zustand/react/shallow';
 
 import type { Gender, ProfileState, RaceType } from './profile.types';
 
+import { getBuildReadOnlyMode } from '@/utils/build-read-only';
+
 interface ProfileStore {
   profile: ProfileState;
   setGender: (gender: Gender) => void;
@@ -22,8 +24,20 @@ export const initialState: ProfileState = {
 
 export const useProfileStore = create<ProfileStore>((set) => ({
   profile: initialState,
-  setGender: (gender) => set((s) => ({ profile: { ...s.profile, gender } })),
-  setRace: (race) => set((s) => ({ profile: { ...s.profile, race } })),
+  setGender: (gender) => {
+    if (getBuildReadOnlyMode()) {
+      return;
+    }
+
+    set((s) => ({ profile: { ...s.profile, gender } }));
+  },
+  setRace: (race) => {
+    if (getBuildReadOnlyMode()) {
+      return;
+    }
+
+    set((s) => ({ profile: { ...s.profile, race } }));
+  },
   replaceProfile: (profile) => set({ profile }),
 }));
 

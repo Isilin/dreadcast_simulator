@@ -4,6 +4,7 @@ import { useShallow } from 'zustand/react/shallow';
 import type { Kit, KitSelection, KitsState } from './kit.types';
 
 import { ItemSpotValue, type ItemSpot } from '@/domain';
+import { getBuildReadOnlyMode } from '@/utils/build-read-only';
 
 interface KitStore {
   kits: KitsState;
@@ -31,7 +32,11 @@ export const initialState: KitsState = Object.fromEntries(
 
 export const useKitStore = create<KitStore>((set) => ({
   kits: initialState,
-  addKit: (spot, kit, force) =>
+  addKit: (spot, kit, force) => {
+    if (getBuildReadOnlyMode()) {
+      return;
+    }
+
     set((s) => {
       const slot = s.kits[spot];
       const existingIndex = slot.findIndex((k) => k.kit.id === kit.id);
@@ -44,30 +49,52 @@ export const useKitStore = create<KitStore>((set) => ({
         kits = [...slot, { kit, number: 1 }];
       }
       return { kits: { ...s.kits, [spot]: kits } };
-    }),
-  setKit: (spot, index, kit) =>
+    });
+  },
+  setKit: (spot, index, kit) => {
+    if (getBuildReadOnlyMode()) {
+      return;
+    }
+
     set((s) => {
       const slot = s.kits[spot];
       if (!slot || index < 0 || index >= slot.length) return s;
       const kits = slot.map((k, i) => (i === index ? { ...k, kit } : k));
       return { kits: { ...s.kits, [spot]: kits } };
-    }),
-  deleteKit: (spot, index) =>
+    });
+  },
+  deleteKit: (spot, index) => {
+    if (getBuildReadOnlyMode()) {
+      return;
+    }
+
     set((s) => {
       const slot = s.kits[spot];
       if (!slot || index < 0 || index >= slot.length) return s;
       return {
         kits: { ...s.kits, [spot]: slot.filter((_, i) => i !== index) },
       };
-    }),
-  resetKits: (spot) => set((s) => ({ kits: { ...s.kits, [spot]: [] } })),
-  setKitNumber: (spot, index, number) =>
+    });
+  },
+  resetKits: (spot) => {
+    if (getBuildReadOnlyMode()) {
+      return;
+    }
+
+    set((s) => ({ kits: { ...s.kits, [spot]: [] } }));
+  },
+  setKitNumber: (spot, index, number) => {
+    if (getBuildReadOnlyMode()) {
+      return;
+    }
+
     set((s) => {
       const slot = s.kits[spot];
       if (!slot || index < 0 || index >= slot.length) return s;
       const kits = slot.map((k, i) => (i === index ? { ...k, number } : k));
       return { kits: { ...s.kits, [spot]: kits } };
-    }),
+    });
+  },
   replaceKits: (kits) => set({ kits }),
 }));
 

@@ -24,16 +24,35 @@ const setNoStoreHeaders = (res: VercelResponse): void => {
 };
 
 interface BuildRow {
-  slot_index: number;
+  id: string;
+  user_id: string;
   snapshot: unknown;
   saved_at: string;
+  created_at: string;
 }
 
-const toResponseDto = (row: BuildRow): BuildResponseDto => ({
-  slot: row.slot_index,
+const toResponseDto = (row: BuildRow, slot: number): BuildResponseDto => ({
+  slot,
   snapshot: row.snapshot,
   saved_at: row.saved_at,
 });
+
+const fetchOrderedBuilds = async (
+  supabase: ReturnType<typeof doCreateClientWithAuth>,
+  userId: string,
+) => {
+  const { data, error } = await supabase
+    .from('build')
+    .select(BUILD_SELECT_QUERY)
+    .eq('user_id', userId)
+    .order('created_at', { ascending: true })
+    .order('id', { ascending: true });
+
+  return {
+    data: (data ?? []) as BuildRow[],
+    error,
+  };
+};
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET' && req.method !== 'PUT') {
@@ -56,11 +75,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const userId = userData.user.id;
 
     if (req.method === 'GET') {
-      const { data, error } = await supabase
-        .from('build')
-        .select(BUILD_SELECT_QUERY)
-        .eq('user_id', userId)
-        .order('slot_index', { ascending: true });
+      const { data, error } = await fetchOrderedBuilds(supabase, userId);
 
       if (error) {
         return res.status(500).json({ error: error.message });
@@ -69,7 +84,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       setNoStoreHeaders(res);
       return res
         .status(200)
-        .json((data ?? []).map((row) => toResponseDto(row as BuildRow)));
+        .json(data.map((row, index) => toResponseDto(row, index + 1)));
     }
 
     const parsedPayload = upsertBuildSchema.safeParse(req.body);
@@ -79,20 +94,45 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const payload = parsedPayload.data as UpsertBuildRequestDto;
     const savedAt = new Date().toISOString();
+    const { data: orderedBuilds, error: orderedBuildsError } =
+      await fetchOrderedBuilds(supabase, userId);
+
+    if (orderedBuildsError) {
+      return res.status(500).json({ error: orderedBuildsError.message });
+    }
+
+    const targetIndex = payload.slot - 1;
+    const targetBuild = orderedBuilds[targetIndex] ?? null;
+
+    if (targetBuild) {
+      const { data, error } = await supabase
+        .from('build')
+        .update({
+          snapshot: payload.snapshot,
+          saved_at: savedAt,
+        })
+        .eq('id', targetBuild.id)
+        .eq('user_id', userId)
+        .select(BUILD_SELECT_QUERY)
+        .single();
+
+      if (error) {
+        return res.status(500).json({ error: error.message });
+      }
+
+      setNoStoreHeaders(res);
+      return res
+        .status(200)
+        .json(toResponseDto(data as BuildRow, targetIndex + 1));
+    }
 
     const { data, error } = await supabase
       .from('build')
-      .upsert(
-        {
-          user_id: userId,
-          slot_index: payload.slot,
-          snapshot: payload.snapshot,
-          saved_at: savedAt,
-        },
-        {
-          onConflict: 'user_id,slot_index',
-        },
-      )
+      .insert({
+        user_id: userId,
+        snapshot: payload.snapshot,
+        saved_at: savedAt,
+      })
       .select(BUILD_SELECT_QUERY)
       .single();
 
@@ -101,7 +141,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     setNoStoreHeaders(res);
-    return res.status(200).json(toResponseDto(data as BuildRow));
+    return res
+      .status(200)
+      .json(toResponseDto(data as BuildRow, orderedBuilds.length + 1));
   } catch (error) {
     return handleError(res, error, 'Erreur builds');
   }

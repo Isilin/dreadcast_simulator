@@ -3,6 +3,8 @@ import { useShallow } from 'zustand/react/shallow';
 
 import type { DrugsState } from './drug.types';
 
+import { getBuildReadOnlyMode } from '@/utils/build-read-only';
+
 interface DrugStore {
   drug: DrugsState;
   toggleDrug: (id: string) => void;
@@ -15,10 +17,15 @@ export const initialState: DrugsState = null;
 
 export const useDrugStore = create<DrugStore>((set) => ({
   drug: initialState,
-  toggleDrug: (id) =>
+  toggleDrug: (id) => {
+    if (getBuildReadOnlyMode()) {
+      return;
+    }
+
     set((state) => ({
       drug: state.drug === id ? null : id,
-    })),
+    }));
+  },
   replaceDrug: (drug) => set({ drug }),
 }));
 

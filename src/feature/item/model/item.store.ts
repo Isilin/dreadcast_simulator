@@ -5,6 +5,7 @@ import { getOtherHand, isWeaponType, itemMatchsSpot } from './item.rules';
 import type { DamageBonusType, Item, ItemsState } from './item.types';
 
 import { ItemSpotValue, type ItemSpot } from '@/domain';
+import { getBuildReadOnlyMode } from '@/utils/build-read-only';
 
 interface ItemStore {
   items: ItemsState;
@@ -25,7 +26,11 @@ export const initialState: ItemsState = Object.fromEntries(
 
 export const useItemStore = create<ItemStore>((set) => ({
   items: initialState,
-  setItem: (spot, item) =>
+  setItem: (spot, item) => {
+    if (getBuildReadOnlyMode()) {
+      return;
+    }
+
     set((s) => {
       if (!itemMatchsSpot(item.type, spot)) return s;
       const previousOther = getOtherHand(spot, s.items[spot]?.hands);
@@ -42,10 +47,21 @@ export const useItemStore = create<ItemStore>((set) => ({
       return {
         items: { ...s.items, [spot]: itemWithBonus, [other!]: itemWithBonus },
       };
-    }),
-  resetItem: (spot) => set((s) => ({ items: { ...s.items, [spot]: null } })),
+    });
+  },
+  resetItem: (spot) => {
+    if (getBuildReadOnlyMode()) {
+      return;
+    }
+
+    set((s) => ({ items: { ...s.items, [spot]: null } }));
+  },
   replaceItems: (items) => set({ items }),
-  setDamageBonus: (spot, bonus) =>
+  setDamageBonus: (spot, bonus) => {
+    if (getBuildReadOnlyMode()) {
+      return;
+    }
+
     set((s) => {
       if (!s.items[spot] || !isWeaponType(s.items[spot]!.type)) return s;
       const otherSpot = getOtherHand(spot, s.items[spot]?.hands);
@@ -54,7 +70,8 @@ export const useItemStore = create<ItemStore>((set) => ({
       return {
         items: { ...s.items, [spot]: nextItem, [otherSpot]: nextItem },
       };
-    }),
+    });
+  },
 }));
 
 export const useItemsState = (): ItemsState => useItemStore((s) => s.items);

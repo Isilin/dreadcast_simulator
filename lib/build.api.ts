@@ -1,5 +1,7 @@
 export const BUILD_SELECT_QUERY = `
-  slot_index,
+  id,
+  user_id,
   snapshot,
-  saved_at
+  saved_at,
+  created_at
 `;

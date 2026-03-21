@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SubscriptionRouteImport } from './routes/subscription'
 import { Route as ConnectionRouteImport } from './routes/connection'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SharedIdRouteImport } from './routes/shared.$id'
 
 const SubscriptionRoute = SubscriptionRouteImport.update({
   id: '/subscription',
@@ -28,35 +29,44 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SharedIdRoute = SharedIdRouteImport.update({
+  id: '/shared/$id',
+  path: '/shared/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/connection': typeof ConnectionRoute
   '/subscription': typeof SubscriptionRoute
+  '/shared/$id': typeof SharedIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/connection': typeof ConnectionRoute
   '/subscription': typeof SubscriptionRoute
+  '/shared/$id': typeof SharedIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/connection': typeof ConnectionRoute
   '/subscription': typeof SubscriptionRoute
+  '/shared/$id': typeof SharedIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/connection' | '/subscription'
+  fullPaths: '/' | '/connection' | '/subscription' | '/shared/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/connection' | '/subscription'
-  id: '__root__' | '/' | '/connection' | '/subscription'
+  to: '/' | '/connection' | '/subscription' | '/shared/$id'
+  id: '__root__' | '/' | '/connection' | '/subscription' | '/shared/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ConnectionRoute: typeof ConnectionRoute
   SubscriptionRoute: typeof SubscriptionRoute
+  SharedIdRoute: typeof SharedIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/shared/$id': {
+      id: '/shared/$id'
+      path: '/shared/$id'
+      fullPath: '/shared/$id'
+      preLoaderRoute: typeof SharedIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ConnectionRoute: ConnectionRoute,
   SubscriptionRoute: SubscriptionRoute,
+  SharedIdRoute: SharedIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

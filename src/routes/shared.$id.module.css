@@ -1,0 +1,57 @@
+.sharedHeader {
+  position: fixed;
+  top: 64px;
+  left: 16px;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sharedLabel {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.sharedTitle {
+  margin: 0;
+  font-size: 18px;
+  color: var(--color-text);
+}
+
+.readOnlyLayout {
+  pointer-events: none;
+}
+
+.centeredState {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.backButton {
+  border: 1px solid var(--color-gray-200);
+  border-radius: 8px;
+  background: var(--color-gray-100);
+  color: var(--color-text);
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .sharedHeader {
+    top: 52px;
+    left: 12px;
+  }
+
+  .sharedTitle {
+    font-size: 15px;
+  }
+}

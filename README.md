@@ -39,6 +39,7 @@ Cette application est construite avec des technologies modernes et suit une arch
   - Hors connexion: 1 build stocke en local (localStorage)
   - Connecte sans abonnement valide: 5 builds distants (BDD)
   - Connecte avec abonnement valide: nombre de builds illimite (BDD)
+  - Partage de build via lien public en lecture seule (`/shared/:id`)
   - En fin d'abonnement, les builds > 5 sont conserves mais masques
   - Validation automatique des prerequis
   - Interface intuitive avec apercu des modifications
@@ -215,7 +216,7 @@ Le projet inclut une configuration complète GitHub Copilot dans `.github/` :
 
 #### v1.1 - Fonctionnalités avancées
 
-- [ ] Partage de builds via URL
+- [x] Partage de builds via URL
 - [ ] Comparaison de builds côte à côte
 - [ ] Suggestions d'optimisation automatiques
 
