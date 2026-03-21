@@ -30,15 +30,12 @@ export const TabsBar = () => {
       return;
     }
 
-    const highestSlot = slots.reduce((highest, slot) => {
-      const slotNumber = Number.parseInt(slot, 10);
-      if (!Number.isInteger(slotNumber) || slotNumber <= highest) {
-        return highest;
-      }
-      return slotNumber;
-    }, 0);
-
-    setActive(String(highestSlot + 1));
+    // Le useMemo ajoute toujours un slot vide en fin de tableau pour les abonnés.
+    // Il suffit d'y naviguer pour "créer" le slot suivant.
+    const nextEmptySlot = slots[slots.length - 1];
+    if (nextEmptySlot) {
+      setActive(nextEmptySlot);
+    }
   };
 
   return (
