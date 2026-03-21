@@ -9,23 +9,29 @@ import type { SubscriptionPlanCode } from '../model';
 
 const SUBSCRIPTION_STALE_TIME_MS = 60 * 1000;
 
+interface SubscriptionQueryOptions {
+  enabled?: boolean;
+}
+
 export const subscriptionQueryKeys = {
   all: ['subscriptions'] as const,
   plans: ['subscription-plans'] as const,
 };
 
-export const useSubscriptions = () =>
+export const useSubscriptions = (options?: SubscriptionQueryOptions) =>
   useQuery({
     queryKey: subscriptionQueryKeys.all,
     queryFn: ({ signal }) => fetchSubscriptions(signal),
     staleTime: SUBSCRIPTION_STALE_TIME_MS,
+    enabled: options?.enabled,
   });
 
-export const useSubscriptionPlans = () =>
+export const useSubscriptionPlans = (options?: SubscriptionQueryOptions) =>
   useQuery({
     queryKey: subscriptionQueryKeys.plans,
     queryFn: ({ signal }) => fetchSubscriptionPlans(signal),
     staleTime: SUBSCRIPTION_STALE_TIME_MS,
+    enabled: options?.enabled,
   });
 
 export const useCreateSubscription = () => {

@@ -36,10 +36,12 @@ Cette application est construite avec des technologies modernes et suit une arch
   - Calcul en temps réel des statistiques finales
 
 - **Gestion des builds**
-  - Sauvegarde locale de jusqu'à 10 builds différents
-  - Import/export de configurations
-  - Validation automatique des prérequis
-  - Interface intuitive avec aperçu des modifications
+  - Hors connexion: 1 build stocke en local (localStorage)
+  - Connecte sans abonnement valide: 5 builds distants (BDD)
+  - Connecte avec abonnement valide: nombre de builds illimite (BDD)
+  - En fin d'abonnement, les builds > 5 sont conserves mais masques
+  - Validation automatique des prerequis
+  - Interface intuitive avec apercu des modifications
 
 - **Authentification**
   - Connexion via endpoint serverless `/api/auth/login` (utilisateur/email + mot de passe)
@@ -159,7 +161,7 @@ Chaque fonctionnalité est organisée selon le pattern `model/services/ui` :
 
 - **Pattern Reducer + Context** pour chaque fonctionnalité
 - Séparation `StateContext`/`DispatchContext` pour les performances
-- Persistance locale avec `localStorage`
+- Persistance hybride: `localStorage` hors connexion et BDD une fois connecte
 - Validation avec schémas Zod
 
 ## Développement

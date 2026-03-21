@@ -47,6 +47,10 @@ Les schémas doivent être exécutés dans l'ordre pour respecter les dépendanc
 015_table_subscription.sql       -- Abonnements utilisateur relies a auth.users
 016_table_subscription_plan.sql  -- Plans abonnement dynamiques
 017_subscription_plan_fk.sql     -- Cle etrangere subscription.plan_code -> subscription_plan.code
+018_alter_subscription_status.sql -- Statut abonnement (pending/validated)
+
+-- Table Builds
+019_table_build.sql              -- Snapshots de builds utilisateur
 ```
 
 ### 2. Seeds (dans l'ordre numérique)
@@ -88,9 +92,9 @@ Les seeds peuvent être exécutés après les schémas :
 
 ### Schemas
 
-- **17 fichiers** de schémas SQL
+- **19 fichiers** de schémas SQL
 - 3 enums (stat_property, item_type, race_type)
-- 13 tables avec indexes et RLS policies
+- 14 tables avec indexes et RLS policies
 
 ### Seeds
 

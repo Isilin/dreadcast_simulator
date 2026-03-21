@@ -6,7 +6,48 @@ import type { Kit, KitSelection, KitsState } from '@/feature/kit';
 import type { ProfileState } from '@/feature/profile';
 
 export const BUILDS_KEY = 'dreadcast.builds.v3';
-export const DEFAULT_SLOTS = 5;
+export const GUEST_SLOTS = 1;
+export const AUTHENTICATED_FREE_SLOTS = 5;
+
+export type BuildStorageMode = 'local' | 'remote';
+
+export interface BuildPersistencePolicy {
+  mode: BuildStorageMode;
+  hasUnlimitedSlots: boolean;
+  visibleSlotCount: number;
+}
+
+interface ResolveBuildPersistencePolicyParams {
+  isAuthenticated: boolean;
+  hasValidSubscription: boolean;
+}
+
+export const resolveBuildPersistencePolicy = ({
+  isAuthenticated,
+  hasValidSubscription,
+}: ResolveBuildPersistencePolicyParams): BuildPersistencePolicy => {
+  if (!isAuthenticated) {
+    return {
+      mode: 'local',
+      hasUnlimitedSlots: false,
+      visibleSlotCount: GUEST_SLOTS,
+    };
+  }
+
+  if (hasValidSubscription) {
+    return {
+      mode: 'remote',
+      hasUnlimitedSlots: true,
+      visibleSlotCount: AUTHENTICATED_FREE_SLOTS,
+    };
+  }
+
+  return {
+    mode: 'remote',
+    hasUnlimitedSlots: false,
+    visibleSlotCount: AUTHENTICATED_FREE_SLOTS,
+  };
+};
 
 export interface SerializedItem {
   id: string;
@@ -97,3 +138,11 @@ export const readBuilds = (): Record<string, BuildSnapshot> => {
 
 export const writeBuilds = (s: Record<string, BuildSnapshot>) =>
   localStorage.setItem(BUILDS_KEY, JSON.stringify(s));
+
+export const clearLocalBuilds = () => {
+  try {
+    localStorage.removeItem(BUILDS_KEY);
+  } catch {
+    // Silently fail if localStorage is not available
+  }
+};

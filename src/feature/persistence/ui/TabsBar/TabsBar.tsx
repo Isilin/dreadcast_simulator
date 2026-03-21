@@ -35,9 +35,9 @@ export const TabsBar = () => {
       {slots.map((s) => (
         <Tabs.Panel key={s} value={s} className={styles.panel}>
           {builds[s]?.savedAt ? (
-            new Date(builds[s].savedAt!).toLocaleString()
+            new Date(builds[s].savedAt!).toLocaleString('fr-FR')
           ) : (
-            <span style={{ opacity: 0.5 }}>Empty</span>
+            <span style={{ opacity: 0.5 }}>Vide</span>
           )}
         </Tabs.Panel>
       ))}
