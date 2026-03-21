@@ -31,11 +31,15 @@ interface BuildRow {
   created_at: string;
 }
 
-const toResponseDto = (row: BuildRow, slot: number): BuildResponseDto => ({
-  slot,
-  snapshot: row.snapshot,
-  saved_at: row.saved_at,
-});
+const toResponseDto = (row: BuildRow, slot: number): BuildResponseDto => {
+  const parsedSnapshot =
+    typeof row.snapshot === 'string' ? JSON.parse(row.snapshot) : row.snapshot;
+  return {
+    slot,
+    snapshot: parsedSnapshot,
+    saved_at: row.saved_at,
+  };
+};
 
 const fetchOrderedBuilds = async (
   supabase: ReturnType<typeof doCreateClientWithAuth>,

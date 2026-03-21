@@ -85,10 +85,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       orderedIds.findIndex((row) => row.id === buildSnapshot.id) + 1,
     );
 
+    const parsedSnapshot =
+      typeof buildSnapshot.snapshot === 'string'
+        ? JSON.parse(buildSnapshot.snapshot)
+        : buildSnapshot.snapshot;
+
     const responsePayload: SharedBuildResponseDto = {
       id: parsedId.data,
       slot,
-      snapshot: buildSnapshot.snapshot,
+      snapshot: parsedSnapshot,
       saved_at: buildSnapshot.saved_at,
       created_at: reference.created_at,
     };
