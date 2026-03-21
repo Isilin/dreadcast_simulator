@@ -64,6 +64,7 @@ export interface SerializedKitSelection {
 export type SerializedKitsSnapshot = Record<ItemSpot, SerializedKitSelection[]>;
 
 export interface BuildSnapshot {
+  name?: string;
   profile: ProfileState;
   implants: ImplantsState;
   items: SerializedItemsSnapshot;
@@ -71,6 +72,8 @@ export interface BuildSnapshot {
   drug: DrugsState;
   savedAt?: number;
 }
+
+export const getDefaultBuildName = (slot: string) => `Build ${slot}`;
 
 export const serializeItems = (state: ItemsState): SerializedItemsSnapshot =>
   Object.fromEntries(

@@ -2,22 +2,25 @@ import { Tabs } from '@base-ui/react';
 import { useNavigate } from '@tanstack/react-router';
 
 import styles from './TabsBar.module.css';
-import { useBuildPersistence } from '../../model';
+import type { BuildPersistenceState } from '../../model/persitence.hook';
 
-import { useItems } from '@/feature/item';
-import { useKits } from '@/feature/kit';
 import Routes from '@/utils/routes';
 
-export const TabsBar = () => {
-  const navigate = useNavigate();
-  const { data: allItems } = useItems();
-  const { data: allKits } = useKits();
+interface TabsBarProps {
+  persistence: BuildPersistenceState;
+}
 
-  const { active, setActive, builds, slots, storageMode, hasUnlimitedSlots } =
-    useBuildPersistence({
-      allItems,
-      allKits,
-    });
+export const TabsBar = ({ persistence }: TabsBarProps) => {
+  const navigate = useNavigate();
+  const {
+    active,
+    setActive,
+    builds,
+    slots,
+    storageMode,
+    hasUnlimitedSlots,
+    getBuildName,
+  } = persistence;
 
   const handleAddSlot = async () => {
     if (storageMode === 'local') {
@@ -45,6 +48,7 @@ export const TabsBar = () => {
           <Tabs.Tab
             key={s}
             value={s}
+            title={getBuildName(s)}
             className={
               active === s
                 ? `${styles.tab} ${styles.active}`

@@ -5,7 +5,14 @@ import styles from './index.module.css';
 
 import { DrugsButton } from '@/feature/drug';
 import { ImplantsButton } from '@/feature/implant';
-import { IconBar, TabsBar } from '@/feature/persistence';
+import { useItems } from '@/feature/item';
+import { useKits } from '@/feature/kit';
+import {
+  BuildNameEditor,
+  IconBar,
+  TabsBar,
+  useBuildPersistence,
+} from '@/feature/persistence';
 import { GenderSelector, RaceSelector, Silhouette } from '@/feature/profile';
 import { Skills } from '@/feature/stats';
 import { Footer, Sidebar, SlotPair } from '@/ui';
@@ -16,8 +23,17 @@ export const Route = createFileRoute(Routes.home)({
 });
 
 function RouteComponent() {
+  const { data: allItems } = useItems();
+  const { data: allKits } = useKits();
+
+  const persistence = useBuildPersistence({
+    allItems,
+    allKits,
+  });
+
   return (
     <>
+      <BuildNameEditor persistence={persistence} />
       <div className={styles.layout}>
         <Sidebar>
           <GenderSelector />
@@ -44,7 +60,7 @@ function RouteComponent() {
           <Silhouette />
         </div>
         <Footer>
-          <TabsBar />
+          <TabsBar persistence={persistence} />
           <IconBar />
         </Footer>
       </div>

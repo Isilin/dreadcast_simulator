@@ -12,6 +12,7 @@ import {
   AUTHENTICATED_FREE_SLOTS,
   GUEST_SLOTS,
   clearLocalBuilds,
+  getDefaultBuildName,
   readBuilds,
   resolveBuildPersistencePolicy,
   restoreItems,
@@ -51,6 +52,18 @@ interface HookParams {
   allKits: Kit[] | undefined;
 }
 
+export interface BuildPersistenceState {
+  active: string;
+  setActive: (slot: string) => void;
+  builds: Record<string, BuildSnapshot>;
+  slots: string[];
+  maxVisibleSlots: number;
+  hasUnlimitedSlots: boolean;
+  storageMode: BuildStorageMode;
+  getBuildName: (slot: string) => string;
+  setActiveBuildName: (name: string) => void;
+}
+
 const nowHasValidSubscription = (
   subscriptions: Array<{ status: 'pending' | 'validated'; endsAt: string }>,
 ) => {
@@ -80,7 +93,10 @@ const toComparableBuild = (build: BuildSnapshot | null | undefined) => {
   });
 };
 
-export function useBuildPersistence({ allItems, allKits }: HookParams) {
+export function useBuildPersistence({
+  allItems,
+  allKits,
+}: HookParams): BuildPersistenceState {
   const { session } = useAuthState();
   const isAuthenticated = Boolean(session?.user);
   const [active, setActive] = useState<string>('1');
@@ -249,29 +265,78 @@ export function useBuildPersistence({ allItems, allKits }: HookParams) {
     }, 0);
   }, [active, allItems, allKits, builds, isLoadingBuilds]);
 
+  const buildSnapshotFromStores = (slot: string): BuildSnapshot => {
+    const profile = useProfileStore.getState().profile;
+    const implants = useImplantStore.getState().implants;
+    const items = useItemStore.getState().items;
+    const kits = useKitStore.getState().kits;
+    const drug = useDrugStore.getState().drug;
+    const serializedItems = serializeItems(items);
+    const serializedKits = serializeKits(kits);
+    const existingBuild = buildsRef.current[slot];
+
+    return {
+      profile,
+      implants,
+      items: serializedItems,
+      kits: serializedKits,
+      drug,
+      name: existingBuild?.name ?? getDefaultBuildName(slot),
+      savedAt: Date.now(),
+    };
+  };
+
+  const getBuildName = (slot: string): string => {
+    const persistedName = builds[slot]?.name?.trim();
+    return persistedName && persistedName.length > 0
+      ? persistedName
+      : getDefaultBuildName(slot);
+  };
+
+  const setActiveBuildName = (name: string) => {
+    if (isLoadingBuildsRef.current) {
+      return;
+    }
+
+    const slot = activeRef.current;
+    const normalizedName = name.trim();
+    const nextName =
+      normalizedName.length > 0 ? normalizedName : getDefaultBuildName(slot);
+    const candidateBuild = {
+      ...buildSnapshotFromStores(slot),
+      name: nextName,
+    };
+
+    setBuilds((previousBuilds) => ({
+      ...previousBuilds,
+      [slot]: candidateBuild,
+    }));
+
+    if (policyRef.current.mode === 'local') {
+      const guestSlot = String(GUEST_SLOTS);
+      writeBuilds({
+        ...readBuilds(),
+        [guestSlot]: candidateBuild,
+      });
+      return;
+    }
+
+    void upsertRemoteBuild({
+      slot,
+      snapshot: candidateBuild,
+    }).catch(() => {
+      // On garde la mise a jour locale en memoire si la sauvegarde reseau echoue.
+    });
+  };
+
   useEffect(() => {
     const doSave = () => {
       if (isRestoringRef.current || isLoadingBuildsRef.current) {
         return;
       }
 
-      const profile = useProfileStore.getState().profile;
-      const implants = useImplantStore.getState().implants;
-      const items = useItemStore.getState().items;
-      const kits = useKitStore.getState().kits;
-      const drug = useDrugStore.getState().drug;
       const currentSlot = activeRef.current;
-      const serializedItems = serializeItems(items);
-      const serializedKits = serializeKits(kits);
-
-      const candidateBuild: BuildSnapshot = {
-        profile,
-        implants,
-        items: serializedItems,
-        kits: serializedKits,
-        drug,
-        savedAt: Date.now(),
-      };
+      const candidateBuild = buildSnapshotFromStores(currentSlot);
 
       const previousBuild = buildsRef.current[currentSlot];
       if (
@@ -344,5 +409,7 @@ export function useBuildPersistence({ allItems, allKits }: HookParams) {
     maxVisibleSlots: persistencePolicy.visibleSlotCount,
     hasUnlimitedSlots: persistencePolicy.hasUnlimitedSlots,
     storageMode: persistencePolicy.mode,
+    getBuildName,
+    setActiveBuildName,
   };
 }
