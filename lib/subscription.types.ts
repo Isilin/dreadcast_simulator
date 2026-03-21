@@ -26,7 +26,3 @@ export interface SubscriptionResponseDto {
 export interface CreateSubscriptionRequestDto {
   planCode: SubscriptionPlanCode;
 }
-
-export interface ValidateSubscriptionRequestDto {
-  subscriptionId: string;
-}
