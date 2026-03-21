@@ -9,18 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ConnexionRouteImport } from './routes/connexion'
-import { Route as AbonnementRouteImport } from './routes/abonnement'
+import { Route as SubscriptionRouteImport } from './routes/subscription'
+import { Route as ConnectionRouteImport } from './routes/connection'
 import { Route as IndexRouteImport } from './routes/index'
 
-const ConnexionRoute = ConnexionRouteImport.update({
-  id: '/connexion',
-  path: '/connexion',
+const SubscriptionRoute = SubscriptionRouteImport.update({
+  id: '/subscription',
+  path: '/subscription',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AbonnementRoute = AbonnementRouteImport.update({
-  id: '/abonnement',
-  path: '/abonnement',
+const ConnectionRoute = ConnectionRouteImport.update({
+  id: '/connection',
+  path: '/connection',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -31,48 +31,48 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/abonnement': typeof AbonnementRoute
-  '/connexion': typeof ConnexionRoute
+  '/connection': typeof ConnectionRoute
+  '/subscription': typeof SubscriptionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/abonnement': typeof AbonnementRoute
-  '/connexion': typeof ConnexionRoute
+  '/connection': typeof ConnectionRoute
+  '/subscription': typeof SubscriptionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/abonnement': typeof AbonnementRoute
-  '/connexion': typeof ConnexionRoute
+  '/connection': typeof ConnectionRoute
+  '/subscription': typeof SubscriptionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/abonnement' | '/connexion'
+  fullPaths: '/' | '/connection' | '/subscription'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/abonnement' | '/connexion'
-  id: '__root__' | '/' | '/abonnement' | '/connexion'
+  to: '/' | '/connection' | '/subscription'
+  id: '__root__' | '/' | '/connection' | '/subscription'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AbonnementRoute: typeof AbonnementRoute
-  ConnexionRoute: typeof ConnexionRoute
+  ConnectionRoute: typeof ConnectionRoute
+  SubscriptionRoute: typeof SubscriptionRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/connexion': {
-      id: '/connexion'
-      path: '/connexion'
-      fullPath: '/connexion'
-      preLoaderRoute: typeof ConnexionRouteImport
+    '/subscription': {
+      id: '/subscription'
+      path: '/subscription'
+      fullPath: '/subscription'
+      preLoaderRoute: typeof SubscriptionRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/abonnement': {
-      id: '/abonnement'
-      path: '/abonnement'
-      fullPath: '/abonnement'
-      preLoaderRoute: typeof AbonnementRouteImport
+    '/connection': {
+      id: '/connection'
+      path: '/connection'
+      fullPath: '/connection'
+      preLoaderRoute: typeof ConnectionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -87,8 +87,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AbonnementRoute: AbonnementRoute,
-  ConnexionRoute: ConnexionRoute,
+  ConnectionRoute: ConnectionRoute,
+  SubscriptionRoute: SubscriptionRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

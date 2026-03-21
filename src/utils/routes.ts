@@ -1,7 +1,7 @@
 const Routes = {
   home: '/',
-  connexion: '/connexion',
-  abonnement: '/abonnement',
+  connection: '/connection',
+  subscription: '/subscription',
 } as const;
 
 type Routes = (typeof Routes)[keyof typeof Routes];
