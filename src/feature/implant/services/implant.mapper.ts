@@ -2,6 +2,7 @@ import type { ImplantResponseDto } from './implant.schema';
 import type { Implant } from '../model/implant.types';
 
 export const toDomain = (dto: ImplantResponseDto): Implant => ({
+  id: dto.id,
   name: dto.name,
   levelMax: dto.level_max,
   attributes: dto.implant_attribute.map((item) => item.attribute),

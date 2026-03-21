@@ -35,6 +35,7 @@ export const ImplantNameValues = [
 export type ImplantName = (typeof ImplantNameValues)[number];
 
 export interface Implant {
+  id: number;
   name: ImplantName;
   levelMax: number;
   attributes: Stat[];

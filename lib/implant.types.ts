@@ -28,6 +28,7 @@ export interface ImplantValueResponseDto {
 }
 
 export interface ImplantResponseDto {
+  id: number;
   name: string;
   level_max: number;
   implant_attribute: ImplantAttributeResponseDto[];

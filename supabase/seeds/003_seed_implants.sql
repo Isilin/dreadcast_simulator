@@ -1,115 +1,115 @@
 -- Seed data pour les implants, leurs attributs et valeurs par niveau
 
 -- Insertion des implants
-INSERT INTO implant (name, level_max) VALUES
-  ('Génie', 10),
-  ('Réplicateur', 10),
-  ('Sain et sauf', 10),
-  ('Chameau', 10),
-  ('Monsieur Clone', 10),
-  ('Geek', 10),
-  ('Chanceux', 10),
-  ('Raciste', 5),
-  ('Urgentiste', 10),
-  ('Prestidigitateur', 10),
-  ('Flash Gordon', 2),
-  ('Inépuisable', 10),
-  ('Peau d''argent', 10),
-  ('Ingénieur', 10),
-  ('Brute', 10),
-  ('Rôdeur', 10),
-  ('Peau d''acier', 10),
-  ('La Main Bleue', 10),
-  ('Éclaireur', 10),
-  ('Je te vois', 10),
-  ('Scientifique', 10),
-  ('Économe', 10),
-  ('Félin', 10),
-  ('Aide de camp', 10),
-  ('Commando', 10),
-  ('Ninja', 9),
-  ('Polyvalent', 9),
-  ('Tireur d''élite', 9),
-  ('Oeil de lynx', 9),
-  ('Enragé', 9)
-ON CONFLICT (name) DO NOTHING;
+INSERT INTO implant (id, name, level_max) VALUES
+  (0, 'Génie', 10),
+  (1, 'Réplicateur', 10),
+  (2, 'Sain et sauf', 10),
+  (3, 'Chameau', 10),
+  (4, 'Monsieur Clone', 10),
+  (5, 'Geek', 10),
+  (6, 'Chanceux', 10),
+  (7, 'Raciste', 5),
+  (8, 'Urgentiste', 10),
+  (9, 'Prestidigitateur', 10),
+  (10, 'Flash Gordon', 2),
+  (11, 'Inépuisable', 10),
+  (12, 'Peau d''argent', 10),
+  (13, 'Ingénieur', 10),
+  (14, 'Brute', 10),
+  (15, 'Rôdeur', 10),
+  (16, 'Peau d''acier', 10),
+  (17, 'La Main Bleue', 10),
+  (18, 'Éclaireur', 10),
+  (19, 'Je te vois', 10),
+  (20, 'Scientifique', 10),
+  (21, 'Économe', 10),
+  (22, 'Félin', 10),
+  (23, 'Aide de camp', 10),
+  (24, 'Commando', 10),
+  (25, 'Ninja', 9),
+  (26, 'Polyvalent', 9),
+  (27, 'Tireur d''élite', 9),
+  (28, 'Oeil de lynx', 9),
+  (29, 'Enragé', 9)
+ON CONFLICT (id) DO NOTHING;
 
 -- Insertion des attributs pour chaque implant
 -- Geek
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Geek', 'computing'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (5, 'computing'::stat_property);
 
 -- Raciste
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Raciste', 'raceDamage'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (7, 'raceDamage'::stat_property);
 
 -- Urgentiste
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Urgentiste', 'medicine'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (8, 'medicine'::stat_property);
 
 -- Prestidigitateur
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Prestidigitateur', 'agility'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (9, 'agility'::stat_property);
 
 -- Flash Gordon
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Flash Gordon', 'speed'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (10, 'speed'::stat_property);
 
 -- Inépuisable
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Inépuisable', 'stamina'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (11, 'stamina'::stat_property);
 
 -- Peau d'argent
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Peau d''argent', 'robustness'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (12, 'robustness'::stat_property);
 
 -- Ingénieur
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Ingénieur', 'engineering'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (13, 'engineering'::stat_property);
 
 -- Brute
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Brute', 'strength'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (14, 'strength'::stat_property);
 
 -- Rôdeur
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Rôdeur', 'stealth'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (15, 'stealth'::stat_property);
 
 -- Peau d'acier
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Peau d''acier', 'health'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (16, 'health'::stat_property);
 
 -- Éclaireur
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Éclaireur', 'hitRating'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (18, 'hitRating'::stat_property);
 
 -- Je te vois
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Je te vois', 'perception'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (19, 'perception'::stat_property);
 
 -- Scientifique (3 attributs)
-INSERT INTO implant_attribute (implant_name, attribute) VALUES 
-  ('Scientifique', 'medicine'::stat_property),
-  ('Scientifique', 'computing'::stat_property),
-  ('Scientifique', 'engineering'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES 
+  (20, 'medicine'::stat_property),
+  (20, 'computing'::stat_property),
+  (20, 'engineering'::stat_property);
 
 -- Félin (2 attributs)
-INSERT INTO implant_attribute (implant_name, attribute) VALUES 
-  ('Félin', 'perception'::stat_property),
-  ('Félin', 'stealth'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES 
+  (22, 'perception'::stat_property),
+  (22, 'stealth'::stat_property);
 
 -- Aide de camp
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Aide de camp', 'teamHeal'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (23, 'teamHeal'::stat_property);
 
 -- Commando
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Commando', 'criticalCacChance'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (24, 'criticalCacChance'::stat_property);
 
 -- Ninja
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Ninja', 'cacDamage'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (25, 'cacDamage'::stat_property);
 
 -- Polyvalent (8 attributs)
-INSERT INTO implant_attribute (implant_name, attribute) VALUES 
-  ('Polyvalent', 'strength'::stat_property),
-  ('Polyvalent', 'agility'::stat_property),
-  ('Polyvalent', 'robustness'::stat_property),
-  ('Polyvalent', 'perception'::stat_property),
-  ('Polyvalent', 'stealth'::stat_property),
-  ('Polyvalent', 'computing'::stat_property),
-  ('Polyvalent', 'medicine'::stat_property),
-  ('Polyvalent', 'engineering'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES 
+  (26, 'strength'::stat_property),
+  (26, 'agility'::stat_property),
+  (26, 'robustness'::stat_property),
+  (26, 'perception'::stat_property),
+  (26, 'stealth'::stat_property),
+  (26, 'computing'::stat_property),
+  (26, 'medicine'::stat_property),
+  (26, 'engineering'::stat_property);
 
 -- Tireur d'élite
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Tireur d''élite', 'criticalHitDamage'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (27, 'criticalHitDamage'::stat_property);
 
 -- Oeil de lynx
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Oeil de lynx', 'hitDamages'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (28, 'hitDamages'::stat_property);
 
 -- Enragé
-INSERT INTO implant_attribute (implant_name, attribute) VALUES ('Enragé', 'criticalCacDamage'::stat_property);
+INSERT INTO implant_attribute (implant_id, attribute) VALUES (29, 'criticalCacDamage'::stat_property);

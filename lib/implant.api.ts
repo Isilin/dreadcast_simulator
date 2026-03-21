@@ -1,6 +1,7 @@
 import type { ImplantResponseDto } from './implant.types.ts';
 
 export const IMPLANT_SELECT_QUERY = `
+  id,
   name,
   level_max,
   implant_attribute (

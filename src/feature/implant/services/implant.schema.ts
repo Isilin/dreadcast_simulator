@@ -26,6 +26,7 @@ const statPropertySchema = z.enum([
 ]);
 
 export const implantResponseDtoSchema = z.object({
+  id: z.coerce.number().int().min(0),
   name: z.enum(ImplantNameValues),
   level_max: z.coerce.number().int().min(1),
   implant_attribute: z.array(
