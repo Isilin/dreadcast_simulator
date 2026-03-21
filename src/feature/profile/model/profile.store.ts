@@ -2,8 +2,7 @@ import { create } from 'zustand';
 import { useShallow } from 'zustand/react/shallow';
 
 import type { Gender, ProfileState, RaceType } from './profile.types';
-
-import { getBuildReadOnlyMode } from '@/utils/build-read-only';
+import { useBuildReadOnlyMode } from '@/feature/persistence';
 
 interface ProfileStore {
   profile: ProfileState;
@@ -25,17 +24,9 @@ export const initialState: ProfileState = {
 export const useProfileStore = create<ProfileStore>((set) => ({
   profile: initialState,
   setGender: (gender) => {
-    if (getBuildReadOnlyMode()) {
-      return;
-    }
-
     set((s) => ({ profile: { ...s.profile, gender } }));
   },
   setRace: (race) => {
-    if (getBuildReadOnlyMode()) {
-      return;
-    }
-
     set((s) => ({ profile: { ...s.profile, race } }));
   },
   replaceProfile: (profile) => set({ profile }),
@@ -44,11 +35,23 @@ export const useProfileStore = create<ProfileStore>((set) => ({
 export const useProfileState = (): ProfileState =>
   useProfileStore((s) => s.profile);
 
-export const useProfileActions = (): ProfileActions =>
-  useProfileStore(
+export const useProfileActions = (): ProfileActions => {
+  const isReadOnly = useBuildReadOnlyMode();
+  const actions = useProfileStore(
     useShallow((s) => ({
       setGender: s.setGender,
       setRace: s.setRace,
       replaceProfile: s.replaceProfile,
     })),
   );
+
+  if (!isReadOnly) {
+    return actions;
+  }
+
+  return {
+    setGender: () => undefined,
+    setRace: () => undefined,
+    replaceProfile: actions.replaceProfile,
+  };
+};

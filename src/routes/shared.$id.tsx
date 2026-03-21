@@ -11,6 +11,7 @@ import { ImplantsButton, useImplantStore } from '@/feature/implant';
 import { useItems, useItemStore } from '@/feature/item';
 import { useKits, useKitStore } from '@/feature/kit';
 import {
+  BuildReadOnlyProvider,
   IconBar,
   fetchSharedBuildById,
   restoreItems,
@@ -20,7 +21,6 @@ import { GenderSelector, RaceSelector, Silhouette } from '@/feature/profile';
 import { useProfileStore } from '@/feature/profile/model/profile.store';
 import { Skills } from '@/feature/stats';
 import { Footer, Sidebar, SlotPair, Spinner } from '@/ui';
-import { setBuildReadOnlyMode } from '@/utils/build-read-only';
 import Routes from '@/utils/routes';
 
 export const Route = createFileRoute('/shared/$id')({
@@ -43,14 +43,6 @@ function RouteComponent() {
     queryFn: ({ signal }) => fetchSharedBuildById({ id, signal }),
     retry: false,
   });
-
-  useEffect(() => {
-    setBuildReadOnlyMode(true);
-
-    return () => {
-      setBuildReadOnlyMode(false);
-    };
-  }, []);
 
   useEffect(() => {
     if (!sharedBuild || !allItems || !allKits) {
@@ -96,7 +88,7 @@ function RouteComponent() {
   const title = sharedBuild.name?.trim() || 'Build partage';
 
   return (
-    <>
+    <BuildReadOnlyProvider value>
       <div className={styles.sharedHeader}>
         <p className={styles.sharedLabel}>Mode lecture seule</p>
         <h1 className={styles.sharedTitle}>{title}</h1>
@@ -132,6 +124,6 @@ function RouteComponent() {
       <Footer>
         <IconBar />
       </Footer>
-    </>
+    </BuildReadOnlyProvider>
   );
 }

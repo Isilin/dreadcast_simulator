@@ -7,6 +7,7 @@ import styles from './KitSelector.module.css';
 
 import { StatValues, type ItemSpot, type Stat } from '@/domain';
 import { useItemsState } from '@/feature/item';
+import { useBuildReadOnlyMode } from '@/feature/persistence';
 import { Card, EffectChip } from '@/ui';
 import { StatusCounterBadge } from '@/ui/StatusCounterBadge';
 
@@ -17,15 +18,17 @@ interface Props {
 export const KitSelector = memo(({ spot }: Props) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const items = useItemsState();
+  const isReadOnly = useBuildReadOnlyMode();
   const limitTech = useMemo(() => items[spot]?.tech || 0, [items, spot]);
   const { kits, noKits, techCost, totalEffect } = useKitsOnSpot(spot);
   const isDisable = useMemo(
     () =>
+      isReadOnly ||
       !items[spot] ||
       (spot === 'rightArm' &&
         items[spot].hands !== undefined &&
         items[spot].hands >= 2),
-    [items, spot],
+    [isReadOnly, items, spot],
   );
 
   const techTotal = useMemo(() => limitTech - techCost, [limitTech, techCost]);
@@ -47,7 +50,7 @@ export const KitSelector = memo(({ spot }: Props) => {
             Choisir un kit
           </Card>
         ) : (
-          <Card state={techStatus}>
+          <Card state={isDisable ? 'disable' : techStatus}>
             <div className={styles.names}>
               {kits?.map(
                 (k, i) =>

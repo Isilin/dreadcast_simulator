@@ -9,6 +9,7 @@ import styles from './ItemSelector.module.css';
 
 import { type ItemSpot } from '@/domain';
 import { useKitsActions } from '@/feature/kit';
+import { useBuildReadOnlyMode } from '@/feature/persistence';
 import { Card } from '@/ui';
 
 interface Props {
@@ -19,6 +20,7 @@ export const ItemSelector = memo(({ spot }: Props) => {
   const actions = useItemsActions();
   const kitActions = useKitsActions();
   const items = useItemsState();
+  const isReadOnly = useBuildReadOnlyMode();
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const onItemSelect = (item: Item) => {
@@ -31,11 +33,16 @@ export const ItemSelector = memo(({ spot }: Props) => {
   };
   return (
     <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
-      <Dialog.Trigger className={styles.wrapper}>
+      <Dialog.Trigger className={styles.wrapper} disabled={isReadOnly}>
         {items[spot] ? (
           <ItemCard item={items[spot]} variant="slot" />
         ) : (
-          <Card className={styles.card}>Choisir un item</Card>
+          <Card
+            className={styles.card}
+            state={isReadOnly ? 'disable' : 'default'}
+          >
+            Choisir un item
+          </Card>
         )}
       </Dialog.Trigger>
       <ItemDialogSelector

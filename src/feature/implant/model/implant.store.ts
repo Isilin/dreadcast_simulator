@@ -7,7 +7,7 @@ import {
   type ImplantsState,
 } from './implant.types';
 
-import { getBuildReadOnlyMode } from '@/utils/build-read-only';
+import { useBuildReadOnlyMode } from '@/feature/persistence';
 
 interface ImplantStore {
   implants: ImplantsState;
@@ -29,24 +29,12 @@ export const initialState: ImplantsState = Object.fromEntries(
 export const useImplantStore = create<ImplantStore>((set) => ({
   implants: initialState,
   setImplant: (name, level) => {
-    if (getBuildReadOnlyMode()) {
-      return;
-    }
-
     set((s) => ({ implants: { ...s.implants, [name]: level } }));
   },
   increaseImplant: (name) => {
-    if (getBuildReadOnlyMode()) {
-      return;
-    }
-
     set((s) => ({ implants: { ...s.implants, [name]: s.implants[name] + 1 } }));
   },
   decreaseImplant: (name) => {
-    if (getBuildReadOnlyMode()) {
-      return;
-    }
-
     set((s) => ({ implants: { ...s.implants, [name]: s.implants[name] - 1 } }));
   },
   replaceImplants: (implants) => set({ implants }),
@@ -55,8 +43,9 @@ export const useImplantStore = create<ImplantStore>((set) => ({
 export const useImplantsState = (): ImplantsState =>
   useImplantStore((s) => s.implants);
 
-export const useImplantsActions = (): ImplantsActions =>
-  useImplantStore(
+export const useImplantsActions = (): ImplantsActions => {
+  const isReadOnly = useBuildReadOnlyMode();
+  const actions = useImplantStore(
     useShallow((s) => ({
       setImplant: s.setImplant,
       increaseImplant: s.increaseImplant,
@@ -64,3 +53,15 @@ export const useImplantsActions = (): ImplantsActions =>
       replaceImplants: s.replaceImplants,
     })),
   );
+
+  if (!isReadOnly) {
+    return actions;
+  }
+
+  return {
+    setImplant: () => undefined,
+    increaseImplant: () => undefined,
+    decreaseImplant: () => undefined,
+    replaceImplants: actions.replaceImplants,
+  };
+};

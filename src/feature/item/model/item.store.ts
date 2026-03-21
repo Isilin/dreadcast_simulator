@@ -5,7 +5,7 @@ import { getOtherHand, isWeaponType, itemMatchsSpot } from './item.rules';
 import type { DamageBonusType, Item, ItemsState } from './item.types';
 
 import { ItemSpotValue, type ItemSpot } from '@/domain';
-import { getBuildReadOnlyMode } from '@/utils/build-read-only';
+import { useBuildReadOnlyMode } from '@/feature/persistence';
 
 interface ItemStore {
   items: ItemsState;
@@ -27,10 +27,6 @@ export const initialState: ItemsState = Object.fromEntries(
 export const useItemStore = create<ItemStore>((set) => ({
   items: initialState,
   setItem: (spot, item) => {
-    if (getBuildReadOnlyMode()) {
-      return;
-    }
-
     set((s) => {
       if (!itemMatchsSpot(item.type, spot)) return s;
       const previousOther = getOtherHand(spot, s.items[spot]?.hands);
@@ -50,18 +46,10 @@ export const useItemStore = create<ItemStore>((set) => ({
     });
   },
   resetItem: (spot) => {
-    if (getBuildReadOnlyMode()) {
-      return;
-    }
-
     set((s) => ({ items: { ...s.items, [spot]: null } }));
   },
   replaceItems: (items) => set({ items }),
   setDamageBonus: (spot, bonus) => {
-    if (getBuildReadOnlyMode()) {
-      return;
-    }
-
     set((s) => {
       if (!s.items[spot] || !isWeaponType(s.items[spot]!.type)) return s;
       const otherSpot = getOtherHand(spot, s.items[spot]?.hands);
@@ -76,8 +64,9 @@ export const useItemStore = create<ItemStore>((set) => ({
 
 export const useItemsState = (): ItemsState => useItemStore((s) => s.items);
 
-export const useItemsActions = (): ItemsActions =>
-  useItemStore(
+export const useItemsActions = (): ItemsActions => {
+  const isReadOnly = useBuildReadOnlyMode();
+  const actions = useItemStore(
     useShallow((s) => ({
       setItem: s.setItem,
       resetItem: s.resetItem,
@@ -85,3 +74,15 @@ export const useItemsActions = (): ItemsActions =>
       setDamageBonus: s.setDamageBonus,
     })),
   );
+
+  if (!isReadOnly) {
+    return actions;
+  }
+
+  return {
+    setItem: () => undefined,
+    resetItem: () => undefined,
+    setDamageBonus: () => undefined,
+    replaceItems: actions.replaceItems,
+  };
+};

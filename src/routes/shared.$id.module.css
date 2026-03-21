@@ -22,10 +22,6 @@
   color: var(--color-text);
 }
 
-.readOnlyLayout {
-  pointer-events: none;
-}
-
 .centeredState {
   min-height: 60vh;
   display: flex;

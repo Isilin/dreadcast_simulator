@@ -4,7 +4,7 @@ import { useShallow } from 'zustand/react/shallow';
 import type { Kit, KitSelection, KitsState } from './kit.types';
 
 import { ItemSpotValue, type ItemSpot } from '@/domain';
-import { getBuildReadOnlyMode } from '@/utils/build-read-only';
+import { useBuildReadOnlyMode } from '@/feature/persistence';
 
 interface KitStore {
   kits: KitsState;
@@ -33,10 +33,6 @@ export const initialState: KitsState = Object.fromEntries(
 export const useKitStore = create<KitStore>((set) => ({
   kits: initialState,
   addKit: (spot, kit, force) => {
-    if (getBuildReadOnlyMode()) {
-      return;
-    }
-
     set((s) => {
       const slot = s.kits[spot];
       const existingIndex = slot.findIndex((k) => k.kit.id === kit.id);
@@ -52,10 +48,6 @@ export const useKitStore = create<KitStore>((set) => ({
     });
   },
   setKit: (spot, index, kit) => {
-    if (getBuildReadOnlyMode()) {
-      return;
-    }
-
     set((s) => {
       const slot = s.kits[spot];
       if (!slot || index < 0 || index >= slot.length) return s;
@@ -64,10 +56,6 @@ export const useKitStore = create<KitStore>((set) => ({
     });
   },
   deleteKit: (spot, index) => {
-    if (getBuildReadOnlyMode()) {
-      return;
-    }
-
     set((s) => {
       const slot = s.kits[spot];
       if (!slot || index < 0 || index >= slot.length) return s;
@@ -77,17 +65,9 @@ export const useKitStore = create<KitStore>((set) => ({
     });
   },
   resetKits: (spot) => {
-    if (getBuildReadOnlyMode()) {
-      return;
-    }
-
     set((s) => ({ kits: { ...s.kits, [spot]: [] } }));
   },
   setKitNumber: (spot, index, number) => {
-    if (getBuildReadOnlyMode()) {
-      return;
-    }
-
     set((s) => {
       const slot = s.kits[spot];
       if (!slot || index < 0 || index >= slot.length) return s;
@@ -100,8 +80,9 @@ export const useKitStore = create<KitStore>((set) => ({
 
 export const useKitsState = (): KitsState => useKitStore((s) => s.kits);
 
-export const useKitsActions = (): KitsActions =>
-  useKitStore(
+export const useKitsActions = (): KitsActions => {
+  const isReadOnly = useBuildReadOnlyMode();
+  const actions = useKitStore(
     useShallow((s) => ({
       addKit: s.addKit,
       setKit: s.setKit,
@@ -111,3 +92,17 @@ export const useKitsActions = (): KitsActions =>
       replaceKits: s.replaceKits,
     })),
   );
+
+  if (!isReadOnly) {
+    return actions;
+  }
+
+  return {
+    addKit: () => undefined,
+    setKit: () => undefined,
+    deleteKit: () => undefined,
+    resetKits: () => undefined,
+    setKitNumber: () => undefined,
+    replaceKits: actions.replaceKits,
+  };
+};
