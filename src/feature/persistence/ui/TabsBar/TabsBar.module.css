@@ -46,6 +46,32 @@
   }
 }
 
+.addTab {
+  min-width: 44px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 2px dashed var(--color-primary-dark);
+  background: color-mix(in srgb, var(--color-primary) 12%, var(--color-panel));
+  color: var(--color-text);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.18s;
+
+  &:hover,
+  &:focus-visible {
+    background: color-mix(
+      in srgb,
+      var(--color-primary) 20%,
+      var(--color-panel)
+    );
+    box-shadow: 0 0 0 2px
+      color-mix(in srgb, var(--color-primary) 30%, transparent);
+    outline: none;
+  }
+}
+
 .panel {
   display: flex;
   justify-content: flex-end;
