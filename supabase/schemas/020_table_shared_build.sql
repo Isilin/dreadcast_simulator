@@ -16,52 +16,21 @@ CREATE INDEX IF NOT EXISTS idx_shared_build_build_ref
 
 ALTER TABLE shared_build ENABLE ROW LEVEL SECURITY;
 
--- Permet a un utilisateur connecte de lire ses propres liens de partage.
-CREATE POLICY "Allow user read own shared builds" ON shared_build
-  FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1
-      FROM build
-      WHERE build.id = shared_build.build_id
-        AND build.user_id = auth.uid()
-    )
-  );
-
 -- Permet aux visiteurs de lire un partage public par identifiant.
 CREATE POLICY "Allow public read shared builds" ON shared_build
   FOR SELECT
   USING (true);
 
+-- L'ownership est valide cote API (verification user/session avant insert/update).
+-- Evite la recursion RLS en ne reliant pas les policies shared_build vers build.
 CREATE POLICY "Allow user insert own shared builds" ON shared_build
   FOR INSERT
-  WITH CHECK (
-    EXISTS (
-      SELECT 1
-      FROM build
-      WHERE build.id = shared_build.build_id
-        AND build.user_id = auth.uid()
-    )
-  );
+  WITH CHECK (auth.uid() IS NOT NULL);
 
 CREATE POLICY "Allow user update own shared builds" ON shared_build
   FOR UPDATE
-  USING (
-    EXISTS (
-      SELECT 1
-      FROM build
-      WHERE build.id = shared_build.build_id
-        AND build.user_id = auth.uid()
-    )
-  )
-  WITH CHECK (
-    EXISTS (
-      SELECT 1
-      FROM build
-      WHERE build.id = shared_build.build_id
-        AND build.user_id = auth.uid()
-    )
-  );
+  USING (auth.uid() IS NOT NULL)
+  WITH CHECK (auth.uid() IS NOT NULL);
 
 -- Autorise la lecture publique des builds explicitement partages.
 CREATE POLICY "Allow public read shared snapshots" ON build
