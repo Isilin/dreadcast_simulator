@@ -26,12 +26,12 @@ export const Card = ({
     <article
       id={id}
       aria-label={label}
-      className={`${style.card} ${className}`}
       style={inlineStyle}
       onClick={onClick}
       role={onClick ? 'button' : undefined}
       data-variant={variant}
       data-state={state}
+      className={`${style.card} ${className}`}
     >
       {children}
     </article>

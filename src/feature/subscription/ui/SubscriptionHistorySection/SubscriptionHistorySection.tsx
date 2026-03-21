@@ -65,6 +65,14 @@ export const SubscriptionHistorySection = ({
                 <li key={subscription.id} className={styles.listItem}>
                   <span>{subscription.planName}</span>
                   <span>{formatPrice(subscription.priceCents)}</span>
+                  <span className={styles.statusRow}>
+                    Statut:{' '}
+                    <strong>
+                      {subscription.status === 'pending'
+                        ? 'En attente de validation admin'
+                        : 'Valide'}
+                    </strong>
+                  </span>
                   <span>
                     {formatDate(subscription.startsAt)} -{' '}
                     {formatDate(subscription.endsAt)}

@@ -27,6 +27,9 @@ export const subscriptionResponseDtoSchema = z.object({
   price_cents: z.coerce.number().int().min(1),
   starts_at: z.string().min(1),
   ends_at: z.string().min(1),
+  status: z.enum(['pending', 'validated']),
+  validated_at: z.string().min(1).nullable(),
+  validated_by: z.string().min(1).nullable(),
   created_at: z.string().min(1),
 });
 

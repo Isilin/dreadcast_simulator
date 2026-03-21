@@ -16,6 +16,10 @@ export const getActiveSubscription = (
   nowTimestamp = Date.now(),
 ) => {
   return subscriptions.find((subscription) => {
+    if (subscription.status !== 'validated') {
+      return false;
+    }
+
     const endTimestamp = new Date(subscription.endsAt).getTime();
     return Number.isFinite(endTimestamp) && endTimestamp >= nowTimestamp;
   });

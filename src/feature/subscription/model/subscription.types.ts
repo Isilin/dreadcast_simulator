@@ -7,6 +7,7 @@ export interface SubscriptionPlan {
 }
 
 export type SubscriptionPlanCode = string;
+export type SubscriptionStatus = 'pending' | 'validated';
 
 export interface SubscriptionRecord {
   id: string;
@@ -16,5 +17,8 @@ export interface SubscriptionRecord {
   priceCents: number;
   startsAt: string;
   endsAt: string;
+  status: SubscriptionStatus;
+  validatedAt: string | null;
+  validatedBy: string | null;
   createdAt: string;
 }

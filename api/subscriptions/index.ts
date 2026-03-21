@@ -94,6 +94,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         price_cents: plan.price_cents,
         starts_at: startsAt,
         ends_at: endsAt,
+        status: 'pending',
       })
       .select(SUBSCRIPTION_SELECT_QUERY)
       .single();

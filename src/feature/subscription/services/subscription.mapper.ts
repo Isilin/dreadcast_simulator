@@ -10,6 +10,9 @@ export const toDomain = (dto: SubscriptionResponseDto): SubscriptionRecord => ({
   priceCents: dto.price_cents,
   startsAt: dto.starts_at,
   endsAt: dto.ends_at,
+  status: dto.status,
+  validatedAt: dto.validated_at,
+  validatedBy: dto.validated_by,
   createdAt: dto.created_at,
 });
 

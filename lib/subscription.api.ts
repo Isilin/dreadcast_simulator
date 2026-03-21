@@ -6,6 +6,9 @@ export const SUBSCRIPTION_SELECT_QUERY = `
   price_cents,
   starts_at,
   ends_at,
+  status,
+  validated_at,
+  validated_by,
   created_at
 `;
 
