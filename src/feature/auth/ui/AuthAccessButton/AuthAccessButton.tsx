@@ -5,11 +5,12 @@ import styles from './AuthAccessButton.module.css';
 
 import { useAuthState } from '@/feature/auth/model';
 import { signOut } from '@/feature/auth/services';
+import Routes from '@/utils/routes';
 
 export const AuthAccessButton = () => {
   const navigate = useNavigate();
   const isConnexionPage = useRouterState({
-    select: (state) => state.location.pathname === '/connexion',
+    select: (state) => state.location.pathname === Routes.connection,
   });
   const { session } = useAuthState();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -50,7 +51,7 @@ export const AuthAccessButton = () => {
 
   const handleClick = async () => {
     if (!isAuthenticated) {
-      await navigate({ to: isConnexionPage ? '/' : '/connexion' });
+      await navigate({ to: isConnexionPage ? Routes.home : Routes.connection });
       return;
     }
 
@@ -62,7 +63,7 @@ export const AuthAccessButton = () => {
 
   const handleOpenSubscription = async () => {
     setIsMenuOpen(false);
-    await navigate({ to: '/abonnement' });
+    await navigate({ to: Routes.subscription });
   };
 
   if (!isAuthenticated) {
