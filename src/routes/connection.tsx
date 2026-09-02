@@ -1,10 +1,12 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
-import { LoginForm, requireAuthenticatedSession } from '@/feature/auth';
+import { LoginForm } from '@/feature/auth';
 import Routes from '@/utils/routes';
 
 export const Route = createFileRoute(Routes.connection)({
   beforeLoad: async () => {
+    const { requireAuthenticatedSession } =
+      await import('@/feature/auth/services/auth.service');
     const isAuthenticated = await requireAuthenticatedSession();
 
     if (isAuthenticated) {

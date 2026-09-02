@@ -6,7 +6,6 @@ import styles from './LoginForm.module.css';
 import {
   getMissingAuthConfigErrorMessage,
   isAuthConfigured,
-  signInWithPassword,
 } from '@/feature/auth/services';
 
 export const LoginForm = () => {
@@ -31,6 +30,7 @@ export const LoginForm = () => {
     setErrorMessage(null);
     setIsSubmitting(true);
 
+    const { signInWithPassword } = await import('../../services/auth.service');
     const { error } = await signInWithPassword({
       email: emailValue,
       password,

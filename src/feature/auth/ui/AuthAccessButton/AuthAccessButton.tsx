@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './AuthAccessButton.module.css';
 
 import { useAuthState } from '@/feature/auth/model';
-import { signOut } from '@/feature/auth/services';
 import Routes from '@/utils/routes';
 
 export const AuthAccessButton = () => {
@@ -56,6 +55,7 @@ export const AuthAccessButton = () => {
     }
 
     setIsSubmitting(true);
+    const { signOut } = await import('../../services/auth.service');
     await signOut();
     setIsSubmitting(false);
     setIsMenuOpen(false);
