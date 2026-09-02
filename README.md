@@ -33,6 +33,7 @@ Cette application est construite avec des technologies modernes et suit une arch
   - Configuration des implants cybernétiques avec niveaux variables
   - Gestion de l'équipement complet (tête, torse, jambes, pieds, armes)
   - Ajout de kits techniques spécialisés
+  - Atelier unifié avec catalogue, filtres et glisser-déposer pour équipements, kits, implants et drogues
   - Calcul en temps réel des statistiques finales
 
 - **Gestion des builds**
@@ -108,6 +109,12 @@ NEXT_PUBLIC_SIMULATOR_SUPABASE_ANON_KEY=votre_cle_anon
 
 Sans ces variables, la page de connexion s'affichera mais la connexion sera désactivée.
 
+### Données du catalogue en local
+
+Le serveur Vite proxifie les appels `/api/*` vers le déploiement Vercel. Le catalogue, les kits, les implants, les drogues et les races nécessitent donc une API Vercel fonctionnelle et une configuration Supabase valide.
+
+Quand le panneau Catalogue affiche `Catalogue indisponible`, le client a reçu une erreur de service. Vérifiez les variables Supabase du projet Vercel et les journaux des fonctions serverless. L'interface reste utilisable pour les builds déjà enregistrés localement.
+
 ### Option 3: Environnement de développement
 
 Pour les développeurs souhaitant contribuer :
@@ -118,6 +125,7 @@ yarn install
 
 # Lancer les vérifications qualité
 yarn lint          # Vérification ESLint
+yarn test          # Tests unitaires Vitest
 yarn format        # Formatage Prettier
 yarn build         # Build de production
 
@@ -144,12 +152,17 @@ Le projet suit une architecture **feature-sliced design** pour une organisation 
 src/
 ├── domain/          # Types partagés (Stat, ItemSpot, etc.)
 ├── feature/         # Fonctionnalités métier
+│   ├── build/        # Atelier, coordination et drag-and-drop
+│   ├── auth/         # Session et identifiants
+│   ├── persistence/  # Snapshots, autosave et builds partagés
 │   ├── implant/     # Gestion des implants
 │   ├── item/        # Gestion des équipements
 │   ├── kit/         # Gestion des kits
-│   └── profile/     # Profil du personnage
-├── ui/              # Composants réutilisables
-└── styles/          # Styles globaux et thème
+│   ├── profile/      # Profil du personnage
+│   └── stats/        # Calcul et présentation des statistiques
+├── ui/               # Composants réutilisables sans logique métier
+├── routes/           # Composition des pages
+└── styles/           # Styles globaux et thème
 ```
 
 Chaque fonctionnalité est organisée selon le pattern `model/services/ui` :
@@ -160,10 +173,24 @@ Chaque fonctionnalité est organisée selon le pattern `model/services/ui` :
 
 ### Gestion d'état
 
-- **Pattern Reducer + Context** pour chaque fonctionnalité
-- Séparation `StateContext`/`DispatchContext` pour les performances
-- Persistance hybride: `localStorage` hors connexion et BDD une fois connecte
+- **Stores Zustand** séparés par domaine
+- **TanStack Query** pour les données distantes et leurs états de chargement
+- Persistance hybride: `localStorage` hors connexion et BDD une fois connecté
 - Validation avec schémas Zod
+
+### Frontières de responsabilité
+
+- `feature/build` orchestre l'atelier, les modes de catalogue et le protocole
+  drag-and-drop; les composants métier restent dans `item`, `kit`, `implant` et
+  `drug`.
+- `feature/persistence` sépare chargement, snapshots, autosave, builds distants
+  et partage public.
+- `feature/auth` sépare session Supabase et opérations d'identifiants derrière
+  une façade stable.
+- `src/ui` contient uniquement les primitives génériques réutilisables.
+
+Voir [FRONTEND_README.md](FRONTEND_README.md) pour le détail des flux et des
+conventions d'implémentation.
 
 ## Développement
 
@@ -173,6 +200,7 @@ Chaque fonctionnalité est organisée selon le pattern `model/services/ui` :
 yarn dev          # Serveur de développement (port 5173)
 yarn build        # Build de production avec vérification TypeScript
 yarn lint         # Vérification ESLint
+yarn test         # Tests unitaires Vitest
 yarn lint:fix     # Correction automatique des erreurs ESLint
 yarn format       # Formatage avec Prettier
 yarn preview      # Preview du build de production
@@ -186,7 +214,7 @@ Le projet suit des standards stricts définis dans [CODING_STANDARDS.md](CODING_
 - **Feature-sliced design** avec exports barrel (`index.ts`)
 - **CSS Modules** avec noms sémantiques
 - **Hooks personnalisés** pour la logique réutilisable
-- **Tests** avec React Testing Library (à implémenter)
+- **Tests** avec Vitest, notamment sur le protocole et les mutations DnD
 
 ### Configuration GitHub Copilot
 
