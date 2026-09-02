@@ -1,4 +1,4 @@
-import { Tabs } from '@base-ui/react';
+import { Tabs } from '@base-ui/react/tabs';
 import { useNavigate } from '@tanstack/react-router';
 
 import styles from './TabsBar.module.css';

@@ -1,87 +1,77 @@
 .container {
-  position: fixed;
-  top: 64px;
-  right: 16px;
-  z-index: 900;
+  position: static;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
+  align-items: stretch;
+  gap: var(--space-1);
 }
 
 .shareButton {
-  border: 1px solid var(--color-primary-dark);
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--color-primary) 14%, var(--color-panel));
-  color: var(--color-text);
-  padding: 6px 10px;
-  font-size: 12px;
-  font-weight: 600;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--small-radius);
+  background: var(--action-primary-muted);
+  color: var(--action-primary-strong);
+  padding: var(--space-1) var(--space-2);
+  font: 600 10px/1.2 var(--font-data);
+  align-self: flex-end;
   cursor: pointer;
 
   &:hover,
   &:focus-visible {
-    background: color-mix(
-      in srgb,
-      var(--color-primary) 22%,
-      var(--color-panel)
-    );
-    outline: none;
+    border-color: var(--action-primary);
+    background: var(--surface-interactive);
+    box-shadow: var(--glow-primary);
   }
 }
 
 .sharePanel {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .shareLink {
-  color: var(--color-primary-light);
-  font-size: 14px;
+  color: var(--action-primary-strong);
+  font: 400 11px/1.2 var(--font-data);
   word-break: break-all;
 }
 
 .copyButton {
   align-self: flex-start;
-  border: 1px solid var(--color-gray-200);
-  border-radius: 8px;
-  background: var(--color-gray-100);
-  color: var(--color-text);
-  padding: 6px 10px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--small-radius);
+  background: var(--surface-interactive);
+  color: var(--text-primary);
+  padding: var(--space-1) var(--space-2);
+  font: 600 10px/1.2 var(--font-data);
   cursor: pointer;
 }
 
 .label {
-  font-size: 12px;
-  color: var(--color-text-secondary);
+  color: var(--text-secondary);
+  font: 600 10px/1.2 var(--font-data);
 }
 
 .input {
-  width: 220px;
-  border: 1px solid var(--color-gray-200);
-  border-radius: 8px;
-  background: var(--color-gray-100);
-  color: var(--color-text);
-  padding: 6px 10px;
-  font-size: 14px;
-  font-weight: 600;
-  text-align: right;
+  width: 100%;
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--small-radius);
+  background: var(--surface-sunken);
+  color: var(--text-primary);
+  font: 600 11px/1.2 var(--font-data);
+  text-align: left;
 
   &:focus-visible {
-    outline: 2px solid var(--color-primary-dark);
-    outline-offset: 1px;
+    border-color: var(--action-primary);
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
   }
 }
 
 @media (max-width: 768px) {
   .container {
-    top: 52px;
-    right: 12px;
-  }
-
-  .input {
-    width: 170px;
-    font-size: 13px;
+    width: 100%;
   }
 }
