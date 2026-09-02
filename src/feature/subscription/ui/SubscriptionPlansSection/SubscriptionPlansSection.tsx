@@ -27,7 +27,7 @@ export const SubscriptionPlansSection = ({
 }: SubscriptionPlansSectionProps) => {
   return (
     <>
-      <section className={styles.grid} aria-label="Plans d abonnement">
+      <section className={styles.grid} aria-label="Plans d'abonnement">
         {isLoading ? (
           <p className={styles.info}>Chargement des plans...</p>
         ) : null}
@@ -36,7 +36,7 @@ export const SubscriptionPlansSection = ({
           <p className={styles.error}>
             {getErrorMessage(
               queryError,
-              'Erreur de chargement des plans abonnement.',
+              "Erreur de chargement des plans d'abonnement.",
             )}
           </p>
         ) : null}
@@ -53,7 +53,7 @@ export const SubscriptionPlansSection = ({
 
       {createError ? (
         <p className={styles.error}>
-          {getErrorMessage(createError, 'Impossible de creer cet abonnement.')}
+          {getErrorMessage(createError, 'Impossible de créer cet abonnement.')}
         </p>
       ) : null}
     </>

@@ -1,4 +1,4 @@
-import { Dialog } from '@base-ui/react';
+import { Dialog } from '@base-ui/react/dialog';
 import { useState } from 'react';
 
 import { useDrugId } from '../../model/drug.store';

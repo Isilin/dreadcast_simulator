@@ -1,0 +1,9 @@
+.label {
+  margin: 0;
+  padding: var(--space-2);
+  border: 1px dashed var(--status-danger);
+  color: var(--status-danger);
+  font: 600 10px/1.2 var(--font-data);
+  text-align: center;
+  text-transform: uppercase;
+}

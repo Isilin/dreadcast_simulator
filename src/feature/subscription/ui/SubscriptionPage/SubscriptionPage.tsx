@@ -1,4 +1,4 @@
-import { Dialog } from '@base-ui/react';
+import { Dialog } from '@base-ui/react/dialog';
 import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 
@@ -105,19 +105,19 @@ export const SubscriptionPage = () => {
               <div className={styles.pendingMessage}>
                 <p>
                   Votre plan <strong>{pendingSubscription.planName}</strong> a
-                  bien ete enregistre en attente.
+                  bien été enregistré en attente.
                 </p>
                 <p>
                   Pensez a verser{' '}
                   <strong>{formatPrice(pendingSubscription.priceCents)}</strong>{' '}
-                  en credits a l adresse suivante:
+                  en crédits à l'adresse suivante :
                 </p>
                 <p className={styles.paymentAddress}>
                   {SUBSCRIPTION_CREDITS_ADDRESS}
                 </p>
                 <p>
-                  Un administrateur validera ensuite votre abonnement apres
-                  verification du paiement.
+                  Un administrateur validera ensuite votre abonnement après
+                  vérification du paiement.
                 </p>
               </div>
             ) : null}

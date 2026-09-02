@@ -1,0 +1,88 @@
+.board {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.8fr) minmax(180px, 1fr) minmax(150px, 0.8fr);
+  gap: var(--space-3);
+  min-width: 0;
+  min-height: 520px;
+  padding: var(--space-3);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-base);
+  box-shadow: var(--elevation-1);
+}
+
+.bodySlots,
+.weaponSlots,
+.rightBoard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.centerBoard {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 420px;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-sunken);
+}
+
+.silhouette {
+  width: min(100%, 280px);
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+  opacity: 0.82;
+  pointer-events: none;
+}
+
+.silhouette > * {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.rightBoard {
+  min-width: 0;
+}
+
+@media (max-width: 1100px) {
+  .board {
+    grid-template-columns: minmax(130px, 0.75fr) minmax(150px, 1fr) minmax(130px, 0.75fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .board {
+    grid-template-columns: 1fr 1fr;
+    min-height: 0;
+  }
+
+  .centerBoard {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    min-height: 280px;
+  }
+
+  .bodySlots {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .rightBoard {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 560px) {
+  .board {
+    grid-template-columns: 1fr;
+  }
+
+  .centerBoard,
+  .bodySlots,
+  .rightBoard {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}

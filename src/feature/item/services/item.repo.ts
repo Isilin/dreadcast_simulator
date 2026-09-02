@@ -1,6 +1,5 @@
 import { ITEM_REPOSITORY_ERROR_CODE, ItemRepositoryError } from './item.errors';
 import { toDomain } from './item.mapper';
-import { itemArrayResponseSchema, itemResponseDtoSchema } from './item.schema';
 import type { Item, ItemType } from '../model/item.types';
 
 import { GET } from '@/utils/http';
@@ -27,6 +26,7 @@ export const fetchItems = async (
   }
 
   const payload: unknown = await response.json();
+  const { itemArrayResponseSchema } = await import('./item.schema');
   const items = validatePayload({
     schema: itemArrayResponseSchema,
     payload,
@@ -52,6 +52,7 @@ export const fetchItemById = async (
   }
 
   const payload: unknown = await response.json();
+  const { itemResponseDtoSchema } = await import('./item.schema');
   const item = validatePayload({
     schema: itemResponseDtoSchema,
     payload,

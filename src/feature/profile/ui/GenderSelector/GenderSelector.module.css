@@ -1,51 +1,58 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.label {
+  color: var(--text-secondary);
+  font: 600 10px/1.2 var(--font-data);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .RadioGroup {
   display: flex;
   flex-direction: row;
   align-items: start;
-  gap: 0.25rem;
-  color: var(--color-gray-900);
-}
-
-@media (max-width: 768px) {
-  .RadioGroup {
-    flex-wrap: wrap;
-  }
-}
-
-.Caption {
-  font-weight: 500;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  color: var(--text-primary);
+  font: 400 11px/1.2 var(--font-data);
 }
 
 .Item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-1);
+  color: var(--text-primary);
+  white-space: nowrap;
 }
 
 .Radio {
   box-sizing: border-box;
   display: flex;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 16px;
+  height: 16px;
   align-items: center;
   justify-content: center;
   border-radius: 100%;
   outline: 0;
   padding: 0;
-  margin: 0;
-  border: none;
+  border: 1px solid var(--border-strong);
+  background-color: transparent;
 
   &[data-unchecked] {
-    border: 1px solid var(--color-gray-300);
-    background-color: transparent;
+    border-color: var(--border-strong);
   }
 
   &[data-checked] {
-    background-color: var(--color-gray-900);
+    border-color: var(--action-primary);
+    background-color: var(--action-primary);
   }
 
   &:focus-visible {
-    outline: 2px solid var(--color-blue);
+    outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
   }
 }
@@ -62,8 +69,8 @@
   &::before {
     content: '';
     border-radius: 100%;
-    width: 0.5rem;
-    height: 0.5rem;
-    background-color: var(--color-gray-50);
+    width: 6px;
+    height: 6px;
+    background-color: var(--canvas);
   }
 }

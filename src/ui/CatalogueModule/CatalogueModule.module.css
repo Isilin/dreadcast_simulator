@@ -1,0 +1,58 @@
+.module {
+  position: relative;
+}
+
+.select {
+  display: grid;
+  gap: 5px;
+  width: 100%;
+  min-height: 76px;
+  padding: var(--space-2);
+  padding-right: 46px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--small-radius);
+  color: var(--text-primary);
+  background: var(--surface-raised);
+  text-align: left;
+}
+
+.select:hover:not(:disabled) {
+  border-color: var(--action-primary);
+  background: var(--surface-interactive);
+}
+
+.select span {
+  font: 600 11px/1.2 var(--font-data);
+}
+
+.select small {
+  color: var(--text-secondary);
+  font: 400 9px/1.2 var(--font-data);
+}
+
+.module[data-dragging='true'] {
+  opacity: 0.35;
+}
+
+.dragHandle {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: inline-grid;
+  min-width: 40px;
+  min-height: 32px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--small-radius);
+  color: var(--text-secondary);
+  background: var(--surface-sunken);
+  line-height: 0;
+  cursor: grab;
+}
+
+.dragHandle svg {
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}

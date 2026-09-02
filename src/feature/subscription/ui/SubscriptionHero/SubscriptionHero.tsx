@@ -6,8 +6,8 @@ export const SubscriptionHero = () => {
       <p className={styles.overline}>Plans Premium</p>
       <h1 className={styles.title}>Abonnement</h1>
       <p className={styles.subtitle}>
-        Choisissez une duree, activez-la instantanement, et gardez un historique
-        clair de vos periodes. 1 an ingame correspond a 1 mois IRL.
+        Choisissez une durée, activez-la instantanément, et gardez un historique
+        clair de vos périodes. 1 an ingame correspond à 1 mois IRL.
       </p>
     </section>
   );

@@ -3,11 +3,6 @@ import {
   SubscriptionRepositoryError,
 } from './subscription.errors';
 import { toDomain, toPlanDomain } from './subscription.mapper';
-import {
-  subscriptionPlanArrayResponseDtoSchema,
-  subscriptionArrayResponseDtoSchema,
-  subscriptionResponseDtoSchema,
-} from './subscription.schema';
 import type {
   SubscriptionPlan,
   SubscriptionPlanCode,
@@ -55,6 +50,8 @@ export const fetchSubscriptions = async (
   }
 
   const payload: unknown = await response.json();
+  const { subscriptionArrayResponseDtoSchema } =
+    await import('./subscription.schema');
   const subscriptions = validatePayload({
     schema: subscriptionArrayResponseDtoSchema,
     payload,
@@ -85,6 +82,8 @@ export const fetchSubscriptionPlans = async (
   }
 
   const payload: unknown = await response.json();
+  const { subscriptionPlanArrayResponseDtoSchema } =
+    await import('./subscription.schema');
   const plans = validatePayload({
     schema: subscriptionPlanArrayResponseDtoSchema,
     payload,
@@ -120,6 +119,8 @@ export const createSubscription = async (
   }
 
   const payload: unknown = await response.json();
+  const { subscriptionResponseDtoSchema } =
+    await import('./subscription.schema');
   const subscription = validatePayload({
     schema: subscriptionResponseDtoSchema,
     payload,

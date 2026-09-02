@@ -1,6 +1,8 @@
 .container {
   list-style: none;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 @media (max-width: 768px) {
@@ -11,6 +13,19 @@
 
 .skill {
   display: flex;
+  align-items: baseline;
   gap: 1rem;
   justify-content: space-between;
+  font: 400 11px/1.2 var(--font-data);
+}
+
+.label {
+  color: var(--text-secondary);
+  font: 400 11px/1.2 var(--font-data);
+}
+
+.value {
+  color: var(--text-primary);
+  font: 600 11px/1.2 var(--font-data);
+  font-variant-numeric: tabular-nums;
 }

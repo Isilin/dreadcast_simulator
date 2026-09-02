@@ -1,8 +1,7 @@
-import { Tooltip } from '@base-ui/react';
+import { Tooltip } from '@base-ui/react/tooltip';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
-import { StrictMode } from 'react';
+import { lazy, StrictMode, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import '@/styles/helpers.css';
@@ -13,6 +12,12 @@ import { routeTree } from './routeTree.gen';
 import { ErrorBoundary } from './ui';
 
 const router = createRouter({ routeTree });
+
+const ReactQueryDevtools = lazy(async () => {
+  const { ReactQueryDevtools: Devtools } =
+    await import('@tanstack/react-query-devtools');
+  return { default: Devtools };
+});
 
 declare module '@tanstack/react-router' {
   interface Register {
@@ -39,7 +44,11 @@ if (!rootElement.innerHTML) {
           <Tooltip.Provider>
             <RouterProvider router={router} />
           </Tooltip.Provider>
-          <ReactQueryDevtools initialIsOpen={false} />
+          {import.meta.env.DEV ? (
+            <Suspense fallback={null}>
+              <ReactQueryDevtools initialIsOpen={false} />
+            </Suspense>
+          ) : null}
         </QueryClientProvider>
       </ErrorBoundary>
     </StrictMode>,

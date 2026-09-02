@@ -1,3 +1,8 @@
+@import '@fontsource/chakra-petch/600.css';
+@import '@fontsource/chakra-petch/700.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/600.css';
+
 *,
 *::before,
 *::after {
@@ -27,4 +32,37 @@ body {
   margin: 0;
   display: flex;
   min-height: 100vh;
+  background:
+    linear-gradient(rgb(32 201 232 / 3%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(32 201 232 / 3%) 1px, transparent 1px),
+    var(--canvas);
+  background-size: 32px 32px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+::selection {
+  color: var(--text-primary);
+  background: var(--action-primary-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
 }

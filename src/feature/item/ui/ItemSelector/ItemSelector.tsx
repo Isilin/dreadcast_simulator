@@ -1,4 +1,4 @@
-import { Dialog } from '@base-ui/react';
+import { Dialog } from '@base-ui/react/dialog';
 import { memo, useState } from 'react';
 
 import { getItemTypes, useItemsActions, useItemsState } from '../../model';

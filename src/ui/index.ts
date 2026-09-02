@@ -1,5 +1,8 @@
+export * from './AppShell';
 export * from './Card';
+export * from './CatalogueModule';
 export * from './DeleteButton';
+export * from './DraggableModuleRow';
 export * from './EffectChip';
 export * from './ErrorBoundary';
 export * from './Fallback';
@@ -8,6 +11,7 @@ export * from './HamburgerButton';
 export * from './Icon';
 export * from './Modal';
 export * from './Popin';
+export * from './DroppablePanel';
 export * from './Sidebar';
 export * from './SlotPair';
 export * from './Spinner';

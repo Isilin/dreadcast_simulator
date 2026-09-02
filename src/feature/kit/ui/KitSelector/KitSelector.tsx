@@ -1,4 +1,4 @@
-import { Dialog } from '@base-ui/react';
+import { Dialog } from '@base-ui/react/dialog';
 import { Fragment, memo, useMemo, useState } from 'react';
 
 import { useKitsOnSpot } from '../../model/kit.selectors';

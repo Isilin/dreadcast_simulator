@@ -1,7 +1,6 @@
 import type { Race } from '../model';
 import { RACE_REPOSITORY_ERROR_CODE, RaceRepositoryError } from './race.errors';
 import { toDomain } from './race.mapper';
-import { raceArrayResponseSchema, raceResponseDtoSchema } from './race.schema';
 
 import { GET } from '@/utils/http';
 import { validatePayload } from '@/utils/validation';
@@ -18,6 +17,7 @@ export const fetchRaces = async (signal?: AbortSignal): Promise<Race[]> => {
   }
 
   const payload: unknown = await response.json();
+  const { raceArrayResponseSchema } = await import('./race.schema');
   const races = validatePayload({
     schema: raceArrayResponseSchema,
     payload,
@@ -46,6 +46,7 @@ export const fetchRaceByType = async (
   }
 
   const payload: unknown = await response.json();
+  const { raceResponseDtoSchema } = await import('./race.schema');
   const race = validatePayload({
     schema: raceResponseDtoSchema,
     payload,

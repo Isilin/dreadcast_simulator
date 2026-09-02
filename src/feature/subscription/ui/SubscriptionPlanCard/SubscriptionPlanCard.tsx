@@ -12,7 +12,7 @@ interface SubscriptionPlanCardProps {
 
 const getPlanLabel = (durationIngameYears: number | null) => {
   if (durationIngameYears === null) {
-    return 'Acces illimite';
+    return 'Accès illimité';
   }
 
   return `Valable ${durationIngameYears} an${durationIngameYears > 1 ? 's' : ''} ingame`;

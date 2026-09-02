@@ -1,4 +1,5 @@
-import { Field, NumberField } from '@base-ui/react';
+import { Field } from '@base-ui/react/field';
+import { NumberField } from '@base-ui/react/number-field';
 
 import {
   useImplantsActions,
