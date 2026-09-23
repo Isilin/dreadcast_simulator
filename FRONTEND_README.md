@@ -102,6 +102,7 @@ Depuis la racine du projet:
 yarn test
 yarn lint
 yarn build
+yarn analyze
 ```
 
 Les tests de modele couvrent notamment la validation des payloads DnD, les

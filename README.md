@@ -199,6 +199,7 @@ conventions d'implémentation.
 ```bash
 yarn dev          # Serveur de développement (port 5173)
 yarn build        # Build de production avec vérification TypeScript
+yarn analyze      # Build avec rapport de taille dans dist/stats.html
 yarn lint         # Vérification ESLint
 yarn test         # Tests unitaires Vitest
 yarn lint:fix     # Correction automatique des erreurs ESLint

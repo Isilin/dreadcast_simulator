@@ -1,4 +1,3 @@
-import { Tooltip } from '@base-ui/react/tooltip';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { lazy, StrictMode, Suspense } from 'react';
@@ -41,9 +40,7 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
-          <Tooltip.Provider>
-            <RouterProvider router={router} />
-          </Tooltip.Provider>
+          <RouterProvider router={router} />
           {import.meta.env.DEV ? (
             <Suspense fallback={null}>
               <ReactQueryDevtools initialIsOpen={false} />
