@@ -2,8 +2,10 @@
   position: relative;
   z-index: 1;
   display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
   gap: 6px;
   align-self: stretch;
+  min-height: 0;
   padding: var(--space-2);
   border: 1px solid transparent;
   background: color-mix(in srgb, var(--surface-base) 72%, transparent);
@@ -36,7 +38,9 @@
 
 .control {
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   gap: 6px;
+  min-height: 0;
   width: 100%;
   padding: 0;
   border: 0;
@@ -64,9 +68,10 @@
 .summary {
   display: grid;
   align-content: center;
-  gap: 6px;
-  min-height: 124px;
+  gap: 4px;
+  min-height: 0;
   padding: var(--space-2);
+  overflow: hidden;
   border: 1px solid var(--border-subtle);
   background: var(--surface-sunken);
 }

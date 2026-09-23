@@ -1,3 +1,4 @@
+export * from './AppFooter';
 export * from './AppShell';
 export * from './Card';
 export * from './CatalogueModule';
@@ -6,7 +7,6 @@ export * from './DraggableModuleRow';
 export * from './EffectChip';
 export * from './ErrorBoundary';
 export * from './Fallback';
-export * from './Footer';
 export * from './HamburgerButton';
 export * from './Icon';
 export * from './Modal';

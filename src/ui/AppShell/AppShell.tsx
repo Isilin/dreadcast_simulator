@@ -1,6 +1,7 @@
 import { Link, type LinkProps } from '@tanstack/react-router';
 import type { PropsWithChildren, ReactNode } from 'react';
 
+import { AppFooter } from '../AppFooter';
 import styles from './AppShell.module.css';
 
 export interface AppShellNavLink {
@@ -48,6 +49,7 @@ export const AppShell = ({ actions, nav, children }: AppShellProps) => {
         <div className={styles.actions}>{actions}</div>
       </header>
       <main className={styles.content}>{children}</main>
+      <AppFooter />
     </div>
   );
 };

@@ -1,22 +1,26 @@
 .catalogue {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
   min-height: 0;
-  height: calc(100vh - 72px - var(--space-5));
+  height: 100%;
   padding: var(--space-3);
   border: 1px solid var(--border-subtle);
   background: color-mix(in srgb, var(--surface-base) 92%, transparent);
   box-shadow: var(--elevation-1);
-  position: sticky;
-  top: calc(56px + var(--space-4));
-  max-height: calc(100vh - 72px - var(--space-5));
-  overflow: auto;
+  overflow: hidden;
+}
+
+.filters {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
 }
 
 .panelHeader {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: space-between;
-  flex-wrap: wrap;
   gap: var(--space-2);
   margin-bottom: var(--space-3);
 }
@@ -46,14 +50,6 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 6px;
-  margin-top: var(--space-3);
-}
-
-.searchLabel {
-  display: block;
-  margin-bottom: 6px;
-  color: var(--text-secondary);
-  font: 600 11px/1.2 var(--font-data);
 }
 
 .search {
@@ -69,8 +65,8 @@
 .slotFilters {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 6px;
-  margin-block: var(--space-3);
 }
 
 .catalogueContext {
@@ -81,7 +77,8 @@
 }
 
 .slotFilter {
-  min-height: 30px;
+  min-height: 28px;
+  padding-inline: var(--space-2);
   border: 1px solid var(--border-subtle);
   border-radius: var(--small-radius);
   color: var(--text-secondary);
@@ -97,8 +94,15 @@
 
 .grid {
   display: grid;
+  flex: 1;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
   gap: var(--space-2);
+  min-height: 0;
+  margin-inline: calc(-1 * var(--space-1));
+  padding-inline: var(--space-1);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .emptyState {
@@ -121,8 +125,11 @@
 @media (max-width: 900px) {
   .catalogue {
     height: auto;
-    max-height: none;
-    position: static;
+    overflow: visible;
+  }
+
+  .grid {
+    max-height: 60dvh;
   }
 
   .grid {

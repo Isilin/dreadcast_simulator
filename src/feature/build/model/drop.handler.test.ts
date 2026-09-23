@@ -7,11 +7,6 @@ import {
   type DropHandlerArgs,
 } from './drop.handler';
 
-import {
-  ImplantNameValues,
-  MAX_IMPLANTS,
-  type ImplantsState,
-} from '@/feature/implant';
 import type { Item } from '@/feature/item';
 import type { Kit, KitSelection } from '@/feature/kit';
 
@@ -32,14 +27,6 @@ const kit: Kit = {
   effects: [],
 };
 
-const implant = {
-  id: 1,
-  name: 'Génie' as const,
-  levelMax: 3,
-  attributes: [],
-  valuePerLevel: [1, 2, 3],
-};
-
 const drug = {
   id: 'drug-1',
   name: 'Stimulant',
@@ -52,27 +39,19 @@ const createActions = (): DropHandlerActions => ({
   addKit: vi.fn(),
   deleteKit: vi.fn(),
   setKitNumber: vi.fn(),
-  decreaseImplant: vi.fn(),
-  setImplant: vi.fn(),
   setDrug: vi.fn(),
 });
-
-const createImplantsState = (level = 0): ImplantsState =>
-  Object.fromEntries(
-    ImplantNameValues.map((name) => [name, name === 'Génie' ? level : 0]),
-  ) as ImplantsState;
 
 const createArgs = (
   actions: DropHandlerActions,
   dragData: WorkbenchDragData | null,
   dropData: WorkbenchDropTarget | null,
-  overrides: Partial<Pick<DropHandlerArgs, 'activeItem' | 'kits' | 'implants'>> = {},
+  overrides: Partial<Pick<DropHandlerArgs, 'activeItem' | 'kits'>> = {},
 ): DropHandlerArgs => ({
   dragData,
   dropData,
   activeItem: null,
   kits: [],
-  implants: createImplantsState(),
   ...overrides,
   ...actions,
 });
@@ -138,35 +117,6 @@ describe('handleDrop', () => {
     expect(rejected).toEqual({ message: 'Cette zone n’accepte pas cet élément.' });
   });
 
-  it('installs implants and enforces the total implant limit', () => {
-    const actions = createActions();
-    const dragData = {
-      kind: 'implant',
-      implant,
-      source: 'catalogue',
-    } as const;
-
-    const result = handleDrop(
-      createArgs(actions, dragData, { kind: 'implant-bay' }, {
-        implants: createImplantsState(1),
-      }),
-    );
-
-    expect(result).toEqual({ message: 'Génie installé niveau 2.' });
-    expect(actions.setImplant).toHaveBeenCalledWith('Génie', 2);
-
-    const atLimit = handleDrop(
-      createArgs(actions, dragData, { kind: 'implant-bay' }, {
-        implants: Object.fromEntries(
-          ImplantNameValues.map((name) => [name, MAX_IMPLANTS]),
-        ) as ImplantsState,
-      }),
-    );
-    expect(atLimit).toEqual({
-      message: `Limite de ${MAX_IMPLANTS} implants atteinte.`,
-    });
-  });
-
   it('activates drugs and removes installed modules', () => {
     const actions = createActions();
 
@@ -189,16 +139,6 @@ describe('handleDrop', () => {
     );
     expect(installedDrugResult).toEqual({ message: 'Stimulant désactivée.' });
     expect(actions.setDrug).toHaveBeenCalledWith(null);
-
-    const installedImplantResult = handleDrop(
-      createArgs(
-        actions,
-        { kind: 'implant', implant, source: 'installed' },
-        { kind: 'removal-dock', spot: 'head' },
-      ),
-    );
-    expect(installedImplantResult).toEqual({ message: 'Génie retiré.' });
-    expect(actions.decreaseImplant).toHaveBeenCalledWith('Génie');
   });
 
   it('decrements kit quantity before deleting its selection', () => {

@@ -1,5 +1,6 @@
 import styles from './WorkbenchBoard.module.css';
 import type { WorkbenchDragData } from '../../model/drag-drop.types';
+import type { CatalogueFilter } from '../../model/workbench.types';
 import {
   bodySlots,
   weaponSlots,
@@ -25,7 +26,7 @@ interface WorkbenchBoardProps {
   activeSpot: ItemSpot;
   draggedData: WorkbenchDragData | null;
   selectedDrug: Drug | null;
-  catalogueFilter: 'equipment' | 'kits' | 'implants' | 'drugs';
+  catalogueFilter: CatalogueFilter;
   onActivateSpot: (spot: ItemSpot) => void;
   onKitOpen: (spot: ItemSpot) => void;
   onDamageBonusChange: (spot: ItemSpot, bonus: DamageBonusType) => void;
@@ -56,7 +57,7 @@ export const WorkbenchBoard = ({
       spotLabel={workbenchSlotLabels[spot]}
       item={items[spot]}
       kitCount={getKitCount(kitsBySpot, spot)}
-      isActive={activeSpot === spot}
+      isActive={catalogueFilter !== 'drugs' && activeSpot === spot}
       draggedItem={draggedData?.kind === 'item' ? draggedData.item : null}
       onActivate={onActivateSpot}
       onKitOpen={onKitOpen}

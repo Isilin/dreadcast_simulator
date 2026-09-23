@@ -1,24 +1,27 @@
 .workbench {
   display: grid;
-  grid-template-columns: minmax(248px, 280px) minmax(560px, 1fr) minmax(288px, 328px);
+  grid-template-columns: minmax(248px, 300px) minmax(0, 1fr) minmax(280px, 320px);
   gap: var(--space-4);
-  align-items: start;
+  height: 100%;
+  min-height: 0;
 }
 
 @media (max-width: 1279px) {
   .workbench {
     grid-template-columns: minmax(230px, 280px) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    height: auto;
+  }
+
+  .workbench > :global([aria-label='Catalogue du build']),
+  .workbench > :global([aria-label='Atelier de build']) {
+    height: calc(100dvh - 160px);
+    min-height: 560px;
   }
 
   .workbench > :global([aria-label='Inspecteur du build']) {
     grid-column: 1 / -1;
-    position: static;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    max-height: none;
-  }
-
-  .workbench > :global([aria-label='Inspecteur du build']) :global([class*='links']) {
-    grid-column: 1 / -1;
+    height: auto;
   }
 }
 
@@ -27,11 +30,9 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .workbench > :global([aria-label='Inspecteur du build']) {
-    grid-template-columns: 1fr;
-  }
-
-  .workbench > :global([aria-label='Inspecteur du build']) :global([class*='links']) {
-    grid-column: auto;
+  .workbench > :global([aria-label='Catalogue du build']),
+  .workbench > :global([aria-label='Atelier de build']) {
+    height: auto;
+    min-height: 0;
   }
 }

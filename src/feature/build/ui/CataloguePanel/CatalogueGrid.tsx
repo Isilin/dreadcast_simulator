@@ -10,11 +10,6 @@ import {
   type Drug,
 } from '@/feature/drug';
 import {
-  CatalogueImplantModule,
-  type Implant,
-  type ImplantsState,
-} from '@/feature/implant';
-import {
   CatalogueItem,
   type Item,
 } from '@/feature/item';
@@ -27,16 +22,13 @@ interface CatalogueGridProps {
   catalogueFilter: CatalogueFilter;
   isCatalogueLoading: boolean;
   isCatalogueUnavailable: boolean;
-  implantLevels: ImplantsState;
   selectedDrugId: string | null;
   visibleDrugs: Drug[];
-  visibleImplants: Implant[];
   visibleItems: Item[];
   visibleKits: Kit[];
   onActivateDrug: (drug: Drug) => void;
   onAddKit: (kit: Kit) => void;
   onEquip: (item: Item) => void;
-  onInstallImplant: (implant: Implant) => void;
 }
 
 export const CatalogueGrid = ({
@@ -46,16 +38,13 @@ export const CatalogueGrid = ({
   catalogueFilter,
   isCatalogueLoading,
   isCatalogueUnavailable,
-  implantLevels,
   selectedDrugId,
   visibleDrugs,
-  visibleImplants,
   visibleItems,
   visibleKits,
   onActivateDrug,
   onAddKit,
   onEquip,
-  onInstallImplant,
 }: CatalogueGridProps) => (
   <div className={styles.grid}>
     {catalogueFilter === 'equipment'
@@ -65,16 +54,6 @@ export const CatalogueGrid = ({
             item={item}
             spotLabel={workbenchSlotLabels[activeSpot]}
             onEquip={onEquip}
-          />
-        ))
-      : null}
-    {catalogueFilter === 'implants'
-      ? visibleImplants.map((implant) => (
-          <CatalogueImplantModule
-            key={implant.id}
-            implant={implant}
-            level={implantLevels[implant.name]}
-            onInstall={() => onInstallImplant(implant)}
           />
         ))
       : null}

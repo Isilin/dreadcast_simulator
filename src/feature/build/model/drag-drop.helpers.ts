@@ -6,7 +6,6 @@ import { workbenchSlotLabels } from './workbench.types';
 
 import { type ItemSpot, ItemSpotValue } from '@/domain';
 import type { Drug } from '@/feature/drug';
-import { ImplantNameValues, type Implant } from '@/feature/implant';
 import { itemMatchsSpot, ItemTypeValues, type Item } from '@/feature/item';
 import type { Kit } from '@/feature/kit';
 
@@ -43,14 +42,6 @@ const isKitData = (value: unknown): value is Kit =>
   isItemType(value.type) &&
   Array.isArray(value.effects);
 
-const isImplantData = (value: unknown): value is Implant =>
-  isRecord(value) &&
-  typeof value.id === 'number' &&
-  ImplantNameValues.includes(value.name as Implant['name']) &&
-  typeof value.levelMax === 'number' &&
-  Array.isArray(value.attributes) &&
-  Array.isArray(value.valuePerLevel);
-
 const isDrugData = (value: unknown): value is Drug =>
   hasTextFields(value, ['id', 'name', 'image']) &&
   isRecord(value) &&
@@ -74,17 +65,6 @@ export const getDraggedData = (data: unknown): WorkbenchDragData | null => {
     };
   }
   if (
-    data.kind === 'implant' &&
-    isDragSource(data.source) &&
-    isImplantData(data.implant)
-  ) {
-    return {
-      kind: 'implant',
-      implant: data.implant,
-      source: data.source,
-    };
-  }
-  if (
     data.kind === 'drug' &&
     isDragSource(data.source) &&
     isDrugData(data.drug)
@@ -102,7 +82,7 @@ export const getDraggedData = (data: unknown): WorkbenchDragData | null => {
 export const getDropData = (data: unknown): WorkbenchDropTarget | null => {
   if (!isRecord(data)) return null;
 
-  if (data.kind === 'implant-bay' || data.kind === 'drug-slot') {
+  if (data.kind === 'drug-slot') {
     return { kind: data.kind };
   }
   if (
@@ -120,16 +100,12 @@ export const getDropData = (data: unknown): WorkbenchDropTarget | null => {
 export const getDragLabel = (dragData: WorkbenchDragData): string => {
   if (dragData.kind === 'item') return dragData.item.name;
   if (dragData.kind === 'kit') return dragData.kit.name;
-  if (dragData.kind === 'implant') return dragData.implant.name;
   return dragData.drug.name;
 };
 
 export const getDragIdentifier = (dragData: WorkbenchDragData): string => {
   if (dragData.kind === 'item') return dragData.item.id;
   if (dragData.kind === 'kit') return `${dragData.source}-${dragData.kit.id}`;
-  if (dragData.kind === 'implant') {
-    return `${dragData.source}-${dragData.implant.id}`;
-  }
   return `${dragData.source}-${dragData.drug.id}`;
 };
 
@@ -147,10 +123,6 @@ export const getDropAnnouncement = (
 
   if (dragData.kind === 'kit' && dropData.kind === 'kit-rack') {
     return `Déposer ${dragData.kit.name} sur ${workbenchSlotLabels[dropData.spot]}.`;
-  }
-
-  if (dragData.kind === 'implant' && dropData.kind === 'implant-bay') {
-    return `Installer ${dragData.implant.name}.`;
   }
 
   if (dragData.kind === 'drug' && dropData.kind === 'drug-slot') {

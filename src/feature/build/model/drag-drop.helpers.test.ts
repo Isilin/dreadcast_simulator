@@ -24,14 +24,6 @@ const kit = {
   effects: [],
 };
 
-const implant = {
-  id: 1,
-  name: 'Génie' as const,
-  levelMax: 3,
-  attributes: [],
-  valuePerLevel: [1, 2, 3],
-};
-
 const drug = {
   id: 'drug-1',
   name: 'Stimulant',
@@ -56,11 +48,6 @@ describe('workbench drag and drop helpers', () => {
       kit,
       source: 'installed',
     });
-    const implantData = getDraggedData({
-      kind: 'implant',
-      implant,
-      source: 'catalogue',
-    });
     const drugData = getDraggedData({
       kind: 'drug',
       drug,
@@ -69,23 +56,21 @@ describe('workbench drag and drop helpers', () => {
 
     expect(itemData).toEqual({ kind: 'item', item });
     expect(kitData).toEqual({ kind: 'kit', kit, source: 'installed' });
-    expect(implantData).toEqual({
-      kind: 'implant',
-      implant,
-      source: 'catalogue',
-    });
     expect(drugData).toEqual({ kind: 'drug', drug, source: 'installed' });
     expect(getDragIdentifier(itemData!)).toBe('item-1');
     expect(getDragIdentifier(kitData!)).toBe('installed-kit-1');
-    expect(getDragIdentifier(implantData!)).toBe('catalogue-1');
     expect(getDragIdentifier(drugData!)).toBe('installed-drug-1');
     expect(getDropData({ kind: 'item-slot', spot: 'head' })).toEqual({
       kind: 'item-slot',
       spot: 'head',
     });
-    expect(getDropData({ kind: 'implant-bay' })).toEqual({
-      kind: 'implant-bay',
+    expect(getDropData({ kind: 'drug-slot' })).toEqual({
+      kind: 'drug-slot',
     });
+    expect(getDropData({ kind: 'implant-bay' })).toBeNull();
+    expect(
+      getDraggedData({ kind: 'implant', implant: {}, source: 'catalogue' }),
+    ).toBeNull();
   });
 
   it('announces compatible and incompatible destinations', () => {
@@ -93,11 +78,6 @@ describe('workbench drag and drop helpers', () => {
     const kitData = getDraggedData({
       kind: 'kit',
       kit,
-      source: 'catalogue',
-    })!;
-    const implantData = getDraggedData({
-      kind: 'implant',
-      implant,
       source: 'catalogue',
     })!;
     const drugData = getDraggedData({
@@ -117,9 +97,6 @@ describe('workbench drag and drop helpers', () => {
     expect(
       getDropAnnouncement(kitData, { kind: 'kit-rack', spot: 'head' }),
     ).toBe('Déposer Blindage sur Tête.');
-    expect(
-      getDropAnnouncement(implantData, { kind: 'implant-bay' }),
-    ).toBe('Installer Génie.');
     expect(getDropAnnouncement(drugData, { kind: 'drug-slot' })).toBe(
       'Activer Stimulant.',
     );

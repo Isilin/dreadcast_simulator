@@ -1,0 +1,38 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 32px;
+  padding: 4px clamp(var(--space-3), 3vw, var(--space-6));
+  border-top: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--canvas) 94%, transparent);
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-secondary);
+  filter: grayscale(1);
+  opacity: 0.6;
+  transition:
+    filter 0.15s ease,
+    opacity 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    filter: none;
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+}
