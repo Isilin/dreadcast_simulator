@@ -6,6 +6,8 @@ import type { BuildPersistenceState } from '../../model/persitence.hook';
 import { createSharedBuildLink, getDefaultBuildName } from '../../services';
 
 import { Modal } from '@/ui';
+import { ShareIcon } from '@/ui/Icon';
+import { IconButton } from '@/ui/IconButton';
 
 interface BuildNameEditorProps {
   persistence: BuildPersistenceState;
@@ -102,13 +104,11 @@ export const BuildNameEditor = ({ persistence }: BuildNameEditorProps) => {
         />
 
         {canShareBuild ? (
-          <button
-            type="button"
-            className={styles.shareButton}
+          <IconButton
+            label="Partager ce build (lien en lecture seule)"
+            icon={<ShareIcon />}
             onClick={() => void handleShareBuild()}
-          >
-            Partager un build
-          </button>
+          />
         ) : null}
       </div>
 

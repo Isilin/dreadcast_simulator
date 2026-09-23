@@ -5,24 +5,6 @@
   min-width: 0;
 }
 
-.shareButton {
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--small-radius);
-  background: var(--action-primary-muted);
-  color: var(--action-primary-strong);
-  padding: var(--space-1) var(--space-2);
-  font: 600 10px/1.2 var(--font-data);
-  white-space: nowrap;
-  cursor: pointer;
-
-  &:hover,
-  &:focus-visible {
-    border-color: var(--action-primary);
-    background: var(--surface-interactive);
-    box-shadow: var(--glow-primary);
-  }
-}
-
 .sharePanel {
   display: flex;
   flex-direction: column;

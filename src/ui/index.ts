@@ -8,6 +8,7 @@ export * from './ErrorBoundary';
 export * from './Fallback';
 export * from './HamburgerButton';
 export * from './Icon';
+export * from './IconButton';
 export * from './Modal';
 export * from './Popin';
 export * from './DroppablePanel';
