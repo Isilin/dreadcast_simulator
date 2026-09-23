@@ -54,6 +54,19 @@ Cette application est construite avec des technologies modernes et suit une arch
   - Page SaaS dediee aux plans: 1 an (50.000¢), 6 ans (250.000¢), 12 ans (450.000¢), Illimite (800.000¢)
   - Enregistrement de chaque abonnement avec date de debut et date de fin
   - API serverless `/api/subscriptions` securisee via jeton Supabase
+  - Prix et dates recalcules en base depuis le plan, validation par un administrateur
+
+- **Communauté** (`/communaute`)
+  - Les abonnes publient une copie figee de leurs builds, signee de leur pseudo (definitif)
+  - Specialisation detectee a partir des statistiques, modifiable a la publication
+  - Filtres: specialisation, note, race, genre, armes, version du jeu, et pour les
+    abonnes seuils de statistiques, implants, drogue, equipement precis et favoris
+  - Tris: tendance (par defaut), mieux notes, recents, plus d'avis, mis a jour
+  - Notation 1 a 5 etoiles avec avis court, copie dans ses builds, favoris,
+    comparaison avec un de ses builds
+  - Recommandations par similitude de statistiques (« Pour vous », « Builds proches du mien »)
+  - Connecte sans abonnement: apercu de la liste; en fin d'abonnement, les
+    publications restent visibles mais figees
 
 - **Données du jeu**
   - Basé sur les mécaniques officielles de Dreadcast
@@ -246,7 +259,7 @@ Le projet inclut une configuration complète GitHub Copilot dans `.github/` :
 #### v1.1 - Fonctionnalités avancées
 
 - [x] Partage de builds via URL
-- [ ] Comparaison de builds côte à côte
+- [x] Comparaison de builds côte à côte (Communauté)
 - [ ] Suggestions d'optimisation automatiques
 
 #### v1.2 - Mécaniques avancées
@@ -257,8 +270,8 @@ Le projet inclut une configuration complète GitHub Copilot dans `.github/` :
 
 #### v2.0 - Backend et collaboration
 
-- [ ] Comptes utilisateurs et builds partagés
-- [ ] Classements et builds de la communauté
+- [x] Comptes utilisateurs et builds partagés
+- [x] Classements et builds de la communauté
 
 ## FAQ
 

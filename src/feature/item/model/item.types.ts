@@ -27,6 +27,8 @@ export interface Item {
   effects?: StatModifier[];
   minDamage?: number;
   maxDamage?: number;
+  minHeal?: number;
+  maxHeal?: number;
   damageBonus?: DamageBonusType;
   hands?: number;
   reach?: number;

@@ -1,20 +1,6 @@
 import type { BuildSnapshot } from './persistence.service';
 
-import { getCurrentSession } from '@/feature/auth';
-
-const getAuthHeaders = async (): Promise<HeadersInit> => {
-  const session = await getCurrentSession();
-  const accessToken = session?.access_token;
-
-  if (!accessToken) {
-    throw new Error('Session utilisateur manquante.');
-  }
-
-  return {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${accessToken}`,
-  };
-};
+import { getAuthHeaders } from '@/feature/auth';
 
 interface CreateSharedBuildLinkParams {
   slot: string;

@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useBuildAutosave } from './autosave.hook';
 import { loadBuilds as loadAvailableBuilds } from './persistence.loader';
 import {
   getBuildNameForSlot,
   getBuildSlots,
-  hasValidSubscription as hasCurrentSubscription,
+  resolveInitialSlot,
 } from './persistence.selectors';
 import {
   createBuildSnapshot,
@@ -18,8 +18,10 @@ import {
   GUEST_SLOTS,
   getDefaultBuildName,
   readBuilds,
+  readLastActiveSlot,
   resolveBuildPersistencePolicy,
   writeBuilds,
+  writeLastActiveSlot,
 } from '../services/persistence.service';
 import type {
   BuildSnapshot,
@@ -29,11 +31,13 @@ import type {
 import { useAuthState } from '@/feature/auth';
 import type { Item } from '@/feature/item';
 import type { Kit } from '@/feature/kit';
-import { useSubscriptions } from '@/feature/subscription';
+import { useActiveSubscription } from '@/feature/subscription';
 
 interface HookParams {
   allItems: Item[] | undefined;
   allKits: Kit[] | undefined;
+  /** Slot to open first (e.g. a build just copied from the Communauté). */
+  initialSlot?: number;
 }
 
 export interface BuildPersistenceState {
@@ -46,26 +50,30 @@ export interface BuildPersistenceState {
   storageMode: BuildStorageMode;
   getBuildName: (slot: string) => string;
   setActiveBuildName: (name: string) => void;
+  /**
+   * Saves the active build immediately (bypassing the autosave debounce) and
+   * resolves once it is persisted. Used before publishing to the Communauté.
+   */
+  saveActiveBuildNow: () => Promise<BuildSnapshot>;
 }
 
 export function useBuildPersistence({
   allItems,
   allKits,
+  initialSlot,
 }: HookParams): BuildPersistenceState {
   const { session } = useAuthState();
   const isAuthenticated = Boolean(session?.user);
-  const [active, setActive] = useState<string>('1');
+  const [active, setActive] = useState<string>(() =>
+    resolveInitialSlot(initialSlot, readLastActiveSlot()),
+  );
   const [builds, setBuilds] = useState<Record<string, BuildSnapshot>>({});
   const [isLoadingBuilds, setIsLoadingBuilds] = useState(true);
 
-  const { data: subscriptions = [] } = useSubscriptions({
-    enabled: isAuthenticated,
-  });
-
-  const hasValidSubscription = useMemo(
-    () => hasCurrentSubscription(subscriptions),
-    [subscriptions],
-  );
+  const {
+    isSubscriber: hasValidSubscription,
+    isLoading: isSubscriptionLoading,
+  } = useActiveSubscription();
 
   const persistencePolicy = useMemo(
     () =>
@@ -134,12 +142,19 @@ export function useBuildPersistence({
   }, [builds, persistencePolicy.hasUnlimitedSlots, persistencePolicy.mode]);
 
   useEffect(() => {
+    // Wait for auth, subscription and builds: until then the slot list is the
+    // free-plan one and would wrongly reset a remembered or copied slot.
+    if (isLoadingBuilds || isSubscriptionLoading) {
+      return;
+    }
+
     if (slots.length === 0 || slots.includes(active)) {
+      writeLastActiveSlot(active);
       return;
     }
 
     setActive(slots[0] ?? String(GUEST_SLOTS));
-  }, [active, slots]);
+  }, [active, isLoadingBuilds, isSubscriptionLoading, slots]);
 
   useEffect(() => {
     if (!allItems || !allKits || isLoadingBuilds) {
@@ -208,7 +223,7 @@ export function useBuildPersistence({
     });
   };
 
-  useBuildAutosave({
+  const { cancelPendingSave } = useBuildAutosave({
     activeRef,
     buildsRef,
     isLoadingBuildsRef,
@@ -216,6 +231,32 @@ export function useBuildPersistence({
     policyRef,
     setBuilds,
   });
+
+  const saveActiveBuildNow = useCallback(async (): Promise<BuildSnapshot> => {
+    const slot = activeRef.current;
+    const candidateBuild = createBuildSnapshot(
+      slot,
+      readBuildStoreState(),
+      buildsRef.current[slot],
+    );
+
+    // Same state as the debounced save: drop it and save synchronously.
+    cancelPendingSave();
+
+    if (policyRef.current.mode === 'local') {
+      const guestSlot = String(GUEST_SLOTS);
+      writeBuilds({ ...readBuilds(), [guestSlot]: candidateBuild });
+      setBuilds({ [guestSlot]: candidateBuild });
+      return candidateBuild;
+    }
+
+    const savedBuild = await upsertRemoteBuild({
+      slot,
+      snapshot: candidateBuild,
+    });
+    setBuilds((previousBuilds) => ({ ...previousBuilds, [slot]: savedBuild }));
+    return savedBuild;
+  }, [cancelPendingSave]);
 
   return {
     active,
@@ -227,5 +268,6 @@ export function useBuildPersistence({
     storageMode: persistencePolicy.mode,
     getBuildName,
     setActiveBuildName,
+    saveActiveBuildNow,
   };
 }

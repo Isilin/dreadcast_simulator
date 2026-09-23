@@ -10,6 +10,22 @@
   },
   "rewrites": [
     { "source": "/api/shared/:id", "destination": "/api/shared?id=:id" },
+    {
+      "source": "/api/profile/me",
+      "destination": "/api/community?resource=profile"
+    },
+    {
+      "source": "/api/community/builds/:id/:action",
+      "destination": "/api/community?resource=builds&id=:id&action=:action"
+    },
+    {
+      "source": "/api/community/builds/:id",
+      "destination": "/api/community?resource=builds&id=:id"
+    },
+    {
+      "source": "/api/community/:resource",
+      "destination": "/api/community?resource=:resource"
+    },
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],

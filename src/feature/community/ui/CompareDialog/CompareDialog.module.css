@@ -1,0 +1,73 @@
+.trigger {
+  composes: button from '../community.controls.module.css';
+}
+
+.body {
+  display: grid;
+  gap: var(--space-3);
+  width: min(100%, 640px);
+  padding: 0 var(--space-3);
+}
+
+.muted {
+  composes: muted from '../community.controls.module.css';
+}
+
+.error {
+  composes: error from '../community.controls.module.css';
+}
+
+.picker {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.label {
+  composes: label from '../community.controls.module.css';
+}
+
+.select {
+  composes: input from '../community.controls.module.css';
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font: 400 12px/1.3 var(--font-data);
+}
+
+.table th,
+.table td {
+  padding: var(--space-1) var(--space-2);
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: right;
+}
+
+.table th:first-child {
+  text-align: left;
+}
+
+.table thead th {
+  color: var(--text-secondary);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.higher {
+  color: var(--status-success);
+  font-weight: 700;
+}
+
+.lower {
+  color: var(--status-danger);
+  font-weight: 700;
+}
+
+.equal {
+  color: var(--text-disabled);
+}

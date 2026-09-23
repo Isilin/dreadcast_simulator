@@ -1,0 +1,126 @@
+.card {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--small-radius);
+  background: var(--surface-raised);
+  transition:
+    border-color 0.12s ease,
+    box-shadow 0.12s ease,
+    transform 0.12s ease;
+
+  &:hover,
+  &:focus-within {
+    border-color: var(--action-primary);
+    box-shadow: var(--glow-primary);
+  }
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.mine {
+  padding: 3px var(--space-2);
+  border-radius: var(--rounded-radius);
+  background: var(--surface-interactive);
+  color: var(--text-secondary);
+  font: 600 10px/1.2 var(--font-data);
+}
+
+.favorite {
+  position: relative;
+  z-index: 1;
+  margin-left: auto;
+}
+
+.title {
+  margin: 0;
+  font: 700 17px/1.25 var(--font-display);
+  overflow-wrap: anywhere;
+}
+
+/* The whole card is clickable through the title link. */
+.link {
+  color: var(--text-primary);
+  text-decoration: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.card:has(.link:focus-visible) {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.meta {
+  margin: 0;
+  color: var(--text-secondary);
+  font: 400 11px/1.4 var(--font-data);
+}
+
+.meta strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.rating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.similarity {
+  color: var(--action-primary-strong);
+  font: 600 10px/1.2 var(--font-data);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-1);
+  margin: 0;
+}
+
+.stat {
+  display: grid;
+  gap: 2px;
+  padding: var(--space-1);
+  border-radius: var(--small-radius);
+  background: var(--surface-sunken);
+  text-align: center;
+}
+
+.stat dt {
+  color: var(--text-secondary);
+  font: 600 9px/1.2 var(--font-data);
+  letter-spacing: 0.06em;
+}
+
+.stat dd {
+  margin: 0;
+  color: var(--text-primary);
+  font: 700 13px/1.2 var(--font-data);
+}
+
+.date {
+  margin: 0;
+  color: var(--text-disabled);
+  font: 400 10px/1.2 var(--font-data);
+}

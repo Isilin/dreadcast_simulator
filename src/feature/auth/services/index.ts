@@ -27,6 +27,27 @@ export const getCurrentSession = async (): Promise<Session | null> => {
   return getSession();
 };
 
+/**
+ * JSON + bearer headers for /api calls. Throws when there is no session;
+ * callers can provide their own typed error.
+ */
+export const getAuthHeaders = async (
+  createMissingSessionError: () => Error = () =>
+    new Error('Session utilisateur manquante.'),
+): Promise<HeadersInit> => {
+  const session = await getCurrentSession();
+  const accessToken = session?.access_token;
+
+  if (!accessToken) {
+    throw createMissingSessionError();
+  }
+
+  return {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${accessToken}`,
+  };
+};
+
 export const requireAuthenticatedSession = async (): Promise<boolean> => {
   const { requireAuthenticatedSession: requireSession } =
     await loadAuthService();

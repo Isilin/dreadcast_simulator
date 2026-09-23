@@ -1,0 +1,75 @@
+.filters {
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+}
+
+/* Standalone (no composes): it overrides `display`. */
+.mobileToggle {
+  display: none;
+  align-items: center;
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--small-radius);
+  background: var(--surface-sunken);
+  color: var(--text-primary);
+  font: 600 11px/1 var(--font-data);
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+.panel {
+  composes: panel from '../community.controls.module.css';
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-3);
+}
+
+.group {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.label {
+  composes: label from '../community.controls.module.css';
+  padding: 0;
+}
+
+.input {
+  composes: input from '../community.controls.module.css';
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.chip {
+  composes: chip from '../community.controls.module.css';
+}
+
+.reset {
+  composes: button from '../community.controls.module.css';
+  justify-self: start;
+}
+
+@media (max-width: 900px) {
+  .mobileToggle {
+    display: inline-flex;
+    justify-self: start;
+  }
+
+  .panel[data-open='false'] {
+    display: none;
+  }
+}

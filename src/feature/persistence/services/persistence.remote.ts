@@ -1,24 +1,22 @@
 import type { BuildSnapshot } from './persistence.service';
 
-import { getCurrentSession } from '@/feature/auth';
+import { getAuthHeaders } from '@/feature/auth';
 
-const getAuthHeaders = async (): Promise<HeadersInit> => {
-  const session = await getCurrentSession();
-  const accessToken = session?.access_token;
+/**
+ * Saves still in flight. A reload must not read the builds before they land,
+ * otherwise an edit flushed on unmount would be overwritten by stale data.
+ */
+const pendingUpserts = new Set<Promise<unknown>>();
 
-  if (!accessToken) {
-    throw new Error('Session utilisateur manquante.');
-  }
-
-  return {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${accessToken}`,
-  };
+export const waitForPendingBuildSaves = async (): Promise<void> => {
+  await Promise.allSettled([...pendingUpserts]);
 };
 
 export const fetchRemoteBuilds = async (
   signal?: AbortSignal,
 ): Promise<Record<string, BuildSnapshot>> => {
+  await waitForPendingBuildSaves();
+
   const headers = await getAuthHeaders();
   const response = await fetch('/api/builds', {
     method: 'GET',
@@ -54,7 +52,7 @@ interface UpsertRemoteBuildParams {
   snapshot: BuildSnapshot;
 }
 
-export const upsertRemoteBuild = async ({
+const sendUpsertRemoteBuild = async ({
   slot,
   snapshot,
 }: UpsertRemoteBuildParams): Promise<BuildSnapshot> => {
@@ -87,4 +85,15 @@ export const upsertRemoteBuild = async ({
     ...parsedSnapshot,
     savedAt: new Date(parsed.saved_at).getTime(),
   };
+};
+
+export const upsertRemoteBuild = (
+  params: UpsertRemoteBuildParams,
+): Promise<BuildSnapshot> => {
+  const request = sendUpsertRemoteBuild(params);
+  pendingUpserts.add(request);
+  void request
+    .finally(() => pendingUpserts.delete(request))
+    .catch(() => undefined);
+  return request;
 };

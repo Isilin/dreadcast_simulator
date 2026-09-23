@@ -38,7 +38,12 @@ import {
 } from '@/feature/kit';
 import { useBuildPersistence } from '@/feature/persistence';
 
-export const BuildWorkbench = () => {
+interface BuildWorkbenchProps {
+  /** Slot to open first (e.g. a build copied from the Communauté). */
+  initialSlot?: number;
+}
+
+export const BuildWorkbench = ({ initialSlot }: BuildWorkbenchProps = {}) => {
   const [activeSpot, setActiveSpot] = useState<ItemSpot>('head');
   const [activeMode, setActiveMode] = useState<WorkbenchMode>('equipment');
   const [catalogueFilter, setCatalogueFilter] =
@@ -64,7 +69,7 @@ export const BuildWorkbench = () => {
     isError: hasDrugsError,
     isLoading: areDrugsLoading,
   } = useDrugs();
-  const persistence = useBuildPersistence({ allItems, allKits });
+  const persistence = useBuildPersistence({ allItems, allKits, initialSlot });
 
   const items = useItemsState();
   const { setDamageBonus, setItem } = useItemsActions();

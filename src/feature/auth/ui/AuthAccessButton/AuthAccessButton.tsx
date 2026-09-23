@@ -1,12 +1,44 @@
 import { useNavigate, useRouterState } from '@tanstack/react-router';
-import { useEffect, useRef, useState } from 'react';
+import {
+  type PropsWithChildren,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import styles from './AuthAccessButton.module.css';
 
 import { useAuthState } from '@/feature/auth/model';
 import Routes from '@/utils/routes';
 
-export const AuthAccessButton = () => {
+interface AuthMenuItemProps extends PropsWithChildren {
+  onClick: () => void;
+}
+
+/**
+ * Menu entry styled like the account menu, for items injected by other
+ * features through AuthAccessButton's renderExtraMenuItems.
+ */
+export const AuthMenuItem = ({ onClick, children }: AuthMenuItemProps) => (
+  <button
+    type="button"
+    className={styles.menuItem}
+    role="menuitem"
+    onClick={onClick}
+  >
+    {children}
+  </button>
+);
+
+interface AuthAccessButtonProps {
+  /** Extra entries of the account menu; closeMenu closes it. */
+  renderExtraMenuItems?: (closeMenu: () => void) => ReactNode;
+}
+
+export const AuthAccessButton = ({
+  renderExtraMenuItems,
+}: AuthAccessButtonProps = {}) => {
   const navigate = useNavigate();
   const isConnexionPage = useRouterState({
     select: (state) => state.location.pathname === Routes.connection,
@@ -95,6 +127,7 @@ export const AuthAccessButton = () => {
 
       {isMenuOpen ? (
         <div className={styles.menu} role="menu" aria-label="Menu utilisateur">
+          {renderExtraMenuItems?.(() => setIsMenuOpen(false))}
           <button
             type="button"
             className={styles.menuItem}

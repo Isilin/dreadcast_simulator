@@ -8,20 +8,25 @@ import {
   getDefaultBuildName,
 } from '../services/persistence.service';
 
-interface SubscriptionState {
-  status: 'pending' | 'validated';
-  endsAt: string;
-}
+/**
+ * Normalizes a slot coming from the URL or sessionStorage.
+ */
+export const parseSlot = (
+  value: string | number | null | undefined,
+): string | null => {
+  if (value === null || value === undefined) return null;
+  const slot = Number(value);
+  return Number.isInteger(slot) && slot > 0 ? String(slot) : null;
+};
 
-export const hasValidSubscription = (
-  subscriptions: ReadonlyArray<SubscriptionState>,
-  now = Date.now(),
-): boolean =>
-  subscriptions.some((subscription) => {
-    if (subscription.status !== 'validated') return false;
-    const endTimestamp = new Date(subscription.endsAt).getTime();
-    return Number.isFinite(endTimestamp) && endTimestamp >= now;
-  });
+/**
+ * Explicit slot (e.g. after a copy from the Communauté) first, then the last
+ * slot used in this tab, then slot 1.
+ */
+export const resolveInitialSlot = (
+  initialSlot: string | number | null | undefined,
+  lastActiveSlot: string | null | undefined,
+): string => parseSlot(initialSlot) ?? parseSlot(lastActiveSlot) ?? '1';
 
 interface GetBuildSlotsParams {
   mode: BuildStorageMode;

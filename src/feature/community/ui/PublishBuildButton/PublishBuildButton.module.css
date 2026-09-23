@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-2);
+}
+
+/* Compact buttons: standalone (no composes) because sizes differ. */
+.button,
+.upsell {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--action-primary);
+  border-radius: var(--small-radius);
+  background: var(--action-primary-muted);
+  color: var(--action-primary-strong);
+  font: 600 10px/1.2 var(--font-data);
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: var(--glow-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+.upsell {
+  border-color: var(--border-strong);
+  background: var(--surface-sunken);
+  color: var(--text-secondary);
+
+  &:hover {
+    border-color: var(--action-primary);
+    box-shadow: none;
+  }
+}
+
+.link {
+  color: var(--action-primary-strong);
+  font: 600 10px/1.2 var(--font-data);
+}
+
+.frozen {
+  margin: 0;
+  color: var(--status-warning);
+  font: 600 10px/1.3 var(--font-data);
+}

@@ -4,7 +4,8 @@ import {
   areBuildsEqual,
   getBuildNameForSlot,
   getBuildSlots,
-  hasValidSubscription,
+  parseSlot,
+  resolveInitialSlot,
 } from './persistence.selectors';
 import type { BuildSnapshot } from '../services/persistence.service';
 
@@ -29,33 +30,20 @@ const createSnapshot = (
 });
 
 describe('persistence selectors', () => {
-  it('accepts only validated subscriptions that have not ended', () => {
-    const now = Date.parse('2026-01-01T00:00:00.000Z');
+  it('parses only positive integer slots', () => {
+    expect(parseSlot('3')).toBe('3');
+    expect(parseSlot(12)).toBe('12');
+    expect(parseSlot('0')).toBeNull();
+    expect(parseSlot('1.5')).toBeNull();
+    expect(parseSlot('abc')).toBeNull();
+    expect(parseSlot(null)).toBeNull();
+  });
 
-    expect(
-      hasValidSubscription(
-        [{ status: 'validated', endsAt: '2026-01-01T00:00:00.000Z' }],
-        now,
-      ),
-    ).toBe(true);
-    expect(
-      hasValidSubscription(
-        [{ status: 'pending', endsAt: '2026-12-31T00:00:00.000Z' }],
-        now,
-      ),
-    ).toBe(false);
-    expect(
-      hasValidSubscription(
-        [{ status: 'validated', endsAt: '2025-12-31T23:59:59.000Z' }],
-        now,
-      ),
-    ).toBe(false);
-    expect(
-      hasValidSubscription(
-        [{ status: 'validated', endsAt: 'not-a-date' }],
-        now,
-      ),
-    ).toBe(false);
+  it('prefers the explicit slot, then the last active slot', () => {
+    expect(resolveInitialSlot(7, '3')).toBe('7');
+    expect(resolveInitialSlot(undefined, '3')).toBe('3');
+    expect(resolveInitialSlot(undefined, 'broken')).toBe('1');
+    expect(resolveInitialSlot(undefined, null)).toBe('1');
   });
 
   it('returns fixed guest and free authenticated slots', () => {

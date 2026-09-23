@@ -1,0 +1,95 @@
+.advanced,
+.locked {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.title {
+  margin: 0;
+  color: var(--text-primary);
+  font: 700 13px/1.2 var(--font-display);
+}
+
+.muted {
+  composes: muted from '../community.controls.module.css';
+}
+
+.link {
+  composes: buttonPrimary from '../community.controls.module.css';
+  justify-self: start;
+}
+
+.group {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.label {
+  composes: label from '../community.controls.module.css';
+}
+
+.input {
+  composes: input from '../community.controls.module.css';
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 72px auto;
+  gap: var(--space-1);
+}
+
+.number {
+  composes: input from '../community.controls.module.css';
+}
+
+.add {
+  composes: button from '../community.controls.module.css';
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-primary);
+  font: 500 12px/1.2 var(--font-data);
+  cursor: pointer;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tags:empty {
+  display: none;
+}
+
+/* Active filter tag: standalone (no composes), colors differ from chips. */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 4px var(--space-2);
+  border: 1px solid var(--action-primary);
+  border-radius: var(--rounded-radius);
+  background: var(--action-primary-muted);
+  color: var(--action-primary-strong);
+  font: 600 10px/1.2 var(--font-data);
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--status-danger);
+    color: var(--status-danger);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+}

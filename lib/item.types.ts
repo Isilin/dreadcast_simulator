@@ -43,6 +43,8 @@ export interface ItemResponseDto {
     | '2handsMelee';
   min_damage: number | null;
   max_damage: number | null;
+  min_heal: number | null;
+  max_heal: number | null;
   damage_bonus: number | null;
   hands: number | null;
   reach: number | null;

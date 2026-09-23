@@ -9,26 +9,18 @@ import type {
   SubscriptionRecord,
 } from '../model';
 
-import { getCurrentSession } from '@/feature/auth';
+import { getAuthHeaders as getSessionHeaders } from '@/feature/auth';
 import { validatePayload } from '@/utils/validation';
 
-const getAuthHeaders = async (): Promise<HeadersInit> => {
-  const session = await getCurrentSession();
-  const accessToken = session?.access_token;
-
-  if (!accessToken) {
-    throw new SubscriptionRepositoryError({
-      code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.MISSING_AUTH_SESSION,
-      message: 'Session utilisateur manquante.',
-      status: 401,
-    });
-  }
-
-  return {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${accessToken}`,
-  };
-};
+const getAuthHeaders = (): Promise<HeadersInit> =>
+  getSessionHeaders(
+    () =>
+      new SubscriptionRepositoryError({
+        code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.MISSING_AUTH_SESSION,
+        message: 'Session utilisateur manquante.',
+        status: 401,
+      }),
+  );
 
 export const fetchSubscriptions = async (
   signal?: AbortSignal,

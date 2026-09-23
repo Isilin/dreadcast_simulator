@@ -13,6 +13,8 @@ src/
   feature/
     build/          Coordination de l'atelier et protocole drag-and-drop
     auth/           Session, connexion, deconnexion et UI de compte
+    account/        Pseudo public du compte (definitif)
+    community/      Communaute: publication, recherche, notes, recommandations
     persistence/    Chargement, snapshots, autosave et partage de builds
     profile/        Race, genre et silhouette
     item/           Equipements et slots
@@ -71,10 +73,35 @@ responsabilites sont separees:
 - `persistence.remote.ts` gere les builds ordinaires.
 - `shared-build.remote.ts` gere les liens de partage publics.
 
+L'autosave debite les sauvegardes de 250 ms et les envoie immediatement si
+l'atelier est demonte (navigation vers la Communaute par exemple).
+`fetchRemoteBuilds` attend les sauvegardes en cours avant de relire les builds.
+Le slot actif est memorise pour l'onglet (`sessionStorage`) et `/?slot=N`
+ouvre un slot precis, par exemple apres une copie depuis la Communaute.
+
 L'authentification expose une facade compatible dans `auth.service.ts`.
 `auth.session.ts` porte bootstrap, listener et lecture de session;
 `auth.credentials.ts` porte connexion et deconnexion; `auth.client.ts` garde la
 creation et la validation du client Supabase.
+
+## Communaute
+
+`feature/community` ne depend jamais de `feature/build`; l'atelier charge ses
+points d'entree (`PublishBuildButton`, `SimilarBuildsButton`) en lazy pour
+garder la Communaute hors du chunk de l'atelier.
+
+- `model/` porte les regles pures: detection de specialisation, filtres
+  (URL, requete API), calcul des stats d'un snapshot sans store
+  (`computeSnapshotStats` via `computeSuitStats`), payloads et comparaison.
+- `services/` valide avec zod tout ce qui vient de l'API, y compris les
+  snapshots publies (donnees non fiables normalisees en `BuildSnapshot`).
+- Les fiches et comparaisons rendent un build a partir de props: les stores
+  de l'atelier ne sont jamais ecrases par un build consulte.
+- Les regles d'acces (abonne, auteur, pseudo) sont appliquees en base par RLS
+  et RPC (voir `supabase/README.md`); l'UI ne fait que les refleter.
+
+L'abonnement actif se lit uniquement via `useActiveSubscription()`
+(`feature/subscription`), meme regle que l'API et la base.
 
 ## Etat et donnees
 

@@ -13,6 +13,8 @@ export const toDomain = (dto: ItemResponseDto): Item => ({
   effects: dto.item_effect.length > 0 ? dto.item_effect : undefined,
   minDamage: dto.min_damage ?? undefined,
   maxDamage: dto.max_damage ?? undefined,
+  minHeal: dto.min_heal ?? undefined,
+  maxHeal: dto.max_heal ?? undefined,
   damageBonus: (dto.damage_bonus ?? undefined) as Item['damageBonus'],
   hands: dto.hands ?? undefined,
   reach: dto.reach ?? undefined,

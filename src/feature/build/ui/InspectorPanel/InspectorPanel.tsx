@@ -1,3 +1,5 @@
+import { lazy, Suspense } from 'react';
+
 import styles from './InspectorPanel.module.css';
 
 import {
@@ -8,6 +10,19 @@ import {
 import type { useBuildPersistence } from '@/feature/persistence';
 import { GenderSelector, RaceSelector } from '@/feature/profile';
 import { Skills } from '@/feature/stats';
+
+// Community entry points are lazy: the Communauté code stays out of the
+// workbench chunk until they render.
+const PublishBuildButton = lazy(() =>
+  import('@/feature/community').then(({ PublishBuildButton: Button }) => ({
+    default: Button,
+  })),
+);
+const SimilarBuildsButton = lazy(() =>
+  import('@/feature/community').then(({ SimilarBuildsButton: Button }) => ({
+    default: Button,
+  })),
+);
 
 type BuildPersistence = ReturnType<typeof useBuildPersistence>;
 
@@ -20,11 +35,17 @@ export const InspectorPanel = ({ persistence }: InspectorPanelProps) => (
     <section className={styles.section}>
       <p className={styles.eyebrow}>Sauvegardes</p>
       <BuildNameEditor persistence={persistence} />
+      <Suspense fallback={null}>
+        <PublishBuildButton persistence={persistence} />
+      </Suspense>
       <TabsBar persistence={persistence} />
     </section>
     <section className={styles.section}>
       <p className={styles.eyebrow}>Statistiques</p>
       <Skills />
+      <Suspense fallback={null}>
+        <SimilarBuildsButton />
+      </Suspense>
     </section>
     <section className={styles.section}>
       <p className={styles.eyebrow}>Profil et modules</p>

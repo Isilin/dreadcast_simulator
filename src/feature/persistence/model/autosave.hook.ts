@@ -1,4 +1,10 @@
-import { type Dispatch, type SetStateAction, useEffect, useRef } from 'react';
+import {
+  type Dispatch,
+  type SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+} from 'react';
 
 import { areBuildsEqual } from './persistence.selectors';
 import {
@@ -33,6 +39,15 @@ interface UseAutosaveParams {
   setBuilds: Dispatch<SetStateAction<Record<string, BuildSnapshot>>>;
 }
 
+export interface BuildAutosave {
+  /** Runs the debounced save now, if any. */
+  flushPendingSave: () => Promise<void>;
+  /** Drops the debounced save (the caller saves the same state itself). */
+  cancelPendingSave: () => void;
+}
+
+const AUTOSAVE_DELAY_MS = 250;
+
 export const useBuildAutosave = ({
   activeRef,
   buildsRef,
@@ -40,11 +55,63 @@ export const useBuildAutosave = ({
   isRestoringRef,
   policyRef,
   setBuilds,
-}: UseAutosaveParams): void => {
+}: UseAutosaveParams): BuildAutosave => {
   const timerRef = useRef<number | null>(null);
+  const pendingSaveRef = useRef<(() => Promise<void>) | null>(null);
+
+  const cancelPendingSave = useCallback(() => {
+    if (timerRef.current) {
+      window.clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    pendingSaveRef.current = null;
+  }, []);
+
+  const flushPendingSave = useCallback(async () => {
+    const pendingSave = pendingSaveRef.current;
+    cancelPendingSave();
+    if (pendingSave) {
+      await pendingSave();
+    }
+  }, [cancelPendingSave]);
 
   useEffect(() => {
-    const doSave = () => {
+    const saveBuild = async (
+      currentSlot: string,
+      candidateBuild: BuildSnapshot,
+    ): Promise<void> => {
+      const currentPolicy = policyRef.current;
+
+      if (currentPolicy.mode === 'local') {
+        const guestSlot = String(GUEST_SLOTS);
+        writeBuilds({
+          ...readBuilds(),
+          [guestSlot]: candidateBuild,
+        });
+        setBuilds({
+          [guestSlot]: candidateBuild,
+        });
+        return;
+      }
+
+      try {
+        const savedBuild = await upsertRemoteBuild({
+          slot: currentSlot,
+          snapshot: candidateBuild,
+        });
+        setBuilds((previousBuilds) => ({
+          ...previousBuilds,
+          [currentSlot]: savedBuild,
+        }));
+      } catch {
+        setBuilds((previousBuilds) => ({
+          ...previousBuilds,
+          [currentSlot]: candidateBuild,
+        }));
+      }
+    };
+
+    const scheduleSave = () => {
       if (isRestoringRef.current || isLoadingBuildsRef.current) {
         return;
       }
@@ -61,65 +128,37 @@ export const useBuildAutosave = ({
         return;
       }
 
-      if (timerRef.current) {
-        window.clearTimeout(timerRef.current);
-      }
-
+      cancelPendingSave();
+      pendingSaveRef.current = () => saveBuild(currentSlot, candidateBuild);
       timerRef.current = window.setTimeout(() => {
-        const currentPolicy = policyRef.current;
-
-        if (currentPolicy.mode === 'local') {
-          const guestSlot = String(GUEST_SLOTS);
-          const nextLocalBuilds = {
-            ...readBuilds(),
-            [guestSlot]: candidateBuild,
-          };
-          writeBuilds(nextLocalBuilds);
-          setBuilds({
-            [guestSlot]: candidateBuild,
-          });
-          return;
-        }
-
-        void upsertRemoteBuild({
-          slot: currentSlot,
-          snapshot: candidateBuild,
-        })
-          .then((savedBuild) => {
-            setBuilds((previousBuilds) => ({
-              ...previousBuilds,
-              [currentSlot]: savedBuild,
-            }));
-          })
-          .catch(() => {
-            setBuilds((previousBuilds) => ({
-              ...previousBuilds,
-              [currentSlot]: candidateBuild,
-            }));
-          });
-      }, 250);
+        void flushPendingSave();
+      }, AUTOSAVE_DELAY_MS);
     };
 
     const unsubscribers = [
-      useProfileStore.subscribe(doSave),
-      useImplantStore.subscribe(doSave),
-      useItemStore.subscribe(doSave),
-      useKitStore.subscribe(doSave),
-      useDrugStore.subscribe(doSave),
+      useProfileStore.subscribe(scheduleSave),
+      useImplantStore.subscribe(scheduleSave),
+      useItemStore.subscribe(scheduleSave),
+      useKitStore.subscribe(scheduleSave),
+      useDrugStore.subscribe(scheduleSave),
     ];
 
     return () => {
       unsubscribers.forEach((unsubscribe) => unsubscribe());
-      if (timerRef.current) {
-        window.clearTimeout(timerRef.current);
-      }
+      // Leaving the workbench (e.g. to the Communauté) must not drop an edit
+      // made during the debounce window.
+      void flushPendingSave();
     };
   }, [
     activeRef,
     buildsRef,
+    cancelPendingSave,
+    flushPendingSave,
     isLoadingBuildsRef,
     isRestoringRef,
     policyRef,
     setBuilds,
   ]);
+
+  return { flushPendingSave, cancelPendingSave };
 };

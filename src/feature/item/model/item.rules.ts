@@ -1,4 +1,4 @@
-import { type ItemType, type ItemsState } from './item.types';
+import { type Item, type ItemType, type ItemsState } from './item.types';
 
 import { ItemSpotValue, type ItemSpot, type Stat } from '@/domain';
 import { createEmptyStats } from '@/utils/stats';
@@ -13,6 +13,13 @@ const HAND_WEAPONS = [
 
 export const isWeaponType = (type: ItemType): boolean =>
   HAND_WEAPONS.includes(type as (typeof HAND_WEAPONS)[number]);
+
+/**
+ * Heal weapons (e.g. Cobra F-750) have a heal range instead of damages.
+ */
+export const isHealWeapon = (
+  item: Pick<Item, 'minHeal'> | null | undefined,
+): boolean => item?.minHeal !== undefined;
 
 /**
  * Gets the opposite arm spot when using two-handed weapons
