@@ -1,6 +1,6 @@
 {
   "buildCommand": "yarn build",
-  "installCommand": "yarn install --immutable",
+  "installCommand": "mkdir -p .vercel/cache/corepack && echo '{\"type\":\"commonjs\"}' > .vercel/cache/corepack/package.json && yarn install --immutable",
   "outputDirectory": "dist",
   "framework": "vite",
   "functions": {
