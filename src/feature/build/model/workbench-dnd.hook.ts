@@ -23,17 +23,14 @@ import {
 
 import type { ItemSpot } from '@/domain';
 import type { Item } from '@/feature/item';
-import type { KitSelection } from '@/feature/kit';
 
 interface UseWorkbenchDndParams extends DropHandlerActions {
   activeItem: Item | null;
-  kits: KitSelection[];
   onSpotChange: (spot: ItemSpot) => void;
 }
 
 export const useWorkbenchDnd = ({
   activeItem,
-  kits,
   onSpotChange,
   ...actions
 }: UseWorkbenchDndParams) => {
@@ -76,7 +73,6 @@ export const useWorkbenchDnd = ({
       dragData: getDraggedData(active.data.current),
       dropData: getDropData(over?.data.current),
       activeItem,
-      kits,
       ...actions,
     });
 

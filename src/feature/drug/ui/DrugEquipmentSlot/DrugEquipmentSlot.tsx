@@ -1,9 +1,9 @@
-import { useDraggable, useDroppable } from '@dnd-kit/core';
+import { useDroppable } from '@dnd-kit/core';
 
 import styles from './DrugEquipmentSlot.module.css';
 import type { Drug } from '../../model/drug.types';
 
-import { GripIcon } from '@/ui/Icon';
+import { TrashIcon } from '@/ui/Icon';
 
 interface DraggedData {
   kind: string;
@@ -27,21 +27,6 @@ export const DrugEquipmentSlot = ({
   const { setNodeRef: setDropNodeRef, isOver } = useDroppable({
     id: 'drug-slot',
     data: { kind: 'drug-slot' },
-  });
-  const installedDragData = drug
-    ? { kind: 'drug' as const, drug, source: 'installed' as const }
-    : null;
-  const {
-    attributes,
-    listeners,
-    setNodeRef: setDragNodeRef,
-    isDragging,
-  } = useDraggable({
-    id: installedDragData
-      ? `active-drug-${installedDragData.drug.id}`
-      : 'active-drug-empty',
-    data: installedDragData ?? undefined,
-    disabled: installedDragData === null,
   });
   const isDragActive =
     draggedData?.kind === 'item' || draggedData?.kind === 'drug';
@@ -72,24 +57,16 @@ export const DrugEquipmentSlot = ({
           <small>1 emplacement</small>
         </span>
       </button>
-      {installedDragData ? (
-        <div className={styles.actions}>
-          <button
-            ref={setDragNodeRef}
-            type="button"
-            className={styles.dragHandle}
-            aria-label={`Glisser ${installedDragData.drug.name} vers la zone de retrait`}
-            title={`Glisser ${installedDragData.drug.name} vers la zone de retrait`}
-            data-dragging={isDragging}
-            {...attributes}
-            {...listeners}
-          >
-            <GripIcon />
-          </button>
-          <button type="button" onClick={onClear}>
-            Désactiver
-          </button>
-        </div>
+      {drug ? (
+        <button
+          type="button"
+          className={styles.remove}
+          onClick={onClear}
+          aria-label={`Désactiver ${drug.name}`}
+          title={`Désactiver ${drug.name}`}
+        >
+          <TrashIcon />
+        </button>
       ) : null}
     </section>
   );

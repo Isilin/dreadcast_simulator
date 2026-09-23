@@ -7,7 +7,6 @@ import {
   workbenchSlotLabels,
   type CatalogueFilter,
 } from '../../model/workbench.types';
-import { RemovalDock } from '../RemovalDock';
 import { WorkbenchBoard } from '../WorkbenchBoard';
 
 import type { ItemSpot } from '@/domain';
@@ -109,7 +108,6 @@ export const WorkbenchWorkspace = ({
             spotLabel={workbenchSlotLabels[activeSpot]}
             onDelete={onKitDelete}
           />
-          <RemovalDock spot={activeSpot} />
         </div>
       ) : null}
     </div>

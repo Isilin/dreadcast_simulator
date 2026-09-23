@@ -9,5 +9,6 @@ export * from './Minus.icon';
 export * from './Moon.icon';
 export * from './Plus.icon';
 export * from './Sun.icon';
+export * from './Trash.icon';
 export * from './Warning.icon';
 export * from './Wrench.icon';

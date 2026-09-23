@@ -1,4 +1,5 @@
 import type { Kit } from '../../model/kit.types';
+import { KitEffects } from '../KitEffects';
 
 import { CatalogueModule } from '@/ui/CatalogueModule';
 
@@ -15,10 +16,12 @@ export const CatalogueKitModule = ({
 }: CatalogueKitModuleProps) => (
   <CatalogueModule
     id={`module-kit-catalogue-${kit.id}`}
-    dragData={{ kind: 'kit', kit, source: 'catalogue' }}
+    dragData={{ kind: 'kit', kit }}
     name={kit.name}
     detail={`Tech ${kit.tech}`}
     onClick={onAdd}
     disabled={disabled}
-  />
+  >
+    <KitEffects effects={kit.effects} />
+  </CatalogueModule>
 );

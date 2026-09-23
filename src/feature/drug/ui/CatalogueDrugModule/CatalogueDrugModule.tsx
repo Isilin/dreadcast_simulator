@@ -15,7 +15,7 @@ export const CatalogueDrugModule = ({
 }: CatalogueDrugModuleProps) => (
   <CatalogueModule
     id={`module-drug-catalogue-${drug.id}`}
-    dragData={{ kind: 'drug', drug, source: 'catalogue' }}
+    dragData={{ kind: 'drug', drug }}
     name={drug.name}
     detail={isActive ? 'Active' : 'Disponible'}
     onClick={onActivate}

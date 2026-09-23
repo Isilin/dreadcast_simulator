@@ -21,9 +21,6 @@ const hasTextFields = (
 ): value is Record<string, unknown> =>
   isRecord(value) && fields.every((field) => typeof value[field] === 'string');
 
-const isDragSource = (value: unknown): value is 'catalogue' | 'installed' =>
-  value === 'catalogue' || value === 'installed';
-
 const isItemType = (value: unknown): value is Item['type'] =>
   typeof value === 'string' &&
   ItemTypeValues.includes(value as Item['type']);
@@ -53,27 +50,11 @@ export const getDraggedData = (data: unknown): WorkbenchDragData | null => {
   if (data.kind === 'item' && isItemData(data.item)) {
     return { kind: 'item', item: data.item };
   }
-  if (
-    data.kind === 'kit' &&
-    isDragSource(data.source) &&
-    isKitData(data.kit)
-  ) {
-    return {
-      kind: 'kit',
-      kit: data.kit,
-      source: data.source,
-    };
+  if (data.kind === 'kit' && isKitData(data.kit)) {
+    return { kind: 'kit', kit: data.kit };
   }
-  if (
-    data.kind === 'drug' &&
-    isDragSource(data.source) &&
-    isDrugData(data.drug)
-  ) {
-    return {
-      kind: 'drug',
-      drug: data.drug,
-      source: data.source,
-    };
+  if (data.kind === 'drug' && isDrugData(data.drug)) {
+    return { kind: 'drug', drug: data.drug };
   }
 
   return null;
@@ -86,9 +67,7 @@ export const getDropData = (data: unknown): WorkbenchDropTarget | null => {
     return { kind: data.kind };
   }
   if (
-    (data.kind === 'item-slot' ||
-      data.kind === 'kit-rack' ||
-      data.kind === 'removal-dock') &&
+    (data.kind === 'item-slot' || data.kind === 'kit-rack') &&
     isItemSpot(data.spot)
   ) {
     return { kind: data.kind, spot: data.spot };
@@ -105,8 +84,8 @@ export const getDragLabel = (dragData: WorkbenchDragData): string => {
 
 export const getDragIdentifier = (dragData: WorkbenchDragData): string => {
   if (dragData.kind === 'item') return dragData.item.id;
-  if (dragData.kind === 'kit') return `${dragData.source}-${dragData.kit.id}`;
-  return `${dragData.source}-${dragData.drug.id}`;
+  if (dragData.kind === 'kit') return `kit-${dragData.kit.id}`;
+  return `drug-${dragData.drug.id}`;
 };
 
 export const getDropAnnouncement = (
@@ -127,14 +106,6 @@ export const getDropAnnouncement = (
 
   if (dragData.kind === 'drug' && dropData.kind === 'drug-slot') {
     return `Activer ${dragData.drug.name}.`;
-  }
-
-  if (
-    dropData.kind === 'removal-dock' &&
-    dragData.kind !== 'item' &&
-    dragData.source === 'installed'
-  ) {
-    return `Retirer ${getDragLabel(dragData)} du build.`;
   }
 
   return 'Cette zone n’accepte pas cet élément.';

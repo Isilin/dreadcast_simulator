@@ -1,10 +1,11 @@
 import styles from './KitRack.module.css';
 import type { KitSelection } from '../../model/kit.types';
+import { KitEffects } from '../KitEffects';
 
 import type { ItemSpot } from '@/domain';
 import type { Item } from '@/feature/item';
-import { DraggableModuleRow } from '@/ui/DraggableModuleRow';
 import { DroppablePanel } from '@/ui/DroppablePanel';
+import { TrashIcon } from '@/ui/Icon';
 
 interface KitRackProps {
   activeItem: Item | null;
@@ -32,21 +33,34 @@ export const KitRack = ({
       {spotLabel} · Tech {techCost}
     </p>
     {activeItem ? (
-      <div className={styles.list}>
-        {kits.map(({ kit, number }, index) => (
-          <DraggableModuleRow
-            key={kit.id}
-            id={`active-kit-installed-${kit.id}`}
-            dragData={{ kind: 'kit', kit, source: 'installed' }}
-            name={kit.name}
-            detail={`x${number}`}
-            onRemove={() => onDelete(index)}
-          />
-        ))}
-        {kits.length === 0 ? (
-          <p className={styles.emptyState}>Déposez un kit ici.</p>
-        ) : null}
-      </div>
+      kits.length > 0 ? (
+        <ul className={styles.list}>
+          {kits.map(({ kit, number }, index) => (
+            <li key={kit.id} className={styles.row}>
+              <div className={styles.info}>
+                <span className={styles.name}>
+                  {kit.name}
+                  <span className={styles.count}>×{number}</span>
+                </span>
+                <KitEffects effects={kit.effects} />
+              </div>
+              <button
+                type="button"
+                className={styles.remove}
+                onClick={() => onDelete(index)}
+                aria-label={`Retirer un ${kit.name}`}
+                title={`Retirer un ${kit.name}`}
+              >
+                <TrashIcon />
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className={styles.emptyState}>
+          Déposez ou cliquez un kit du catalogue.
+        </p>
+      )
     ) : (
       <p className={styles.emptyState}>
         Équipez d’abord un élément sur cet emplacement.

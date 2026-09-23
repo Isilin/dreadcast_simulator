@@ -70,8 +70,6 @@
 .kitTools {
   display: grid;
   flex: 0 1 auto;
-  grid-template-columns: minmax(0, 1fr) minmax(160px, 0.35fr);
-  gap: var(--space-3);
   max-height: 40%;
   min-height: 0;
 }
@@ -99,9 +97,5 @@
 
   .body {
     overflow: visible;
-  }
-
-  .kitTools {
-    grid-template-columns: 1fr;
   }
 }

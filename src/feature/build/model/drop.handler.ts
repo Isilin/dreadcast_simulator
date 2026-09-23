@@ -7,13 +7,11 @@ import { workbenchSlotLabels } from './workbench.types';
 import type { ItemSpot } from '@/domain';
 import { itemMatchsSpot } from '@/feature/item';
 import type { Item } from '@/feature/item';
-import type { Kit, KitSelection } from '@/feature/kit';
+import type { Kit } from '@/feature/kit';
 
 export interface DropHandlerActions {
   setItem: (spot: ItemSpot, item: Item) => void;
   addKit: (spot: ItemSpot, kit: Kit) => void;
-  deleteKit: (spot: ItemSpot, index: number) => void;
-  setKitNumber: (spot: ItemSpot, index: number, number: number) => void;
   setDrug: (id: string | null) => void;
 }
 
@@ -21,7 +19,6 @@ export interface DropHandlerArgs extends DropHandlerActions {
   dragData: WorkbenchDragData | null;
   dropData: WorkbenchDropTarget | null;
   activeItem: Item | null;
-  kits: KitSelection[];
 }
 
 export interface DropHandlerResult {
@@ -33,11 +30,8 @@ export const handleDrop = ({
   dragData,
   dropData,
   activeItem,
-  kits,
   setItem,
   addKit,
-  deleteKit,
-  setKitNumber,
   setDrug,
 }: DropHandlerArgs): DropHandlerResult => {
   if (!dragData || !dropData) {
@@ -71,33 +65,6 @@ export const handleDrop = ({
   if (dragData.kind === 'drug' && dropData.kind === 'drug-slot') {
     setDrug(dragData.drug.id);
     return { message: `${dragData.drug.name} activée.` };
-  }
-
-  if (
-    dropData.kind === 'removal-dock' &&
-    dragData.kind === 'kit' &&
-    dragData.source === 'installed'
-  ) {
-    const index = kits.findIndex(({ kit }) => kit.id === dragData.kit.id);
-    const kit = kits[index];
-    if (!kit) return { message: 'Kit non trouvé dans cet emplacement.' };
-    if (kit.number > 1) {
-      setKitNumber(dropData.spot, index, kit.number - 1);
-    } else {
-      deleteKit(dropData.spot, index);
-    }
-    return {
-      message: `${dragData.kit.name} retiré de ${workbenchSlotLabels[dropData.spot]}.`,
-    };
-  }
-
-  if (
-    dropData.kind === 'removal-dock' &&
-    dragData.kind === 'drug' &&
-    dragData.source === 'installed'
-  ) {
-    setDrug(null);
-    return { message: `${dragData.drug.name} désactivée.` };
   }
 
   return { message: 'Cette zone n’accepte pas cet élément.' };

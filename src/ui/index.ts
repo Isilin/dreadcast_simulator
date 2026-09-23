@@ -3,7 +3,6 @@ export * from './AppShell';
 export * from './Card';
 export * from './CatalogueModule';
 export * from './DeleteButton';
-export * from './DraggableModuleRow';
 export * from './EffectChip';
 export * from './ErrorBoundary';
 export * from './Fallback';

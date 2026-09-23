@@ -8,11 +8,84 @@
 
 .list {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: 6px var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--small-radius);
+  background: var(--surface-raised);
+}
+
+.info {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.name {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+  overflow: hidden;
+  color: var(--text-primary);
+  font: 600 11px/1.2 var(--font-data);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.count {
+  color: var(--action-primary-strong);
+  font: 700 10px/1 var(--font-data);
+}
+
+.remove {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--status-danger) 45%, transparent);
+  border-radius: var(--small-radius);
+  color: var(--status-danger);
+  background: color-mix(in srgb, var(--status-danger) 8%, transparent);
+  cursor: pointer;
+}
+
+.remove svg {
+  width: 15px;
+  height: 15px;
+}
+
+.remove:hover,
+.remove:focus-visible {
+  border-color: var(--status-danger);
+  background: color-mix(in srgb, var(--status-danger) 18%, transparent);
+}
+
+.remove:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
 }
 
 .emptyState {
-  margin: var(--space-4) 0;
+  margin: var(--space-2) 0;
   color: var(--text-secondary);
   font: 400 12px/1.5 var(--font-data);
+}
+
+@media (max-width: 560px) {
+  .list {
+    grid-template-columns: 1fr;
+  }
 }

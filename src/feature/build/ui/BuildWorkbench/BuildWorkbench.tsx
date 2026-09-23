@@ -123,12 +123,9 @@ export const BuildWorkbench = ({ initialSlot }: BuildWorkbenchProps = {}) => {
   } = useWorkbenchDnd({
     activeItem,
     addKit,
-    deleteKit,
-    kits,
     onSpotChange: setActiveSpot,
     setDrug,
     setItem,
-    setKitNumber,
   });
 
   return (

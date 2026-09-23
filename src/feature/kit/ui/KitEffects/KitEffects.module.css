@@ -1,0 +1,29 @@
+.effects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.effect {
+  padding: 2px 4px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--small-radius);
+  color: var(--text-secondary);
+  background: var(--surface-sunken);
+  font: 600 9px/1.1 var(--font-data);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.effect[data-sign='positive'] {
+  border-color: color-mix(in srgb, var(--status-success) 40%, transparent);
+  color: var(--status-success);
+}
+
+.effect[data-sign='negative'] {
+  border-color: color-mix(in srgb, var(--status-danger) 40%, transparent);
+  color: var(--status-danger);
+}
