@@ -1,12 +1,12 @@
 import { Dialog } from '@base-ui/react/dialog';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import styles from './BuildNameEditor.module.css';
 import type { BuildPersistenceState } from '../../model/persitence.hook';
 import { createSharedBuildLink, getDefaultBuildName } from '../../services';
 
 import { Modal } from '@/ui';
-import { ShareIcon } from '@/ui/Icon';
+import { CheckIcon, CopyIcon, ShareIcon } from '@/ui/Icon';
 import { IconButton } from '@/ui/IconButton';
 
 interface BuildNameEditorProps {
@@ -27,6 +27,11 @@ export const BuildNameEditor = ({ persistence }: BuildNameEditorProps) => {
   const [isSharing, setIsSharing] = useState(false);
   const [sharePath, setSharePath] = useState<string | null>(null);
   const [shareError, setShareError] = useState<string | null>(null);
+  const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>(
+    'idle',
+  );
+  const copyTimer = useRef<number | undefined>(undefined);
+  const shareLinkRef = useRef<HTMLAnchorElement>(null);
 
   const canShareBuild = storageMode === 'remote' && hasUnlimitedSlots;
   const canCopyToClipboard =
@@ -41,6 +46,8 @@ export const BuildNameEditor = ({ persistence }: BuildNameEditorProps) => {
     );
   }, [active, builds]);
 
+  useEffect(() => () => window.clearTimeout(copyTimer.current), []);
+
   const commitName = () => {
     setActiveBuildName(draftName);
   };
@@ -49,6 +56,7 @@ export const BuildNameEditor = ({ persistence }: BuildNameEditorProps) => {
     setIsShareDialogOpen(true);
     setIsSharing(true);
     setShareError(null);
+    setCopyState('idle');
 
     try {
       const sharedId = await createSharedBuildLink({ slot: active });
@@ -71,8 +79,26 @@ export const BuildNameEditor = ({ persistence }: BuildNameEditorProps) => {
       return;
     }
 
-    await navigator.clipboard.writeText(shareUrl);
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopyState('copied');
+    } catch {
+      // Clipboard refused (permissions, embedded browser): select the link so
+      // it can be copied by hand.
+      const link = shareLinkRef.current;
+      if (link) window.getSelection()?.selectAllChildren(link);
+      setCopyState('failed');
+    }
+    window.clearTimeout(copyTimer.current);
+    copyTimer.current = window.setTimeout(() => setCopyState('idle'), 2500);
   };
+
+  const copyLabel =
+    copyState === 'copied'
+      ? 'Lien copié'
+      : copyState === 'failed'
+        ? 'Copie impossible : lien sélectionné, faites Ctrl+C'
+        : 'Copier le lien';
 
   return (
     <>
@@ -128,18 +154,34 @@ export const BuildNameEditor = ({ persistence }: BuildNameEditorProps) => {
             {!isSharing && shareUrl ? (
               <div className={styles.sharePanel}>
                 <p>Ce lien ouvre votre build en lecture seule:</p>
-                <a href={sharePath ?? '#'} className={styles.shareLink}>
-                  {shareUrl}
-                </a>
-                {canCopyToClipboard ? (
-                  <button
-                    type="button"
-                    className={styles.copyButton}
-                    onClick={() => void copyShareUrl()}
+                <div className={styles.shareRow}>
+                  <a
+                    ref={shareLinkRef}
+                    href={sharePath ?? '#'}
+                    className={styles.shareLink}
                   >
-                    Copier le lien
-                  </button>
-                ) : null}
+                    {shareUrl}
+                  </a>
+                  {canCopyToClipboard ? (
+                    <IconButton
+                      label={copyLabel}
+                      icon={
+                        copyState === 'copied' ? <CheckIcon /> : <CopyIcon />
+                      }
+                      variant={
+                        copyState === 'copied'
+                          ? 'primary'
+                          : copyState === 'failed'
+                            ? 'warning'
+                            : 'default'
+                      }
+                      onClick={() => void copyShareUrl()}
+                    />
+                  ) : null}
+                </div>
+                <p className="visuallyHidden" aria-live="polite">
+                  {copyState === 'idle' ? '' : `${copyLabel}.`}
+                </p>
               </div>
             ) : null}
           </Modal.Content>

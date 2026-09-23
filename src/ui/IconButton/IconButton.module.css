@@ -59,7 +59,8 @@
 }
 
 .positioner {
-  z-index: var(--z-modal);
+  /* Above modals: tooltips also label buttons inside dialogs. */
+  z-index: calc(var(--z-modal) + 1);
 }
 
 .popup {

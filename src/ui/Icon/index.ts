@@ -3,6 +3,7 @@ export * from './Check.icon';
 export * from './ChevronDown.icon';
 export * from './ChevronUpDown.icon';
 export * from './Clear.icon';
+export * from './Copy.icon';
 export * from './CursorGrow.icon';
 export * from './Eye.icon';
 export * from './Github.icon';
