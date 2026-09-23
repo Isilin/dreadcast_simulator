@@ -71,6 +71,7 @@ Les schémas doivent être exécutés dans l'ordre pour respecter les dépendanc
 029_rpc_community_write.sql      -- RPC community_publish / community_update_publication
 030_rpc_community_search.sql     -- RPC community_search (filtres, tris, pagination)
 031_rpc_community_similar.sql    -- RPC community_similar / community_for_you
+032_index_community_content_author.sql -- Index de community_build_content.author_id
 ```
 
 ### Procedure d'application en production
@@ -93,7 +94,7 @@ script d'annulation dans `rollbacks/` (meme nom, suffixe `.rollback.sql`).
    partages via `get_shared_build`), puis `023b`. Lancer ensuite la requete
    d'audit en fin de `022` (les validations faites a la main dans l'editeur
    SQL ont `validated_by` vide : les verifier, pas les supprimer).
-4. Lot Communaute : `024` a `031` dans l'ordre, puis deploiement de l'API et
+4. Lot Communaute : `024` a `032` dans l'ordre, puis deploiement de l'API et
    du front. `024` declare `v15` comme version courante : l'ajuster si la
    Communaute ouvre avant le passage des donnees en v15.
 5. Verifier les advisors Supabase (securite et performance).
