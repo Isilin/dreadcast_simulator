@@ -1,0 +1,50 @@
+.inspector {
+  display: grid;
+  align-content: start;
+  gap: var(--space-4);
+  min-width: 0;
+  min-height: 0;
+  height: calc(100vh - 72px - var(--space-5));
+  max-height: calc(100vh - 72px - var(--space-5));
+  padding: var(--space-3);
+  border: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--surface-base) 92%, transparent);
+  box-shadow: var(--elevation-1);
+  position: sticky;
+  top: calc(56px + var(--space-4));
+  overflow: auto;
+}
+
+.section {
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: var(--action-primary);
+  font: 600 10px/1.2 var(--font-data);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.profileControls {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.links {
+  margin-top: auto;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+}
+
+@media (max-width: 900px) {
+  .inspector {
+    height: auto;
+    max-height: none;
+    position: static;
+  }
+}

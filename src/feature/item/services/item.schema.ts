@@ -47,6 +47,9 @@ export const itemResponseDtoSchema = z.object({
   ]),
   min_damage: z.number().min(0).nullable(),
   max_damage: z.number().min(0).nullable(),
+  // Optional: absent from API deployments older than the heal weapons.
+  min_heal: z.number().min(0).nullable().optional(),
+  max_heal: z.number().min(0).nullable().optional(),
   damage_bonus: z.number().min(0).max(5).nullable(),
   hands: z.number().min(1).max(2).nullable(),
   reach: z.number().min(0).max(14).nullable(),

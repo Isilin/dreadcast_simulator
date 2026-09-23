@@ -1,4 +1,5 @@
-import { Field, Select } from '@base-ui/react';
+import { Field } from '@base-ui/react/field';
+import { Select } from '@base-ui/react/select';
 
 import styles from './RaceSelector.module.css';
 import { useProfileActions, useProfileState } from '../../model/profile.store';
@@ -24,8 +25,8 @@ export const RaceSelector = () => {
   };
 
   return (
-    <Field.Root>
-      <Field.Label>Race</Field.Label>
+    <Field.Root className={styles.field}>
+      <Field.Label className={styles.label}>Race</Field.Label>
       <Select.Root
         items={raceItems}
         value={race || 'Humain'}

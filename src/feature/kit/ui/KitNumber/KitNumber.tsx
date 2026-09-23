@@ -1,4 +1,4 @@
-import { NumberField } from '@base-ui/react';
+import { NumberField } from '@base-ui/react/number-field';
 
 import styles from './KitNumber.module.css';
 

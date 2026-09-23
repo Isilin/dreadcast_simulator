@@ -1,55 +1,43 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { useBuildAutosave } from './autosave.hook';
+import { loadBuilds as loadAvailableBuilds } from './persistence.loader';
 import {
-  fetchRemoteBuilds,
-  upsertRemoteBuild,
-} from '../services/persistence.remote';
+  getBuildNameForSlot,
+  getBuildSlots,
+  resolveInitialSlot,
+} from './persistence.selectors';
+import {
+  createBuildSnapshot,
+  readBuildStoreState,
+  resetBuildStores,
+  restoreBuildToStores,
+} from './persistence.snapshot';
+import { upsertRemoteBuild } from '../services/persistence.remote';
+import {
+  GUEST_SLOTS,
+  getDefaultBuildName,
+  readBuilds,
+  readLastActiveSlot,
+  resolveBuildPersistencePolicy,
+  writeBuilds,
+  writeLastActiveSlot,
+} from '../services/persistence.service';
 import type {
   BuildSnapshot,
   BuildStorageMode,
 } from '../services/persistence.service';
-import {
-  AUTHENTICATED_FREE_SLOTS,
-  GUEST_SLOTS,
-  clearLocalBuilds,
-  getDefaultBuildName,
-  readBuilds,
-  resolveBuildPersistencePolicy,
-  restoreItems,
-  restoreKits,
-  serializeItems,
-  serializeKits,
-  writeBuilds,
-} from '../services/persistence.service';
 
 import { useAuthState } from '@/feature/auth';
-import {
-  useDrugStore,
-  initialState as drugsInitialState,
-} from '@/feature/drug/model/drug.store';
-import {
-  useImplantStore,
-  initialState as implantsInitialState,
-} from '@/feature/implant/model/implant.store';
 import type { Item } from '@/feature/item';
-import {
-  useItemStore,
-  initialState as itemsInitialState,
-} from '@/feature/item/model/item.store';
 import type { Kit } from '@/feature/kit';
-import {
-  useKitStore,
-  initialState as kitsInitialState,
-} from '@/feature/kit/model/kit.store';
-import {
-  useProfileStore,
-  initialState as profileInitialState,
-} from '@/feature/profile/model/profile.store';
-import { useSubscriptions } from '@/feature/subscription';
+import { useActiveSubscription } from '@/feature/subscription';
 
 interface HookParams {
   allItems: Item[] | undefined;
   allKits: Kit[] | undefined;
+  /** Slot to open first (e.g. a build just copied from the Communauté). */
+  initialSlot?: number;
 }
 
 export interface BuildPersistenceState {
@@ -62,55 +50,30 @@ export interface BuildPersistenceState {
   storageMode: BuildStorageMode;
   getBuildName: (slot: string) => string;
   setActiveBuildName: (name: string) => void;
+  /**
+   * Saves the active build immediately (bypassing the autosave debounce) and
+   * resolves once it is persisted. Used before publishing to the Communauté.
+   */
+  saveActiveBuildNow: () => Promise<BuildSnapshot>;
 }
-
-const nowHasValidSubscription = (
-  subscriptions: Array<{ status: 'pending' | 'validated'; endsAt: string }>,
-) => {
-  const now = Date.now();
-
-  return subscriptions.some((subscription) => {
-    if (subscription.status !== 'validated') {
-      return false;
-    }
-
-    const endTimestamp = new Date(subscription.endsAt).getTime();
-    return Number.isFinite(endTimestamp) && endTimestamp >= now;
-  });
-};
-
-const toComparableBuild = (build: BuildSnapshot | null | undefined) => {
-  if (!build) {
-    return null;
-  }
-
-  return JSON.stringify({
-    profile: build.profile,
-    implants: build.implants,
-    items: build.items,
-    kits: build.kits,
-    drug: build.drug,
-  });
-};
 
 export function useBuildPersistence({
   allItems,
   allKits,
+  initialSlot,
 }: HookParams): BuildPersistenceState {
   const { session } = useAuthState();
   const isAuthenticated = Boolean(session?.user);
-  const [active, setActive] = useState<string>('1');
+  const [active, setActive] = useState<string>(() =>
+    resolveInitialSlot(initialSlot, readLastActiveSlot()),
+  );
   const [builds, setBuilds] = useState<Record<string, BuildSnapshot>>({});
   const [isLoadingBuilds, setIsLoadingBuilds] = useState(true);
 
-  const { data: subscriptions = [] } = useSubscriptions({
-    enabled: isAuthenticated,
-  });
-
-  const hasValidSubscription = useMemo(
-    () => nowHasValidSubscription(subscriptions),
-    [subscriptions],
-  );
+  const {
+    isSubscriber: hasValidSubscription,
+    isLoading: isSubscriptionLoading,
+  } = useActiveSubscription();
 
   const persistencePolicy = useMemo(
     () =>
@@ -122,7 +85,6 @@ export function useBuildPersistence({
   );
 
   const isRestoringRef = useRef(false);
-  const timerRef = useRef<number | null>(null);
   const activeRef = useRef(active);
   const buildsRef = useRef(builds);
   const policyRef = useRef(persistencePolicy);
@@ -142,49 +104,16 @@ export function useBuildPersistence({
 
     const loadBuilds = async () => {
       setIsLoadingBuilds(true);
-
-      if (currentMode === 'local') {
-        // Déconnexion : sauvegarder le slot 1 distant en mémoire → localStorage
-        if (prevMode === 'remote') {
-          const inMemorySlot1 = buildsRef.current['1'];
-          if (inMemorySlot1) {
-            writeBuilds({ ...readBuilds(), '1': inMemorySlot1 });
-          }
-        }
-
-        const guestBuild = readBuilds()['1'];
-        if (!cancelled) {
-          setBuilds(guestBuild ? { '1': guestBuild } : {});
-          setIsLoadingBuilds(false);
-        }
-        return;
-      }
-
-      // Mode distant (connecté)
       try {
-        const remoteBuilds = await fetchRemoteBuilds();
-
-        // Connexion : si slot 1 distant vide et build local existant → migration silencieuse
-        const localBuild = readBuilds()['1'];
-        if (!remoteBuilds['1'] && localBuild) {
-          try {
-            const migrated = await upsertRemoteBuild({
-              slot: '1',
-              snapshot: localBuild,
-            });
-            if (!cancelled) {
-              remoteBuilds['1'] = migrated;
-            }
-          } catch {
-            // Migration non bloquante
-          }
-        }
-
-        // Supprimer le localStorage quand on bascule en mode distant
-        clearLocalBuilds();
+        const loadedBuilds = await loadAvailableBuilds({
+          mode: currentMode,
+          previousMode: prevMode,
+          inMemorySlot1:
+            prevMode === 'remote' ? buildsRef.current['1'] : undefined,
+        });
 
         if (!cancelled) {
-          setBuilds(remoteBuilds);
+          setBuilds(loadedBuilds);
         }
       } catch {
         if (!cancelled) {
@@ -205,38 +134,27 @@ export function useBuildPersistence({
   }, [persistencePolicy.mode, session?.user?.id]);
 
   const slots = useMemo(() => {
-    if (persistencePolicy.mode === 'local') {
-      return ['1'];
-    }
-
-    if (!persistencePolicy.hasUnlimitedSlots) {
-      return Array.from({ length: AUTHENTICATED_FREE_SLOTS }, (_, index) =>
-        String(index + 1),
-      );
-    }
-
-    const existingSlotNumbers = Object.keys(builds)
-      .map((slot) => Number.parseInt(slot, 10))
-      .filter((slot) => Number.isInteger(slot) && slot > 0);
-    const maxExistingSlot =
-      existingSlotNumbers.length > 0 ? Math.max(...existingSlotNumbers) : 0;
-    const totalVisibleSlots = Math.max(
-      AUTHENTICATED_FREE_SLOTS,
-      maxExistingSlot + 1,
-    );
-
-    return Array.from({ length: totalVisibleSlots }, (_, index) =>
-      String(index + 1),
-    );
+    return getBuildSlots({
+      mode: persistencePolicy.mode,
+      hasUnlimitedSlots: persistencePolicy.hasUnlimitedSlots,
+      builds,
+    });
   }, [builds, persistencePolicy.hasUnlimitedSlots, persistencePolicy.mode]);
 
   useEffect(() => {
+    // Wait for auth, subscription and builds: until then the slot list is the
+    // free-plan one and would wrongly reset a remembered or copied slot.
+    if (isLoadingBuilds || isSubscriptionLoading) {
+      return;
+    }
+
     if (slots.length === 0 || slots.includes(active)) {
+      writeLastActiveSlot(active);
       return;
     }
 
     setActive(slots[0] ?? String(GUEST_SLOTS));
-  }, [active, slots]);
+  }, [active, isLoadingBuilds, isSubscriptionLoading, slots]);
 
   useEffect(() => {
     if (!allItems || !allKits || isLoadingBuilds) {
@@ -247,17 +165,9 @@ export function useBuildPersistence({
     const build = builds[active];
 
     if (build) {
-      useProfileStore.getState().replaceProfile(build.profile);
-      useImplantStore.getState().replaceImplants(build.implants);
-      useItemStore.getState().replaceItems(restoreItems(build.items, allItems));
-      useKitStore.getState().replaceKits(restoreKits(build.kits, allKits));
-      useDrugStore.getState().replaceDrug(build.drug ?? drugsInitialState);
+      restoreBuildToStores(build, allItems, allKits);
     } else {
-      useProfileStore.getState().replaceProfile(profileInitialState);
-      useImplantStore.getState().replaceImplants(implantsInitialState);
-      useItemStore.getState().replaceItems(itemsInitialState);
-      useKitStore.getState().replaceKits(kitsInitialState);
-      useDrugStore.getState().replaceDrug(drugsInitialState);
+      resetBuildStores();
     }
 
     setTimeout(() => {
@@ -266,31 +176,15 @@ export function useBuildPersistence({
   }, [active, allItems, allKits, builds, isLoadingBuilds]);
 
   const buildSnapshotFromStores = (slot: string): BuildSnapshot => {
-    const profile = useProfileStore.getState().profile;
-    const implants = useImplantStore.getState().implants;
-    const items = useItemStore.getState().items;
-    const kits = useKitStore.getState().kits;
-    const drug = useDrugStore.getState().drug;
-    const serializedItems = serializeItems(items);
-    const serializedKits = serializeKits(kits);
-    const existingBuild = buildsRef.current[slot];
-
-    return {
-      profile,
-      implants,
-      items: serializedItems,
-      kits: serializedKits,
-      drug,
-      name: existingBuild?.name ?? getDefaultBuildName(slot),
-      savedAt: Date.now(),
-    };
+    return createBuildSnapshot(
+      slot,
+      readBuildStoreState(),
+      buildsRef.current[slot],
+    );
   };
 
   const getBuildName = (slot: string): string => {
-    const persistedName = builds[slot]?.name?.trim();
-    return persistedName && persistedName.length > 0
-      ? persistedName
-      : getDefaultBuildName(slot);
+    return getBuildNameForSlot(builds, slot);
   };
 
   const setActiveBuildName = (name: string) => {
@@ -329,77 +223,40 @@ export function useBuildPersistence({
     });
   };
 
-  useEffect(() => {
-    const doSave = () => {
-      if (isRestoringRef.current || isLoadingBuildsRef.current) {
-        return;
-      }
+  const { cancelPendingSave } = useBuildAutosave({
+    activeRef,
+    buildsRef,
+    isLoadingBuildsRef,
+    isRestoringRef,
+    policyRef,
+    setBuilds,
+  });
 
-      const currentSlot = activeRef.current;
-      const candidateBuild = buildSnapshotFromStores(currentSlot);
+  const saveActiveBuildNow = useCallback(async (): Promise<BuildSnapshot> => {
+    const slot = activeRef.current;
+    const candidateBuild = createBuildSnapshot(
+      slot,
+      readBuildStoreState(),
+      buildsRef.current[slot],
+    );
 
-      const previousBuild = buildsRef.current[currentSlot];
-      if (
-        toComparableBuild(previousBuild) === toComparableBuild(candidateBuild)
-      ) {
-        return;
-      }
+    // Same state as the debounced save: drop it and save synchronously.
+    cancelPendingSave();
 
-      if (timerRef.current) {
-        window.clearTimeout(timerRef.current);
-      }
+    if (policyRef.current.mode === 'local') {
+      const guestSlot = String(GUEST_SLOTS);
+      writeBuilds({ ...readBuilds(), [guestSlot]: candidateBuild });
+      setBuilds({ [guestSlot]: candidateBuild });
+      return candidateBuild;
+    }
 
-      timerRef.current = window.setTimeout(() => {
-        const currentPolicy = policyRef.current;
-
-        if (currentPolicy.mode === 'local') {
-          const guestSlot = String(GUEST_SLOTS);
-          const nextLocalBuilds = {
-            ...readBuilds(),
-            [guestSlot]: candidateBuild,
-          };
-          writeBuilds(nextLocalBuilds);
-          setBuilds({
-            [guestSlot]: candidateBuild,
-          });
-          return;
-        }
-
-        void upsertRemoteBuild({
-          slot: currentSlot,
-          snapshot: candidateBuild,
-        })
-          .then((savedBuild) => {
-            setBuilds((previousBuilds) => ({
-              ...previousBuilds,
-              [currentSlot]: savedBuild,
-            }));
-          })
-          .catch(() => {
-            // On conserve l'etat local memoire pour ne pas bloquer l'edition en cas d'erreur reseau.
-            setBuilds((previousBuilds) => ({
-              ...previousBuilds,
-              [currentSlot]: candidateBuild,
-            }));
-          });
-      }, 250);
-    };
-
-    const unsubscribers = [
-      useProfileStore.subscribe(doSave),
-      useImplantStore.subscribe(doSave),
-      useItemStore.subscribe(doSave),
-      useKitStore.subscribe(doSave),
-      useDrugStore.subscribe(doSave),
-    ];
-
-    return () => {
-      unsubscribers.forEach((unsubscribe) => unsubscribe());
-      if (timerRef.current) {
-        window.clearTimeout(timerRef.current);
-      }
-    };
-  }, []);
+    const savedBuild = await upsertRemoteBuild({
+      slot,
+      snapshot: candidateBuild,
+    });
+    setBuilds((previousBuilds) => ({ ...previousBuilds, [slot]: savedBuild }));
+    return savedBuild;
+  }, [cancelPendingSave]);
 
   return {
     active,
@@ -411,5 +268,6 @@ export function useBuildPersistence({
     storageMode: persistencePolicy.mode,
     getBuildName,
     setActiveBuildName,
+    saveActiveBuildNow,
   };
 }

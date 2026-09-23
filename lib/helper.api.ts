@@ -40,6 +40,45 @@ export const requireBearerToken = (
   return token;
 };
 
+export type AuthenticatedSupabaseClient = ReturnType<
+  typeof doCreateClientWithAuth
+>;
+
+export interface AuthenticatedContext {
+  supabase: AuthenticatedSupabaseClient;
+  userId: string;
+}
+
+/**
+ * Validates the bearer token and resolves the Supabase user. Sends the 401
+ * response itself and returns null when the request is not authenticated.
+ */
+export const requireAuthenticatedUser = async (
+  req: VercelRequest,
+  res: VercelResponse,
+): Promise<AuthenticatedContext | null> => {
+  const accessToken = requireBearerToken(req, res);
+  if (!accessToken) {
+    return null;
+  }
+
+  const supabase = doCreateClientWithAuth(accessToken);
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error || !data.user) {
+    res.status(401).json({ error: 'Utilisateur non authentifie.' });
+    return null;
+  }
+
+  return { supabase, userId: data.user.id };
+};
+
+export const setNoStoreHeaders = (res: VercelResponse): void => {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+};
+
 export const setCacheHeaders = (res: VercelResponse): void => {
   res.setHeader(
     'Cache-Control',

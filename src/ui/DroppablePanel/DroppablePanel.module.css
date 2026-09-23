@@ -1,0 +1,25 @@
+.panel {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+  min-height: 520px;
+  padding: var(--space-5);
+  background: linear-gradient(
+    135deg,
+    transparent,
+    rgb(32 201 232 / 5%),
+    transparent
+  );
+}
+
+.panel[data-drop-over='true'] {
+  outline: 1px solid var(--action-primary);
+  outline-offset: -1px;
+  box-shadow: inset 0 0 40px rgb(32 201 232 / 12%);
+}
+
+@media (max-width: 900px) {
+  .panel {
+    min-height: 360px;
+  }
+}

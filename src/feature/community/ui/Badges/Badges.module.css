@@ -1,0 +1,56 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--rounded-radius);
+  font: 600 10px/1.2 var(--font-data);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.specialization {
+  composes: badge;
+  border-color: var(--action-primary);
+  background: var(--action-primary-muted);
+  color: var(--action-primary-strong);
+}
+
+.specialization[data-specialization='medecin'],
+.specialization[data-specialization='soutien'] {
+  border-color: var(--status-success);
+  background: color-mix(in srgb, var(--status-success) 14%, transparent);
+  color: var(--status-success);
+}
+
+.specialization[data-specialization='combattant_cac'],
+.specialization[data-specialization='tank'] {
+  border-color: var(--status-danger);
+  background: var(--color-red-dark);
+  color: var(--status-danger);
+}
+
+.specialization[data-specialization='tireur'],
+.specialization[data-specialization='furtif'] {
+  border-color: var(--status-info);
+  background: var(--color-blue-light);
+  color: var(--status-info);
+}
+
+.specialization[data-specialization='polyvalent'] {
+  border-color: var(--border-strong);
+  background: var(--surface-sunken);
+  color: var(--text-secondary);
+}
+
+.version {
+  composes: badge;
+  color: var(--text-secondary);
+}
+
+.versionOutdated {
+  composes: badge;
+  border-color: var(--status-warning);
+  background: var(--color-orange-light);
+  color: var(--status-warning);
+}

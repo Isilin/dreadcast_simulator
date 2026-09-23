@@ -1,46 +1,22 @@
-import z from 'zod';
-
 import type { BuildSnapshot } from './persistence.service';
 
-import { getCurrentSession } from '@/feature/auth';
+import { getAuthHeaders } from '@/feature/auth';
 
-const remoteBuildResponseSchema = z.object({
-  slot: z.coerce.number().int().min(1),
-  snapshot: z.record(z.string(), z.unknown()),
-  saved_at: z.string().min(1),
-});
+/**
+ * Saves still in flight. A reload must not read the builds before they land,
+ * otherwise an edit flushed on unmount would be overwritten by stale data.
+ */
+const pendingUpserts = new Set<Promise<unknown>>();
 
-const remoteBuildArrayResponseSchema = z.array(remoteBuildResponseSchema);
-
-const createSharedBuildResponseSchema = z.object({
-  id: z.uuid(),
-});
-
-const sharedBuildResponseSchema = z.object({
-  id: z.uuid(),
-  slot: z.coerce.number().int().min(1),
-  snapshot: z.record(z.string(), z.unknown()),
-  saved_at: z.string().min(1),
-  created_at: z.string().min(1),
-});
-
-const getAuthHeaders = async (): Promise<HeadersInit> => {
-  const session = await getCurrentSession();
-  const accessToken = session?.access_token;
-
-  if (!accessToken) {
-    throw new Error('Session utilisateur manquante.');
-  }
-
-  return {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${accessToken}`,
-  };
+export const waitForPendingBuildSaves = async (): Promise<void> => {
+  await Promise.allSettled([...pendingUpserts]);
 };
 
 export const fetchRemoteBuilds = async (
   signal?: AbortSignal,
 ): Promise<Record<string, BuildSnapshot>> => {
+  await waitForPendingBuildSaves();
+
   const headers = await getAuthHeaders();
   const response = await fetch('/api/builds', {
     method: 'GET',
@@ -53,6 +29,8 @@ export const fetchRemoteBuilds = async (
   }
 
   const payload: unknown = await response.json();
+  const { remoteBuildArrayResponseSchema } =
+    await import('./persistence.schema');
   const parsed = remoteBuildArrayResponseSchema.parse(payload);
 
   return Object.fromEntries(
@@ -74,7 +52,7 @@ interface UpsertRemoteBuildParams {
   snapshot: BuildSnapshot;
 }
 
-export const upsertRemoteBuild = async ({
+const sendUpsertRemoteBuild = async ({
   slot,
   snapshot,
 }: UpsertRemoteBuildParams): Promise<BuildSnapshot> => {
@@ -99,7 +77,8 @@ export const upsertRemoteBuild = async ({
   }
 
   const payload: unknown = await response.json();
-  const parsed = remoteBuildResponseSchema.parse(payload);
+  const { remoteBuildResponseDtoSchema } = await import('./persistence.schema');
+  const parsed = remoteBuildResponseDtoSchema.parse(payload);
   const parsedSnapshot = parsed.snapshot as unknown as BuildSnapshot;
 
   return {
@@ -108,62 +87,13 @@ export const upsertRemoteBuild = async ({
   };
 };
 
-interface CreateSharedBuildLinkParams {
-  slot: string;
-}
-
-export const createSharedBuildLink = async ({
-  slot,
-}: CreateSharedBuildLinkParams): Promise<string> => {
-  const headers = await getAuthHeaders();
-  const numericSlot = Number.parseInt(slot, 10);
-
-  if (!Number.isInteger(numericSlot) || numericSlot <= 0) {
-    throw new Error('Slot de build invalide.');
-  }
-
-  const response = await fetch('/api/shared', {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({
-      slot: numericSlot,
-    }),
-  });
-
-  if (!response.ok) {
-    throw new Error('Impossible de partager le build.');
-  }
-
-  const payload: unknown = await response.json();
-  const parsed = createSharedBuildResponseSchema.parse(payload);
-
-  return parsed.id;
-};
-
-interface FetchSharedBuildByIdParams {
-  id: string;
-  signal?: AbortSignal;
-}
-
-export const fetchSharedBuildById = async ({
-  id,
-  signal,
-}: FetchSharedBuildByIdParams): Promise<BuildSnapshot> => {
-  const response = await fetch(`/api/shared/${encodeURIComponent(id)}`, {
-    method: 'GET',
-    signal,
-  });
-
-  if (!response.ok) {
-    throw new Error('Impossible de recuperer le build partage.');
-  }
-
-  const payload: unknown = await response.json();
-  const parsed = sharedBuildResponseSchema.parse(payload);
-  const parsedSnapshot = parsed.snapshot as unknown as BuildSnapshot;
-
-  return {
-    ...parsedSnapshot,
-    savedAt: new Date(parsed.saved_at).getTime(),
-  };
+export const upsertRemoteBuild = (
+  params: UpsertRemoteBuildParams,
+): Promise<BuildSnapshot> => {
+  const request = sendUpsertRemoteBuild(params);
+  pendingUpserts.add(request);
+  void request
+    .finally(() => pendingUpserts.delete(request))
+    .catch(() => undefined);
+  return request;
 };

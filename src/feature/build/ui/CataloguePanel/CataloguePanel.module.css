@@ -1,0 +1,131 @@
+.catalogue {
+  min-width: 0;
+  min-height: 0;
+  height: calc(100vh - 72px - var(--space-5));
+  padding: var(--space-3);
+  border: 1px solid var(--border-subtle);
+  background: color-mix(in srgb, var(--surface-base) 92%, transparent);
+  box-shadow: var(--elevation-1);
+  position: sticky;
+  top: calc(56px + var(--space-4));
+  max-height: calc(100vh - 72px - var(--space-5));
+  overflow: auto;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: var(--action-primary);
+  font: 600 10px/1.2 var(--font-data);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.panelHeader h1 {
+  margin: 0;
+  color: var(--text-primary);
+  font: 700 22px/1 var(--font-display);
+}
+
+.counter {
+  padding: 4px 6px;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font: 600 11px/1.2 var(--font-data);
+}
+
+.modeTabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: var(--space-3);
+}
+
+.searchLabel {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+  font: 600 11px/1.2 var(--font-data);
+}
+
+.search {
+  width: 100%;
+  min-height: var(--control-height);
+  padding: 0 var(--space-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--small-radius);
+  color: var(--text-primary);
+  background: var(--surface-sunken);
+}
+
+.slotFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-block: var(--space-3);
+}
+
+.catalogueContext {
+  color: var(--action-primary-strong);
+  font: 600 10px/1 var(--font-data);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.slotFilter {
+  min-height: 30px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--small-radius);
+  color: var(--text-secondary);
+  background: var(--surface-sunken);
+  font: 600 10px/1 var(--font-data);
+}
+
+.slotFilter[data-active='true'] {
+  border-color: var(--action-primary);
+  color: var(--action-primary-strong);
+  background: var(--action-primary-muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.emptyState {
+  grid-column: 1 / -1;
+  margin: var(--space-4) 0;
+  color: var(--text-secondary);
+  font: 400 12px/1.5 var(--font-data);
+}
+
+.error {
+  grid-column: 1 / -1;
+  margin: var(--space-4) 0;
+  padding: var(--space-2);
+  border-left: 2px solid var(--status-danger);
+  color: var(--status-danger);
+  background: color-mix(in srgb, var(--status-danger) 8%, transparent);
+  font: 400 12px/1.5 var(--font-data);
+}
+
+@media (max-width: 900px) {
+  .catalogue {
+    height: auto;
+    max-height: none;
+    position: static;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  }
+}

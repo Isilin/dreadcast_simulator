@@ -1,6 +1,5 @@
 import { KIT_REPOSITORY_ERROR_CODE, KitRepositoryError } from './kit.errors';
 import { toDomain } from './kit.mapper';
-import { kitArrayResponseSchema, kitResponseDtoSchema } from './kit.schema';
 import type { Kit } from '../model';
 
 import { GET } from '@/utils/http';
@@ -30,6 +29,7 @@ export const fetchKits = async (
   }
 
   const payload: unknown = await response.json();
+  const { kitArrayResponseSchema } = await import('./kit.schema');
   const kits = validatePayload({
     schema: kitArrayResponseSchema,
     payload,
@@ -55,6 +55,7 @@ export const fetchKitById = async (
   }
 
   const payload: unknown = await response.json();
+  const { kitResponseDtoSchema } = await import('./kit.schema');
   const kit = validatePayload({
     schema: kitResponseDtoSchema,
     payload,

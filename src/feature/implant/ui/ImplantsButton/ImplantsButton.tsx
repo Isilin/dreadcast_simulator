@@ -1,4 +1,4 @@
-import { Dialog } from '@base-ui/react';
+import { Dialog } from '@base-ui/react/dialog';
 import { useState } from 'react';
 
 import { MAX_IMPLANTS, useImplantsCount } from '../..';

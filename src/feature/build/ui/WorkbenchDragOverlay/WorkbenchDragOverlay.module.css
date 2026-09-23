@@ -1,0 +1,9 @@
+.overlay {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--action-primary);
+  border-radius: var(--small-radius);
+  color: var(--text-primary);
+  background: var(--surface-raised);
+  box-shadow: var(--glow-primary), var(--elevation-2);
+  font: 600 12px/1 var(--font-data);
+}

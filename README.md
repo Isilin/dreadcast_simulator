@@ -33,6 +33,7 @@ Cette application est construite avec des technologies modernes et suit une arch
   - Configuration des implants cybernétiques avec niveaux variables
   - Gestion de l'équipement complet (tête, torse, jambes, pieds, armes)
   - Ajout de kits techniques spécialisés
+  - Atelier unifié avec catalogue, filtres et glisser-déposer pour équipements, kits, implants et drogues
   - Calcul en temps réel des statistiques finales
 
 - **Gestion des builds**
@@ -53,6 +54,19 @@ Cette application est construite avec des technologies modernes et suit une arch
   - Page SaaS dediee aux plans: 1 an (50.000¢), 6 ans (250.000¢), 12 ans (450.000¢), Illimite (800.000¢)
   - Enregistrement de chaque abonnement avec date de debut et date de fin
   - API serverless `/api/subscriptions` securisee via jeton Supabase
+  - Prix et dates recalcules en base depuis le plan, validation par un administrateur
+
+- **Communauté** (`/communaute`)
+  - Les abonnes publient une copie figee de leurs builds, signee de leur pseudo (definitif)
+  - Specialisation detectee a partir des statistiques, modifiable a la publication
+  - Filtres: specialisation, note, race, genre, armes, version du jeu, et pour les
+    abonnes seuils de statistiques, implants, drogue, equipement precis et favoris
+  - Tris: tendance (par defaut), mieux notes, recents, plus d'avis, mis a jour
+  - Notation 1 a 5 etoiles avec avis court, copie dans ses builds, favoris,
+    comparaison avec un de ses builds
+  - Recommandations par similitude de statistiques (« Pour vous », « Builds proches du mien »)
+  - Connecte sans abonnement: apercu de la liste; en fin d'abonnement, les
+    publications restent visibles mais figees
 
 - **Données du jeu**
   - Basé sur les mécaniques officielles de Dreadcast
@@ -108,6 +122,12 @@ NEXT_PUBLIC_SIMULATOR_SUPABASE_ANON_KEY=votre_cle_anon
 
 Sans ces variables, la page de connexion s'affichera mais la connexion sera désactivée.
 
+### Données du catalogue en local
+
+Le serveur Vite proxifie les appels `/api/*` vers le déploiement Vercel. Le catalogue, les kits, les implants, les drogues et les races nécessitent donc une API Vercel fonctionnelle et une configuration Supabase valide.
+
+Quand le panneau Catalogue affiche `Catalogue indisponible`, le client a reçu une erreur de service. Vérifiez les variables Supabase du projet Vercel et les journaux des fonctions serverless. L'interface reste utilisable pour les builds déjà enregistrés localement.
+
 ### Option 3: Environnement de développement
 
 Pour les développeurs souhaitant contribuer :
@@ -118,6 +138,7 @@ yarn install
 
 # Lancer les vérifications qualité
 yarn lint          # Vérification ESLint
+yarn test          # Tests unitaires Vitest
 yarn format        # Formatage Prettier
 yarn build         # Build de production
 
@@ -144,12 +165,17 @@ Le projet suit une architecture **feature-sliced design** pour une organisation 
 src/
 ├── domain/          # Types partagés (Stat, ItemSpot, etc.)
 ├── feature/         # Fonctionnalités métier
+│   ├── build/        # Atelier, coordination et drag-and-drop
+│   ├── auth/         # Session et identifiants
+│   ├── persistence/  # Snapshots, autosave et builds partagés
 │   ├── implant/     # Gestion des implants
 │   ├── item/        # Gestion des équipements
 │   ├── kit/         # Gestion des kits
-│   └── profile/     # Profil du personnage
-├── ui/              # Composants réutilisables
-└── styles/          # Styles globaux et thème
+│   ├── profile/      # Profil du personnage
+│   └── stats/        # Calcul et présentation des statistiques
+├── ui/               # Composants réutilisables sans logique métier
+├── routes/           # Composition des pages
+└── styles/           # Styles globaux et thème
 ```
 
 Chaque fonctionnalité est organisée selon le pattern `model/services/ui` :
@@ -160,10 +186,24 @@ Chaque fonctionnalité est organisée selon le pattern `model/services/ui` :
 
 ### Gestion d'état
 
-- **Pattern Reducer + Context** pour chaque fonctionnalité
-- Séparation `StateContext`/`DispatchContext` pour les performances
-- Persistance hybride: `localStorage` hors connexion et BDD une fois connecte
+- **Stores Zustand** séparés par domaine
+- **TanStack Query** pour les données distantes et leurs états de chargement
+- Persistance hybride: `localStorage` hors connexion et BDD une fois connecté
 - Validation avec schémas Zod
+
+### Frontières de responsabilité
+
+- `feature/build` orchestre l'atelier, les modes de catalogue et le protocole
+  drag-and-drop; les composants métier restent dans `item`, `kit`, `implant` et
+  `drug`.
+- `feature/persistence` sépare chargement, snapshots, autosave, builds distants
+  et partage public.
+- `feature/auth` sépare session Supabase et opérations d'identifiants derrière
+  une façade stable.
+- `src/ui` contient uniquement les primitives génériques réutilisables.
+
+Voir [FRONTEND_README.md](FRONTEND_README.md) pour le détail des flux et des
+conventions d'implémentation.
 
 ## Développement
 
@@ -172,7 +212,9 @@ Chaque fonctionnalité est organisée selon le pattern `model/services/ui` :
 ```bash
 yarn dev          # Serveur de développement (port 5173)
 yarn build        # Build de production avec vérification TypeScript
+yarn analyze      # Build avec rapport de taille dans dist/stats.html
 yarn lint         # Vérification ESLint
+yarn test         # Tests unitaires Vitest
 yarn lint:fix     # Correction automatique des erreurs ESLint
 yarn format       # Formatage avec Prettier
 yarn preview      # Preview du build de production
@@ -186,7 +228,7 @@ Le projet suit des standards stricts définis dans [CODING_STANDARDS.md](CODING_
 - **Feature-sliced design** avec exports barrel (`index.ts`)
 - **CSS Modules** avec noms sémantiques
 - **Hooks personnalisés** pour la logique réutilisable
-- **Tests** avec React Testing Library (à implémenter)
+- **Tests** avec Vitest, notamment sur le protocole et les mutations DnD
 
 ### Configuration GitHub Copilot
 
@@ -217,7 +259,7 @@ Le projet inclut une configuration complète GitHub Copilot dans `.github/` :
 #### v1.1 - Fonctionnalités avancées
 
 - [x] Partage de builds via URL
-- [ ] Comparaison de builds côte à côte
+- [x] Comparaison de builds côte à côte (Communauté)
 - [ ] Suggestions d'optimisation automatiques
 
 #### v1.2 - Mécaniques avancées
@@ -228,8 +270,8 @@ Le projet inclut une configuration complète GitHub Copilot dans `.github/` :
 
 #### v2.0 - Backend et collaboration
 
-- [ ] Comptes utilisateurs et builds partagés
-- [ ] Classements et builds de la communauté
+- [x] Comptes utilisateurs et builds partagés
+- [x] Classements et builds de la communauté
 
 ## FAQ
 

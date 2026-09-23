@@ -1,4 +1,4 @@
-import { Tooltip } from '@base-ui/react';
+import { Tooltip } from '@base-ui/react/tooltip';
 import { type HTMLProps, type PropsWithChildren, type ReactNode } from 'react';
 
 import styles from './Popin.module.css';

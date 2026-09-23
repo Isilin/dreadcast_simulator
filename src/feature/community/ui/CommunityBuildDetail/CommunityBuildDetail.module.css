@@ -1,0 +1,165 @@
+.page {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 1180px;
+  margin: 0 auto;
+  color: var(--text-primary);
+}
+
+.back {
+  justify-self: start;
+  color: var(--text-secondary);
+  font: 600 11px/1 var(--font-data);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--action-primary-strong);
+  }
+}
+
+.header {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-5);
+  border-left: 2px solid var(--action-primary);
+  background: color-mix(in srgb, var(--surface-raised) 80%, transparent);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.title {
+  margin: 0;
+  font: 700 28px/1.1 var(--font-display);
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  margin: 0;
+  color: var(--text-secondary);
+  font: 400 12px/1.4 var(--font-data);
+}
+
+.meta strong {
+  color: var(--text-primary);
+}
+
+.rating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.dates {
+  color: var(--text-disabled);
+  font: 400 11px/1.2 var(--font-data);
+}
+
+.description {
+  margin: var(--space-1) 0 0;
+  max-width: 80ch;
+  font: 400 13px/1.6 var(--font-data);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.keyStats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.keyStats div {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--small-radius);
+  background: var(--surface-raised);
+}
+
+.keyStats dt {
+  color: var(--text-secondary);
+  font: 600 10px/1.2 var(--font-data);
+}
+
+.keyStats dd {
+  margin: var(--space-1) 0 0;
+  font: 700 18px/1 var(--font-data);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.primaryAction {
+  composes: buttonPrimary from '../community.controls.module.css';
+}
+
+.dangerAction {
+  composes: buttonDanger from '../community.controls.module.css';
+}
+
+.muted {
+  composes: muted from '../community.controls.module.css';
+}
+
+.error {
+  composes: error from '../community.controls.module.css';
+}
+
+.warning {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--status-warning);
+  border-radius: var(--small-radius);
+  background: var(--color-orange-light);
+  font: 400 12px/1.5 var(--font-data);
+}
+
+.state {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-3);
+  color: var(--text-secondary);
+  font: 400 13px/1.5 var(--font-data);
+  text-align: center;
+}
+
+.stateTitle {
+  margin: 0;
+  color: var(--text-primary);
+  font: 700 22px/1.2 var(--font-display);
+}
+
+.backButton {
+  composes: button from '../community.controls.module.css';
+}
+
+.dialogBody {
+  display: grid;
+  gap: var(--space-2);
+  width: min(100%, 480px);
+  padding: 0 var(--space-3);
+  font: 400 13px/1.5 var(--font-data);
+}
+
+.dialogBody p {
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .header {
+    padding: var(--space-3);
+  }
+
+  .title {
+    font-size: 22px;
+  }
+}

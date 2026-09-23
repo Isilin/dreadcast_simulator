@@ -7,13 +7,18 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "analyze": "tsc -b && vite build --mode analyze",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "test": "vitest run",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "preview": "vite preview"
   },
   "dependencies": {
     "@base-ui/react": "1.2.0",
+    "@dnd-kit/core": "^6.3.1",
+    "@fontsource/chakra-petch": "^5.2.8",
+    "@fontsource/ibm-plex-mono": "^5.2.7",
     "@supabase/supabase-js": "^2.38.0",
     "@tanstack/react-query": "^5.91.3",
     "@tanstack/react-router": "^1.163.3",
@@ -43,10 +48,12 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^16.5.0",
     "prettier": "^3.8.1",
+    "rollup-plugin-visualizer": "^7.1.1",
     "sharp": "^0.34.5",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.56.1",
     "vercel": "^50.28.0",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vitest": "^4.1.11"
   }
 }

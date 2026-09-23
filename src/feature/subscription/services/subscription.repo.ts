@@ -3,37 +3,24 @@ import {
   SubscriptionRepositoryError,
 } from './subscription.errors';
 import { toDomain, toPlanDomain } from './subscription.mapper';
-import {
-  subscriptionPlanArrayResponseDtoSchema,
-  subscriptionArrayResponseDtoSchema,
-  subscriptionResponseDtoSchema,
-} from './subscription.schema';
 import type {
   SubscriptionPlan,
   SubscriptionPlanCode,
   SubscriptionRecord,
 } from '../model';
 
-import { getCurrentSession } from '@/feature/auth';
+import { getAuthHeaders as getSessionHeaders } from '@/feature/auth';
 import { validatePayload } from '@/utils/validation';
 
-const getAuthHeaders = async (): Promise<HeadersInit> => {
-  const session = await getCurrentSession();
-  const accessToken = session?.access_token;
-
-  if (!accessToken) {
-    throw new SubscriptionRepositoryError({
-      code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.MISSING_AUTH_SESSION,
-      message: 'Session utilisateur manquante.',
-      status: 401,
-    });
-  }
-
-  return {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${accessToken}`,
-  };
-};
+const getAuthHeaders = (): Promise<HeadersInit> =>
+  getSessionHeaders(
+    () =>
+      new SubscriptionRepositoryError({
+        code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.MISSING_AUTH_SESSION,
+        message: 'Session utilisateur manquante.',
+        status: 401,
+      }),
+  );
 
 export const fetchSubscriptions = async (
   signal?: AbortSignal,
@@ -55,6 +42,8 @@ export const fetchSubscriptions = async (
   }
 
   const payload: unknown = await response.json();
+  const { subscriptionArrayResponseDtoSchema } =
+    await import('./subscription.schema');
   const subscriptions = validatePayload({
     schema: subscriptionArrayResponseDtoSchema,
     payload,
@@ -85,6 +74,8 @@ export const fetchSubscriptionPlans = async (
   }
 
   const payload: unknown = await response.json();
+  const { subscriptionPlanArrayResponseDtoSchema } =
+    await import('./subscription.schema');
   const plans = validatePayload({
     schema: subscriptionPlanArrayResponseDtoSchema,
     payload,
@@ -120,6 +111,8 @@ export const createSubscription = async (
   }
 
   const payload: unknown = await response.json();
+  const { subscriptionResponseDtoSchema } =
+    await import('./subscription.schema');
   const subscription = validatePayload({
     schema: subscriptionResponseDtoSchema,
     payload,

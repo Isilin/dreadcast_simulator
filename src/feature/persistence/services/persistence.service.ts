@@ -142,6 +142,28 @@ export const readBuilds = (): Record<string, BuildSnapshot> => {
 export const writeBuilds = (s: Record<string, BuildSnapshot>) =>
   localStorage.setItem(BUILDS_KEY, JSON.stringify(s));
 
+export const ACTIVE_SLOT_KEY = 'dreadcast.activeSlot';
+
+/**
+ * Last active slot of the tab, so that leaving the workbench (Communauté,
+ * abonnement...) does not reopen slot 1 on return.
+ */
+export const readLastActiveSlot = (): string | null => {
+  try {
+    return sessionStorage.getItem(ACTIVE_SLOT_KEY);
+  } catch {
+    return null;
+  }
+};
+
+export const writeLastActiveSlot = (slot: string) => {
+  try {
+    sessionStorage.setItem(ACTIVE_SLOT_KEY, slot);
+  } catch {
+    // Silently fail if sessionStorage is not available
+  }
+};
+
 export const clearLocalBuilds = () => {
   try {
     localStorage.removeItem(BUILDS_KEY);

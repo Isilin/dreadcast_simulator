@@ -1,0 +1,14 @@
+.tab {
+  min-height: 32px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--small-radius);
+  color: var(--text-secondary);
+  background: var(--surface-sunken);
+  font: 600 10px/1 var(--font-data);
+}
+
+.tab[data-active='true'] {
+  border-color: var(--action-primary);
+  color: var(--action-primary-strong);
+  background: var(--action-primary-muted);
+}

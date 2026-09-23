@@ -3,10 +3,6 @@ import {
   ImplantRepositoryError,
 } from './implant.errors';
 import { toDomain } from './implant.mapper';
-import {
-  implantArrayResponseSchema,
-  implantResponseDtoSchema,
-} from './implant.schema';
 import type { Implant } from '../model/implant.types';
 
 import { GET } from '@/utils/http';
@@ -30,6 +26,7 @@ export const fetchImplants = async (
   }
 
   const payload: unknown = await response.json();
+  const { implantArrayResponseSchema } = await import('./implant.schema');
   const implants = validatePayload({
     schema: implantArrayResponseSchema,
     payload,
@@ -58,6 +55,7 @@ export const fetchImplantByName = async (
   }
 
   const payload: unknown = await response.json();
+  const { implantResponseDtoSchema } = await import('./implant.schema');
   const implant = validatePayload({
     schema: implantResponseDtoSchema,
     payload,

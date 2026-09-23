@@ -1,6 +1,10 @@
 import { useMemo } from 'react';
 
-import { computeStat, computeStatWithoutItems } from './suit.rules';
+import {
+  BASE_HEALTH_STAMINA,
+  computeStat,
+  computeStatWithoutItems,
+} from './suit.rules';
 
 import { StatValues, type Stat } from '@/domain';
 import { useDrugEffects } from '@/feature/drug';
@@ -31,7 +35,9 @@ export const useSuitSelector = () => {
             kitsEffects,
             drugEffects,
           );
-          if (stat === 'health' || stat === 'stamina') acc[stat] += 116; // Base health and stamina
+          if (stat === 'health' || stat === 'stamina') {
+            acc[stat] += BASE_HEALTH_STAMINA;
+          }
           return acc;
         },
         {} as Record<Stat, number>,

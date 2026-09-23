@@ -49,8 +49,77 @@ Les schémas doivent être exécutés dans l'ordre pour respecter les dépendanc
 017_subscription_plan_fk.sql     -- Cle etrangere subscription.plan_code -> subscription_plan.code
 018_alter_subscription_status.sql -- Statut abonnement (pending/validated)
 
+-- Armes de soin
+018_alter_table_item_add_heal_range.sql -- Colonnes min_heal / max_heal (requis par 029)
+
 -- Table Builds
 019_table_build.sql              -- Snapshots de builds utilisateur
+020_table_shared_build.sql       -- Liens de partage publics
+
+-- Securite (P0)
+021_private_helpers.sql          -- Schema private : has_active_subscription, owns_build...
+022_fix_subscription_insert.sql  -- Insertion abonnement forcee en pending + prix/dates recalcules
+023a_harden_shared_build.sql     -- Partages : user_id, policies proprietaire, RPC get_shared_build
+023b_drop_legacy_shared_policies.sql -- APRES deploiement de l'API : retire les policies permissives
+
+-- Communaute
+024_table_game_version.sql       -- Versions du jeu (v15 courante)
+025_table_user_profile.sql       -- Pseudo de compte (definitif)
+026_table_community_build.sql    -- Publications (metadonnees + contenu reserve abonnes)
+027_table_community_review.sql   -- Notes et avis
+028_table_community_favorite.sql -- Favoris
+029_rpc_community_write.sql      -- RPC community_publish / community_update_publication
+030_rpc_community_search.sql     -- RPC community_search (filtres, tris, pagination)
+031_rpc_community_similar.sql    -- RPC community_similar / community_for_you
+032_index_community_content_author.sql -- Index de community_build_content.author_id
+```
+
+### Procedure d'application en production
+
+Chaque script 021+ est transactionnel (`BEGIN; ... COMMIT;`) et possede un
+script d'annulation dans `rollbacks/` (meme nom, suffixe `.rollback.sql`).
+
+1. Sauvegarder la base avant chaque lot (le dossier `backups/` est ignore
+   par git) :
+
+   ```bash
+   supabase db dump --db-url "$SUPABASE_DB_URL" -f backups/<date>_schema.sql
+   supabase db dump --db-url "$SUPABASE_DB_URL" --data-only -f backups/<date>_data.sql
+   ```
+
+2. Prerequis : `018_alter_table_item_add_heal_range` (colonnes nullables,
+   sans risque). L'API lit desormais `min_heal`/`max_heal` : `/api/items`
+   echoue si ces colonnes manquent.
+3. Lot P0 : `021`, `022`, `023a`, puis deploiement de l'API (lecture des
+   partages via `get_shared_build`), puis `023b`. Lancer ensuite la requete
+   d'audit en fin de `022` (les validations faites a la main dans l'editeur
+   SQL ont `validated_by` vide : les verifier, pas les supprimer).
+4. Lot Communaute : `024` a `032` dans l'ordre, puis deploiement de l'API et
+   du front. `024` declare `v15` comme version courante : l'ajuster si la
+   Communaute ouvre avant le passage des donnees en v15.
+5. Verifier les advisors Supabase (securite et performance).
+6. En cas de probleme : executer les rollbacks en ordre inverse.
+
+Ces scripts ont ete valides sur une base Supabase locale (schemas 001-020 +
+seeds, puis 021-031, puis rollbacks et re-application) avec des tests RLS
+simulant `anon` et `authenticated`.
+
+### Maintenance Communaute (pas de moderation integree)
+
+```sql
+-- Supprimer un avis
+DELETE FROM community_review WHERE id = '<review_id>';
+
+-- Depublier une publication
+DELETE FROM community_build WHERE id = '<publication_id>';
+
+-- Corriger un pseudo (definitif cote utilisateur)
+UPDATE user_profile SET pseudo = '<nouveau>' WHERE user_id = '<user_id>';
+
+-- Passer a une nouvelle version du jeu
+UPDATE game_version SET is_current = false WHERE is_current;
+INSERT INTO game_version (code, label, released_at, is_current)
+VALUES ('v16', 'Version 16', CURRENT_DATE, true);
 ```
 
 ### 2. Seeds (dans l'ordre numérique)
@@ -88,7 +157,7 @@ Les seeds peuvent être exécutés après les schémas :
 017_seed_subscription_plans.sql  -- Plans d'abonnement dynamiques
 
 -- MaJ v15
-018_seed_items_v15.sql          -- 1 item weapon de soin + 10 kits
+018_seed_v15.sql                -- 1 arme de soin + 20 kits + ajustements v15
 ```
 
 ## Statistiques
@@ -131,7 +200,9 @@ Toutes les tables incluent des policies RLS pour sécuriser l'accès aux donnée
 
 ### Timestamps
 
-Toutes les tables incluent `created_at` et `updated_at` avec gestion automatique via trigger.
+Toutes les tables incluent `created_at` et `updated_at`. Seules les tables de
+la Communaute (`community_build`, `community_review`) mettent `updated_at` a
+jour automatiquement via le trigger `private.set_updated_at()`.
 
 ### Indexes
 

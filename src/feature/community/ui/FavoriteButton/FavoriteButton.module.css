@@ -1,0 +1,42 @@
+.button {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--rounded-radius);
+  background: var(--surface-sunken);
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+
+  &[aria-pressed='true'] {
+    border-color: var(--status-danger);
+    color: var(--status-danger);
+  }
+
+  &:hover:not(:disabled) {
+    border-color: var(--status-danger);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+}
+
+.buttonWithLabel {
+  composes: button from '../community.controls.module.css';
+
+  &[aria-pressed='true'] {
+    border-color: var(--status-danger);
+    color: var(--status-danger);
+  }
+}

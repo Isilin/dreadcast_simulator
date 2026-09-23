@@ -9,6 +9,8 @@ export const ITEM_SELECT_QUERY = `
   type,
   min_damage,
   max_damage,
+  min_heal,
+  max_heal,
   damage_bonus,
   hands,
   reach,

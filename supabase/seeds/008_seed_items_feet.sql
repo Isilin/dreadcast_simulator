@@ -71,7 +71,7 @@ INSERT INTO item_effect (item_id, property, value) VALUES
   ('306', 'computing'::stat_property, 7),
   ('306', 'speed'::stat_property, 1),
   ('307', 'stealth'::stat_property, -8),
-  ('307', 'medicine'::stat_property, 7),
+  ('307', 'medicine'::stat_property, 12),
   ('307', 'speed'::stat_property, 1),
   ('308', 'speed'::stat_property, 1),
   ('309', 'strength'::stat_property, 4),

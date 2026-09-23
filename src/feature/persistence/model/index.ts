@@ -1,4 +1,5 @@
 export { useBuildPersistence } from './persitence.hook';
+export { restoreSharedBuild } from './shared-build-restoration';
 export {
   BuildReadOnlyProvider,
   useBuildReadOnlyMode,

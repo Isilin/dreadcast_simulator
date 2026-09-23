@@ -1,9 +1,4 @@
-/* Fixed positioning in top-right corner without affecting layout */
 .switchContainer {
-  position: fixed;
-  top: 16px;
-  right: 144px;
-  z-index: 1000;
   padding: 0;
   border: none;
   background: none;
@@ -25,7 +20,7 @@
   position: relative;
   width: 56px;
   height: 28px;
-  background-color: var(--color-gray-300);
+  background-color: var(--surface-interactive);
   border-radius: var(--rounded-radius);
   border: 1px solid var(--card-bd);
   transition: background-color 350ms ease-in-out;
@@ -33,7 +28,7 @@
   align-items: center;
 
   &:hover {
-    background-color: var(--color-gray-400);
+    background-color: var(--border-strong);
   }
 }
 
@@ -42,7 +37,7 @@
   position: absolute;
   width: 24px;
   height: 24px;
-  background-color: var(--card-bg);
+  background-color: var(--surface-raised);
   border-radius: 50%;
   border: 1px solid var(--card-bd);
   display: flex;

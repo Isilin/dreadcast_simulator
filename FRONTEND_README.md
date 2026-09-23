@@ -1,69 +1,137 @@
-# React + TypeScript + Vite
+# Architecture frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Le frontend est une application React 19 + TypeScript construite avec Vite,
+TanStack Router, TanStack Query et Zustand. Le code suit une organisation
+feature-sliced: chaque fonctionnalite garde ses regles, ses donnees et son UI
+dans une frontiere explicite.
 
-Currently, two official plugins are available:
+## Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+src/
+  domain/          Types stables partages par plusieurs features
+  feature/
+    build/          Coordination de l'atelier et protocole drag-and-drop
+    auth/           Session, connexion, deconnexion et UI de compte
+    account/        Pseudo public du compte (definitif)
+    community/      Communaute: publication, recherche, notes, recommandations
+    persistence/    Chargement, snapshots, autosave et partage de builds
+    profile/        Race, genre et silhouette
+    item/           Equipements et slots
+    kit/            Kits et racks
+    implant/        Implants et baie d'implants
+    drug/           Drogues et slot actif
+    stats/          Calcul et presentation des statistiques
+    subscription/   Abonnements
+  ui/               Composants generiques reutilisables
+  routes/           Composition des pages et configuration TanStack Router
+  styles/           Variables, helpers et animations globales
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Chaque feature suit autant que possible le decoupage suivant:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+feature/<nom>/
+  model/        Types, stores, selectors, regles et hooks metier
+  services/     Requetes, DTO, schemas et mapping
+  ui/           Composants propres au domaine, avec CSS Module co-localise
+  index.ts      Surface publique de la feature
 ```
+
+Les imports entre features passent par leur `index.ts` public. Les imports
+internes restent relatifs a leur feature. `src/ui` ne contient que des
+composants sans regle metier, par exemple les panneaux generiques et les lignes
+de modules installes.
+
+## Atelier de build
+
+`feature/build` est la feature de workflow. `BuildWorkbench` compose les
+panneaux et lit les stores de domaine, mais les composants d'equipement, de
+kits, d'implants et de drogues restent dans leurs features respectives.
+
+Le drag-and-drop est decoupe en trois niveaux:
+
+- `drag-drop.types.ts` definit les unions de donnees transportees.
+- `drag-drop.helpers.ts` valide les payloads inconnus et produit les annonces
+  accessibles.
+- `drop.handler.ts` applique les mutations metier sans dependance React.
+
+`workbench-dnd.hook.ts` ne gere que les capteurs, l'etat du drag et le lien
+entre `@dnd-kit` et le handler pur. Cette separation permet de tester les
+branches de drop sans rendu DOM.
+
+## Persistance et authentification
+
+La persistance conserve le meme contrat public `useBuildPersistence`, mais ses
+responsabilites sont separees:
+
+- `persistence.loader.ts` charge le mode local ou distant et gere la migration
+  du slot invite.
+- `persistence.snapshot.ts` lit, cree et restaure les snapshots dans les
+  stores de domaine.
+- `autosave.hook.ts` observe les stores et debite les sauvegardes.
+- `persistence.remote.ts` gere les builds ordinaires.
+- `shared-build.remote.ts` gere les liens de partage publics.
+
+L'autosave debite les sauvegardes de 250 ms et les envoie immediatement si
+l'atelier est demonte (navigation vers la Communaute par exemple).
+`fetchRemoteBuilds` attend les sauvegardes en cours avant de relire les builds.
+Le slot actif est memorise pour l'onglet (`sessionStorage`) et `/?slot=N`
+ouvre un slot precis, par exemple apres une copie depuis la Communaute.
+
+L'authentification expose une facade compatible dans `auth.service.ts`.
+`auth.session.ts` porte bootstrap, listener et lecture de session;
+`auth.credentials.ts` porte connexion et deconnexion; `auth.client.ts` garde la
+creation et la validation du client Supabase.
+
+## Communaute
+
+`feature/community` ne depend jamais de `feature/build`; l'atelier charge ses
+points d'entree (`PublishBuildButton`, `SimilarBuildsButton`) en lazy pour
+garder la Communaute hors du chunk de l'atelier.
+
+- `model/` porte les regles pures: detection de specialisation, filtres
+  (URL, requete API), calcul des stats d'un snapshot sans store
+  (`computeSnapshotStats` via `computeSuitStats`), payloads et comparaison.
+- `services/` valide avec zod tout ce qui vient de l'API, y compris les
+  snapshots publies (donnees non fiables normalisees en `BuildSnapshot`).
+- Les fiches et comparaisons rendent un build a partir de props: les stores
+  de l'atelier ne sont jamais ecrases par un build consulte.
+- Les regles d'acces (abonne, auteur, pseudo) sont appliquees en base par RLS
+  et RPC (voir `supabase/README.md`); l'UI ne fait que les refleter.
+
+L'abonnement actif se lit uniquement via `useActiveSubscription()`
+(`feature/subscription`), meme regle que l'API et la base.
+
+## Etat et donnees
+
+Les stores Zustand appartiennent aux features de domaine. TanStack Query gere
+les donnees distantes et les etats de chargement. Les snapshots persistants
+stockent uniquement les identifiants et valeurs necessaires, puis restaurent
+les objets complets a partir du catalogue courant.
+
+Les composants UI ne contiennent pas de logique de requete ou de serialisation.
+Les regles qui traversent plusieurs domaines restent dans `feature/build` ou
+`feature/persistence`, selon qu'elles concernent le workflow ou le stockage.
+
+## Styles
+
+Chaque composant possede son fichier `*.module.css`. Les variables communes
+restent dans `src/styles/theme.css`; les helpers et animations globaux restent
+dans `src/styles/`. Les feuilles de route ne contiennent que la composition de
+page et les contraintes de placement propres a la route.
+
+## Validation
+
+Depuis la racine du projet:
+
+```bash
+yarn test
+yarn lint
+yarn build
+yarn analyze
+```
+
+Les tests de modele couvrent notamment la validation des payloads DnD, les
+annonces d'accessibilite et les mutations de drop. Les parcours UI doivent etre
+verifies sur desktop et mobile lors des changements touchant l'atelier.

@@ -26,3 +26,6 @@ dist-ssr
 .env*
 .vercel
 .env*.local
+
+# Dumps de base de donnees (supabase db dump)
+backups/

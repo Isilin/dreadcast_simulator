@@ -1,4 +1,6 @@
-import { Field, Radio, RadioGroup } from '@base-ui/react';
+import { Field } from '@base-ui/react/field';
+import { Radio } from '@base-ui/react/radio';
+import { RadioGroup } from '@base-ui/react/radio-group';
 
 import styles from './GenderSelector.module.css';
 import { useProfileActions, useProfileState } from '../../model/profile.store';
@@ -9,8 +11,8 @@ export const GenderSelector = () => {
   const { setGender } = useProfileActions();
 
   return (
-    <Field.Root>
-      <Field.Label>Genre</Field.Label>
+    <Field.Root className={styles.field}>
+      <Field.Label className={styles.label}>Genre</Field.Label>
       <RadioGroup
         defaultValue="male"
         className={styles.RadioGroup}

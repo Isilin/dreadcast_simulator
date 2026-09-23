@@ -28,6 +28,7 @@ export const IconBar = () => (
     </a>
     <a
       href="https://www.dreadcast.net/Forum/2-157189-k24---essler-industries?1"
+      target="_blank"
       rel="noopener noreferrer"
       aria-label="Nomura Incorporated"
       className={styles.iconLink}

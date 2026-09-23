@@ -1,3 +1,4 @@
+export { findRaceStats } from './profile.rules';
 export * from './profile.selectors';
 export {
   useProfileActions,

@@ -1,4 +1,4 @@
-import { Dialog } from '@base-ui/react';
+import { Dialog } from '@base-ui/react/dialog';
 import { useEffect, useState } from 'react';
 
 import styles from './BuildNameEditor.module.css';

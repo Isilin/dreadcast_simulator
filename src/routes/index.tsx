@@ -1,69 +1,46 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { lazy, Suspense, useEffect, useState } from 'react';
 
 import './App.css';
-import styles from './index.module.css';
 
-import { DrugsButton } from '@/feature/drug';
-import { ImplantsButton } from '@/feature/implant';
-import { useItems } from '@/feature/item';
-import { useKits } from '@/feature/kit';
-import {
-  BuildNameEditor,
-  IconBar,
-  TabsBar,
-  useBuildPersistence,
-} from '@/feature/persistence';
-import { GenderSelector, RaceSelector, Silhouette } from '@/feature/profile';
-import { Skills } from '@/feature/stats';
-import { Footer, Sidebar, SlotPair } from '@/ui';
+import { Fallback } from '@/ui';
 import Routes from '@/utils/routes';
 
+const BuildWorkbench = lazy(() =>
+  import('@/feature/build').then(({ BuildWorkbench: Workbench }) => ({
+    default: Workbench,
+  })),
+);
+
+interface HomeSearch {
+  /** Slot to open, e.g. after copying a build from the Communauté. */
+  slot?: number;
+}
+
 export const Route = createFileRoute(Routes.home)({
+  validateSearch: (search: Record<string, unknown>): HomeSearch => {
+    const slot = Number(search.slot);
+    return Number.isInteger(slot) && slot > 0 ? { slot } : {};
+  },
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { data: allItems } = useItems();
-  const { data: allKits } = useKits();
+  const navigate = useNavigate();
+  const { slot } = Route.useSearch();
+  const [initialSlot] = useState(slot);
 
-  const persistence = useBuildPersistence({
-    allItems,
-    allKits,
-  });
+  // The slot is only an instruction for the first render: drop it from the
+  // URL so that a reload reopens the last active slot instead.
+  useEffect(() => {
+    if (slot !== undefined) {
+      void navigate({ to: Routes.home, search: {}, replace: true });
+    }
+  }, [navigate, slot]);
 
   return (
-    <>
-      <BuildNameEditor persistence={persistence} />
-      <div className={styles.layout}>
-        <Sidebar>
-          <GenderSelector />
-          <RaceSelector />
-          <Skills />
-          <ImplantsButton />
-          <DrugsButton />
-        </Sidebar>
-        <div className={styles.mainContent}>
-          <div className={styles.equipmentSection}>
-            <div className={styles.bodySlots}>
-              <SlotPair spot="head" />
-              <SlotPair spot="chest" />
-              <SlotPair spot="legs" />
-              <SlotPair spot="feet" />
-            </div>
-
-            <div className={styles.weaponSlots}>
-              <SlotPair spot="leftArm" reversed />
-              <SlotPair spot="rightArm" reversed />
-              <SlotPair spot="secondary" reversed />
-            </div>
-          </div>
-          <Silhouette />
-        </div>
-        <Footer>
-          <TabsBar persistence={persistence} />
-          <IconBar />
-        </Footer>
-      </div>
-    </>
+    <Suspense fallback={<Fallback />}>
+      <BuildWorkbench initialSlot={initialSlot} />
+    </Suspense>
   );
 }

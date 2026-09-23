@@ -6,19 +6,17 @@ import './App.css';
 import layoutStyles from './index.module.css';
 import styles from './shared.$id.module.css';
 
-import { DrugsButton, useDrugStore } from '@/feature/drug';
-import { ImplantsButton, useImplantStore } from '@/feature/implant';
-import { useItems, useItemStore } from '@/feature/item';
-import { useKits, useKitStore } from '@/feature/kit';
+import { DrugsButton } from '@/feature/drug';
+import { ImplantsButton } from '@/feature/implant';
+import { useItems } from '@/feature/item';
+import { useKits } from '@/feature/kit';
 import {
   BuildReadOnlyProvider,
   IconBar,
   fetchSharedBuildById,
-  restoreItems,
-  restoreKits,
+  restoreSharedBuild,
 } from '@/feature/persistence';
 import { GenderSelector, RaceSelector, Silhouette } from '@/feature/profile';
-import { useProfileStore } from '@/feature/profile/model/profile.store';
 import { Skills } from '@/feature/stats';
 import { Footer, Sidebar, SlotPair, Spinner } from '@/ui';
 import Routes from '@/utils/routes';
@@ -49,20 +47,14 @@ function RouteComponent() {
       return;
     }
 
-    useProfileStore.getState().replaceProfile(sharedBuild.profile);
-    useImplantStore.getState().replaceImplants(sharedBuild.implants);
-    useItemStore
-      .getState()
-      .replaceItems(restoreItems(sharedBuild.items, allItems));
-    useKitStore.getState().replaceKits(restoreKits(sharedBuild.kits, allKits));
-    useDrugStore.getState().replaceDrug(sharedBuild.drug);
+    restoreSharedBuild(sharedBuild, allItems, allKits);
   }, [allItems, allKits, sharedBuild]);
 
   if (isLoading) {
     return (
       <main className={styles.centeredState}>
         <Spinner />
-        <p>Chargement du build partage...</p>
+        <p>Chargement du build partagé...</p>
       </main>
     );
   }
@@ -70,7 +62,7 @@ function RouteComponent() {
   if (isError || !sharedBuild) {
     return (
       <main className={styles.centeredState}>
-        <h1>Build partage indisponible</h1>
+        <h1>Build partagé indisponible</h1>
         <p>
           {error instanceof Error ? error.message : 'Lien invalide ou expire.'}
         </p>
@@ -85,12 +77,12 @@ function RouteComponent() {
     );
   }
 
-  const title = sharedBuild.name?.trim() || 'Build partage';
+  const title = sharedBuild.name?.trim() || 'Build partagé';
 
   return (
     <BuildReadOnlyProvider value>
       <div className={styles.sharedHeader}>
-        <p className={styles.sharedLabel}>Mode lecture seule</p>
+        <p className={styles.sharedLabel}>Build partagé · Lecture seule</p>
         <h1 className={styles.sharedTitle}>{title}</h1>
       </div>
 

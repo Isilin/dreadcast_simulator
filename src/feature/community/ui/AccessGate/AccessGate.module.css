@@ -1,0 +1,36 @@
+.gate {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px dashed var(--border-strong);
+  border-left: 2px solid var(--status-warning);
+  border-radius: var(--small-radius);
+  background: color-mix(in srgb, var(--surface-raised) 80%, transparent);
+}
+
+.overline {
+  margin: 0;
+  color: var(--status-warning);
+  font: 600 10px/1.2 var(--font-data);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  font: 700 18px/1.2 var(--font-display);
+}
+
+.text {
+  color: var(--text-secondary);
+  font: 400 12px/1.5 var(--font-data);
+}
+
+.text p {
+  margin: 0;
+}
+
+.cta {
+  composes: buttonPrimary from '../community.controls.module.css';
+}

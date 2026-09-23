@@ -1,6 +1,5 @@
 import { DRUG_REPOSITORY_ERROR_CODE, DrugRepositoryError } from './drug.errors';
 import { toDomain } from './drug.mapper';
-import { drugArrayResponseSchema, drugResponseDtoSchema } from './drug.schema';
 import type { Drug } from '../model/drug.types';
 
 import { GET } from '@/utils/http';
@@ -24,6 +23,7 @@ export const fetchDrugs = async (
   }
 
   const payload: unknown = await response.json();
+  const { drugArrayResponseSchema } = await import('./drug.schema');
   const drugs = validatePayload({
     schema: drugArrayResponseSchema,
     payload,
@@ -49,6 +49,7 @@ export const fetchDrugById = async (
   }
 
   const payload: unknown = await response.json();
+  const { drugResponseDtoSchema } = await import('./drug.schema');
   const drug = validatePayload({
     schema: drugResponseDtoSchema,
     payload,
