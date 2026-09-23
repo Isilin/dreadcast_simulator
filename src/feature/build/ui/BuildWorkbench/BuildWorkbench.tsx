@@ -22,6 +22,7 @@ import {
 import {
   type DamageBonusType,
   type Item,
+  getEquippedSpot,
   useItems,
   useItemsActions,
   useItemsState,
@@ -95,6 +96,7 @@ export const BuildWorkbench = ({ initialSlot }: BuildWorkbenchProps = {}) => {
 
   const equipItem = (item: Item) => {
     setItem(activeSpot, item);
+    setActiveSpot(getEquippedSpot(activeSpot, item));
   };
 
   const activateDrug = (drug: Drug) => {

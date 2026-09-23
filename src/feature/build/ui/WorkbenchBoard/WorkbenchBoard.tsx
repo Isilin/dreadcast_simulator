@@ -17,6 +17,7 @@ import {
   type DamageBonusType,
   type ItemsState,
   EquipmentSlot,
+  isTwoHandedOffhand,
 } from '@/feature/item';
 import { type KitsState } from '@/feature/kit';
 import { Silhouette } from '@/feature/profile';
@@ -51,21 +52,28 @@ export const WorkbenchBoard = ({
   onDrugActivate,
   onDrugClear,
 }: WorkbenchBoardProps) => {
-  const renderEquipmentSlot = (spot: ItemSpot) => (
-    <EquipmentSlot
-      key={spot}
-      spot={spot}
-      spotLabel={workbenchSlotLabels[spot]}
-      item={items[spot]}
-      kitCount={getKitCount(kitsBySpot, spot)}
-      effects={computeSlotEffects(items[spot], kitsBySpot[spot])}
-      isActive={catalogueFilter !== 'drugs' && activeSpot === spot}
-      draggedItem={draggedData?.kind === 'item' ? draggedData.item : null}
-      onActivate={onActivateSpot}
-      onKitOpen={onKitOpen}
-      onDamageBonusChange={(bonus) => onDamageBonusChange(spot, bonus)}
-    />
-  );
+  const renderEquipmentSlot = (spot: ItemSpot) => {
+    const isOffhand = isTwoHandedOffhand(items, spot);
+
+    return (
+      <EquipmentSlot
+        key={spot}
+        spot={spot}
+        spotLabel={workbenchSlotLabels[spot]}
+        item={items[spot]}
+        kitCount={getKitCount(kitsBySpot, spot)}
+        effects={
+          isOffhand ? [] : computeSlotEffects(items[spot], kitsBySpot[spot])
+        }
+        isOffhand={isOffhand}
+        isActive={catalogueFilter !== 'drugs' && activeSpot === spot}
+        draggedItem={draggedData?.kind === 'item' ? draggedData.item : null}
+        onActivate={onActivateSpot}
+        onKitOpen={onKitOpen}
+        onDamageBonusChange={(bonus) => onDamageBonusChange(spot, bonus)}
+      />
+    );
+  };
 
   return (
     <div className={styles.board}>

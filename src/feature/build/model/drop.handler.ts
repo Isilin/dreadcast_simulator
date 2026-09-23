@@ -5,7 +5,7 @@ import type {
 import { workbenchSlotLabels } from './workbench.types';
 
 import type { ItemSpot } from '@/domain';
-import { itemMatchsSpot } from '@/feature/item';
+import { getEquippedSpot, itemMatchsSpot } from '@/feature/item';
 import type { Item } from '@/feature/item';
 import type { Kit } from '@/feature/kit';
 
@@ -46,7 +46,7 @@ export const handleDrop = ({
     setItem(dropData.spot, dragData.item);
     return {
       message: `${dragData.item.name} équipé sur ${workbenchSlotLabels[dropData.spot]}.`,
-      nextSpot: dropData.spot,
+      nextSpot: getEquippedSpot(dropData.spot, dragData.item),
     };
   }
 

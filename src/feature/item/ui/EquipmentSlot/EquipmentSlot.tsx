@@ -19,6 +19,8 @@ interface EquipmentSlotProps {
   kitCount: number;
   /** Cumulative effects of the item and its kits. */
   effects?: StatModifier[];
+  /** Right arm mirroring a two-handed weapon: shown greyed out. */
+  isOffhand?: boolean;
   isActive: boolean;
   draggedItem: Item | null;
   onActivate: (spot: ItemSpot) => void;
@@ -32,6 +34,7 @@ export const EquipmentSlot = ({
   item,
   kitCount,
   effects = [],
+  isOffhand = false,
   isActive,
   draggedItem,
   onActivate,
@@ -59,6 +62,7 @@ export const EquipmentSlot = ({
       data-drop-valid={isValidDrop}
       data-drop-invalid={isDragActive && !isValidDrop}
       data-drag-active={isDragActive}
+      data-offhand={isOffhand}
       aria-label={`Emplacement ${spotLabel}`}
     >
       <div className={styles.header}>
@@ -81,17 +85,21 @@ export const EquipmentSlot = ({
             ) : null}
             <span className={styles.details}>
               <strong>{item?.name ?? 'Aucun équipement'}</strong>
-              <span
-                title={
-                  item
+              {isOffhand ? (
+                <span>Tenue à deux mains</span>
+              ) : (
+                <span
+                  title={
+                    item
+                      ? `Tech ${item.tech} · Intégrité ${item.integrity}`
+                      : undefined
+                  }
+                >
+                  {item
                     ? `Tech ${item.tech} · Intégrité ${item.integrity}`
-                    : undefined
-                }
-              >
-                {item
-                  ? `Tech ${item.tech} · Intégrité ${item.integrity}`
-                  : 'Déposez un équipement'}
-              </span>
+                    : 'Déposez un équipement'}
+                </span>
+              )}
             </span>
           </span>
         </button>
@@ -115,7 +123,7 @@ export const EquipmentSlot = ({
           ) : null}
         </button>
       </div>
-      {effects.length > 0 ? (
+      {effects.length > 0 && !isOffhand ? (
         <div
           className={styles.effects}
           title={`Effets cumulés (équipement et kits) : ${effects
@@ -128,7 +136,7 @@ export const EquipmentSlot = ({
           <StatEffects effects={effects} />
         </div>
       ) : null}
-      {item && isWeaponType(item.type) ? (
+      {item && isWeaponType(item.type) && !isOffhand ? (
         <label className={styles.damageControl}>
           <span>Dégâts</span>
           <select
