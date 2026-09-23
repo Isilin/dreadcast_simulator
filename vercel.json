@@ -1,6 +1,6 @@
 {
-  "buildCommand": "npm run build",
-  "installCommand": "npm install",
+  "buildCommand": "corepack yarn build",
+  "installCommand": "corepack yarn install --immutable",
   "outputDirectory": "dist",
   "framework": "vite",
   "functions": {
