@@ -8,14 +8,17 @@ import {
   type Item,
 } from '../../model/item.types';
 
-import type { ItemSpot } from '@/domain';
+import { StatValues, type ItemSpot, type StatModifier } from '@/domain';
 import { WrenchIcon } from '@/ui/Icon';
+import { StatEffects } from '@/ui/StatEffects';
 
 interface EquipmentSlotProps {
   spot: ItemSpot;
   spotLabel: string;
   item: Item | null;
   kitCount: number;
+  /** Cumulative effects of the item and its kits. */
+  effects?: StatModifier[];
   isActive: boolean;
   draggedItem: Item | null;
   onActivate: (spot: ItemSpot) => void;
@@ -28,6 +31,7 @@ export const EquipmentSlot = ({
   spotLabel,
   item,
   kitCount,
+  effects = [],
   isActive,
   draggedItem,
   onActivate,
@@ -67,17 +71,28 @@ export const EquipmentSlot = ({
         >
           <span className={styles.name}>{spotLabel}</span>
           <span className={styles.summary} data-empty={!item}>
-            <strong>{item?.name ?? 'Aucun équipement'}</strong>
-            <span>
-              {item
-                ? `Tech ${item.tech} · Intégrité ${item.integrity}`
-                : 'Déposez un équipement'}
+            {item ? (
+              <img
+                className={styles.visual}
+                src={item.image}
+                alt=""
+                loading="lazy"
+              />
+            ) : null}
+            <span className={styles.details}>
+              <strong>{item?.name ?? 'Aucun équipement'}</strong>
+              <span
+                title={
+                  item
+                    ? `Tech ${item.tech} · Intégrité ${item.integrity}`
+                    : undefined
+                }
+              >
+                {item
+                  ? `Tech ${item.tech} · Intégrité ${item.integrity}`
+                  : 'Déposez un équipement'}
+              </span>
             </span>
-            <small>
-              {kitCount
-                ? `${kitCount} kit${kitCount > 1 ? 's' : ''}`
-                : 'Aucun kit'}
-            </small>
           </span>
         </button>
         <button
@@ -85,11 +100,34 @@ export const EquipmentSlot = ({
           className={styles.kitButton}
           disabled={isKitDisabled}
           onClick={() => onKitOpen(spot)}
-          aria-label={`Gérer les kits de ${spotLabel}`}
+          aria-label={`Gérer les kits de ${spotLabel}${kitCount ? `, ${kitCount} installé${kitCount > 1 ? 's' : ''}` : ''}`}
+          title={
+            kitCount
+              ? `${kitCount} kit${kitCount > 1 ? 's' : ''} installé${kitCount > 1 ? 's' : ''}`
+              : 'Gérer les kits'
+          }
         >
           <WrenchIcon />
+          {kitCount ? (
+            <span className={styles.kitCount} aria-hidden="true">
+              {kitCount}
+            </span>
+          ) : null}
         </button>
       </div>
+      {effects.length > 0 ? (
+        <div
+          className={styles.effects}
+          title={`Effets cumulés (équipement et kits) : ${effects
+            .map(
+              ({ property, value }) =>
+                `${StatValues[property].tag} ${value > 0 ? '+' : ''}${value}`,
+            )
+            .join(', ')}`}
+        >
+          <StatEffects effects={effects} />
+        </div>
+      ) : null}
       {item && isWeaponType(item.type) ? (
         <label className={styles.damageControl}>
           <span>Dégâts</span>

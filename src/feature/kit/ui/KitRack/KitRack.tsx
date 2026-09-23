@@ -5,12 +5,13 @@ import {
   getTechBudgetStatus,
 } from '../../model/kit.rules';
 import type { KitSelection } from '../../model/kit.types';
-import { KitEffects } from '../KitEffects';
 
-import type { ItemSpot, Stat, StatModifier } from '@/domain';
+import type { ItemSpot } from '@/domain';
 import type { Item } from '@/feature/item';
 import { DroppablePanel } from '@/ui/DroppablePanel';
 import { MinusIcon, PlusIcon, TrashIcon } from '@/ui/Icon';
+import { StatEffects } from '@/ui/StatEffects';
+import { statRecordToModifiers } from '@/utils/stats';
 
 interface KitRackProps {
   activeItem: Item | null;
@@ -21,11 +22,6 @@ interface KitRackProps {
   onDecrease: (index: number) => void;
   onDelete: (index: number) => void;
 }
-
-const toModifiers = (effects: Record<Stat, number>): StatModifier[] =>
-  (Object.entries(effects) as [Stat, number][])
-    .filter(([, value]) => value !== 0)
-    .map(([property, value]) => ({ property, value }));
 
 /** Kits installed on the active equipment slot, with its tech budget. */
 export const KitRack = ({
@@ -40,7 +36,7 @@ export const KitRack = ({
   const remaining = activeItem
     ? computeRemainingTech(activeItem.tech, kits)
     : 0;
-  const totalEffects = toModifiers(computeSpotTotalEffect(kits));
+  const totalEffects = statRecordToModifiers(computeSpotTotalEffect(kits));
 
   return (
     <DroppablePanel
@@ -68,7 +64,7 @@ export const KitRack = ({
       {totalEffects.length > 0 ? (
         <div className={styles.totals}>
           <span>Effets cumulés</span>
-          <KitEffects effects={totalEffects} />
+          <StatEffects effects={totalEffects} />
         </div>
       ) : null}
 
@@ -90,7 +86,7 @@ export const KitRack = ({
                   Tech {kit.tech}
                   {number > 1 ? ` · total ${kit.tech * number}` : ''}
                 </span>
-                <KitEffects effects={kit.effects} />
+                <StatEffects effects={kit.effects} />
               </div>
               <div className={styles.controls}>
                 <button

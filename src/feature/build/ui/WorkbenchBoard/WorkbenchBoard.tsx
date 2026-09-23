@@ -1,5 +1,6 @@
 import styles from './WorkbenchBoard.module.css';
 import type { WorkbenchDragData } from '../../model/drag-drop.types';
+import { computeSlotEffects } from '../../model/slot-effects';
 import type { CatalogueFilter } from '../../model/workbench.types';
 import {
   bodySlots,
@@ -57,6 +58,7 @@ export const WorkbenchBoard = ({
       spotLabel={workbenchSlotLabels[spot]}
       item={items[spot]}
       kitCount={getKitCount(kitsBySpot, spot)}
+      effects={computeSlotEffects(items[spot], kitsBySpot[spot])}
       isActive={catalogueFilter !== 'drugs' && activeSpot === spot}
       draggedItem={draggedData?.kind === 'item' ? draggedData.item : null}
       onActivate={onActivateSpot}

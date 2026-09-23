@@ -14,6 +14,7 @@ export * from './DroppablePanel';
 export * from './Sidebar';
 export * from './SlotPair';
 export * from './Spinner';
+export * from './StatEffects';
 export * from './StatusCounterBadge';
 export * from './TechBadge';
 export * from './ThemeToggle';

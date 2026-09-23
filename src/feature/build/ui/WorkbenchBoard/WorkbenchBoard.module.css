@@ -1,6 +1,6 @@
 .board {
   display: grid;
-  grid-template-columns: minmax(150px, 1fr) minmax(120px, 0.7fr) minmax(150px, 1fr);
+  grid-template-columns: minmax(150px, 1fr) minmax(80px, 0.5fr) minmax(150px, 1fr);
   grid-template-rows: minmax(0, 1fr);
   gap: var(--space-3);
   min-width: 0;

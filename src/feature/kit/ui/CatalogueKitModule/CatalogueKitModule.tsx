@@ -1,7 +1,7 @@
 import type { Kit } from '../../model/kit.types';
-import { KitEffects } from '../KitEffects';
 
 import { CatalogueModule } from '@/ui/CatalogueModule';
+import { StatEffects } from '@/ui/StatEffects';
 
 interface CatalogueKitModuleProps {
   kit: Kit;
@@ -22,6 +22,6 @@ export const CatalogueKitModule = ({
     onClick={onAdd}
     disabled={disabled}
   >
-    <KitEffects effects={kit.effects} />
+    <StatEffects effects={kit.effects} />
   </CatalogueModule>
 );
