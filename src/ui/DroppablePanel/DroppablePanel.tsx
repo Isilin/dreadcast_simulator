@@ -7,6 +7,7 @@ interface DroppablePanelProps {
   id: string;
   dropData: Data;
   title: string;
+  className?: string;
   children: ReactNode;
 }
 
@@ -14,6 +15,7 @@ export const DroppablePanel = ({
   id,
   dropData,
   title,
+  className,
   children,
 }: DroppablePanelProps) => {
   const { setNodeRef, isOver } = useDroppable({ id, data: dropData });
@@ -21,7 +23,7 @@ export const DroppablePanel = ({
   return (
     <section
       ref={setNodeRef}
-      className={styles.panel}
+      className={className ? `${styles.panel} ${className}` : styles.panel}
       data-drop-over={isOver}
       aria-label={title}
     >

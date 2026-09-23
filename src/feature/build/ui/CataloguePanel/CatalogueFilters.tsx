@@ -36,25 +36,35 @@ export const CatalogueFilters = ({
   onSelectEquipmentSpot,
 }: CatalogueFiltersProps) => {
   const activeTab = getCatalogueTab(catalogueFilter);
+  const isKitView = catalogueFilter === 'kits';
+  const activeItem = items[activeSpot];
 
   return (
     <div className={styles.filters}>
-      <div className={styles.modeTabs} role="tablist" aria-label="Catalogue">
-        <ModeTab
-          activeMode={activeTab}
-          mode="equipment"
-          onChange={onSelectCatalogueTab}
-        >
-          Équipement
-        </ModeTab>
-        <ModeTab
-          activeMode={activeTab}
-          mode="drugs"
-          onChange={onSelectCatalogueTab}
-        >
-          Drogues
-        </ModeTab>
-      </div>
+      {isKitView ? (
+        <div className={styles.kitTab} role="tablist" aria-label="Catalogue">
+          <ModeTab activeMode="kits" mode="kits" onChange={() => undefined}>
+            Kits
+          </ModeTab>
+        </div>
+      ) : (
+        <div className={styles.modeTabs} role="tablist" aria-label="Catalogue">
+          <ModeTab
+            activeMode={activeTab}
+            mode="equipment"
+            onChange={onSelectCatalogueTab}
+          >
+            Équipement
+          </ModeTab>
+          <ModeTab
+            activeMode={activeTab}
+            mode="drugs"
+            onChange={onSelectCatalogueTab}
+          >
+            Drogues
+          </ModeTab>
+        </div>
+      )}
 
       <label className="visuallyHidden" htmlFor="item-catalogue-search">
         {searchLabels[catalogueFilter]}
@@ -68,7 +78,14 @@ export const CatalogueFilters = ({
         placeholder={searchLabels[catalogueFilter]}
       />
 
-      {activeTab === 'equipment' ? (
+      {isKitView ? (
+        <p className={styles.catalogueContext}>
+          {workbenchSlotLabels[activeSpot]}
+          {activeItem ? ` · compatibles ${activeItem.name}` : ''}
+        </p>
+      ) : null}
+
+      {activeTab === 'equipment' && !isKitView ? (
         <div className={styles.slotFilters} aria-label="Filtre d'équipement">
           {ItemSpotValue.map((itemSpot) => (
             <button
@@ -82,11 +99,6 @@ export const CatalogueFilters = ({
               {items[itemSpot] ? <span aria-hidden="true">•</span> : null}
             </button>
           ))}
-          {catalogueFilter === 'kits' ? (
-            <span className={styles.catalogueContext}>
-              Kits · {workbenchSlotLabels[activeSpot]}
-            </span>
-          ) : null}
         </div>
       ) : null}
     </div>

@@ -52,6 +52,10 @@
   gap: 6px;
 }
 
+.kitTab {
+  display: grid;
+}
+
 .search {
   width: 100%;
   min-height: var(--control-height);
@@ -70,6 +74,7 @@
 }
 
 .catalogueContext {
+  margin: 0;
   color: var(--action-primary-strong);
   font: 600 10px/1 var(--font-data);
   letter-spacing: 0.04em;

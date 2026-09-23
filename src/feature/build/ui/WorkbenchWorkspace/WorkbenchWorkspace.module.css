@@ -20,8 +20,38 @@
   background: var(--surface-raised);
 }
 
-.header > :first-child {
+.titleGroup {
+  display: flex;
   flex-shrink: 0;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+.back {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid var(--action-primary);
+  border-radius: var(--small-radius);
+  color: var(--action-primary-strong);
+  background: var(--action-primary-muted);
+  cursor: pointer;
+}
+
+.back svg {
+  width: 18px;
+  height: 18px;
+}
+
+.back:hover {
+  box-shadow: var(--glow-primary);
+}
+
+.back:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
 }
 
 .buildActions {
@@ -62,21 +92,9 @@
   overflow-y: auto;
 }
 
-.body > :first-child {
+.body > * {
   flex: 1;
   min-height: 0;
-}
-
-.kitTools {
-  display: grid;
-  flex: 0 1 auto;
-  max-height: 40%;
-  min-height: 0;
-}
-
-.kitTools > * {
-  min-height: 0;
-  overflow-y: auto;
 }
 
 @media (max-width: 640px) {

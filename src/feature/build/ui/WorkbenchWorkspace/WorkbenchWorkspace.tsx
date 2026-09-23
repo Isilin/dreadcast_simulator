@@ -21,6 +21,7 @@ import {
   BuildNameEditor,
   type BuildPersistenceState,
 } from '@/feature/persistence';
+import { ArrowLeftIcon } from '@/ui/Icon';
 
 // The Communauté code stays out of the workbench chunk until the button
 // renders.
@@ -38,12 +39,14 @@ interface WorkbenchWorkspaceProps {
   items: ItemsState;
   kits: KitSelection[];
   kitsBySpot: KitsState;
-  techCost: number;
   draggedData: WorkbenchDragData | null;
   selectedDrug: Drug | null;
   onActivateSpot: (spot: ItemSpot) => void;
   onKitOpen: (spot: ItemSpot) => void;
+  onKitClose: () => void;
   onDamageBonusChange: (spot: ItemSpot, bonus: DamageBonusType) => void;
+  onKitIncrease: (index: number) => void;
+  onKitDecrease: (index: number) => void;
   onKitDelete: (index: number) => void;
   onDrugActivate: () => void;
   onDrugClear: () => void;
@@ -57,59 +60,77 @@ export const WorkbenchWorkspace = ({
   items,
   kits,
   kitsBySpot,
-  techCost,
   draggedData,
   selectedDrug,
   onActivateSpot,
   onKitOpen,
+  onKitClose,
   onDamageBonusChange,
+  onKitIncrease,
+  onKitDecrease,
   onKitDelete,
   onDrugActivate,
   onDrugClear,
-}: WorkbenchWorkspaceProps) => (
-  <section className={styles.workspace} aria-label="Atelier de build">
-    <header className={styles.header}>
-      <div>
-        <p className={styles.eyebrow}>Build actif</p>
-        <h2>{getWorkspaceTitle(catalogueFilter)}</h2>
-      </div>
-      <div className={styles.buildActions}>
-        <div className={styles.buildName}>
-          <BuildNameEditor persistence={persistence} />
+}: WorkbenchWorkspaceProps) => {
+  const isKitView = catalogueFilter === 'kits';
+
+  return (
+    <section className={styles.workspace} aria-label="Atelier de build">
+      <header className={styles.header}>
+        <div className={styles.titleGroup}>
+          {isKitView ? (
+            <button
+              type="button"
+              className={styles.back}
+              onClick={onKitClose}
+              aria-label="Retour au poste d'équipement"
+              title="Retour au poste d'équipement"
+            >
+              <ArrowLeftIcon />
+            </button>
+          ) : null}
+          <div>
+            <p className={styles.eyebrow}>Build actif</p>
+            <h2>{getWorkspaceTitle(catalogueFilter)}</h2>
+          </div>
         </div>
-        <Suspense fallback={null}>
-          <PublishBuildButton persistence={persistence} />
-        </Suspense>
-      </div>
-    </header>
+        <div className={styles.buildActions}>
+          <div className={styles.buildName}>
+            <BuildNameEditor persistence={persistence} />
+          </div>
+          <Suspense fallback={null}>
+            <PublishBuildButton persistence={persistence} />
+          </Suspense>
+        </div>
+      </header>
 
-    <div className={styles.body}>
-      <WorkbenchBoard
-        items={items}
-        kitsBySpot={kitsBySpot}
-        activeSpot={activeSpot}
-        draggedData={draggedData}
-        selectedDrug={selectedDrug}
-        catalogueFilter={catalogueFilter}
-        onActivateSpot={onActivateSpot}
-        onKitOpen={onKitOpen}
-        onDamageBonusChange={onDamageBonusChange}
-        onDrugActivate={onDrugActivate}
-        onDrugClear={onDrugClear}
-      />
-
-      {catalogueFilter === 'kits' ? (
-        <div className={styles.kitTools}>
+      <div className={styles.body}>
+        {isKitView ? (
           <KitRack
             activeItem={activeItem}
             kits={kits}
-            techCost={techCost}
             spot={activeSpot}
             spotLabel={workbenchSlotLabels[activeSpot]}
+            onIncrease={onKitIncrease}
+            onDecrease={onKitDecrease}
             onDelete={onKitDelete}
           />
-        </div>
-      ) : null}
-    </div>
-  </section>
-);
+        ) : (
+          <WorkbenchBoard
+            items={items}
+            kitsBySpot={kitsBySpot}
+            activeSpot={activeSpot}
+            draggedData={draggedData}
+            selectedDrug={selectedDrug}
+            catalogueFilter={catalogueFilter}
+            onActivateSpot={onActivateSpot}
+            onKitOpen={onKitOpen}
+            onDamageBonusChange={onDamageBonusChange}
+            onDrugActivate={onDrugActivate}
+            onDrugClear={onDrugClear}
+          />
+        )}
+      </div>
+    </section>
+  );
+};

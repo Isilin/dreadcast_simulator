@@ -54,3 +54,25 @@ export const computeTotalEffects = (
   );
   return stats;
 };
+
+/** State of the tech budget of an equipment slot. */
+export type TechBudgetStatus = 'over' | 'full' | 'low' | 'spare';
+
+/** Tech points above which unused room is flagged as spare. */
+export const SPARE_TECH_THRESHOLD = 40;
+
+/**
+ * Tech points left on an item once its kits are installed (negative when the
+ * kits cost more than the item allows).
+ */
+export const computeRemainingTech = (
+  itemTech: number,
+  kits: KitSelection[],
+): number => itemTech - computeSpotTechCost(kits);
+
+export const getTechBudgetStatus = (remaining: number): TechBudgetStatus => {
+  if (remaining < 0) return 'over';
+  if (remaining === 0) return 'full';
+  if (remaining > SPARE_TECH_THRESHOLD) return 'spare';
+  return 'low';
+};

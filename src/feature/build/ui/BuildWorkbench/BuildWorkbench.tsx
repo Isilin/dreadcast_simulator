@@ -65,7 +65,7 @@ export const BuildWorkbench = ({ initialSlot }: BuildWorkbenchProps = {}) => {
 
   const items = useItemsState();
   const { setDamageBonus, setItem } = useItemsActions();
-  const { kits, techCost } = useKitsOnSpot(activeSpot);
+  const { kits } = useKitsOnSpot(activeSpot);
   const kitsBySpot = useKitsState();
   const { addKit, deleteKit, setKitNumber } = useKitsActions();
   const selectedDrugId = useDrugId();
@@ -101,14 +101,14 @@ export const BuildWorkbench = ({ initialSlot }: BuildWorkbenchProps = {}) => {
     setDrug(drug.id);
   };
 
-  const deleteSelectedKit = (index: number) => {
+  const changeKitNumber = (index: number, delta: number) => {
     const selectedKit = kits[index];
     if (!selectedKit) return;
-    if (selectedKit.number > 1) {
-      setKitNumber(activeSpot, index, selectedKit.number - 1);
-      return;
-    }
-    deleteKit(activeSpot, index);
+    setKitNumber(
+      activeSpot,
+      index,
+      Math.max(1, selectedKit.number + delta),
+    );
   };
 
   const {
@@ -170,15 +170,17 @@ export const BuildWorkbench = ({ initialSlot }: BuildWorkbenchProps = {}) => {
           items={items}
           kits={kits}
           kitsBySpot={kitsBySpot}
-          techCost={techCost}
           draggedData={draggedData}
           selectedDrug={selectedDrug}
           onActivateSpot={setActiveSpot}
           onKitOpen={openKitPanel}
+          onKitClose={() => setCatalogueFilter('equipment')}
           onDamageBonusChange={(spot: ItemSpot, bonus: DamageBonusType) =>
             setDamageBonus(spot, bonus)
           }
-          onKitDelete={deleteSelectedKit}
+          onKitIncrease={(index: number) => changeKitNumber(index, 1)}
+          onKitDecrease={(index: number) => changeKitNumber(index, -1)}
+          onKitDelete={(index: number) => deleteKit(activeSpot, index)}
           onDrugActivate={() => selectCatalogueTab('drugs')}
           onDrugClear={() => setDrug(null)}
         />

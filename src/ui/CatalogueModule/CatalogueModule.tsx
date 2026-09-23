@@ -2,6 +2,7 @@ import { useDraggable, type Data } from '@dnd-kit/core';
 import type { ReactNode } from 'react';
 
 import styles from './CatalogueModule.module.css';
+import { GripIcon } from '../Icon';
 
 interface CatalogueModuleProps {
   id: string;
@@ -41,6 +42,11 @@ export const CatalogueModule = ({
         {...attributes}
         {...listeners}
       >
+        {disabled ? null : (
+          <span className={styles.grip} aria-hidden="true">
+            <GripIcon />
+          </span>
+        )}
         <span className={styles.name}>{name}</span>
         <small className={styles.detail}>{detail}</small>
         {children}
