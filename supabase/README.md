@@ -72,6 +72,9 @@ Les schémas doivent être exécutés dans l'ordre pour respecter les dépendanc
 030_rpc_community_search.sql     -- RPC community_search (filtres, tris, pagination)
 031_rpc_community_similar.sql    -- RPC community_similar / community_for_you
 032_index_community_content_author.sql -- Index de community_build_content.author_id
+
+-- Performance
+033_optimize_legacy_rls.sql      -- Policies build/subscription : (SELECT auth.uid()) + index FK subscription
 ```
 
 ### Procedure d'application en production
