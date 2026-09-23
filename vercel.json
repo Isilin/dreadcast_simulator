@@ -1,6 +1,6 @@
 {
   "buildCommand": "yarn build",
-  "installCommand": "corepack enable && yarn install --immutable",
+  "installCommand": "yarn install --immutable",
   "outputDirectory": "dist",
   "framework": "vite",
   "functions": {
