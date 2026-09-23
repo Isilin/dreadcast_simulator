@@ -1,3 +1,5 @@
+import { lazy, Suspense } from 'react';
+
 import styles from './WorkbenchWorkspace.module.css';
 import type { WorkbenchDragData } from '../../model/drag-drop.types';
 import {
@@ -16,8 +18,21 @@ import {
   type ItemsState,
 } from '@/feature/item';
 import { KitRack, type KitSelection, type KitsState } from '@/feature/kit';
+import {
+  BuildNameEditor,
+  type BuildPersistenceState,
+} from '@/feature/persistence';
+
+// The Communauté code stays out of the workbench chunk until the button
+// renders.
+const PublishBuildButton = lazy(() =>
+  import('@/feature/community').then(({ PublishBuildButton: Button }) => ({
+    default: Button,
+  })),
+);
 
 interface WorkbenchWorkspaceProps {
+  persistence: BuildPersistenceState;
   catalogueFilter: CatalogueFilter;
   activeSpot: ItemSpot;
   activeItem: Item | null;
@@ -36,6 +51,7 @@ interface WorkbenchWorkspaceProps {
 }
 
 export const WorkbenchWorkspace = ({
+  persistence,
   catalogueFilter,
   activeSpot,
   activeItem,
@@ -54,8 +70,18 @@ export const WorkbenchWorkspace = ({
 }: WorkbenchWorkspaceProps) => (
   <section className={styles.workspace} aria-label="Atelier de build">
     <header className={styles.header}>
-      <p className={styles.eyebrow}>Build actif</p>
-      <h2>{getWorkspaceTitle(catalogueFilter)}</h2>
+      <div>
+        <p className={styles.eyebrow}>Build actif</p>
+        <h2>{getWorkspaceTitle(catalogueFilter)}</h2>
+      </div>
+      <div className={styles.buildActions}>
+        <div className={styles.buildName}>
+          <BuildNameEditor persistence={persistence} />
+        </div>
+        <Suspense fallback={null}>
+          <PublishBuildButton persistence={persistence} />
+        </Suspense>
+      </div>
     </header>
 
     <div className={styles.body}>

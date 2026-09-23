@@ -4,44 +4,24 @@ import styles from './InspectorPanel.module.css';
 import { ModeTab } from '../ModeTab';
 
 import { ImplantsPanel } from '@/feature/implant';
-import { BuildNameEditor, TabsBar } from '@/feature/persistence';
-import type { useBuildPersistence } from '@/feature/persistence';
 import { GenderSelector, RaceSelector } from '@/feature/profile';
 import { Skills } from '@/feature/stats';
 
-// Community entry points are lazy: the Communauté code stays out of the
-// workbench chunk until they render.
-const PublishBuildButton = lazy(() =>
-  import('@/feature/community').then(({ PublishBuildButton: Button }) => ({
-    default: Button,
-  })),
-);
+// The community entry point is lazy: the Communauté code stays out of the
+// workbench chunk until it renders.
 const SimilarBuildsButton = lazy(() =>
   import('@/feature/community').then(({ SimilarBuildsButton: Button }) => ({
     default: Button,
   })),
 );
 
-type BuildPersistence = ReturnType<typeof useBuildPersistence>;
 type InspectorTab = 'stats' | 'implants';
 
-interface InspectorPanelProps {
-  persistence: BuildPersistence;
-}
-
-export const InspectorPanel = ({ persistence }: InspectorPanelProps) => {
+export const InspectorPanel = () => {
   const [activeTab, setActiveTab] = useState<InspectorTab>('stats');
 
   return (
     <aside className={styles.inspector} aria-label="Inspecteur du build">
-      <section className={styles.section}>
-        <p className={styles.eyebrow}>Sauvegardes</p>
-        <BuildNameEditor persistence={persistence} />
-        <Suspense fallback={null}>
-          <PublishBuildButton persistence={persistence} />
-        </Suspense>
-        <TabsBar persistence={persistence} />
-      </section>
       <section className={styles.section}>
         <p className={styles.eyebrow}>Profil</p>
         <div className={styles.profileControls}>

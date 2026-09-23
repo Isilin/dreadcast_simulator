@@ -75,7 +75,7 @@ export const BuildNameEditor = ({ persistence }: BuildNameEditorProps) => {
   return (
     <>
       <div className={styles.container}>
-        <label htmlFor="build-name-input" className={styles.label}>
+        <label htmlFor="build-name-input" className="visuallyHidden">
           Nom du build
         </label>
         <input

@@ -7,22 +7,13 @@
 
 .tabList {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--space-1);
   min-width: 0;
+  overflow-x: auto;
   padding: var(--space-1);
   border: 1px solid var(--border-subtle);
   border-radius: var(--small-radius);
   background: var(--surface-sunken);
-}
-
-@media (max-width: 768px) {
-  .tabList {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-  }
 }
 
 .tab {
@@ -33,6 +24,7 @@
   color: var(--text-secondary);
   background: var(--surface-interactive);
   font: 600 11px/1.2 var(--font-data);
+  flex-shrink: 0;
   transition:
     background-color 0.18s,
     border-color 0.18s,
@@ -62,6 +54,7 @@
 }
 
 .addTab {
+  flex-shrink: 0;
   min-width: var(--control-height-sm);
   min-height: var(--control-height-sm);
   padding: 0 var(--space-2);

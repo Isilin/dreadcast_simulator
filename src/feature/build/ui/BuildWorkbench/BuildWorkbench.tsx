@@ -33,7 +33,8 @@ import {
   useKitsOnSpot,
   useKitsState,
 } from '@/feature/kit';
-import { useBuildPersistence } from '@/feature/persistence';
+import { TabsBar, useBuildPersistence } from '@/feature/persistence';
+import { AppFooterPortal } from '@/ui';
 
 interface BuildWorkbenchProps {
   /** Slot to open first (e.g. a build copied from the Communauté). */
@@ -165,6 +166,7 @@ export const BuildWorkbench = ({ initialSlot }: BuildWorkbenchProps = {}) => {
           onAddKit={(kit: Kit) => addKit(activeSpot, kit)}
         />
         <WorkbenchWorkspace
+          persistence={persistence}
           catalogueFilter={catalogueFilter}
           activeSpot={activeSpot}
           activeItem={activeItem}
@@ -183,9 +185,12 @@ export const BuildWorkbench = ({ initialSlot }: BuildWorkbenchProps = {}) => {
           onDrugActivate={() => selectCatalogueTab('drugs')}
           onDrugClear={() => setDrug(null)}
         />
-        <InspectorPanel persistence={persistence} />
+        <InspectorPanel />
       </div>
       <WorkbenchDragOverlay dragData={draggedData} />
+      <AppFooterPortal>
+        <TabsBar persistence={persistence} />
+      </AppFooterPortal>
     </DndContext>
   );
 };
