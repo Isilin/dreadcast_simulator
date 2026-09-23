@@ -10,18 +10,13 @@ import {
   doCreateClientWithAuth,
   handleError,
   requireBearerToken,
+  setNoStoreHeaders,
 } from '../../lib/helper.api.js';
 
 const upsertBuildSchema = z.object({
   slot: z.coerce.number().int().min(1),
   snapshot: z.record(z.string(), z.unknown()),
 });
-
-const setNoStoreHeaders = (res: VercelResponse): void => {
-  res.setHeader('Content-Type', 'application/json');
-  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
-  res.setHeader('Pragma', 'no-cache');
-};
 
 interface BuildRow {
   id: string;

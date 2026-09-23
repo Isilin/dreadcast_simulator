@@ -5,6 +5,7 @@ import {
   doCreateClientWithAuth,
   handleError,
   requireBearerToken,
+  setNoStoreHeaders,
 } from '../../lib/helper.api.js';
 import {
   SUBSCRIPTION_SELECT_QUERY,
@@ -20,12 +21,6 @@ import type {
 const createSubscriptionSchema = z.object({
   planCode: z.string().min(1),
 });
-
-const setNoStoreHeaders = (res: VercelResponse): void => {
-  res.setHeader('Content-Type', 'application/json');
-  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
-  res.setHeader('Pragma', 'no-cache');
-};
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET' && req.method !== 'POST') {
