@@ -2,13 +2,13 @@
 
 -- Insertion des items
 INSERT INTO item (id, name, image, tech, integrity, type, min_heal, max_heal, damage_bonus, hands, reach, hits_per_round) VALUES
-  ('606', 'Cobra F-750', '/assets/items/Cobra_F-750.webp', 100, 40, '2handsMelee'::item_type, 50, 150, NULL, 2, 9, 1),
+  ('606', 'Cobra F-750', '/assets/items/Cobra_F-750.webp', 100, 40, '2handsMelee'::item_type, 50, 150, NULL, 2, 9, 1)
 
 ON CONFLICT (id) DO NOTHING;
 
 -- Insertion des prérequis
 INSERT INTO item_prerequisite (item_id, property, value) VALUES
-  ('606', 'medicine'::stat_property, 150),
+  ('606', 'medicine'::stat_property, 150)
 ON CONFLICT DO NOTHING;
 
 -- Insertion des effets
@@ -43,60 +43,60 @@ ON CONFLICT DO NOTHING;
 INSERT INTO kit_effect (kit_id, property, value) VALUES
   ('232', 'strength'::stat_property, 7),
   ('232', 'agility'::stat_property, 2),
-  ('232', 'resistance'::stat_property, -2),
+  ('232', 'robustness'::stat_property, -2),
   ('32', 'strength'::stat_property, 6),
   ('32', 'agility'::stat_property, 2),
-  ('32', 'resistance'::stat_property, -2),
+  ('32', 'robustness'::stat_property, -2),
   ('332', 'strength'::stat_property, 6),
   ('332', 'agility'::stat_property, 2),
-  ('332', 'resistance'::stat_property, -2),
+  ('332', 'robustness'::stat_property, -2),
   ('132', 'strength'::stat_property, 6),
   ('132', 'agility'::stat_property, 2),
-  ('132', 'resistance'::stat_property, -2),
+  ('132', 'robustness'::stat_property, -2),
   ('432', 'strength'::stat_property, 3),
   ('432', 'agility'::stat_property, 2),
   ('233', 'perception'::stat_property, 6),
   ('233', 'agility'::stat_property, 2),
-  ('233', 'resistance'::stat_property, -2),
+  ('233', 'robustness'::stat_property, -2),
   ('33', 'perception'::stat_property, 6),
   ('33', 'agility'::stat_property, 2),
-  ('33', 'resistance'::stat_property, -2),
+  ('33', 'robustness'::stat_property, -2),
   ('333', 'perception'::stat_property, 6),
   ('333', 'agility'::stat_property, 2),
-  ('333', 'resistance'::stat_property, -2),
+  ('333', 'robustness'::stat_property, -2),
   ('133', 'perception'::stat_property, 6),
   ('133', 'agility'::stat_property, 2),
-  ('133', 'resistance'::stat_property, -2),
+  ('133', 'robustness'::stat_property, -2),
   ('433', 'perception'::stat_property, 2),
   ('433', 'agility'::stat_property, 3),
   ('234', 'strength'::stat_property, 7),
   ('234', 'agility'::stat_property, 2),
-  ('234', 'resistance'::stat_property, -3),
+  ('234', 'robustness'::stat_property, -3),
   ('34', 'strength'::stat_property, 6),
   ('34', 'agility'::stat_property, 2),
-  ('34', 'resistance'::stat_property, -3),
+  ('34', 'robustness'::stat_property, -3),
   ('334', 'strength'::stat_property, 6),
   ('334', 'agility'::stat_property, 2),
-  ('334', 'resistance'::stat_property, -3),
+  ('334', 'robustness'::stat_property, -3),
   ('134', 'strength'::stat_property, 6),
   ('134', 'agility'::stat_property, 2),
-  ('134', 'resistance'::stat_property, -3),
+  ('134', 'robustness'::stat_property, -3),
   ('434', 'strength'::stat_property, 3),
   ('434', 'agility'::stat_property, 2),
   ('235', 'perception'::stat_property, 6),
   ('235', 'agility'::stat_property, 2),
-  ('235', 'resistance'::stat_property, -3),
+  ('235', 'robustness'::stat_property, -3),
   ('35', 'perception'::stat_property, 6),
   ('35', 'agility'::stat_property, 2),
-  ('35', 'resistance'::stat_property, -3),
+  ('35', 'robustness'::stat_property, -3),
   ('335', 'perception'::stat_property, 6),
   ('335', 'agility'::stat_property, 2),
-  ('335', 'resistance'::stat_property, -3),
+  ('335', 'robustness'::stat_property, -3),
   ('135', 'perception'::stat_property, 6),
   ('135', 'agility'::stat_property, 2),
-  ('135', 'resistance'::stat_property, -3),
+  ('135', 'robustness'::stat_property, -3),
   ('435', 'perception'::stat_property, 2),
-  ('435', 'agility'::stat_property, 3),
+  ('435', 'agility'::stat_property, 3)
 ON CONFLICT DO NOTHING;
 
 -- Renommage du kit "À canon lourd" en "instable" (id 539)
