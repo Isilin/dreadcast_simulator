@@ -1,9 +1,10 @@
 .board {
   display: grid;
-  grid-template-columns: minmax(150px, 0.8fr) minmax(180px, 1fr) minmax(150px, 0.8fr);
+  grid-template-columns: minmax(150px, 1fr) minmax(80px, 0.5fr) minmax(150px, 1fr);
+  grid-template-rows: minmax(0, 1fr);
   gap: var(--space-3);
   min-width: 0;
-  min-height: 520px;
+  min-height: 0;
   padding: var(--space-3);
   border: 1px solid var(--border-subtle);
   background: var(--surface-base);
@@ -11,25 +12,33 @@
 }
 
 .bodySlots,
-.weaponSlots,
 .rightBoard {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: repeat(4, minmax(0, 1fr));
   gap: var(--space-2);
+  min-height: 0;
+}
+
+.weaponSlots {
+  display: contents;
 }
 
 .centerBoard {
   display: grid;
   place-items: center;
   min-width: 0;
-  min-height: 420px;
+  min-height: 0;
+  overflow: hidden;
   border: 1px solid var(--border-subtle);
   background: var(--surface-sunken);
 }
 
 .silhouette {
+  position: relative;
+  isolation: isolate;
   width: min(100%, 280px);
-  min-height: 360px;
+  height: 100%;
+  min-height: 0;
   display: grid;
   place-items: center;
   opacity: 0.82;
@@ -47,14 +56,19 @@
 
 @media (max-width: 1100px) {
   .board {
-    grid-template-columns: minmax(130px, 0.75fr) minmax(150px, 1fr) minmax(130px, 0.75fr);
+    grid-template-columns: minmax(130px, 1fr) minmax(100px, 0.6fr) minmax(130px, 1fr);
   }
 }
 
 @media (max-width: 900px) {
   .board {
     grid-template-columns: 1fr 1fr;
-    min-height: 0;
+    grid-template-rows: none;
+  }
+
+  .bodySlots,
+  .rightBoard {
+    grid-template-rows: none;
   }
 
   .centerBoard {

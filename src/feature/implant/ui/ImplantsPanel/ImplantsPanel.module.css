@@ -1,0 +1,121 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 0;
+  height: 100%;
+}
+
+.summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0;
+  color: var(--text-secondary);
+  font: 600 11px/1.2 var(--font-data);
+}
+
+.summary > span {
+  font: 700 12px/1 var(--font-data);
+}
+
+.message {
+  margin: 0;
+  color: var(--text-secondary);
+  font: 400 12px/1.5 var(--font-data);
+}
+
+.list {
+  display: grid;
+  gap: 2px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 2px var(--space-1);
+  border: 1px solid transparent;
+  border-radius: var(--small-radius);
+}
+
+.row[data-active='true'] {
+  border-color: var(--border-subtle);
+  background: var(--action-primary-muted);
+}
+
+.thumb {
+  width: 28px;
+  height: 28px;
+}
+
+.name {
+  overflow: hidden;
+  color: var(--text-primary);
+  font: 600 11px/1.2 var(--font-data);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row[data-active='false'] .name {
+  color: var(--text-secondary);
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.step {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--small-radius);
+  color: var(--text-primary);
+  background: var(--surface-sunken);
+  cursor: pointer;
+}
+
+.step svg {
+  width: 12px;
+  height: 12px;
+}
+
+.step:hover:not(:disabled) {
+  border-color: var(--action-primary);
+  color: var(--action-primary-strong);
+}
+
+.step:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
+.step:disabled {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.level {
+  min-width: 34px;
+  color: var(--text-primary);
+  font: 700 12px/1 var(--font-data);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.levelMax {
+  color: var(--text-secondary);
+  font-weight: 400;
+}

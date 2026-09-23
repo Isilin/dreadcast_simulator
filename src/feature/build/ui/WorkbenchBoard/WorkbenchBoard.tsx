@@ -1,5 +1,7 @@
 import styles from './WorkbenchBoard.module.css';
 import type { WorkbenchDragData } from '../../model/drag-drop.types';
+import { computeSlotEffects } from '../../model/slot-effects';
+import type { CatalogueFilter } from '../../model/workbench.types';
 import {
   bodySlots,
   weaponSlots,
@@ -15,6 +17,7 @@ import {
   type DamageBonusType,
   type ItemsState,
   EquipmentSlot,
+  isTwoHandedOffhand,
 } from '@/feature/item';
 import { type KitsState } from '@/feature/kit';
 import { Silhouette } from '@/feature/profile';
@@ -25,7 +28,7 @@ interface WorkbenchBoardProps {
   activeSpot: ItemSpot;
   draggedData: WorkbenchDragData | null;
   selectedDrug: Drug | null;
-  catalogueFilter: 'equipment' | 'kits' | 'implants' | 'drugs';
+  catalogueFilter: CatalogueFilter;
   onActivateSpot: (spot: ItemSpot) => void;
   onKitOpen: (spot: ItemSpot) => void;
   onDamageBonusChange: (spot: ItemSpot, bonus: DamageBonusType) => void;
@@ -49,20 +52,28 @@ export const WorkbenchBoard = ({
   onDrugActivate,
   onDrugClear,
 }: WorkbenchBoardProps) => {
-  const renderEquipmentSlot = (spot: ItemSpot) => (
-    <EquipmentSlot
-      key={spot}
-      spot={spot}
-      spotLabel={workbenchSlotLabels[spot]}
-      item={items[spot]}
-      kitCount={getKitCount(kitsBySpot, spot)}
-      isActive={activeSpot === spot}
-      draggedItem={draggedData?.kind === 'item' ? draggedData.item : null}
-      onActivate={onActivateSpot}
-      onKitOpen={onKitOpen}
-      onDamageBonusChange={(bonus) => onDamageBonusChange(spot, bonus)}
-    />
-  );
+  const renderEquipmentSlot = (spot: ItemSpot) => {
+    const isOffhand = isTwoHandedOffhand(items, spot);
+
+    return (
+      <EquipmentSlot
+        key={spot}
+        spot={spot}
+        spotLabel={workbenchSlotLabels[spot]}
+        item={items[spot]}
+        kitCount={getKitCount(kitsBySpot, spot)}
+        effects={
+          isOffhand ? [] : computeSlotEffects(items[spot], kitsBySpot[spot])
+        }
+        isOffhand={isOffhand}
+        isActive={catalogueFilter !== 'drugs' && activeSpot === spot}
+        draggedItem={draggedData?.kind === 'item' ? draggedData.item : null}
+        onActivate={onActivateSpot}
+        onKitOpen={onKitOpen}
+        onDamageBonusChange={(bonus) => onDamageBonusChange(spot, bonus)}
+      />
+    );
+  };
 
   return (
     <div className={styles.board}>

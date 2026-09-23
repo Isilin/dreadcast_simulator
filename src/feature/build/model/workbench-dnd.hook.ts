@@ -22,21 +22,15 @@ import {
 } from './drop.handler';
 
 import type { ItemSpot } from '@/domain';
-import type { ImplantsState } from '@/feature/implant';
 import type { Item } from '@/feature/item';
-import type { KitSelection } from '@/feature/kit';
 
 interface UseWorkbenchDndParams extends DropHandlerActions {
   activeItem: Item | null;
-  implants: ImplantsState;
-  kits: KitSelection[];
   onSpotChange: (spot: ItemSpot) => void;
 }
 
 export const useWorkbenchDnd = ({
   activeItem,
-  implants,
-  kits,
   onSpotChange,
   ...actions
 }: UseWorkbenchDndParams) => {
@@ -79,8 +73,6 @@ export const useWorkbenchDnd = ({
       dragData: getDraggedData(active.data.current),
       dropData: getDropData(over?.data.current),
       activeItem,
-      kits,
-      implants,
       ...actions,
     });
 

@@ -91,3 +91,22 @@ export const itemPrerequisitesMet = (
     return total >= pr.value;
   });
 };
+
+/**
+ * The right arm only mirrors a two-handed weapon held in the left arm: it is
+ * not a second weapon (its effects are cancelled by the suit rules).
+ */
+export const isTwoHandedOffhand = (
+  items: ItemsState,
+  spot: ItemSpot,
+): boolean => spot === 'rightArm' && (items.leftArm?.hands ?? 0) > 1;
+
+/**
+ * Slot to select once an item is equipped: a two-handed weapon is handled
+ * from the left arm, the right arm only mirrors it.
+ */
+export const getEquippedSpot = (
+  spot: ItemSpot,
+  item: Pick<Item, 'hands'>,
+): ItemSpot =>
+  spot === 'rightArm' && (item.hands ?? 0) > 1 ? 'leftArm' : spot;

@@ -1,7 +1,9 @@
 import type { ItemSpot } from '@/domain';
 
-export type WorkbenchMode = 'equipment' | 'implants';
-export type CatalogueFilter = 'equipment' | 'kits' | 'implants' | 'drugs';
+/** Tabs of the catalogue panel. */
+export type CatalogueTab = 'equipment' | 'drugs';
+/** What the catalogue lists: kits are reached from an equipment slot. */
+export type CatalogueFilter = 'equipment' | 'kits' | 'drugs';
 
 export const workbenchSlotLabels: Record<ItemSpot, string> = {
   head: 'Tête',
@@ -16,21 +18,8 @@ export const workbenchSlotLabels: Record<ItemSpot, string> = {
 export const bodySlots: ItemSpot[] = ['head', 'chest', 'legs', 'feet'];
 export const weaponSlots: ItemSpot[] = ['leftArm', 'rightArm', 'secondary'];
 
-export const getModeTitle = (
-  mode: WorkbenchMode,
-  catalogueFilter: CatalogueFilter,
-): string => {
-  if (mode === 'implants') return "Baie d'implants";
-  if (catalogueFilter === 'kits') return 'Gestion des kits';
-  return "Poste d'équipement";
-};
+export const getCatalogueTab = (filter: CatalogueFilter): CatalogueTab =>
+  filter === 'drugs' ? 'drugs' : 'equipment';
 
-export const getModeTarget = (
-  mode: WorkbenchMode,
-  catalogueFilter: CatalogueFilter,
-  spot: ItemSpot,
-): string => {
-  if (mode === 'implants') return 'Build actif';
-  if (catalogueFilter === 'drugs') return 'Emplacement drogue';
-  return workbenchSlotLabels[spot];
-};
+export const getWorkspaceTitle = (catalogueFilter: CatalogueFilter): string =>
+  catalogueFilter === 'kits' ? 'Gestion des kits' : "Poste d'équipement";

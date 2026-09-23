@@ -4,7 +4,6 @@ import type { CatalogueFilter } from '../../model/workbench.types';
 
 import type { ItemSpot } from '@/domain';
 import type { Drug } from '@/feature/drug';
-import type { Implant } from '@/feature/implant';
 import { itemMatchsSpot } from '@/feature/item';
 import type { Item } from '@/feature/item';
 import type { Kit } from '@/feature/kit';
@@ -12,7 +11,6 @@ import type { Kit } from '@/feature/kit';
 interface UseCatalogueResultsArgs {
   allItems: Item[] | undefined;
   allKits: Kit[] | undefined;
-  allImplants: Implant[];
   allDrugs: Drug[];
   activeItem: Item | null;
   activeSpot: ItemSpot;
@@ -20,18 +18,15 @@ interface UseCatalogueResultsArgs {
   query: string;
   areItemsLoading: boolean;
   areKitsLoading: boolean;
-  areImplantsLoading: boolean;
   areDrugsLoading: boolean;
   hasItemsError: boolean;
   hasKitsError: boolean;
-  hasImplantsError: boolean;
   hasDrugsError: boolean;
 }
 
 export const useCatalogueResults = ({
   allItems,
   allKits,
-  allImplants,
   allDrugs,
   activeItem,
   activeSpot,
@@ -39,11 +34,9 @@ export const useCatalogueResults = ({
   query,
   areItemsLoading,
   areKitsLoading,
-  areImplantsLoading,
   areDrugsLoading,
   hasItemsError,
   hasKitsError,
-  hasImplantsError,
   hasDrugsError,
 }: UseCatalogueResultsArgs) => {
   const deferredQuery = useDeferredValue(query.trim().toLocaleLowerCase());
@@ -55,35 +48,25 @@ export const useCatalogueResults = ({
   const visibleKits = (allKits ?? []).filter(
     (kit) => kit.type === activeItem?.type && matchesQuery(kit.name),
   );
-  const visibleImplants = allImplants.filter((implant) =>
-    matchesQuery(implant.name),
-  );
   const visibleDrugs = allDrugs.filter((drug) => matchesQuery(drug.name));
   const catalogueCount =
     catalogueFilter === 'equipment'
       ? visibleItems.length
       : catalogueFilter === 'kits'
         ? visibleKits.length
-        : catalogueFilter === 'implants'
-          ? visibleImplants.length
-          : visibleDrugs.length;
+        : visibleDrugs.length;
   const isCatalogueLoading =
     (catalogueFilter === 'equipment' && areItemsLoading) ||
     (catalogueFilter === 'kits' && areKitsLoading) ||
-    (catalogueFilter === 'implants' && areImplantsLoading) ||
     (catalogueFilter === 'drugs' && areDrugsLoading);
   const isCatalogueUnavailable =
     (catalogueFilter === 'equipment' && hasItemsError && !allItems) ||
     (catalogueFilter === 'kits' && hasKitsError && !allKits) ||
-    (catalogueFilter === 'implants' &&
-      hasImplantsError &&
-      !allImplants.length) ||
     (catalogueFilter === 'drugs' && hasDrugsError && !allDrugs.length);
 
   return {
     visibleItems,
     visibleKits,
-    visibleImplants,
     visibleDrugs,
     catalogueCount,
     isCatalogueLoading,

@@ -52,3 +52,16 @@ export const computeImplantsEffects = (
 
   return stats;
 };
+
+/**
+ * Highest level an implant can reach without exceeding the level max of the
+ * implant nor the total implant limit.
+ */
+export const computeImplantLevelCap = (
+  state: Record<string, number>,
+  implant: Pick<Implant, 'name' | 'levelMax'>,
+): number => {
+  const current = state[implant.name] ?? 0;
+  const remaining = MAX_IMPLANTS - computeImplantsCount(state);
+  return Math.max(current, Math.min(implant.levelMax, current + remaining));
+};

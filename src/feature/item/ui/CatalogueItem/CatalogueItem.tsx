@@ -3,6 +3,8 @@ import { useDraggable } from '@dnd-kit/core';
 import styles from './CatalogueItem.module.css';
 import type { Item } from '../../model/item.types';
 
+import { GripIcon } from '@/ui/Icon';
+
 interface CatalogueItemProps {
   item: Item;
   spotLabel: string;
@@ -30,6 +32,9 @@ export const CatalogueItem = ({
         {...attributes}
         {...listeners}
       >
+        <span className={styles.grip} aria-hidden="true">
+          <GripIcon />
+        </span>
         <img src={item.image} alt="" loading="lazy" />
         <span className={styles.name}>{item.name}</span>
         <span className={styles.meta}>

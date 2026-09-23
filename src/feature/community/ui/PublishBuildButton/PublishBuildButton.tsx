@@ -8,6 +8,14 @@ import { PublishBuildDialog } from '../PublishBuildDialog';
 
 import type { useBuildPersistence } from '@/feature/persistence';
 import { useActiveSubscription } from '@/feature/subscription';
+import {
+  EyeIcon,
+  LockIcon,
+  RefreshIcon,
+  SnowflakeIcon,
+  UploadIcon,
+} from '@/ui/Icon';
+import { IconButton, IconTooltip, iconButtonClassName } from '@/ui/IconButton';
 import Routes from '@/utils/routes';
 
 interface PublishBuildButtonProps {
@@ -38,17 +46,34 @@ export const PublishBuildButton = ({
     (entry) => entry.sourceSlot === persistence.active,
   );
 
+  const viewLink = publication ? (
+    <IconTooltip label="Voir la publication">
+      <Link
+        to={Routes.communityById}
+        params={{ id: publication.id }}
+        className={iconButtonClassName}
+        aria-label="Voir la publication"
+      >
+        <EyeIcon />
+      </Link>
+    </IconTooltip>
+  ) : null;
+
   if (publication?.frozen) {
     return (
       <div className={styles.container}>
-        <p className={styles.frozen}>Publication figée : abonnement expiré.</p>
-        <Link
-          to={Routes.communityById}
-          params={{ id: publication.id }}
-          className={styles.link}
-        >
-          Voir la publication
-        </Link>
+        <IconTooltip label="Publication figée : abonnement expiré">
+          <span
+            className={iconButtonClassName}
+            data-variant="warning"
+            role="img"
+            tabIndex={0}
+            aria-label="Publication figée : abonnement expiré"
+          >
+            <SnowflakeIcon />
+          </span>
+        </IconTooltip>
+        {viewLink}
       </div>
     );
   }
@@ -56,33 +81,33 @@ export const PublishBuildButton = ({
   if (!isSubscriber && !publication) {
     return (
       <div className={styles.container}>
-        <Link to={Routes.subscription} className={styles.upsell}>
-          Publier dans la Communauté · abonnés
-        </Link>
+        <IconTooltip label="Publier dans la Communauté · réservé aux abonnés">
+          <Link
+            to={Routes.subscription}
+            className={iconButtonClassName}
+            data-variant="muted"
+            aria-label="Publier dans la Communauté · réservé aux abonnés"
+          >
+            <LockIcon />
+          </Link>
+        </IconTooltip>
       </div>
     );
   }
 
   return (
     <div className={styles.container}>
-      <button
-        type="button"
-        className={styles.button}
+      <IconButton
+        label={
+          publication
+            ? 'Mettre à jour la publication'
+            : 'Publier dans la Communauté'
+        }
+        icon={publication ? <RefreshIcon /> : <UploadIcon />}
+        variant="primary"
         onClick={() => setDialog({ publication })}
-      >
-        {publication
-          ? 'Mettre à jour la publication'
-          : 'Publier dans la Communauté'}
-      </button>
-      {publication ? (
-        <Link
-          to={Routes.communityById}
-          params={{ id: publication.id }}
-          className={styles.link}
-        >
-          Voir la publication
-        </Link>
-      ) : null}
+      />
+      {viewLink}
       <PublishBuildDialog
         persistence={persistence}
         publication={dialog?.publication}

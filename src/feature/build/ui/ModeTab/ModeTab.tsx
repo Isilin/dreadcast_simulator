@@ -1,16 +1,22 @@
 import styles from './ModeTab.module.css';
-import type { WorkbenchMode } from '../../model/workbench.types';
 
-interface ModeTabProps {
-  activeMode: WorkbenchMode;
-  mode: WorkbenchMode;
+interface ModeTabProps<T extends string> {
+  activeMode: T;
+  mode: T;
   children: string;
-  onChange: (mode: WorkbenchMode) => void;
+  onChange: (mode: T) => void;
 }
 
-export const ModeTab = ({ activeMode, mode, children, onChange }: ModeTabProps) => (
+export const ModeTab = <T extends string>({
+  activeMode,
+  mode,
+  children,
+  onChange,
+}: ModeTabProps<T>) => (
   <button
     type="button"
+    role="tab"
+    aria-selected={activeMode === mode}
     className={styles.tab}
     data-active={activeMode === mode}
     onClick={() => onChange(mode)}

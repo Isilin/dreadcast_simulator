@@ -1,13 +1,14 @@
 import { Field } from '@base-ui/react/field';
 import { NumberField } from '@base-ui/react/number-field';
 
+import styles from './ImplantSelector.module.css';
+import { computeImplantLevelCap } from '../../model/implant.rules';
 import {
   useImplantsActions,
   useImplantsState,
 } from '../../model/implant.store';
 import type { Implant } from '../../model/implant.types';
 import { ImplantIcon } from '../ImplantIcon';
-import styles from './ImplantSelector.module.css';
 
 import { useBuildReadOnlyMode } from '@/feature/persistence';
 import { CursorGrowIcon, MinusIcon, PlusIcon } from '@/ui';
@@ -21,6 +22,7 @@ export const ImplantSelector = ({ implant }: Props) => {
   const { setImplant } = useImplantsActions();
   const currentImplant = implantations[implant.name];
   const isReadOnly = useBuildReadOnlyMode();
+  const cap = computeImplantLevelCap(implantations, implant);
 
   return (
     <Field.Root>
@@ -33,7 +35,7 @@ export const ImplantSelector = ({ implant }: Props) => {
         defaultValue={0}
         className={styles.field}
         min={0}
-        max={implant.levelMax}
+        max={cap}
         disabled={isReadOnly}
         value={currentImplant || 0}
         onValueChange={(value) => setImplant(implant.name, value || 0)}
@@ -54,10 +56,7 @@ export const ImplantSelector = ({ implant }: Props) => {
           <NumberField.Input className={styles.input} />
           <NumberField.Increment
             className={styles.increment}
-            disabled={
-              isReadOnly ||
-              (!!currentImplant && currentImplant >= implant.levelMax)
-            }
+            disabled={isReadOnly || (currentImplant ?? 0) >= cap}
           >
             <PlusIcon />
           </NumberField.Increment>

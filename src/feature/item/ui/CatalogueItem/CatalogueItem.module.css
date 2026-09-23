@@ -3,6 +3,7 @@
 }
 
 .select {
+  position: relative;
   display: grid;
   grid-template-rows: 72px auto auto;
   gap: 5px;
@@ -45,6 +46,37 @@
   font: 400 9px/1.2 var(--font-data);
 }
 
-.item[data-dragging='true'] {
-  opacity: 0.35;
+.item[data-dragging='true'] .select {
+  border-style: dashed;
+  border-color: var(--action-primary);
+  box-shadow: none;
+  opacity: 0.4;
+}
+
+.select:hover .grip,
+.select:focus-visible .grip {
+  color: var(--action-primary-strong);
+  opacity: 1;
+}
+
+.grip {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  border-radius: var(--small-radius);
+  color: var(--text-secondary);
+  opacity: 0.45;
+  pointer-events: none;
+  transition:
+    opacity 0.12s ease,
+    color 0.12s ease;
+}
+
+.grip svg {
+  width: 14px;
+  height: 14px;
 }

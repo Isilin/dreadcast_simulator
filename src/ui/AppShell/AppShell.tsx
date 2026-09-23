@@ -1,6 +1,8 @@
 import { Link, type LinkProps } from '@tanstack/react-router';
-import type { PropsWithChildren, ReactNode } from 'react';
+import { useState, type PropsWithChildren, type ReactNode } from 'react';
 
+import { AppFooter } from '../AppFooter';
+import { AppFooterSlotContext } from './AppFooterSlot';
 import styles from './AppShell.module.css';
 
 export interface AppShellNavLink {
@@ -16,38 +18,47 @@ interface AppShellProps extends PropsWithChildren {
 }
 
 export const AppShell = ({ actions, nav, children }: AppShellProps) => {
+  const [footerSlot, setFooterSlot] = useState<HTMLElement | null>(null);
+
   return (
-    <div className={styles.shell}>
-      <header className={styles.header}>
-        <Link to="/" className={styles.brand} aria-label="Dreadcast Simulator">
-          <span className={styles.brandMark}>DS</span>
-          <span className={styles.brandText}>
-            <strong>Dreadcast</strong>
-            <span>Atelier de build</span>
-          </span>
-        </Link>
-        {nav && nav.length > 0 ? (
-          <nav className={styles.nav} aria-label="Navigation principale">
-            {nav.map((link) => (
-              <Link
-                key={link.label}
-                to={link.to}
-                className={styles.navLink}
-                activeProps={{ className: styles.navLinkActive }}
-                activeOptions={{ exact: link.exact ?? false }}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-        ) : (
-          <div className={styles.status} aria-label="Espace de simulation">
-            Simulateur
-          </div>
-        )}
-        <div className={styles.actions}>{actions}</div>
-      </header>
-      <main className={styles.content}>{children}</main>
-    </div>
+    <AppFooterSlotContext.Provider value={footerSlot}>
+      <div className={styles.shell}>
+        <header className={styles.header}>
+          <Link
+            to="/"
+            className={styles.brand}
+            aria-label="Dreadcast Simulator"
+          >
+            <span className={styles.brandMark}>DS</span>
+            <span className={styles.brandText}>
+              <strong>Dreadcast</strong>
+              <span>Atelier de build</span>
+            </span>
+          </Link>
+          {nav && nav.length > 0 ? (
+            <nav className={styles.nav} aria-label="Navigation principale">
+              {nav.map((link) => (
+                <Link
+                  key={link.label}
+                  to={link.to}
+                  className={styles.navLink}
+                  activeProps={{ className: styles.navLinkActive }}
+                  activeOptions={{ exact: link.exact ?? false }}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          ) : (
+            <div className={styles.status} aria-label="Espace de simulation">
+              Simulateur
+            </div>
+          )}
+          <div className={styles.actions}>{actions}</div>
+        </header>
+        <main className={styles.content}>{children}</main>
+        <AppFooter slotRef={setFooterSlot} />
+      </div>
+    </AppFooterSlotContext.Provider>
   );
 };

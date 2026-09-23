@@ -2,8 +2,10 @@
   position: relative;
   z-index: 1;
   display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
   gap: 6px;
   align-self: stretch;
+  min-height: 0;
   padding: var(--space-2);
   border: 1px solid transparent;
   background: color-mix(in srgb, var(--surface-base) 72%, transparent);
@@ -36,7 +38,9 @@
 
 .control {
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   gap: 6px;
+  min-height: 0;
   width: 100%;
   padding: 0;
   border: 0;
@@ -64,9 +68,10 @@
 .summary {
   display: grid;
   align-content: center;
-  gap: 6px;
-  min-height: 124px;
+  gap: 4px;
+  min-height: 0;
   padding: var(--space-2);
+  overflow: hidden;
   border: 1px solid var(--border-subtle);
   background: var(--surface-sunken);
 }
@@ -87,37 +92,34 @@
   font: 400 10px/1.3 var(--font-data);
 }
 
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 6px;
-}
-
-.actions > button {
-  min-height: 28px;
-  border: 1px solid var(--border-subtle);
+.remove {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  display: grid;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--status-danger) 45%, transparent);
   border-radius: var(--small-radius);
-  color: var(--text-secondary);
-  background: var(--surface-sunken);
-  font: 600 9px/1 var(--font-data);
+  color: var(--status-danger);
+  background: color-mix(in srgb, var(--status-danger) 8%, transparent);
+  cursor: pointer;
 }
 
-.actions > button:hover,
-.actions > button:focus-visible {
-  border-color: var(--action-primary);
-  color: var(--action-primary-strong);
+.remove svg {
+  width: 15px;
+  height: 15px;
 }
 
-.actions .dragHandle {
-  min-width: 32px;
-  padding: 0 8px;
-  color: var(--action-primary-strong);
-  line-height: 0;
-  cursor: grab;
+.remove:hover,
+.remove:focus-visible {
+  border-color: var(--status-danger);
+  background: color-mix(in srgb, var(--status-danger) 18%, transparent);
 }
 
-.dragHandle svg {
-  width: 16px;
-  height: 16px;
-  pointer-events: none;
+.remove:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
 }

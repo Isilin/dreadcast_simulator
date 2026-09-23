@@ -12,13 +12,12 @@ import { useItems } from '@/feature/item';
 import { useKits } from '@/feature/kit';
 import {
   BuildReadOnlyProvider,
-  IconBar,
   fetchSharedBuildById,
   restoreSharedBuild,
 } from '@/feature/persistence';
 import { GenderSelector, RaceSelector, Silhouette } from '@/feature/profile';
 import { Skills } from '@/feature/stats';
-import { Footer, Sidebar, SlotPair, Spinner } from '@/ui';
+import { Sidebar, SlotPair, Spinner } from '@/ui';
 import Routes from '@/utils/routes';
 
 export const Route = createFileRoute('/shared/$id')({
@@ -112,10 +111,6 @@ function RouteComponent() {
           <Silhouette />
         </div>
       </div>
-
-      <Footer>
-        <IconBar />
-      </Footer>
     </BuildReadOnlyProvider>
   );
 }
