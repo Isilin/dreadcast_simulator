@@ -117,26 +117,6 @@ export const computeItemsEffect = (state: ItemsState): Record<Stat, number> => {
 };
 
 /**
- * Check if an item's prerequisites are met using only race and implants stats
- */
-export const itemPrerequisitesMet = (
-  item: unknown,
-  raceStats: Partial<Record<Stat, number>>,
-  implantsStats: Record<Stat, number>,
-): boolean => {
-  if (!item || typeof item !== 'object') return true;
-  const asItem = item as {
-    prerequisites?: { property: Stat; value: number }[];
-  };
-  if (!asItem.prerequisites) return true;
-  return asItem.prerequisites.every((pr) => {
-    const total =
-      (raceStats?.[pr.property] ?? 0) + (implantsStats?.[pr.property] ?? 0);
-    return total >= pr.value;
-  });
-};
-
-/**
  * The right arm only mirrors a two-handed weapon held in the left arm: it is
  * not a second weapon (its effects are cancelled by the suit rules).
  */

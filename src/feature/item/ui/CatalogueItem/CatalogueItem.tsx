@@ -3,6 +3,7 @@ import { useDraggable } from '@dnd-kit/core';
 import styles from './CatalogueItem.module.css';
 import type { Item } from '../../model/item.types';
 
+import { PrerequisiteWarning } from '@/feature/prerequisite';
 import { GripIcon } from '@/ui/Icon';
 import { StatEffects } from '@/ui/StatEffects';
 import { sumStatModifiers } from '@/utils/stats';
@@ -10,12 +11,15 @@ import { sumStatModifiers } from '@/utils/stats';
 interface CatalogueItemProps {
   item: Item;
   spotLabel: string;
+  /** False shows a red warning with the missing prerequisites. */
+  prerequisitesMet?: boolean;
   onEquip: (item: Item) => void;
 }
 
 export const CatalogueItem = ({
   item,
   spotLabel,
+  prerequisitesMet = true,
   onEquip,
 }: CatalogueItemProps) => {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
@@ -24,7 +28,11 @@ export const CatalogueItem = ({
   });
 
   return (
-    <article className={styles.item} data-dragging={isDragging}>
+    <article
+      className={styles.item}
+      data-dragging={isDragging}
+      data-prerequisites-unmet={!prerequisitesMet}
+    >
       <button
         ref={setNodeRef}
         type="button"
@@ -44,6 +52,12 @@ export const CatalogueItem = ({
         </span>
         <StatEffects effects={sumStatModifiers(item.effects ?? [])} inline />
       </button>
+      {prerequisitesMet ? null : (
+        <PrerequisiteWarning
+          prerequisites={item.prerequisites}
+          className={styles.prerequisites}
+        />
+      )}
     </article>
   );
 };

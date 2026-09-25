@@ -53,6 +53,10 @@
   box-shadow: var(--glow-primary);
 }
 
+.slot[data-prerequisites-unmet='true'] {
+  border-color: var(--status-danger);
+}
+
 .slot[data-drag-active='true'][data-drop-invalid='true'] {
   opacity: 0.38;
   filter: grayscale(1);
@@ -130,6 +134,10 @@
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 6px;
+}
+
+.actions[data-with-warning='true'] {
+  grid-template-columns: auto minmax(0, 1fr) auto;
 }
 
 /* Whole lines of effects only: the next ones are in the tooltip. */

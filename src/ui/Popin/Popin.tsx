@@ -6,7 +6,10 @@ import styles from './Popin.module.css';
 interface Props {
   content: ReactNode;
   placement?: 'top' | 'bottom' | 'left' | 'right';
+  /** Class of the trigger. */
   className?: string;
+  /** Extra class of the popup, e.g. to give it a status color. */
+  popupClassName?: string;
 }
 
 export const Popin = ({
@@ -14,6 +17,7 @@ export const Popin = ({
   children,
   placement,
   className,
+  popupClassName,
 }: PropsWithChildren<Props>) => {
   return (
     <Tooltip.Root>
@@ -26,7 +30,15 @@ export const Popin = ({
       </Tooltip.Trigger>
       <Tooltip.Portal>
         <Tooltip.Positioner sideOffset={10} side={placement}>
-          <Tooltip.Popup className={styles.content}>{content}</Tooltip.Popup>
+          <Tooltip.Popup
+            className={
+              popupClassName
+                ? `${styles.content} ${popupClassName}`
+                : styles.content
+            }
+          >
+            {content}
+          </Tooltip.Popup>
         </Tooltip.Positioner>
       </Tooltip.Portal>
     </Tooltip.Root>

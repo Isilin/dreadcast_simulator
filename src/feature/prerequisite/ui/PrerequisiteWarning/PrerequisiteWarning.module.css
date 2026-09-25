@@ -1,0 +1,48 @@
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--status-danger);
+  cursor: help;
+}
+
+.icon {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.count {
+  font: 700 10px/1.2 var(--font-data);
+  white-space: nowrap;
+}
+
+.popup {
+  max-width: 280px;
+  border: 1px solid var(--status-danger);
+  color: var(--text-primary);
+  background: color-mix(
+    in srgb,
+    var(--status-danger) 16%,
+    var(--surface-raised)
+  );
+  box-shadow: var(--elevation-1);
+}
+
+.title {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--status-danger);
+  font: 700 11px/1.2 var(--font-data);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.list {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  font: 600 12px/1.35 var(--font-data);
+  list-style: none;
+}

@@ -8,11 +8,14 @@ import type { CatalogueFilter } from '../../model/workbench.types';
 
 import type { ItemSpot } from '@/domain';
 import type { Drug } from '@/feature/drug';
-import { useImplantsEffects } from '@/feature/implant';
-import { isArmSpot, itemMatchsSpot, itemPrerequisitesMet } from '@/feature/item';
+import { isArmSpot, itemMatchsSpot } from '@/feature/item';
 import type { Item } from '@/feature/item';
 import type { Kit } from '@/feature/kit';
-import { useRaceStats } from '@/feature/profile';
+import {
+  arePrerequisitesMet,
+  usePrerequisiteContext,
+  type Prerequisite,
+} from '@/feature/prerequisite';
 
 interface UseCatalogueResultsArgs {
   allItems: Item[] | undefined;
@@ -47,8 +50,9 @@ export const useCatalogueResults = ({
   hasKitsError,
   hasDrugsError,
 }: UseCatalogueResultsArgs) => {
-  const raceStats = useRaceStats();
-  const implantsEffects = useImplantsEffects();
+  const prerequisiteContext = usePrerequisiteContext();
+  const meetsPrerequisites = (prerequisites: Prerequisite[] | undefined) =>
+    arePrerequisitesMet(prerequisites, prerequisiteContext);
   const deferredQuery = useDeferredValue(query.trim().toLocaleLowerCase());
   const matchesQuery = (name: string) =>
     name.toLocaleLowerCase().includes(deferredQuery);
@@ -60,8 +64,7 @@ export const useCatalogueResults = ({
     equipmentFilters,
     {
       isArmSpot: isArmSpot(activeSpot),
-      isEquippable: (item) =>
-        itemPrerequisitesMet(item, raceStats ?? {}, implantsEffects),
+      isEquippable: (item) => meetsPrerequisites(item.prerequisites),
     },
   );
   const visibleKits = (allKits ?? []).filter(
@@ -90,5 +93,6 @@ export const useCatalogueResults = ({
     catalogueCount,
     isCatalogueLoading,
     isCatalogueUnavailable,
+    meetsPrerequisites,
   };
 };

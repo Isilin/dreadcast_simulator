@@ -13,6 +13,11 @@ interface CatalogueModuleProps {
   image?: string;
   /** Extra content under the detail line (e.g. stat effects). */
   children?: ReactNode;
+  /**
+   * Warning shown over the top-left corner, outside the draggable button, and
+   * outlines the card in red.
+   */
+  alert?: ReactNode;
   disabled?: boolean;
   onClick: () => void;
 }
@@ -25,6 +30,7 @@ export const CatalogueModule = ({
   detail,
   image,
   children,
+  alert,
   disabled = false,
   onClick,
 }: CatalogueModuleProps) => {
@@ -35,7 +41,11 @@ export const CatalogueModule = ({
   });
 
   return (
-    <article className={styles.module} data-dragging={isDragging}>
+    <article
+      className={styles.module}
+      data-dragging={isDragging}
+      data-alert={Boolean(alert)}
+    >
       <button
         ref={setNodeRef}
         type="button"
@@ -58,6 +68,7 @@ export const CatalogueModule = ({
         <small className={styles.detail}>{detail}</small>
         {children}
       </button>
+      {alert ? <div className={styles.alert}>{alert}</div> : null}
     </article>
   );
 };

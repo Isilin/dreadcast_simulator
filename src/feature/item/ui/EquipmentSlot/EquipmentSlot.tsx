@@ -10,6 +10,10 @@ import {
 } from '../../model/item.types';
 
 import { StatValues, type ItemSpot, type StatModifier } from '@/domain';
+import {
+  PrerequisiteWarning,
+  useUnmetPrerequisites,
+} from '@/feature/prerequisite';
 import { RemoveButton } from '@/ui/RemoveButton';
 import { StatEffects } from '@/ui/StatEffects';
 
@@ -51,6 +55,8 @@ export const EquipmentSlot = ({
     draggedItem && itemMatchsSpot(draggedItem.type, spot),
   );
   const isDragActive = draggedItem !== null;
+  const hasUnmetPrerequisites =
+    useUnmetPrerequisites(item?.prerequisites).length > 0 && !isOffhand;
 
   return (
     <section
@@ -62,6 +68,7 @@ export const EquipmentSlot = ({
       data-drop-invalid={isDragActive && !isValidDrop}
       data-drag-active={isDragActive}
       data-offhand={isOffhand}
+      data-prerequisites-unmet={hasUnmetPrerequisites}
       aria-label={`Emplacement ${spotLabel}`}
     >
       <div className={styles.header}>
@@ -123,7 +130,13 @@ export const EquipmentSlot = ({
         ) : null}
       </div>
       {item && !isOffhand ? (
-        <div className={styles.actions}>
+        <div
+          className={styles.actions}
+          data-with-warning={hasUnmetPrerequisites}
+        >
+          {hasUnmetPrerequisites ? (
+            <PrerequisiteWarning prerequisites={item.prerequisites} />
+          ) : null}
           {kitControl}
           <RemoveButton label={`Retirer ${item.name}`} onClick={onRemove} />
         </div>

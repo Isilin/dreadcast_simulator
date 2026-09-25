@@ -73,6 +73,7 @@ export const CataloguePanel = ({
     catalogueCount,
     isCatalogueLoading,
     isCatalogueUnavailable,
+    meetsPrerequisites,
   } = useCatalogueResults({
     allItems,
     allKits,
@@ -120,6 +121,7 @@ export const CataloguePanel = ({
         catalogueFilter={catalogueFilter}
         isCatalogueLoading={isCatalogueLoading}
         isCatalogueUnavailable={isCatalogueUnavailable}
+        meetsPrerequisites={meetsPrerequisites}
         selectedDrugId={selectedDrugId}
         visibleDrugs={visibleDrugs}
         visibleItems={visibleItems}

@@ -8,6 +8,7 @@ import type { KitSelection } from '../../model/kit.types';
 
 import type { ItemSpot } from '@/domain';
 import type { Item } from '@/feature/item';
+import { PrerequisiteWarning } from '@/feature/prerequisite';
 import { DroppablePanel } from '@/ui/DroppablePanel';
 import { MinusIcon, PlusIcon } from '@/ui/Icon';
 import { RemoveButton } from '@/ui/RemoveButton';
@@ -83,6 +84,11 @@ export const KitRack = ({
             <li key={kit.id} className={styles.row}>
               <div className={styles.info}>
                 <span className={styles.name}>{kit.name}</span>
+                <PrerequisiteWarning
+                  prerequisites={kit.prerequisites}
+                  showCount
+                  className={styles.warning}
+                />
                 <span className={styles.tech}>
                   Tech {kit.tech}
                   {number > 1 ? ` · total ${kit.tech * number}` : ''}
