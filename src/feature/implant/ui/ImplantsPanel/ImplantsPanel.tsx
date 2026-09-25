@@ -10,6 +10,7 @@ import {
 } from '../../model/implant.store';
 import type { Implant } from '../../model/implant.types';
 import { useImplants } from '../../services';
+import { ImplantEffectsPopin } from '../ImplantEffectsPopin';
 import { THUMBS } from '../ImplantIcon/thumbs';
 
 import { useBuildReadOnlyMode } from '@/feature/persistence';
@@ -31,16 +32,22 @@ const ImplantRow = ({
   onChange,
 }: ImplantRowProps) => (
   <li className={styles.row} data-active={level > 0}>
-    <UiImage
-      src={THUMBS[implant.name]}
-      alt=""
-      decorative
-      size={28}
-      fit="contain"
-      radius={4}
-      wrapperClassName={styles.thumb}
-    />
-    <span className={styles.name}>{implant.name}</span>
+    <ImplantEffectsPopin
+      implant={implant}
+      level={level}
+      className={styles.identity}
+    >
+      <UiImage
+        src={THUMBS[implant.name]}
+        alt=""
+        decorative
+        size={28}
+        fit="contain"
+        radius={4}
+        wrapperClassName={styles.thumb}
+      />
+      <span className={styles.name}>{implant.name}</span>
+    </ImplantEffectsPopin>
     <div className={styles.stepper}>
       <button
         type="button"

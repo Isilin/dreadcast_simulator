@@ -10,6 +10,8 @@ interface Props {
   className?: string;
   /** Extra class of the popup, e.g. to give it a status color. */
   popupClassName?: string;
+  /** Lets keyboard users open the popin by focusing the trigger. */
+  focusable?: boolean;
 }
 
 export const Popin = ({
@@ -18,12 +20,18 @@ export const Popin = ({
   placement,
   className,
   popupClassName,
+  focusable = false,
 }: PropsWithChildren<Props>) => {
   return (
     <Tooltip.Root>
       <Tooltip.Trigger
         render={(props: HTMLProps<HTMLHeadingElement>) => (
-          <span {...{ ...props, className }}>{props.children}</span>
+          <span
+            {...{ ...props, className }}
+            tabIndex={focusable ? 0 : props.tabIndex}
+          >
+            {props.children}
+          </span>
         )}
       >
         {children}
