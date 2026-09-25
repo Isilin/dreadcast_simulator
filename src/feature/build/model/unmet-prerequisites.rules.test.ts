@@ -12,6 +12,7 @@ import { createEmptyStats } from '@/utils/stats';
 
 const context: PrerequisiteContext = {
   pureStats: { ...createEmptyStats(), agility: 40 },
+  race: 'Humain',
   titles: [],
   implants: implantsInitialState,
 };

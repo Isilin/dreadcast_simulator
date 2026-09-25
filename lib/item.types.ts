@@ -33,6 +33,10 @@ export interface ImplantPrerequisiteResponseDto {
   implant: { name: string } | null;
 }
 
+export interface RacePrerequisiteResponseDto {
+  race: string;
+}
+
 export interface ItemResponseDto {
   id: string;
   name: string;
@@ -60,5 +64,6 @@ export interface ItemResponseDto {
   item_prerequisite: ItemStatModifierResponseDto[];
   item_prerequisite_title: TitlePrerequisiteResponseDto[];
   item_prerequisite_implant: ImplantPrerequisiteResponseDto[];
+  item_prerequisite_race: RacePrerequisiteResponseDto[];
   item_effect: ItemStatModifierResponseDto[];
 }

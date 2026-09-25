@@ -33,6 +33,10 @@ export interface KitImplantPrerequisiteResponseDto {
   implant: { name: string } | null;
 }
 
+export interface KitRacePrerequisiteResponseDto {
+  race: string;
+}
+
 export interface KitResponseDto {
   id: string;
   name: string;
@@ -51,4 +55,5 @@ export interface KitResponseDto {
   kit_prerequisite: KitEffectResponseDto[];
   kit_prerequisite_title: KitTitlePrerequisiteResponseDto[];
   kit_prerequisite_implant: KitImplantPrerequisiteResponseDto[];
+  kit_prerequisite_race: KitRacePrerequisiteResponseDto[];
 }

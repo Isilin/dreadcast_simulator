@@ -9,11 +9,13 @@ describe('toPrerequisites', () => {
         stats: [{ property: 'medicine', value: 150 }],
         titles: [{ title_id: 'sentinelle' }],
         implants: [{ implant: { name: 'Génie' } }, { implant: null }],
+        races: [{ race: 'Gnoll' }, { race: 'Kobold' }],
       }),
     ).toEqual([
       { kind: 'stat', property: 'medicine', value: 150 },
       { kind: 'title', titleId: 'sentinelle' },
       { kind: 'implant', implant: 'Génie' },
+      { kind: 'race', races: ['Gnoll', 'Kobold'] },
     ]);
   });
 

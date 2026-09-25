@@ -8,6 +8,7 @@ export const toDomain = (dto: KitResponseDto): Kit => {
     stats: dto.kit_prerequisite,
     titles: dto.kit_prerequisite_title,
     implants: dto.kit_prerequisite_implant,
+    races: dto.kit_prerequisite_race,
   });
 
   return {

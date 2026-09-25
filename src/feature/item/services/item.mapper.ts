@@ -8,6 +8,7 @@ export const toDomain = (dto: ItemResponseDto): Item => {
     stats: dto.item_prerequisite,
     titles: dto.item_prerequisite_title,
     implants: dto.item_prerequisite_implant,
+    races: dto.item_prerequisite_race,
   });
 
   return {

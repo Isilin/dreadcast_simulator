@@ -29,6 +29,8 @@ export const isPrerequisiteMet = (
       return context.titles.includes(prerequisite.titleId);
     case 'implant':
       return (context.implants[prerequisite.implant] ?? 0) >= 1;
+    case 'race':
+      return prerequisite.races.includes(context.race);
   }
 };
 
@@ -61,6 +63,8 @@ export const formatPrerequisite = (
       return `Titre : ${titleNames[prerequisite.titleId] ?? prerequisite.titleId}`;
     case 'implant':
       return `Implant : ${prerequisite.implant} (non installé)`;
+    case 'race':
+      return `Race : ${prerequisite.races.join(' ou ')}`;
   }
 };
 
@@ -73,5 +77,7 @@ export const prerequisiteKey = (prerequisite: Prerequisite): string => {
       return `title-${prerequisite.titleId}`;
     case 'implant':
       return `implant-${prerequisite.implant}`;
+    case 'race':
+      return 'race';
   }
 };

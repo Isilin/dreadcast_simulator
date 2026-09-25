@@ -16,6 +16,7 @@ const buildContext = (
   overrides: Partial<PrerequisiteContext> = {},
 ): PrerequisiteContext => ({
   pureStats: { ...createEmptyStats(), agility: 32 },
+  race: 'Gnoll',
   titles: ['sentinelle'],
   implants: { ...implantsInitialState, Génie: 1 },
   ...overrides,
@@ -35,6 +36,11 @@ const sentinelle: Prerequisite = { kind: 'title', titleId: 'sentinelle' };
 const liberateur: Prerequisite = { kind: 'title', titleId: 'liberateur' };
 const genie: Prerequisite = { kind: 'implant', implant: 'Génie' };
 const enrage: Prerequisite = { kind: 'implant', implant: 'Enragé' };
+const gnollOrKobold: Prerequisite = {
+  kind: 'race',
+  races: ['Gnoll', 'Kobold'],
+};
+const human: Prerequisite = { kind: 'race', races: ['Humain'] };
 
 describe('computePureStats', () => {
   it('adds the race and the implants', () => {
@@ -79,6 +85,11 @@ describe('isPrerequisiteMet', () => {
     expect(isPrerequisiteMet(genie, context)).toBe(true);
     expect(isPrerequisiteMet(enrage, context)).toBe(false);
   });
+
+  it('is met by any of the races', () => {
+    expect(isPrerequisiteMet(gnollOrKobold, context)).toBe(true);
+    expect(isPrerequisiteMet(human, context)).toBe(false);
+  });
 });
 
 describe('findUnmetPrerequisites', () => {
@@ -87,10 +98,19 @@ describe('findUnmetPrerequisites', () => {
 
     expect(
       findUnmetPrerequisites(
-        [agility30, agility50, sentinelle, liberateur, genie, enrage],
+        [
+          agility30,
+          agility50,
+          sentinelle,
+          liberateur,
+          genie,
+          enrage,
+          gnollOrKobold,
+          human,
+        ],
         context,
       ),
-    ).toEqual([agility50, liberateur, enrage]);
+    ).toEqual([agility50, liberateur, enrage, human]);
   });
 
   it('meets an empty or missing list', () => {
@@ -122,6 +142,12 @@ describe('formatPrerequisite', () => {
   it('shows the missing implant', () => {
     expect(formatPrerequisite(enrage, context, {})).toBe(
       'Implant : Enragé (non installé)',
+    );
+  });
+
+  it('shows the allowed races', () => {
+    expect(formatPrerequisite(gnollOrKobold, context, {})).toBe(
+      'Race : Gnoll ou Kobold',
     );
   });
 });

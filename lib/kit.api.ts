@@ -23,6 +23,9 @@ export const KIT_SELECT_QUERY = `
     implant (
       name
     )
+  ),
+  kit_prerequisite_race (
+    race
   )
 `;
 

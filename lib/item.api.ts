@@ -30,6 +30,9 @@ export const ITEM_SELECT_QUERY = `
       name
     )
   ),
+  item_prerequisite_race (
+    race
+  ),
   item_effect (
     property,
     value

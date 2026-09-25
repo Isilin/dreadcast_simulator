@@ -4,11 +4,12 @@ import { computePureStats, findUnmetPrerequisites } from './prerequisite.rules';
 import type { Prerequisite, PrerequisiteContext } from './prerequisite.types';
 
 import { useImplantsEffects, useImplantsState } from '@/feature/implant';
-import { useRaceStats } from '@/feature/profile';
+import { useProfileState, useRaceStats } from '@/feature/profile';
 import { useTitlesState } from '@/feature/title';
 
 /** Race, implants and titles of the current build. */
 export const usePrerequisiteContext = (): PrerequisiteContext => {
+  const { race } = useProfileState();
   const raceStats = useRaceStats();
   const implantsEffects = useImplantsEffects();
   const implants = useImplantsState();
@@ -17,10 +18,11 @@ export const usePrerequisiteContext = (): PrerequisiteContext => {
   return useMemo(
     () => ({
       pureStats: computePureStats(raceStats, implantsEffects),
+      race,
       titles,
       implants,
     }),
-    [implants, implantsEffects, raceStats, titles],
+    [implants, implantsEffects, race, raceStats, titles],
   );
 };
 

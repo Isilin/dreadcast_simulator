@@ -2,6 +2,7 @@ import z from 'zod';
 
 import {
   implantPrerequisiteDtoSchema,
+  racePrerequisiteDtoSchema,
   titlePrerequisiteDtoSchema,
 } from '@/feature/prerequisite/services/prerequisite.schema';
 
@@ -63,6 +64,7 @@ export const itemResponseDtoSchema = z.object({
   // Optional: absent from API deployments older than these prerequisites.
   item_prerequisite_title: z.array(titlePrerequisiteDtoSchema).optional(),
   item_prerequisite_implant: z.array(implantPrerequisiteDtoSchema).optional(),
+  item_prerequisite_race: z.array(racePrerequisiteDtoSchema).optional(),
   item_effect: z.array(itemStatModifierSchema),
 });
 
