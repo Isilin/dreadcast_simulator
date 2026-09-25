@@ -2,10 +2,13 @@ import { describe, expect, it } from 'vitest';
 
 import {
   getEquippedSpot,
+  getItemStatBonus,
   getItemTypes,
   getOtherHand,
+  isArmSpot,
   isTwoHandedOffhand,
   itemMatchsSpot,
+  weaponFilterToItemTypes,
 } from './item.rules';
 import type { Item, ItemsState } from './item.types';
 
@@ -71,5 +74,41 @@ describe('item rules', () => {
     expect(getEquippedSpot('rightArm', { hands: 1 })).toBe('rightArm');
     expect(getEquippedSpot('leftArm', { hands: 2 })).toBe('leftArm');
     expect(getEquippedSpot('head', {})).toBe('head');
+  });
+
+  it('maps weapon filters to item types', () => {
+    expect(weaponFilterToItemTypes(null, null)).toEqual([]);
+    expect(weaponFilterToItemTypes('melee', 2)).toEqual(['2handsMelee']);
+    expect(weaponFilterToItemTypes('shot', null)).toEqual([
+      '1handShot',
+      '2handsShot',
+    ]);
+    expect(weaponFilterToItemTypes(null, 1)).toEqual([
+      '1handMelee',
+      '1handShot',
+    ]);
+  });
+
+  it('sums the positive effects on the given stats only', () => {
+    const item = {
+      effects: [
+        { property: 'perception', value: 12 },
+        { property: 'hitDamages', value: 3 },
+        { property: 'agility', value: -5 },
+        { property: 'strength', value: 8 },
+      ],
+    } satisfies Pick<Item, 'effects'>;
+
+    expect(getItemStatBonus(item, ['perception', 'hitDamages'])).toBe(15);
+    expect(getItemStatBonus(item, ['agility'])).toBe(0);
+    expect(getItemStatBonus(item, [])).toBe(0);
+    expect(getItemStatBonus({}, ['perception'])).toBe(0);
+  });
+
+  it('recognizes the arm spots', () => {
+    expect(isArmSpot('leftArm')).toBe(true);
+    expect(isArmSpot('rightArm')).toBe(true);
+    expect(isArmSpot('secondary')).toBe(false);
+    expect(isArmSpot('head')).toBe(false);
   });
 });

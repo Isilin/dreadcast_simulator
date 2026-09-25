@@ -97,6 +97,130 @@
   background: var(--action-primary-muted);
 }
 
+.equipmentFilters {
+  display: grid;
+  gap: 6px;
+}
+
+.filtersBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.filtersToggle,
+.filtersReset {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding-inline: var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--small-radius);
+  color: var(--text-secondary);
+  background: var(--surface-sunken);
+  font: 600 10px/1 var(--font-data);
+  cursor: pointer;
+}
+
+.filtersReset {
+  border-color: transparent;
+  background: transparent;
+}
+
+.filtersToggle:hover,
+.filtersReset:hover:not(:disabled) {
+  border-color: var(--action-primary);
+  color: var(--text-primary);
+}
+
+.filtersToggle[aria-expanded='true'] {
+  border-color: var(--action-primary);
+  color: var(--action-primary-strong);
+}
+
+.filtersReset:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.filtersPanel {
+  display: grid;
+  gap: var(--space-2);
+  max-height: 40dvh;
+  padding: var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--small-radius);
+  background: var(--surface-raised);
+  overflow-y: auto;
+}
+
+.filterGroup {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.filterLegend {
+  margin-bottom: 4px;
+  padding: 0;
+  color: var(--text-secondary);
+  font: 600 9px/1.2 var(--font-data);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.chip {
+  min-height: 24px;
+  padding-inline: 6px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--small-radius);
+  color: var(--text-secondary);
+  background: var(--surface-sunken);
+  font: 600 10px/1 var(--font-data);
+  cursor: pointer;
+}
+
+.chip:hover:not(:disabled) {
+  border-color: var(--action-primary);
+  color: var(--text-primary);
+}
+
+.chip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.chip[aria-pressed='true'] {
+  border-color: var(--action-primary);
+  color: var(--action-primary-strong);
+  background: var(--action-primary-muted);
+}
+
+.filtersToggle:focus-visible,
+.filtersReset:focus-visible,
+.chip:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-primary);
+  font: 500 11px/1.2 var(--font-data);
+  cursor: pointer;
+}
+
 .grid {
   display: grid;
   flex: 1;

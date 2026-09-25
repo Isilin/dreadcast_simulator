@@ -6,7 +6,6 @@ import {
   filtersToSearch,
   hasAdvancedFilters,
   parseCommunitySearch,
-  weaponFilterToItemTypes,
 } from './community-filters.rules';
 import type { CommunityFilters } from './community.types';
 import {
@@ -70,19 +69,6 @@ describe('community filters', () => {
 
   it('accepts values parsed as numbers by the router', () => {
     expect(parseCommunitySearch({ q: 1234 }).query).toBe('1234');
-  });
-
-  it('maps weapon filters to item types', () => {
-    expect(weaponFilterToItemTypes(null, null)).toEqual([]);
-    expect(weaponFilterToItemTypes('melee', 2)).toEqual(['2handsMelee']);
-    expect(weaponFilterToItemTypes('shot', null)).toEqual([
-      '1handShot',
-      '2handsShot',
-    ]);
-    expect(weaponFilterToItemTypes(null, 1)).toEqual([
-      '1handMelee',
-      '1handShot',
-    ]);
   });
 
   it('builds a query accepted by the API validation', () => {

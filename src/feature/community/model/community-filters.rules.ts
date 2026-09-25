@@ -12,7 +12,7 @@ import {
 } from './community.types';
 
 import { StatValues, type Stat } from '@/domain';
-import type { ItemType } from '@/feature/item';
+import { weaponFilterToItemTypes } from '@/feature/item';
 import { RaceTypeValues, type Gender, type RaceType } from '@/feature/profile';
 
 export const COMMUNITY_PAGE_SIZE = 24;
@@ -182,26 +182,6 @@ export const filtersToSearch = (
   return Object.fromEntries(
     Object.entries(search).filter(([, value]) => value !== undefined),
   ) as CommunityUrlSearch;
-};
-
-/**
- * Weapon kind and hands to the weapon item types to match (any of them).
- */
-export const weaponFilterToItemTypes = (
-  kind: WeaponKind | null,
-  hands: WeaponHands | null,
-): ItemType[] => {
-  if (!kind && !hands) return [];
-
-  const kinds: WeaponKind[] = kind ? [kind] : ['melee', 'shot'];
-  const handCounts: WeaponHands[] = hands ? [hands] : [1, 2];
-
-  return kinds.flatMap((weaponKind) =>
-    handCounts.map((count): ItemType => {
-      const prefix = count === 1 ? '1hand' : '2hands';
-      return `${prefix}${weaponKind === 'melee' ? 'Melee' : 'Shot'}` as ItemType;
-    }),
-  );
 };
 
 /** Filters reading the publication content: subscribers only. */

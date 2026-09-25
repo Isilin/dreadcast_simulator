@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { CatalogueFilters } from './CatalogueFilters';
 import { CatalogueGrid } from './CatalogueGrid';
 import styles from './CataloguePanel.module.css';
 import { useCatalogueResults } from './useCatalogueResults';
+import {
+  EMPTY_EQUIPMENT_FILTERS,
+  getBonusStats,
+} from '../../model/catalogue-filters.rules';
 import {
   type CatalogueFilter,
   type CatalogueTab,
@@ -58,6 +62,10 @@ export const CataloguePanel = ({
   onAddKit,
 }: CataloguePanelProps) => {
   const [query, setQuery] = useState('');
+  const [equipmentFilters, setEquipmentFilters] = useState(
+    EMPTY_EQUIPMENT_FILTERS,
+  );
+  const bonusStats = useMemo(() => getBonusStats(allItems ?? []), [allItems]);
   const {
     visibleItems,
     visibleKits,
@@ -73,6 +81,7 @@ export const CataloguePanel = ({
     activeSpot,
     catalogueFilter,
     query,
+    equipmentFilters,
     areItemsLoading,
     areKitsLoading,
     areDrugsLoading,
@@ -94,9 +103,12 @@ export const CataloguePanel = ({
 
       <CatalogueFilters
         activeSpot={activeSpot}
+        bonusStats={bonusStats}
         catalogueFilter={catalogueFilter}
+        equipmentFilters={equipmentFilters}
         items={items}
         query={query}
+        onEquipmentFiltersChange={setEquipmentFilters}
         onQueryChange={setQuery}
         onSelectCatalogueTab={onSelectCatalogueTab}
         onSelectEquipmentSpot={onSelectEquipmentSpot}
