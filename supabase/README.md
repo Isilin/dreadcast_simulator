@@ -161,6 +161,9 @@ Les seeds peuvent être exécutés après les schémas :
 
 -- MaJ v15
 018_seed_v15.sql                -- 1 arme de soin + 20 kits + ajustements v15
+
+-- Correctifs de données
+019_fix_item_images.sql          -- Images d'items manquantes (bases existantes)
 ```
 
 ## Statistiques
@@ -173,7 +176,7 @@ Les seeds peuvent être exécutés après les schémas :
 
 ### Seeds
 
-- **18 fichiers** de seeds SQL
+- **19 fichiers** de seeds SQL
 - 13 drogues + modificateurs
 - 11 races
 - 30 implants + ~200 valeurs par niveau
