@@ -95,3 +95,10 @@
 .button[data-status='over'] .value {
   color: var(--status-danger);
 }
+
+/* Very short screens, as the equipment slot. */
+@media (max-height: 800px) {
+  .button {
+    min-height: 24px;
+  }
+}

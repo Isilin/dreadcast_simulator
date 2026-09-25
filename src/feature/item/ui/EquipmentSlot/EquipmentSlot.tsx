@@ -99,6 +99,25 @@ export const EquipmentSlot = ({
             </span>
           </span>
         </button>
+        {item && isWeaponType(item.type) && !isOffhand ? (
+          <label className={styles.damageControl}>
+            <span>Dégâts</span>
+            <select
+              value={item.damageBonus ?? 0}
+              onChange={(event) =>
+                onDamageBonusChange(
+                  Number(event.target.value) as DamageBonusType,
+                )
+              }
+            >
+              {DAMAGE_BONUS_VALUES.map((bonus) => (
+                <option key={bonus} value={bonus}>
+                  +{bonus}
+                </option>
+              ))}
+            </select>
+          </label>
+        ) : null}
       </div>
       {item && !isOffhand ? kitControl : null}
       {effects.length > 0 && !isOffhand ? (
@@ -113,23 +132,6 @@ export const EquipmentSlot = ({
         >
           <StatEffects effects={effects} />
         </div>
-      ) : null}
-      {item && isWeaponType(item.type) && !isOffhand ? (
-        <label className={styles.damageControl}>
-          <span>Dégâts</span>
-          <select
-            value={item.damageBonus ?? 0}
-            onChange={(event) =>
-              onDamageBonusChange(Number(event.target.value) as DamageBonusType)
-            }
-          >
-            {DAMAGE_BONUS_VALUES.map((bonus) => (
-              <option key={bonus} value={bonus}>
-                +{bonus}
-              </option>
-            ))}
-          </select>
-        </label>
       ) : null}
     </section>
   );
