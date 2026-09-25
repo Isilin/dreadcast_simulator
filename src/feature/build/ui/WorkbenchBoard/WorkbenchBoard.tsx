@@ -19,7 +19,7 @@ import {
   EquipmentSlot,
   isTwoHandedOffhand,
 } from '@/feature/item';
-import { type KitsState } from '@/feature/kit';
+import { KitBudgetButton, type KitsState } from '@/feature/kit';
 import { Silhouette } from '@/feature/profile';
 
 interface WorkbenchBoardProps {
@@ -36,9 +36,6 @@ interface WorkbenchBoardProps {
   onDrugClear: () => void;
 }
 
-const getKitCount = (kits: KitsState, spot: ItemSpot): number =>
-  kits[spot].reduce((count, selection) => count + selection.number, 0);
-
 export const WorkbenchBoard = ({
   items,
   kitsBySpot,
@@ -54,22 +51,31 @@ export const WorkbenchBoard = ({
 }: WorkbenchBoardProps) => {
   const renderEquipmentSlot = (spot: ItemSpot) => {
     const isOffhand = isTwoHandedOffhand(items, spot);
+    const item = items[spot];
 
     return (
       <EquipmentSlot
         key={spot}
         spot={spot}
         spotLabel={workbenchSlotLabels[spot]}
-        item={items[spot]}
-        kitCount={getKitCount(kitsBySpot, spot)}
+        item={item}
+        kitControl={
+          item ? (
+            <KitBudgetButton
+              itemTech={item.tech}
+              kits={kitsBySpot[spot]}
+              spotLabel={workbenchSlotLabels[spot]}
+              onOpen={() => onKitOpen(spot)}
+            />
+          ) : null
+        }
         effects={
-          isOffhand ? [] : computeSlotEffects(items[spot], kitsBySpot[spot])
+          isOffhand ? [] : computeSlotEffects(item, kitsBySpot[spot])
         }
         isOffhand={isOffhand}
         isActive={catalogueFilter !== 'drugs' && activeSpot === spot}
         draggedItem={draggedData?.kind === 'item' ? draggedData.item : null}
         onActivate={onActivateSpot}
-        onKitOpen={onKitOpen}
         onDamageBonusChange={(bonus) => onDamageBonusChange(spot, bonus)}
       />
     );
