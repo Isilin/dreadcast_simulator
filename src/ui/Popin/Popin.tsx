@@ -37,7 +37,11 @@ export const Popin = ({
         {children}
       </Tooltip.Trigger>
       <Tooltip.Portal>
-        <Tooltip.Positioner sideOffset={10} side={placement}>
+        <Tooltip.Positioner
+          className={styles.positioner}
+          sideOffset={10}
+          side={placement}
+        >
           <Tooltip.Popup
             className={
               popupClassName
