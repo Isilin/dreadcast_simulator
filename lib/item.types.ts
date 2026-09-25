@@ -25,6 +25,14 @@ export interface ItemStatModifierResponseDto {
   value: number;
 }
 
+export interface TitlePrerequisiteResponseDto {
+  title_id: string;
+}
+
+export interface ImplantPrerequisiteResponseDto {
+  implant: { name: string } | null;
+}
+
 export interface ItemResponseDto {
   id: string;
   name: string;
@@ -50,5 +58,7 @@ export interface ItemResponseDto {
   reach: number | null;
   hits_per_round: number | null;
   item_prerequisite: ItemStatModifierResponseDto[];
+  item_prerequisite_title: TitlePrerequisiteResponseDto[];
+  item_prerequisite_implant: ImplantPrerequisiteResponseDto[];
   item_effect: ItemStatModifierResponseDto[];
 }

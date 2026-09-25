@@ -1,5 +1,8 @@
 import type { ItemResponseDto } from './item.types.ts';
 
+// The implant of a prerequisite is many-to-one: PostgREST returns an object,
+// while supabase-js (without generated DB types) infers an array. Hence the
+// `as unknown` casts in the handlers.
 export const ITEM_SELECT_QUERY = `
   id,
   name,
@@ -18,6 +21,14 @@ export const ITEM_SELECT_QUERY = `
   item_prerequisite (
     property,
     value
+  ),
+  item_prerequisite_title (
+    title_id
+  ),
+  item_prerequisite_implant (
+    implant (
+      name
+    )
   ),
   item_effect (
     property,

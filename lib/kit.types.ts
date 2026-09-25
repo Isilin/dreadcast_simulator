@@ -25,6 +25,14 @@ export interface KitEffectResponseDto {
   value: number;
 }
 
+export interface KitTitlePrerequisiteResponseDto {
+  title_id: string;
+}
+
+export interface KitImplantPrerequisiteResponseDto {
+  implant: { name: string } | null;
+}
+
 export interface KitResponseDto {
   id: string;
   name: string;
@@ -40,4 +48,7 @@ export interface KitResponseDto {
     | '1handMelee'
     | '2handsMelee';
   kit_effect: KitEffectResponseDto[];
+  kit_prerequisite: KitEffectResponseDto[];
+  kit_prerequisite_title: KitTitlePrerequisiteResponseDto[];
+  kit_prerequisite_implant: KitImplantPrerequisiteResponseDto[];
 }

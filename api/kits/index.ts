@@ -32,7 +32,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return handleSupabaseError(res, error, 'Kit not found');
       }
 
-      return sendJson(res, kit as KitResponseDto);
+      return sendJson(res, kit as unknown as KitResponseDto);
     }
 
     let kitsQuery = supabase.from('kit').select(KIT_SELECT_QUERY);
@@ -54,7 +54,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: error.message });
     }
 
-    const typedKits = (kits as KitResponseDto[]) || [];
+    const typedKits = (kits as unknown as KitResponseDto[]) || [];
 
     return sendJson(res, typedKits);
   } catch (error) {
