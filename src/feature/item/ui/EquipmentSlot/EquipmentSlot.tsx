@@ -1,4 +1,5 @@
 import { useDroppable } from '@dnd-kit/core';
+import type { ReactNode } from 'react';
 
 import styles from './EquipmentSlot.module.css';
 import { isWeaponType, itemMatchsSpot } from '../../model/item.rules';
@@ -9,14 +10,14 @@ import {
 } from '../../model/item.types';
 
 import { StatValues, type ItemSpot, type StatModifier } from '@/domain';
-import { WrenchIcon } from '@/ui/Icon';
 import { StatEffects } from '@/ui/StatEffects';
 
 interface EquipmentSlotProps {
   spot: ItemSpot;
   spotLabel: string;
   item: Item | null;
-  kitCount: number;
+  /** Kit management entry, shown under an equipped item. */
+  kitControl?: ReactNode;
   /** Cumulative effects of the item and its kits. */
   effects?: StatModifier[];
   /** Right arm mirroring a two-handed weapon: shown greyed out. */
@@ -24,7 +25,6 @@ interface EquipmentSlotProps {
   isActive: boolean;
   draggedItem: Item | null;
   onActivate: (spot: ItemSpot) => void;
-  onKitOpen: (spot: ItemSpot) => void;
   onDamageBonusChange: (bonus: DamageBonusType) => void;
 }
 
@@ -32,13 +32,12 @@ export const EquipmentSlot = ({
   spot,
   spotLabel,
   item,
-  kitCount,
+  kitControl,
   effects = [],
   isOffhand = false,
   isActive,
   draggedItem,
   onActivate,
-  onKitOpen,
   onDamageBonusChange,
 }: EquipmentSlotProps) => {
   const { setNodeRef, isOver } = useDroppable({
@@ -49,9 +48,6 @@ export const EquipmentSlot = ({
     draggedItem && itemMatchsSpot(draggedItem.type, spot),
   );
   const isDragActive = draggedItem !== null;
-  const isKitDisabled =
-    !item ||
-    (spot === 'rightArm' && item.hands !== undefined && item.hands >= 2);
 
   return (
     <section
@@ -103,26 +99,8 @@ export const EquipmentSlot = ({
             </span>
           </span>
         </button>
-        <button
-          type="button"
-          className={styles.kitButton}
-          disabled={isKitDisabled}
-          onClick={() => onKitOpen(spot)}
-          aria-label={`Gérer les kits de ${spotLabel}${kitCount ? `, ${kitCount} installé${kitCount > 1 ? 's' : ''}` : ''}`}
-          title={
-            kitCount
-              ? `${kitCount} kit${kitCount > 1 ? 's' : ''} installé${kitCount > 1 ? 's' : ''}`
-              : 'Gérer les kits'
-          }
-        >
-          <WrenchIcon />
-          {kitCount ? (
-            <span className={styles.kitCount} aria-hidden="true">
-              {kitCount}
-            </span>
-          ) : null}
-        </button>
       </div>
+      {item && !isOffhand ? kitControl : null}
       {effects.length > 0 && !isOffhand ? (
         <div
           className={styles.effects}

@@ -40,7 +40,7 @@ INSERT INTO item (id, name, image, tech, integrity, type, min_damage, max_damage
   ('435', 'Cape', '/assets/items/Overlongboard_5.webp', 360, 50, 'secondary'::item_type, NULL, NULL, NULL, NULL, NULL, NULL),
   ('436', 'Vaychette Noir', '/assets/items/Vaychette_noir.webp', 350, 40, 'secondary'::item_type, NULL, NULL, NULL, NULL, NULL, NULL),
   ('437', 'Anneau Rebelle', '/assets/items/Anneau_rebelle.webp', 0, 600, 'secondary'::item_type, NULL, NULL, NULL, NULL, NULL, NULL),
-  ('438', 'Diamant jaune', '/assets/items/', 0, 50, 'secondary'::item_type, NULL, NULL, NULL, NULL, NULL, NULL),
+  ('438', 'Diamant jaune', '/assets/items/Diamant_jaune.webp', 0, 50, 'secondary'::item_type, NULL, NULL, NULL, NULL, NULL, NULL),
   ('439', 'Anneau Or', '/assets/items/Anneau_or.webp', 0, 50, 'secondary'::item_type, NULL, NULL, NULL, NULL, NULL, NULL),
   ('440', 'Bague Emeraude', '/assets/items/Bague_emeraude.webp', 0, 50, 'secondary'::item_type, NULL, NULL, NULL, NULL, NULL, NULL),
   ('441', 'Chevalière Argent', '/assets/items/Chevaliere_argent.webp', 0, 50, 'secondary'::item_type, NULL, NULL, NULL, NULL, NULL, NULL),

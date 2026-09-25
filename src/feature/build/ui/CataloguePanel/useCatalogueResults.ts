@@ -1,12 +1,18 @@
 import { useDeferredValue } from 'react';
 
+import {
+  filterEquipment,
+  type EquipmentFilters,
+} from '../../model/catalogue-filters.rules';
 import type { CatalogueFilter } from '../../model/workbench.types';
 
 import type { ItemSpot } from '@/domain';
 import type { Drug } from '@/feature/drug';
-import { itemMatchsSpot } from '@/feature/item';
+import { useImplantsEffects } from '@/feature/implant';
+import { isArmSpot, itemMatchsSpot, itemPrerequisitesMet } from '@/feature/item';
 import type { Item } from '@/feature/item';
 import type { Kit } from '@/feature/kit';
+import { useRaceStats } from '@/feature/profile';
 
 interface UseCatalogueResultsArgs {
   allItems: Item[] | undefined;
@@ -16,6 +22,7 @@ interface UseCatalogueResultsArgs {
   activeSpot: ItemSpot;
   catalogueFilter: CatalogueFilter;
   query: string;
+  equipmentFilters: EquipmentFilters;
   areItemsLoading: boolean;
   areKitsLoading: boolean;
   areDrugsLoading: boolean;
@@ -32,6 +39,7 @@ export const useCatalogueResults = ({
   activeSpot,
   catalogueFilter,
   query,
+  equipmentFilters,
   areItemsLoading,
   areKitsLoading,
   areDrugsLoading,
@@ -39,11 +47,22 @@ export const useCatalogueResults = ({
   hasKitsError,
   hasDrugsError,
 }: UseCatalogueResultsArgs) => {
+  const raceStats = useRaceStats();
+  const implantsEffects = useImplantsEffects();
   const deferredQuery = useDeferredValue(query.trim().toLocaleLowerCase());
   const matchesQuery = (name: string) =>
     name.toLocaleLowerCase().includes(deferredQuery);
-  const visibleItems = (allItems ?? []).filter(
-    (item) => itemMatchsSpot(item.type, activeSpot) && matchesQuery(item.name),
+  const visibleItems = filterEquipment(
+    (allItems ?? []).filter(
+      (item) =>
+        itemMatchsSpot(item.type, activeSpot) && matchesQuery(item.name),
+    ),
+    equipmentFilters,
+    {
+      isArmSpot: isArmSpot(activeSpot),
+      isEquippable: (item) =>
+        itemPrerequisitesMet(item, raceStats ?? {}, implantsEffects),
+    },
   );
   const visibleKits = (allKits ?? []).filter(
     (kit) => kit.type === activeItem?.type && matchesQuery(kit.name),

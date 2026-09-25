@@ -10,7 +10,7 @@
 
 .header {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
   align-items: stretch;
   gap: 6px;
   min-height: 0;
@@ -32,53 +32,6 @@
 .control:focus-visible {
   outline: 1px solid var(--action-primary);
   outline-offset: 3px;
-}
-
-.kitButton {
-  position: relative;
-  display: grid;
-  width: 36px;
-  min-width: 36px;
-  height: 36px;
-  min-height: 36px;
-  place-items: center;
-  padding: 0;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--small-radius);
-  color: var(--action-primary-strong);
-  background: var(--surface-raised);
-  font: 600 9px/1 var(--font-data);
-}
-
-.kitCount {
-  position: absolute;
-  right: -6px;
-  bottom: -6px;
-  min-width: 16px;
-  height: 16px;
-  padding: 0 3px;
-  border-radius: 8px;
-  color: var(--canvas);
-  background: var(--action-primary);
-  font: 700 9px/16px var(--font-data);
-  text-align: center;
-}
-
-.kitButton svg {
-  width: 16px;
-  height: 16px;
-  pointer-events: none;
-}
-
-.kitButton:hover:not(:disabled),
-.kitButton:focus-visible {
-  border-color: var(--action-primary);
-  background: var(--action-primary-muted);
-}
-
-.kitButton:disabled {
-  color: var(--text-muted);
-  background: var(--surface-sunken);
 }
 
 .slot[data-active='true'] {

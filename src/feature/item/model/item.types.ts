@@ -13,6 +13,17 @@ export const ItemTypeValues = [
 ] as const;
 export type ItemType = (typeof ItemTypeValues)[number];
 
+export const WeaponKindValues = ['melee', 'shot'] as const;
+export type WeaponKind = (typeof WeaponKindValues)[number];
+
+export const WEAPON_KIND_LABELS: Record<WeaponKind, string> = {
+  melee: 'Corps à corps',
+  shot: 'Tir',
+};
+
+export const WeaponHandsValues = [1, 2] as const;
+export type WeaponHands = (typeof WeaponHandsValues)[number];
+
 export const DAMAGE_BONUS_VALUES = [0, 1, 2, 3, 4, 5] as const;
 export type DamageBonusType = (typeof DAMAGE_BONUS_VALUES)[number];
 

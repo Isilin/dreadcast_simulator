@@ -5,7 +5,8 @@
 .select {
   position: relative;
   display: grid;
-  grid-template-rows: 72px auto auto;
+  grid-template-rows: 72px auto auto auto;
+  align-content: start;
   gap: 5px;
   width: 100%;
   min-width: 0;

@@ -1,32 +1,20 @@
-import type { Stat } from '@/domain';
-import type { ItemType } from '@/feature/item';
+import type { Specialization, Stat } from '@/domain';
+import type { ItemType, WeaponHands, WeaponKind } from '@/feature/item';
 import type { BuildSnapshot } from '@/feature/persistence';
 import type { Gender, RaceType } from '@/feature/profile';
 
-export const SpecializationValues = [
-  'medecin',
-  'informaticien',
-  'ingenieur',
-  'combattant_cac',
-  'tireur',
-  'furtif',
-  'tank',
-  'soutien',
-  'polyvalent',
-] as const;
-export type Specialization = (typeof SpecializationValues)[number];
-
-export const SPECIALIZATION_LABELS: Record<Specialization, string> = {
-  medecin: 'Médecin',
-  informaticien: 'Informaticien',
-  ingenieur: 'Ingénieur',
-  combattant_cac: 'Combattant CaC',
-  tireur: 'Tireur',
-  furtif: 'Furtif',
-  tank: 'Tank',
-  soutien: 'Soutien',
-  polyvalent: 'Polyvalent',
-};
+export {
+  SPECIALIZATION_LABELS,
+  SpecializationValues,
+  type Specialization,
+} from '@/domain';
+export {
+  WEAPON_KIND_LABELS,
+  WeaponHandsValues,
+  WeaponKindValues,
+  type WeaponHands,
+  type WeaponKind,
+} from '@/feature/item';
 
 export const CommunitySortValues = [
   'trending',
@@ -44,17 +32,6 @@ export const COMMUNITY_SORT_LABELS: Record<CommunitySort, string> = {
   most_reviewed: "Plus d'avis",
   updated: 'Mis à jour',
 };
-
-export const WeaponKindValues = ['melee', 'shot'] as const;
-export type WeaponKind = (typeof WeaponKindValues)[number];
-
-export const WEAPON_KIND_LABELS: Record<WeaponKind, string> = {
-  melee: 'Corps à corps',
-  shot: 'Tir',
-};
-
-export const WeaponHandsValues = [1, 2] as const;
-export type WeaponHands = (typeof WeaponHandsValues)[number];
 
 /** '*' = every game version. */
 export const ALL_GAME_VERSIONS = '*';

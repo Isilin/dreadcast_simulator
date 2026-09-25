@@ -1,4 +1,6 @@
 import styles from './CataloguePanel.module.css';
+import { EquipmentFiltersPanel } from './EquipmentFiltersPanel';
+import type { EquipmentFilters } from '../../model/catalogue-filters.rules';
 import {
   type CatalogueFilter,
   type CatalogueTab,
@@ -7,14 +9,17 @@ import {
 } from '../../model/workbench.types';
 import { ModeTab } from '../ModeTab';
 
-import { ItemSpotValue, type ItemSpot } from '@/domain';
-import type { ItemsState } from '@/feature/item';
+import { ItemSpotValue, type ItemSpot, type Stat } from '@/domain';
+import { isArmSpot, type ItemsState } from '@/feature/item';
 
 interface CatalogueFiltersProps {
   activeSpot: ItemSpot;
+  bonusStats: Stat[];
   catalogueFilter: CatalogueFilter;
+  equipmentFilters: EquipmentFilters;
   items: ItemsState;
   query: string;
+  onEquipmentFiltersChange: (filters: EquipmentFilters) => void;
   onQueryChange: (query: string) => void;
   onSelectCatalogueTab: (tab: CatalogueTab) => void;
   onSelectEquipmentSpot: (spot: ItemSpot) => void;
@@ -28,9 +33,12 @@ const searchLabels: Record<CatalogueFilter, string> = {
 
 export const CatalogueFilters = ({
   activeSpot,
+  bonusStats,
   catalogueFilter,
+  equipmentFilters,
   items,
   query,
+  onEquipmentFiltersChange,
   onQueryChange,
   onSelectCatalogueTab,
   onSelectEquipmentSpot,
@@ -86,20 +94,28 @@ export const CatalogueFilters = ({
       ) : null}
 
       {activeTab === 'equipment' && !isKitView ? (
-        <div className={styles.slotFilters} aria-label="Filtre d'équipement">
-          {ItemSpotValue.map((itemSpot) => (
-            <button
-              key={itemSpot}
-              type="button"
-              className={styles.slotFilter}
-              data-active={activeSpot === itemSpot}
-              onClick={() => onSelectEquipmentSpot(itemSpot)}
-            >
-              {workbenchSlotLabels[itemSpot]}
-              {items[itemSpot] ? <span aria-hidden="true">•</span> : null}
-            </button>
-          ))}
-        </div>
+        <>
+          <div className={styles.slotFilters} aria-label="Filtre d'équipement">
+            {ItemSpotValue.map((itemSpot) => (
+              <button
+                key={itemSpot}
+                type="button"
+                className={styles.slotFilter}
+                data-active={activeSpot === itemSpot}
+                onClick={() => onSelectEquipmentSpot(itemSpot)}
+              >
+                {workbenchSlotLabels[itemSpot]}
+                {items[itemSpot] ? <span aria-hidden="true">•</span> : null}
+              </button>
+            ))}
+          </div>
+          <EquipmentFiltersPanel
+            bonusStats={bonusStats}
+            filters={equipmentFilters}
+            isArmSpot={isArmSpot(activeSpot)}
+            onChange={onEquipmentFiltersChange}
+          />
+        </>
       ) : null}
     </div>
   );

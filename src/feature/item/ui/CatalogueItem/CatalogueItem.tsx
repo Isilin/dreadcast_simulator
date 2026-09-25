@@ -4,6 +4,8 @@ import styles from './CatalogueItem.module.css';
 import type { Item } from '../../model/item.types';
 
 import { GripIcon } from '@/ui/Icon';
+import { StatEffects } from '@/ui/StatEffects';
+import { sumStatModifiers } from '@/utils/stats';
 
 interface CatalogueItemProps {
   item: Item;
@@ -40,6 +42,7 @@ export const CatalogueItem = ({
         <span className={styles.meta}>
           Tech {item.tech} · Intégrité {item.integrity}
         </span>
+        <StatEffects effects={sumStatModifiers(item.effects ?? [])} inline />
       </button>
     </article>
   );
