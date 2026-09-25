@@ -108,4 +108,4 @@ INSERT INTO kit_effect (kit_id, property, value) VALUES
   ('229', 'stealth'::stat_property, -5),
   ('230', 'robustness'::stat_property, 13),
   ('231', 'computing'::stat_property, 4)
-ON CONFLICT DO NOTHING;
+ON CONFLICT (kit_id, property) DO NOTHING;

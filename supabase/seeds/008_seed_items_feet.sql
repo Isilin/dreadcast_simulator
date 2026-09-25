@@ -49,7 +49,7 @@ INSERT INTO item_prerequisite (item_id, property, value) VALUES
   ('326', 'agility'::stat_property, 1),
   ('327', 'agility'::stat_property, 1),
   ('328', 'agility'::stat_property, 1)
-ON CONFLICT DO NOTHING;
+ON CONFLICT (item_id, property) DO NOTHING;
 
 -- Insertion des effets
 INSERT INTO item_effect (item_id, property, value) VALUES
@@ -116,4 +116,4 @@ INSERT INTO item_effect (item_id, property, value) VALUES
   ('329', 'engineering'::stat_property, 8),
   ('329', 'speed'::stat_property, 1),
   ('330', 'speed'::stat_property, 1)
-ON CONFLICT DO NOTHING;
+ON CONFLICT (item_id, property) DO NOTHING;

@@ -94,4 +94,4 @@ INSERT INTO kit_effect (kit_id, property, value) VALUES
   ('537', 'agility'::stat_property, -5),
   ('537', 'perception'::stat_property, 8),
   ('539', 'perception'::stat_property, -10)
-ON CONFLICT DO NOTHING;
+ON CONFLICT (kit_id, property) DO NOTHING;
