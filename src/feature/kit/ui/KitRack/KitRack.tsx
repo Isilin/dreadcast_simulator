@@ -9,7 +9,8 @@ import type { KitSelection } from '../../model/kit.types';
 import type { ItemSpot } from '@/domain';
 import type { Item } from '@/feature/item';
 import { DroppablePanel } from '@/ui/DroppablePanel';
-import { MinusIcon, PlusIcon, TrashIcon } from '@/ui/Icon';
+import { MinusIcon, PlusIcon } from '@/ui/Icon';
+import { RemoveButton } from '@/ui/RemoveButton';
 import { StatEffects } from '@/ui/StatEffects';
 import { statRecordToModifiers } from '@/utils/stats';
 
@@ -111,15 +112,11 @@ export const KitRack = ({
                 >
                   <PlusIcon />
                 </button>
-                <button
-                  type="button"
+                <RemoveButton
                   className={styles.remove}
+                  label={`Supprimer ${kit.name}`}
                   onClick={() => onDelete(index)}
-                  aria-label={`Supprimer ${kit.name}`}
-                  title={`Supprimer ${kit.name}`}
-                >
-                  <TrashIcon />
-                </button>
+                />
               </div>
             </li>
           ))}

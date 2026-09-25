@@ -12,6 +12,7 @@ export * from './IconButton';
 export * from './Modal';
 export * from './Popin';
 export * from './DroppablePanel';
+export * from './RemoveButton';
 export * from './Sidebar';
 export * from './SlotPair';
 export * from './Spinner';
