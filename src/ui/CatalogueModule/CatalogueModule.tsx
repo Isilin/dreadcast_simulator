@@ -9,6 +9,8 @@ interface CatalogueModuleProps {
   dragData: Data;
   name: string;
   detail: string;
+  /** Visual shown above the name. */
+  image?: string;
   /** Extra content under the detail line (e.g. stat effects). */
   children?: ReactNode;
   disabled?: boolean;
@@ -21,6 +23,7 @@ export const CatalogueModule = ({
   dragData,
   name,
   detail,
+  image,
   children,
   disabled = false,
   onClick,
@@ -37,6 +40,7 @@ export const CatalogueModule = ({
         ref={setNodeRef}
         type="button"
         className={styles.select}
+        data-with-visual={Boolean(image)}
         onClick={onClick}
         disabled={disabled}
         {...attributes}
@@ -47,6 +51,9 @@ export const CatalogueModule = ({
             <GripIcon />
           </span>
         )}
+        {image ? (
+          <img className={styles.visual} src={image} alt="" loading="lazy" />
+        ) : null}
         <span className={styles.name}>{name}</span>
         <small className={styles.detail}>{detail}</small>
         {children}

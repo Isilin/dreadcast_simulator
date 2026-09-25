@@ -3,7 +3,9 @@ import { useDroppable } from '@dnd-kit/core';
 import styles from './DrugEquipmentSlot.module.css';
 import type { Drug } from '../../model/drug.types';
 
-import { TrashIcon } from '@/ui/Icon';
+import { StatValues } from '@/domain';
+import { RemoveButton } from '@/ui/RemoveButton';
+import { StatEffects } from '@/ui/StatEffects';
 
 interface DraggedData {
   kind: string;
@@ -43,30 +45,51 @@ export const DrugEquipmentSlot = ({
       data-drag-active={isDragActive}
       aria-label="Emplacement drogue"
     >
-      <button
-        type="button"
-        className={styles.control}
-        onClick={onActivate}
-        aria-label="Sélectionner l’emplacement drogue"
-        aria-pressed={isActive}
-      >
-        <span className={styles.name}>Drogue</span>
-        <span className={styles.summary} data-empty={!drug}>
-          <strong>{drug?.name ?? 'Aucune drogue active'}</strong>
-          <span>{drug ? 'Substance active' : 'Déposez une drogue'}</span>
-          <small>1 emplacement</small>
-        </span>
-      </button>
-      {drug ? (
+      <div className={styles.header}>
         <button
           type="button"
-          className={styles.remove}
-          onClick={onClear}
-          aria-label={`Désactiver ${drug.name}`}
-          title={`Désactiver ${drug.name}`}
+          className={styles.control}
+          onClick={onActivate}
+          aria-label="Sélectionner l’emplacement drogue"
+          aria-pressed={isActive}
         >
-          <TrashIcon />
+          <span className={styles.name}>Drogue</span>
+          <span className={styles.summary} data-empty={!drug}>
+            {drug ? (
+              <img
+                className={styles.visual}
+                src={drug.image}
+                alt=""
+                loading="lazy"
+              />
+            ) : null}
+            <span className={styles.details}>
+              <strong>{drug?.name ?? 'Aucune drogue active'}</strong>
+              <span>{drug ? 'Substance active' : 'Déposez une drogue'}</span>
+              <small>1 emplacement</small>
+            </span>
+          </span>
         </button>
+        {drug ? (
+          <RemoveButton
+            className={styles.remove}
+            label={`Désactiver ${drug.name}`}
+            onClick={onClear}
+          />
+        ) : null}
+      </div>
+      {drug && drug.sideEffects.length > 0 ? (
+        <div
+          className={styles.effects}
+          title={`Effets de la drogue : ${drug.sideEffects
+            .map(
+              ({ property, value }) =>
+                `${StatValues[property].tag} ${value > 0 ? '+' : ''}${value}`,
+            )
+            .join(', ')}`}
+        >
+          <StatEffects effects={drug.sideEffects} />
+        </div>
       ) : null}
     </section>
   );

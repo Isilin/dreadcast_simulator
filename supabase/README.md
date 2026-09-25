@@ -78,6 +78,9 @@ Les schémas doivent être exécutés dans l'ordre pour respecter les dépendanc
 
 -- Integrite
 034_unique_stat_modifiers.sql    -- Dedoublonne effets/prerequis/modificateurs + UNIQUE (<owner>_id, property)
+
+-- Builds
+035_build_delete_policy.sql      -- Suppression d'un build par son proprietaire
 ```
 
 ### Procedure d'application en production

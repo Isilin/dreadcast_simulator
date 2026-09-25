@@ -46,7 +46,15 @@ export const useItemStore = create<ItemStore>((set) => ({
     });
   },
   resetItem: (spot) => {
-    set((s) => ({ items: { ...s.items, [spot]: null } }));
+    set((s) => {
+      // A two-handed weapon also leaves the other arm.
+      const other = getOtherHand(spot, s.items[spot]?.hands);
+      return {
+        items: other
+          ? { ...s.items, [spot]: null, [other]: null }
+          : { ...s.items, [spot]: null },
+      };
+    });
   },
   replaceItems: (items) => set({ items }),
   setDamageBonus: (spot, bonus) => {

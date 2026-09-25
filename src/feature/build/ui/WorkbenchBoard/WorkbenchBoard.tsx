@@ -32,6 +32,7 @@ interface WorkbenchBoardProps {
   onActivateSpot: (spot: ItemSpot) => void;
   onKitOpen: (spot: ItemSpot) => void;
   onDamageBonusChange: (spot: ItemSpot, bonus: DamageBonusType) => void;
+  onItemRemove: (spot: ItemSpot) => void;
   onDrugActivate: () => void;
   onDrugClear: () => void;
 }
@@ -46,6 +47,7 @@ export const WorkbenchBoard = ({
   onActivateSpot,
   onKitOpen,
   onDamageBonusChange,
+  onItemRemove,
   onDrugActivate,
   onDrugClear,
 }: WorkbenchBoardProps) => {
@@ -77,6 +79,7 @@ export const WorkbenchBoard = ({
         draggedItem={draggedData?.kind === 'item' ? draggedData.item : null}
         onActivate={onActivateSpot}
         onDamageBonusChange={(bonus) => onDamageBonusChange(spot, bonus)}
+        onRemove={() => onItemRemove(spot)}
       />
     );
   };

@@ -119,8 +119,7 @@
   gap: 4px;
 }
 
-.step,
-.remove {
+.step {
   display: grid;
   width: 26px;
   height: 26px;
@@ -161,24 +160,9 @@
 
 .remove {
   margin-left: 4px;
-  border: 1px solid color-mix(in srgb, var(--status-danger) 45%, transparent);
-  color: var(--status-danger);
-  background: color-mix(in srgb, var(--status-danger) 8%, transparent);
 }
 
-.remove svg {
-  width: 15px;
-  height: 15px;
-}
-
-.remove:hover,
-.remove:focus-visible {
-  border-color: var(--status-danger);
-  background: color-mix(in srgb, var(--status-danger) 18%, transparent);
-}
-
-.step:focus-visible,
-.remove:focus-visible {
+.step:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 1px;
 }

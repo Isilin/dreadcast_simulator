@@ -87,6 +87,25 @@ const sendUpsertRemoteBuild = async ({
   };
 };
 
+/**
+ * Deletes the build of a slot: the next slots move up. A build missing on the
+ * server (never saved) counts as deleted.
+ */
+export const deleteRemoteBuild = async (slot: string): Promise<void> => {
+  // A save still in flight would recreate the build after its deletion.
+  await waitForPendingBuildSaves();
+
+  const headers = await getAuthHeaders();
+  const response = await fetch(`/api/builds?slot=${encodeURIComponent(slot)}`, {
+    method: 'DELETE',
+    headers,
+  });
+
+  if (!response.ok && response.status !== 404) {
+    throw new Error('Impossible de supprimer le build distant.');
+  }
+};
+
 export const upsertRemoteBuild = (
   params: UpsertRemoteBuildParams,
 ): Promise<BuildSnapshot> => {

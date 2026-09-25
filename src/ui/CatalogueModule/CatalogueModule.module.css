@@ -42,6 +42,17 @@
   cursor: not-allowed;
 }
 
+/* The grip sits over the visual: the text no longer needs room for it. */
+.select[data-with-visual='true'] {
+  padding-right: var(--space-2);
+}
+
+.visual {
+  width: 100%;
+  height: 72px;
+  object-fit: contain;
+}
+
 .name {
   font: 600 11px/1.2 var(--font-data);
 }

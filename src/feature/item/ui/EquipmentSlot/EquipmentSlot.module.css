@@ -1,25 +1,29 @@
+/* The item card keeps its height: the effects give way first. */
 .slot {
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-  justify-items: stretch;
+  display: flex;
+  flex-direction: column;
   gap: 6px;
   min-height: 0;
   padding: var(--space-2);
+  overflow: hidden;
   border: 1px solid transparent;
 }
 
+/* The damage control of a weapon opens a column beside the item card. */
 .header {
   display: grid;
+  flex: 1 0 auto;
+  grid-template-rows: auto minmax(0, 1fr);
   grid-template-columns: minmax(0, 1fr);
+  grid-auto-columns: auto;
   align-items: stretch;
   gap: 6px;
-  min-height: 0;
 }
 
 .control {
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  gap: 6px;
+  grid-row: 1 / -1;
+  grid-template-rows: subgrid;
   min-height: 0;
   width: 100%;
   padding: 0;
@@ -77,18 +81,7 @@
   text-transform: uppercase;
 }
 
-.slot[data-active='true'] .slot[data-offhand='true'] .summary {
-  border-style: dashed;
-  filter: grayscale(1);
-  opacity: 0.45;
-}
-
-.slot[data-offhand='true'] .name::after {
-  content: ' · seconde main';
-  text-transform: none;
-}
-
-.name {
+.slot[data-active='true'] .name {
   color: var(--action-primary-strong);
 }
 
@@ -129,9 +122,22 @@
   white-space: nowrap;
 }
 
+/* Kit entry and remove button, at the height of the kit entry. */
+.actions {
+  --remove-button-size: 28px;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Whole lines of effects only: the next ones are in the tooltip. */
 .effects {
-  max-height: 38px;
+  flex: 0 1 auto;
   min-width: 0;
+  min-height: 0;
+  max-height: 16px;
   overflow: hidden;
 }
 
@@ -147,11 +153,18 @@
 }
 
 .damageControl {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
+  grid-row: 2;
+  grid-column: 2;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 4px;
+  min-height: 0;
+  padding: 0 6px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
+  background: var(--surface-sunken);
   font: 600 10px/1 var(--font-data);
 }
 
@@ -164,14 +177,21 @@
   font: 600 10px/1 var(--font-data);
 }
 
-/* Short screens: one line of effects and a smaller visual. */
-@media (max-height: 820px) {
+/* Tall screens: room for a second line of effects. */
+@media (min-height: 980px) {
+  .effects {
+    max-height: 35px;
+  }
+}
+
+/* Short screens: tighter spacing and a smaller visual. */
+@media (max-height: 900px) {
   .slot {
     gap: 4px;
     padding: 6px;
   }
 
-  .control {
+  .header {
     gap: 4px;
   }
 
@@ -183,8 +203,39 @@
     width: 32px;
     height: 32px;
   }
+}
 
+/* Very short screens: the card keeps the item name, the kit entry still
+   shows its tech. */
+@media (max-height: 800px) {
+  .summary {
+    padding: 4px 6px;
+  }
+
+  .visual {
+    width: 24px;
+    height: 24px;
+  }
+
+  .details > span {
+    display: none;
+  }
+
+  .damageControl {
+    gap: 2px;
+  }
+
+  .damageControl select {
+    min-height: 20px;
+  }
+
+  .actions {
+    --remove-button-size: 24px;
+  }
+}
+
+@media (max-height: 740px) {
   .effects {
-    max-height: 36px;
+    display: none;
   }
 }

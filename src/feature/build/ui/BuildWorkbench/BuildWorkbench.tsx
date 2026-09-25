@@ -65,10 +65,10 @@ export const BuildWorkbench = ({ initialSlot }: BuildWorkbenchProps = {}) => {
   const persistence = useBuildPersistence({ allItems, allKits, initialSlot });
 
   const items = useItemsState();
-  const { setDamageBonus, setItem } = useItemsActions();
+  const { resetItem, setDamageBonus, setItem } = useItemsActions();
   const { kits } = useKitsOnSpot(activeSpot);
   const kitsBySpot = useKitsState();
-  const { addKit, deleteKit, setKitNumber } = useKitsActions();
+  const { addKit, deleteKit, resetKits, setKitNumber } = useKitsActions();
   const selectedDrugId = useDrugId();
   const { setDrug } = useDrugActions();
   const selectedDrug = selectedDrugId
@@ -97,6 +97,11 @@ export const BuildWorkbench = ({ initialSlot }: BuildWorkbenchProps = {}) => {
   const equipItem = (item: Item) => {
     setItem(activeSpot, item);
     setActiveSpot(getEquippedSpot(activeSpot, item));
+  };
+
+  const removeItem = (spot: ItemSpot) => {
+    resetItem(spot);
+    resetKits(spot);
   };
 
   const activateDrug = (drug: Drug) => {
@@ -180,6 +185,7 @@ export const BuildWorkbench = ({ initialSlot }: BuildWorkbenchProps = {}) => {
           onDamageBonusChange={(spot: ItemSpot, bonus: DamageBonusType) =>
             setDamageBonus(spot, bonus)
           }
+          onItemRemove={removeItem}
           onKitIncrease={(index: number) => changeKitNumber(index, 1)}
           onKitDecrease={(index: number) => changeKitNumber(index, -1)}
           onKitDelete={(index: number) => deleteKit(activeSpot, index)}

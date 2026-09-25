@@ -18,6 +18,10 @@ const upsertBuildSchema = z.object({
   snapshot: z.record(z.string(), z.unknown()),
 });
 
+const deleteBuildSchema = z.object({
+  slot: z.coerce.number().int().min(1),
+});
+
 interface BuildRow {
   id: string;
   user_id: string;
@@ -54,7 +58,7 @@ const fetchOrderedBuilds = async (
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== 'GET' && req.method !== 'PUT') {
+  if (req.method !== 'GET' && req.method !== 'PUT' && req.method !== 'DELETE') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
@@ -84,6 +88,45 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res
         .status(200)
         .json(data.map((row, index) => toResponseDto(row, index + 1)));
+    }
+
+    if (req.method === 'DELETE') {
+      const parsedQuery = deleteBuildSchema.safeParse(req.query);
+      if (!parsedQuery.success) {
+        return res.status(400).json({ error: 'Slot de build invalide.' });
+      }
+
+      const { data: orderedBuilds, error: orderedBuildsError } =
+        await fetchOrderedBuilds(supabase, userId);
+
+      if (orderedBuildsError) {
+        return res.status(500).json({ error: orderedBuildsError.message });
+      }
+
+      // The next slots move up: they follow the creation order.
+      const targetBuild = orderedBuilds[parsedQuery.data.slot - 1];
+      if (!targetBuild) {
+        return res.status(404).json({ error: 'Build introuvable.' });
+      }
+
+      const { data, error } = await supabase
+        .from('build')
+        .delete()
+        .eq('id', targetBuild.id)
+        .eq('user_id', userId)
+        .select('id');
+
+      if (error) {
+        return res.status(500).json({ error: error.message });
+      }
+
+      // Row level security skips the row silently when deletion is refused.
+      if (!data || data.length === 0) {
+        return res.status(403).json({ error: 'Suppression du build refusée.' });
+      }
+
+      setNoStoreHeaders(res);
+      return res.status(204).end();
     }
 
     const parsedPayload = upsertBuildSchema.safeParse(req.body);

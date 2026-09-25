@@ -1,0 +1,35 @@
+/* The parent may resize it through --remove-button-size. */
+.button {
+  display: grid;
+  flex: none;
+  width: var(--remove-button-size, 26px);
+  height: var(--remove-button-size, 26px);
+  padding: 0;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--status-danger) 45%, transparent);
+  border-radius: var(--small-radius);
+  color: var(--status-danger);
+  background: color-mix(in srgb, var(--status-danger) 8%, transparent);
+  cursor: pointer;
+}
+
+.button svg {
+  width: 15px;
+  height: 15px;
+}
+
+.button:hover:not(:disabled),
+.button:focus-visible {
+  border-color: var(--status-danger);
+  background: color-mix(in srgb, var(--status-danger) 18%, transparent);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

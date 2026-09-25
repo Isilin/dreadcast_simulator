@@ -8,6 +8,7 @@ import { createSharedBuildLink, getDefaultBuildName } from '../../services';
 import { Modal } from '@/ui';
 import { CheckIcon, CopyIcon, ShareIcon } from '@/ui/Icon';
 import { IconButton } from '@/ui/IconButton';
+import { RemoveButton } from '@/ui/RemoveButton';
 
 interface BuildNameEditorProps {
   persistence: BuildPersistenceState;
@@ -19,6 +20,7 @@ export const BuildNameEditor = ({ persistence }: BuildNameEditorProps) => {
     builds,
     getBuildName,
     setActiveBuildName,
+    deleteActiveBuild,
     storageMode,
     hasUnlimitedSlots,
   } = persistence;
@@ -30,6 +32,9 @@ export const BuildNameEditor = ({ persistence }: BuildNameEditorProps) => {
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>(
     'idle',
   );
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
   const copyTimer = useRef<number | undefined>(undefined);
   const shareLinkRef = useRef<HTMLAnchorElement>(null);
 
@@ -66,6 +71,20 @@ export const BuildNameEditor = ({ persistence }: BuildNameEditorProps) => {
       setSharePath(null);
     } finally {
       setIsSharing(false);
+    }
+  };
+
+  const handleDeleteBuild = async () => {
+    setIsDeleting(true);
+    setDeleteError(null);
+
+    try {
+      await deleteActiveBuild();
+      setIsDeleteDialogOpen(false);
+    } catch {
+      setDeleteError('Impossible de supprimer ce build. Réessayez plus tard.');
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -136,7 +155,54 @@ export const BuildNameEditor = ({ persistence }: BuildNameEditorProps) => {
             onClick={() => void handleShareBuild()}
           />
         ) : null}
+
+        <RemoveButton
+          label="Supprimer ce build"
+          disabled={!builds[active]}
+          onClick={() => {
+            setDeleteError(null);
+            setIsDeleteDialogOpen(true);
+          }}
+        />
       </div>
+
+      <Dialog.Root
+        open={isDeleteDialogOpen}
+        onOpenChange={(open) => {
+          if (!isDeleting) setIsDeleteDialogOpen(open);
+        }}
+      >
+        <Modal>
+          <Modal.Header>
+            <Modal.Title>Supprimer le build</Modal.Title>
+          </Modal.Header>
+          <Modal.Content>
+            <div className={styles.deletePanel}>
+              <p>« {getBuildName(active)} » sera supprimé définitivement.</p>
+              {storageMode === 'remote' ? (
+                <p>
+                  Les builds suivants remontent d’un rang. Ses liens de partage
+                  ne fonctionneront plus ; s’il est publié dans la Communauté,
+                  la publication reste en ligne mais ne pourra plus être mise à
+                  jour.
+                </p>
+              ) : null}
+              {deleteError ? <p role="alert">{deleteError}</p> : null}
+            </div>
+          </Modal.Content>
+          <Modal.Footer>
+            <Modal.Close />
+            <button
+              type="button"
+              className={styles.confirmDelete}
+              disabled={isDeleting}
+              onClick={() => void handleDeleteBuild()}
+            >
+              {isDeleting ? 'Suppression…' : 'Supprimer'}
+            </button>
+          </Modal.Footer>
+        </Modal>
+      </Dialog.Root>
 
       <Dialog.Root
         open={isShareDialogOpen}
