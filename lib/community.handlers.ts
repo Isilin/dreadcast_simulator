@@ -9,6 +9,7 @@ import {
   sendCommunityError,
   sendDbError,
   toSummaryDto,
+  type CommunityPreviewRow,
 } from './community.api.js';
 import type {
   CommunityBuildDetailDto,
@@ -357,6 +358,43 @@ const handleDetail = async (
           row.content_updated_at,
         )
       : null,
+  };
+
+  return sendOk(res, 200, payload);
+};
+
+/**
+ * GET /api/community/builds/:id without a session: a shared link opens the
+ * locked preview, as for a signed-in non-subscriber.
+ */
+const handleGuestDetail = async (id: string, res: VercelResponse) => {
+  if (!idSchema.safeParse(id).success) {
+    return sendCommunityError(res, 'INVALID_ID');
+  }
+
+  const { data, error } = await doCreateClient()
+    .rpc('community_get_preview', { p_id: id })
+    .maybeSingle();
+
+  if (error) {
+    return sendDbError(res, error);
+  }
+
+  if (!data) {
+    return sendCommunityError(res, 'PUBLICATION_NOT_FOUND');
+  }
+
+  const payload: CommunityBuildDetailDto = {
+    summary: toSummaryDto({
+      ...(data as CommunityPreviewRow),
+      stats: null,
+      is_mine: false,
+      is_favorite: false,
+    }),
+    content: null,
+    locked: true,
+    is_subscriber: false,
+    my_review: null,
   };
 
   return sendOk(res, 200, payload);
@@ -919,6 +957,16 @@ export const routeCommunityRequest = async (
 ) => {
   if (route.resource === 'meta') {
     return handleMeta(req, res);
+  }
+
+  if (
+    route.resource === 'builds' &&
+    route.id &&
+    !route.action &&
+    req.method === 'GET' &&
+    !req.headers.authorization
+  ) {
+    return handleGuestDetail(route.id, res);
   }
 
   const context = await requireAuthenticatedUser(req, res);

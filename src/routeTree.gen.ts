@@ -13,7 +13,6 @@ import { Route as SubscriptionRouteImport } from './routes/subscription'
 import { Route as ConnectionRouteImport } from './routes/connection'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CommunauteIndexRouteImport } from './routes/communaute.index'
-import { Route as SharedIdRouteImport } from './routes/shared.$id'
 import { Route as CommunauteIdRouteImport } from './routes/communaute.$id'
 
 const SubscriptionRoute = SubscriptionRouteImport.update({
@@ -36,11 +35,6 @@ const CommunauteIndexRoute = CommunauteIndexRouteImport.update({
   path: '/communaute/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SharedIdRoute = SharedIdRouteImport.update({
-  id: '/shared/$id',
-  path: '/shared/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CommunauteIdRoute = CommunauteIdRouteImport.update({
   id: '/communaute/$id',
   path: '/communaute/$id',
@@ -52,7 +46,6 @@ export interface FileRoutesByFullPath {
   '/connection': typeof ConnectionRoute
   '/subscription': typeof SubscriptionRoute
   '/communaute/$id': typeof CommunauteIdRoute
-  '/shared/$id': typeof SharedIdRoute
   '/communaute/': typeof CommunauteIndexRoute
 }
 export interface FileRoutesByTo {
@@ -60,7 +53,6 @@ export interface FileRoutesByTo {
   '/connection': typeof ConnectionRoute
   '/subscription': typeof SubscriptionRoute
   '/communaute/$id': typeof CommunauteIdRoute
-  '/shared/$id': typeof SharedIdRoute
   '/communaute': typeof CommunauteIndexRoute
 }
 export interface FileRoutesById {
@@ -69,7 +61,6 @@ export interface FileRoutesById {
   '/connection': typeof ConnectionRoute
   '/subscription': typeof SubscriptionRoute
   '/communaute/$id': typeof CommunauteIdRoute
-  '/shared/$id': typeof SharedIdRoute
   '/communaute/': typeof CommunauteIndexRoute
 }
 export interface FileRouteTypes {
@@ -79,23 +70,15 @@ export interface FileRouteTypes {
     | '/connection'
     | '/subscription'
     | '/communaute/$id'
-    | '/shared/$id'
     | '/communaute/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/connection'
-    | '/subscription'
-    | '/communaute/$id'
-    | '/shared/$id'
-    | '/communaute'
+  to: '/' | '/connection' | '/subscription' | '/communaute/$id' | '/communaute'
   id:
     | '__root__'
     | '/'
     | '/connection'
     | '/subscription'
     | '/communaute/$id'
-    | '/shared/$id'
     | '/communaute/'
   fileRoutesById: FileRoutesById
 }
@@ -104,7 +87,6 @@ export interface RootRouteChildren {
   ConnectionRoute: typeof ConnectionRoute
   SubscriptionRoute: typeof SubscriptionRoute
   CommunauteIdRoute: typeof CommunauteIdRoute
-  SharedIdRoute: typeof SharedIdRoute
   CommunauteIndexRoute: typeof CommunauteIndexRoute
 }
 
@@ -138,13 +120,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CommunauteIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/shared/$id': {
-      id: '/shared/$id'
-      path: '/shared/$id'
-      fullPath: '/shared/$id'
-      preLoaderRoute: typeof SharedIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/communaute/$id': {
       id: '/communaute/$id'
       path: '/communaute/$id'
@@ -160,7 +135,6 @@ const rootRouteChildren: RootRouteChildren = {
   ConnectionRoute: ConnectionRoute,
   SubscriptionRoute: SubscriptionRoute,
   CommunauteIdRoute: CommunauteIdRoute,
-  SharedIdRoute: SharedIdRoute,
   CommunauteIndexRoute: CommunauteIndexRoute,
 }
 export const routeTree = rootRouteImport

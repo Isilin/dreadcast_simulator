@@ -28,7 +28,10 @@ import {
 } from '../model';
 
 import type { Stat } from '@/domain';
-import { getAuthHeaders as getSessionHeaders } from '@/feature/auth';
+import {
+  getAuthHeaders as getSessionHeaders,
+  getOptionalAuthHeaders,
+} from '@/feature/auth';
 import { GET } from '@/utils/http';
 import { validatePayload } from '@/utils/validation';
 
@@ -67,15 +70,19 @@ interface CallOptions {
   body?: unknown;
   signal?: AbortSignal;
   fallbackMessage: string;
+  /** Sends the request without a session instead of failing. */
+  allowGuest?: boolean;
 }
 
 const callApi = async (
   url: string,
-  { method = 'GET', body, signal, fallbackMessage }: CallOptions,
+  { method = 'GET', body, signal, fallbackMessage, allowGuest }: CallOptions,
 ): Promise<unknown> => {
   const response = await fetch(url, {
     method,
-    headers: await getAuthHeaders(),
+    headers: allowGuest
+      ? await getOptionalAuthHeaders()
+      : await getAuthHeaders(),
     body: body === undefined ? undefined : JSON.stringify(body),
     signal,
   });
@@ -142,6 +149,7 @@ export const fetchCommunityBuild = async (
   const payload = await callApi(buildUrl(id), {
     signal,
     fallbackMessage: 'Impossible de récupérer ce build.',
+    allowGuest: true,
   });
 
   const { communityBuildDetailDtoSchema } = await loadSchemas();

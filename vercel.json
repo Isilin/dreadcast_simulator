@@ -8,8 +8,10 @@
       "includeFiles": "lib/**"
     }
   },
+  "redirects": [
+    { "source": "/shared/:id", "destination": "/", "permanent": false }
+  ],
   "rewrites": [
-    { "source": "/api/shared/:id", "destination": "/api/shared?id=:id" },
     {
       "source": "/api/profile/me",
       "destination": "/api/community?resource=profile"

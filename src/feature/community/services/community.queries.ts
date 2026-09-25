@@ -73,13 +73,17 @@ export const useCommunitySearch = (
   });
 };
 
+/** Open to guests (shared links): they get the locked preview. */
 export const useCommunityBuild = (id: string) => {
-  const isAuthenticated = useIsAuthenticated();
+  const { session, isBootstrapping } = useAuthState();
+  const viewer = session?.user.id ?? 'guest';
 
   return useQuery({
-    queryKey: communityQueryKeys.detail(id),
+    // The viewer is part of the key: signing in or out refetches the access
+    // level. detail(id) stays a prefix for invalidations.
+    queryKey: [...communityQueryKeys.detail(id), viewer],
     queryFn: ({ signal }) => fetchCommunityBuild(id, signal),
-    enabled: isAuthenticated,
+    enabled: !isBootstrapping,
     retry: false,
   });
 };
