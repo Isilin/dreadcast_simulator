@@ -1,8 +1,50 @@
 .container {
+  --remove-button-size: var(--control-height);
+
   display: flex;
   align-items: center;
   gap: var(--space-2);
   min-width: 0;
+}
+
+.deletePanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.deletePanel [role='alert'] {
+  color: var(--status-danger);
+}
+
+.confirmDelete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-3);
+  border: 1px solid color-mix(in srgb, var(--status-danger) 60%, transparent);
+  border-radius: var(--small-radius);
+  color: var(--status-danger);
+  background: var(--surface-sunken);
+  font: 600 11px/1 var(--font-data);
+  cursor: pointer;
+}
+
+.confirmDelete:hover:not(:disabled),
+.confirmDelete:focus-visible {
+  border-color: var(--status-danger);
+  background: color-mix(in srgb, var(--status-danger) 18%, transparent);
+}
+
+.confirmDelete:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.confirmDelete:disabled {
+  opacity: 0.6;
+  cursor: progress;
 }
 
 .sharePanel {

@@ -13,7 +13,11 @@ import {
   resetBuildStores,
   restoreBuildToStores,
 } from './persistence.snapshot';
-import { upsertRemoteBuild } from '../services/persistence.remote';
+import {
+  deleteRemoteBuild,
+  fetchRemoteBuilds,
+  upsertRemoteBuild,
+} from '../services/persistence.remote';
 import {
   GUEST_SLOTS,
   getDefaultBuildName,
@@ -55,6 +59,11 @@ export interface BuildPersistenceState {
    * resolves once it is persisted. Used before publishing to the Communauté.
    */
   saveActiveBuildNow: () => Promise<BuildSnapshot>;
+  /**
+   * Deletes the build of the active slot: the next builds move up one slot.
+   * Guests get an empty build back.
+   */
+  deleteActiveBuild: () => Promise<void>;
 }
 
 export function useBuildPersistence({
@@ -258,6 +267,36 @@ export function useBuildPersistence({
     return savedBuild;
   }, [cancelPendingSave]);
 
+  const deleteActiveBuild = useCallback(async (): Promise<void> => {
+    const slot = activeRef.current;
+
+    // An autosave of the build being deleted would recreate it.
+    cancelPendingSave();
+    isRestoringRef.current = true;
+
+    try {
+      if (policyRef.current.mode === 'local') {
+        const remainingBuilds = { ...readBuilds() };
+        delete remainingBuilds[String(GUEST_SLOTS)];
+        writeBuilds(remainingBuilds);
+        setBuilds({});
+        return;
+      }
+
+      await deleteRemoteBuild(slot);
+      const remainingBuilds = await fetchRemoteBuilds();
+      setBuilds(remainingBuilds);
+
+      // The last build is gone: show the one before instead of an empty slot.
+      const slotNumber = Number.parseInt(slot, 10);
+      if (!remainingBuilds[slot] && slotNumber > 1) {
+        setActive(String(slotNumber - 1));
+      }
+    } finally {
+      isRestoringRef.current = false;
+    }
+  }, [cancelPendingSave]);
+
   return {
     active,
     setActive,
@@ -269,5 +308,6 @@ export function useBuildPersistence({
     getBuildName,
     setActiveBuildName,
     saveActiveBuildNow,
+    deleteActiveBuild,
   };
 }
