@@ -85,6 +85,7 @@ Les schémas doivent être exécutés dans l'ordre pour respecter les dépendanc
 -- Prerequis
 036_table_title.sql              -- Titres du jeu (prerequis, sans stats)
 037_table_prerequisites.sql      -- Prerequis titre/implant des items, prerequis stat/titre/implant des kits
+038_table_race_prerequisites.sql -- Prerequis de race des items et des kits (une des races listees)
 ```
 
 ### Procedure d'application en production
@@ -113,9 +114,9 @@ script d'annulation dans `rollbacks/` (meme nom, suffixe `.rollback.sql`).
 5. Lot Integrite : `034` supprime les doublons d'effets et de prerequis laisses
    par une double execution des seeds, puis ajoute les contraintes d'unicite
    qui rendent les seeds rejouables (`ON CONFLICT (<owner>_id, property)`).
-6. Lot Prerequis : `036` puis `037`, **avant** le deploiement de l'API
-   (`/api/items` et `/api/kits` embarquent les nouvelles tables et echouent
-   si elles manquent). Tables vides a la creation.
+6. Lot Prerequis : `036`, `037` puis `038` (+ seed `020`), **avant** le
+   deploiement de l'API (`/api/items` et `/api/kits` embarquent les nouvelles
+   tables et echouent si elles manquent).
 7. Verifier les advisors Supabase (securite et performance).
 8. En cas de probleme : executer les rollbacks en ordre inverse.
 
@@ -177,6 +178,9 @@ Les seeds peuvent être exécutés après les schémas :
 
 -- MaJ v15
 018_seed_v15.sql                -- 1 arme de soin + 20 kits + ajustements v15
+
+-- Prerequis
+020_seed_kit_race_prerequisites.sql -- Kits exclusifs a une race (requiert 038)
 
 -- Correctifs de données
 019_fix_item_images.sql          -- Images d'items manquantes (bases existantes)
