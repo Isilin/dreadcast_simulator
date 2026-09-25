@@ -1,5 +1,11 @@
 import z from 'zod';
 
+import {
+  implantPrerequisiteDtoSchema,
+  racePrerequisiteDtoSchema,
+  titlePrerequisiteDtoSchema,
+} from '@/feature/prerequisite/services/prerequisite.schema';
+
 const statPropertySchema = z.enum([
   'strength',
   'agility',
@@ -55,6 +61,10 @@ export const itemResponseDtoSchema = z.object({
   reach: z.number().min(0).max(14).nullable(),
   hits_per_round: z.number().min(0).nullable(),
   item_prerequisite: z.array(itemStatModifierSchema),
+  // Optional: absent from API deployments older than these prerequisites.
+  item_prerequisite_title: z.array(titlePrerequisiteDtoSchema).optional(),
+  item_prerequisite_implant: z.array(implantPrerequisiteDtoSchema).optional(),
+  item_prerequisite_race: z.array(racePrerequisiteDtoSchema).optional(),
   item_effect: z.array(itemStatModifierSchema),
 });
 

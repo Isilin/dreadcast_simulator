@@ -1,5 +1,11 @@
 import z from 'zod';
 
+import {
+  implantPrerequisiteDtoSchema,
+  racePrerequisiteDtoSchema,
+  titlePrerequisiteDtoSchema,
+} from '@/feature/prerequisite/services/prerequisite.schema';
+
 const kitEffectSchema = z.object({
   property: z.enum([
     'strength',
@@ -42,6 +48,11 @@ export const kitResponseDtoSchema = z.object({
     '2handsMelee',
   ]),
   kit_effect: z.array(kitEffectSchema),
+  // Optional: absent from API deployments older than the kit prerequisites.
+  kit_prerequisite: z.array(kitEffectSchema).optional(),
+  kit_prerequisite_title: z.array(titlePrerequisiteDtoSchema).optional(),
+  kit_prerequisite_implant: z.array(implantPrerequisiteDtoSchema).optional(),
+  kit_prerequisite_race: z.array(racePrerequisiteDtoSchema).optional(),
 });
 
 export type KitResponseDto = z.infer<typeof kitResponseDtoSchema>;

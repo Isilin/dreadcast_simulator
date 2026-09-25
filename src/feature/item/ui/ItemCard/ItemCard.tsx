@@ -1,11 +1,11 @@
 import styles from './ItemCard.module.css';
-import { itemPrerequisitesMet } from '../../model/item.rules';
 import type { Item } from '../../model/item.types';
-import { PrerequisitePopin } from '../PrerequisitePopin';
 
 import { StatValues } from '@/domain';
-import { useImplantsEffects } from '@/feature/implant';
-import { useRaceStats } from '@/feature/profile';
+import {
+  PrerequisiteWarning,
+  useUnmetPrerequisites,
+} from '@/feature/prerequisite';
 import { Card, EffectChip, UiImage } from '@/ui';
 
 interface Props {
@@ -21,21 +21,9 @@ export const ItemCard = ({
   onClick,
   selected,
 }: Props) => {
-  const raceStats = useRaceStats();
-  const implantsEffects = useImplantsEffects();
-  const prerequisitesOk = itemPrerequisitesMet(
-    item,
-    raceStats || {},
-    implantsEffects,
-  );
-  const {
-    name,
-    image,
-    integrity,
-    tech,
-    effects = [],
-    prerequisites = [],
-  } = item;
+  const prerequisitesOk =
+    useUnmetPrerequisites(item.prerequisites).length === 0;
+  const { name, image, integrity, tech, effects = [], prerequisites } = item;
 
   return (
     <Card
@@ -44,9 +32,10 @@ export const ItemCard = ({
       onClick={onClick}
       label={name}
     >
-      {!prerequisitesOk && prerequisites.length > 0 && (
-        <PrerequisitePopin item={item} />
-      )}
+      <PrerequisiteWarning
+        prerequisites={prerequisites}
+        className={styles.prerequisiteWarning}
+      />
       <div className={styles.meta}>
         <span className={styles.badge} title="Durabilité">
           <span className={styles.key}>Durabilité :</span> {integrity}

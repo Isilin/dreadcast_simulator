@@ -164,7 +164,7 @@ export const EquipmentFiltersPanel = ({
 
           <label
             className={styles.checkbox}
-            title="Prérequis atteints avec la race et les implants"
+            title="Prérequis atteints avec la race, les implants et les titres"
           >
             <input
               type="checkbox"

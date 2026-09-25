@@ -20,7 +20,7 @@ export interface EquipmentFilters {
   weaponKind: WeaponKind | null;
   weaponHands: WeaponHands | null;
   healOnly: boolean;
-  /** Only items whose prerequisites are met by the race and the implants. */
+  /** Only items whose prerequisites are met (race, implants and titles). */
   equippableOnly: boolean;
 }
 

@@ -14,6 +14,7 @@ import {
   type Item,
 } from '@/feature/item';
 import { CatalogueKitModule, type Kit } from '@/feature/kit';
+import type { Prerequisite } from '@/feature/prerequisite';
 
 interface CatalogueGridProps {
   activeItem: Item | null;
@@ -22,6 +23,7 @@ interface CatalogueGridProps {
   catalogueFilter: CatalogueFilter;
   isCatalogueLoading: boolean;
   isCatalogueUnavailable: boolean;
+  meetsPrerequisites: (prerequisites: Prerequisite[] | undefined) => boolean;
   selectedDrugId: string | null;
   visibleDrugs: Drug[];
   visibleItems: Item[];
@@ -38,6 +40,7 @@ export const CatalogueGrid = ({
   catalogueFilter,
   isCatalogueLoading,
   isCatalogueUnavailable,
+  meetsPrerequisites,
   selectedDrugId,
   visibleDrugs,
   visibleItems,
@@ -53,6 +56,7 @@ export const CatalogueGrid = ({
             key={item.id}
             item={item}
             spotLabel={workbenchSlotLabels[activeSpot]}
+            prerequisitesMet={meetsPrerequisites(item.prerequisites)}
             onEquip={onEquip}
           />
         ))
@@ -74,6 +78,7 @@ export const CatalogueGrid = ({
             kit={kit}
             onAdd={() => onAddKit(kit)}
             disabled={!activeItem}
+            prerequisitesMet={meetsPrerequisites(kit.prerequisites)}
           />
         ))
       : null}

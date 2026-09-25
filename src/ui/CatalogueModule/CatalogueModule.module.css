@@ -95,3 +95,17 @@
   width: 14px;
   height: 14px;
 }
+
+.module[data-alert='true'] .select {
+  border-color: var(--status-danger);
+}
+
+/* Under the grip, in the right gutter kept free for it. Sibling of the
+   draggable button: hovering it never starts a drag. */
+.alert {
+  position: absolute;
+  top: 30px;
+  right: 8px;
+  z-index: 1;
+  display: flex;
+}

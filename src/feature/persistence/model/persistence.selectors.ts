@@ -82,6 +82,7 @@ export const areBuildsEqual = (
       items: previousBuild.items,
       kits: previousBuild.kits,
       drug: previousBuild.drug,
+      titles: previousBuild.titles ?? [],
     }) ===
     JSON.stringify({
       profile: nextBuild.profile,
@@ -89,6 +90,7 @@ export const areBuildsEqual = (
       items: nextBuild.items,
       kits: nextBuild.kits,
       drug: nextBuild.drug,
+      titles: nextBuild.titles ?? [],
     })
   );
 };

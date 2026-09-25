@@ -32,7 +32,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return handleSupabaseError(res, error, 'Item not found');
       }
 
-      return sendJson(res, item as ItemResponseDto);
+      return sendJson(res, item as unknown as ItemResponseDto);
     }
 
     let itemsQuery = supabase.from('item').select(ITEM_SELECT_QUERY);
@@ -54,7 +54,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: error.message });
     }
 
-    const typedItems = (items as ItemResponseDto[]) || [];
+    const typedItems = (items as unknown as ItemResponseDto[]) || [];
 
     return sendJson(res, typedItems);
   } catch (error) {

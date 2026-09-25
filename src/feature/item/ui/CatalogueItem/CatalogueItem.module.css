@@ -81,3 +81,15 @@
   width: 14px;
   height: 14px;
 }
+
+.item[data-prerequisites-unmet='true'] .select {
+  border-color: var(--status-danger);
+}
+
+/* Sibling of the draggable button: hovering it never starts a drag. */
+.prerequisites {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 1;
+}

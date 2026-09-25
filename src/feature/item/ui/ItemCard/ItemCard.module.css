@@ -68,3 +68,9 @@
     justify-content: space-around;
   }
 }
+
+.prerequisiteWarning {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+}

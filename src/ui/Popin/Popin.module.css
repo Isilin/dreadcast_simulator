@@ -1,3 +1,9 @@
+.positioner {
+  /* Portaled to the body: above positioned cards (e.g. the drug slot) and
+     modals, since popins also show inside dialogs. */
+  z-index: calc(var(--z-modal) + 1);
+}
+
 .content {
   box-sizing: border-box;
   font-size: var(--font-size);

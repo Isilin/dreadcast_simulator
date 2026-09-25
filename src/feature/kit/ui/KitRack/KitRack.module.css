@@ -108,6 +108,10 @@
   white-space: nowrap;
 }
 
+.warning {
+  justify-self: start;
+}
+
 .tech {
   color: var(--text-secondary);
   font: 400 9px/1.2 var(--font-data);

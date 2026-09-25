@@ -30,6 +30,15 @@ export const computeImplantStatus = (
 };
 
 /**
+ * Bonus of an implant on each of its attributes at a level (not cumulative:
+ * the value of the level is the whole bonus). 0 when not installed.
+ */
+export const computeImplantLevelValue = (
+  implant: Pick<Implant, 'valuePerLevel'>,
+  level: number,
+): number => (level > 0 ? (implant.valuePerLevel[level - 1] ?? 0) : 0);
+
+/**
  * Computes the total effects from all active implants
  */
 export const computeImplantsEffects = (
@@ -41,10 +50,9 @@ export const computeImplantsEffects = (
   if (!implants) return stats;
 
   implants.forEach((implant) => {
-    const level = state[implant.name] ?? 0;
-    if (level <= 0) return;
+    const value = computeImplantLevelValue(implant, state[implant.name] ?? 0);
+    if (value === 0) return;
 
-    const value = implant.valuePerLevel[level - 1] ?? 0;
     implant.attributes.forEach((stat) => {
       stats[stat] += value;
     });

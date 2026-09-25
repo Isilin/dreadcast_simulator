@@ -1,4 +1,5 @@
 import type { ItemSpot, StatModifier } from '@/domain';
+import type { Prerequisite } from '@/feature/prerequisite';
 
 export const ItemTypeValues = [
   'head',
@@ -34,7 +35,7 @@ export interface Item {
   tech: number;
   integrity: number;
   type: ItemType;
-  prerequisites?: StatModifier[];
+  prerequisites?: Prerequisite[];
   effects?: StatModifier[];
   minDamage?: number;
   maxDamage?: number;

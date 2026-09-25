@@ -2,10 +2,12 @@ import { lazy, Suspense, useState } from 'react';
 
 import styles from './InspectorPanel.module.css';
 import { ModeTab } from '../ModeTab';
+import { UnmetPrerequisitesNotice } from '../UnmetPrerequisitesNotice';
 
 import { ImplantsPanel } from '@/feature/implant';
 import { GenderSelector, RaceSelector } from '@/feature/profile';
 import { Skills } from '@/feature/stats';
+import { TitlesPanel } from '@/feature/title';
 
 // The community entry point is lazy: the Communauté code stays out of the
 // workbench chunk until it renders.
@@ -15,7 +17,7 @@ const SimilarBuildsButton = lazy(() =>
   })),
 );
 
-type InspectorTab = 'stats' | 'implants';
+type InspectorTab = 'stats' | 'implants' | 'titles';
 
 export const InspectorPanel = () => {
   const [activeTab, setActiveTab] = useState<InspectorTab>('stats');
@@ -41,18 +43,22 @@ export const InspectorPanel = () => {
           >
             Implants
           </ModeTab>
+          <ModeTab activeMode={activeTab} mode="titles" onChange={setActiveTab}>
+            Titres
+          </ModeTab>
         </div>
         <div className={styles.tabPanel} role="tabpanel">
           {activeTab === 'stats' ? (
             <>
+              <UnmetPrerequisitesNotice />
               <Skills />
               <Suspense fallback={null}>
                 <SimilarBuildsButton />
               </Suspense>
             </>
-          ) : (
-            <ImplantsPanel />
-          )}
+          ) : null}
+          {activeTab === 'implants' ? <ImplantsPanel /> : null}
+          {activeTab === 'titles' ? <TitlesPanel /> : null}
         </div>
       </section>
     </aside>
