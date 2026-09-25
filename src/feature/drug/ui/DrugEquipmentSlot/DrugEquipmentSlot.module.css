@@ -1,14 +1,26 @@
+/* The drug card keeps its height: the effects give way first. */
 .slot {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
+  display: flex;
+  flex-direction: column;
   gap: 6px;
   align-self: stretch;
   min-height: 0;
   padding: var(--space-2);
+  overflow: hidden;
   border: 1px solid transparent;
   background: color-mix(in srgb, var(--surface-base) 72%, transparent);
+}
+
+/* The remove button opens a column beside the drug card. */
+.header {
+  display: grid;
+  flex: 1 0 auto;
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-columns: auto;
+  gap: 6px;
 }
 
 .slot[data-active='true'] {
@@ -38,8 +50,8 @@
 
 .control {
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  gap: 6px;
+  grid-row: 1 / -1;
+  grid-template-rows: subgrid;
   min-height: 0;
   width: 100%;
   padding: 0;
@@ -67,8 +79,9 @@
 
 .summary {
   display: grid;
-  align-content: center;
-  gap: 4px;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-2);
   min-height: 0;
   padding: var(--space-2);
   overflow: hidden;
@@ -77,8 +90,29 @@
 }
 
 .summary[data-empty='true'] {
+  grid-template-columns: minmax(0, 1fr);
   border-style: dashed;
   color: var(--text-secondary);
+}
+
+.visual {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.details {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.details strong,
+.details span,
+.details small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .summary strong {
@@ -92,34 +126,69 @@
   font: 400 10px/1.3 var(--font-data);
 }
 
+/* Whole lines of effects only: the next ones are in the tooltip. */
+.effects {
+  flex: 0 1 auto;
+  min-width: 0;
+  min-height: 0;
+  max-height: 16px;
+  overflow: hidden;
+}
+
 .remove {
-  position: absolute;
-  top: var(--space-2);
-  right: var(--space-2);
-  display: grid;
-  width: 28px;
-  height: 28px;
-  padding: 0;
-  place-items: center;
-  border: 1px solid color-mix(in srgb, var(--status-danger) 45%, transparent);
-  border-radius: var(--small-radius);
-  color: var(--status-danger);
-  background: color-mix(in srgb, var(--status-danger) 8%, transparent);
-  cursor: pointer;
+  grid-row: 2;
+  grid-column: 2;
+  align-self: center;
 }
 
-.remove svg {
-  width: 15px;
-  height: 15px;
+/* Same steps as the equipment slots. */
+@media (min-height: 980px) {
+  .effects {
+    max-height: 35px;
+  }
 }
 
-.remove:hover,
-.remove:focus-visible {
-  border-color: var(--status-danger);
-  background: color-mix(in srgb, var(--status-danger) 18%, transparent);
+@media (max-height: 900px) {
+  .slot {
+    gap: 4px;
+    padding: 6px;
+  }
+
+  .header {
+    gap: 4px;
+  }
+
+  .summary {
+    padding: 6px;
+  }
+
+  .visual {
+    width: 32px;
+    height: 32px;
+  }
 }
 
-.remove:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 1px;
+@media (max-height: 800px) {
+  .summary {
+    padding: 4px 6px;
+  }
+
+  .visual {
+    width: 24px;
+    height: 24px;
+  }
+
+  .summary small {
+    display: none;
+  }
+
+  .slot {
+    --remove-button-size: 24px;
+  }
+}
+
+@media (max-height: 740px) {
+  .effects {
+    display: none;
+  }
 }
