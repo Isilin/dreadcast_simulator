@@ -75,6 +75,9 @@ Les schémas doivent être exécutés dans l'ordre pour respecter les dépendanc
 
 -- Performance
 033_optimize_legacy_rls.sql      -- Policies build/subscription : (SELECT auth.uid()) + index FK subscription
+
+-- Integrite
+034_unique_stat_modifiers.sql    -- Dedoublonne effets/prerequis/modificateurs + UNIQUE (<owner>_id, property)
 ```
 
 ### Procedure d'application en production
@@ -100,8 +103,11 @@ script d'annulation dans `rollbacks/` (meme nom, suffixe `.rollback.sql`).
 4. Lot Communaute : `024` a `032` dans l'ordre, puis deploiement de l'API et
    du front. `024` declare `v15` comme version courante : l'ajuster si la
    Communaute ouvre avant le passage des donnees en v15.
-5. Verifier les advisors Supabase (securite et performance).
-6. En cas de probleme : executer les rollbacks en ordre inverse.
+5. Lot Integrite : `034` supprime les doublons d'effets et de prerequis laisses
+   par une double execution des seeds, puis ajoute les contraintes d'unicite
+   qui rendent les seeds rejouables (`ON CONFLICT (<owner>_id, property)`).
+6. Verifier les advisors Supabase (securite et performance).
+7. En cas de probleme : executer les rollbacks en ordre inverse.
 
 Ces scripts ont ete valides sur une base Supabase locale (schemas 001-020 +
 seeds, puis 021-031, puis rollbacks et re-application) avec des tests RLS

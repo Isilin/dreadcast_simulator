@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS kit_effect (
   property stat_property NOT NULL,
   value INTEGER NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT valid_value CHECK (value != 0)
+  CONSTRAINT valid_value CHECK (value != 0),
+  UNIQUE(kit_id, property)
 );
 
 -- Index pour les recherches courantes

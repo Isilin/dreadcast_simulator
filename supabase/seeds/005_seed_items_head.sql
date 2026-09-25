@@ -99,7 +99,7 @@ INSERT INTO item_prerequisite (item_id, property, value) VALUES
   ('54', 'perception'::stat_property, 50),
   ('57', 'robustness'::stat_property, 50),
   ('57', 'engineering'::stat_property, 50)
-ON CONFLICT DO NOTHING;
+ON CONFLICT (item_id, property) DO NOTHING;
 
 -- Insertion des effets
 INSERT INTO item_effect (item_id, property, value) VALUES
@@ -187,4 +187,4 @@ INSERT INTO item_effect (item_id, property, value) VALUES
   ('56', 'robustness'::stat_property, -3),
   ('57', 'perception'::stat_property, -5),
   ('57', 'health'::stat_property, 12)
-ON CONFLICT DO NOTHING;
+ON CONFLICT (item_id, property) DO NOTHING;

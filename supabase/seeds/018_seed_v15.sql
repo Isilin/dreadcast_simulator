@@ -9,12 +9,12 @@ ON CONFLICT (id) DO NOTHING;
 -- Insertion des prérequis
 INSERT INTO item_prerequisite (item_id, property, value) VALUES
   ('606', 'medicine'::stat_property, 150)
-ON CONFLICT DO NOTHING;
+ON CONFLICT (item_id, property) DO NOTHING;
 
 -- Insertion des effets
 -- INSERT INTO item_effect (item_id, property, value) VALUES
 --   ('500', 'medicine'::stat_property, 10),
--- ON CONFLICT DO NOTHING;
+-- ON CONFLICT (item_id, property) DO NOTHING;
 
 
 INSERT INTO kit (id, name, tech, type) VALUES
@@ -97,7 +97,7 @@ INSERT INTO kit_effect (kit_id, property, value) VALUES
   ('135', 'robustness'::stat_property, -3),
   ('435', 'perception'::stat_property, 2),
   ('435', 'agility'::stat_property, 3)
-ON CONFLICT DO NOTHING;
+ON CONFLICT (kit_id, property) DO NOTHING;
 
 -- Renommage du kit "À canon lourd" en "instable" (id 539)
 UPDATE kit SET name = 'instable' WHERE id = '539';
