@@ -61,7 +61,7 @@
 
 .Positioner {
   outline: none;
-  z-index: 1;
+  z-index: var(--z-drawer);
   -webkit-user-select: none;
   user-select: none;
 }

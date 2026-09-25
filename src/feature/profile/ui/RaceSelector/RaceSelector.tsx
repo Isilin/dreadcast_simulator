@@ -42,7 +42,14 @@ export const RaceSelector = () => {
           </Select.Icon>
         </Select.Trigger>
         <Select.Portal>
-          <Select.Positioner className={styles.Positioner} sideOffset={8}>
+          {/* Always open below: aligning the selected race with the trigger
+              moves the list up, under the header for the last races. */}
+          <Select.Positioner
+            className={styles.Positioner}
+            side="bottom"
+            sideOffset={8}
+            alignItemWithTrigger={false}
+          >
             <Select.ScrollUpArrow className={styles.ScrollArrow} />
             <Select.Popup className={styles.Popup}>
               {raceItems?.map(({ label, value }) => (
