@@ -86,6 +86,10 @@ Les schémas doivent être exécutés dans l'ordre pour respecter les dépendanc
 036_table_title.sql              -- Titres du jeu (prerequis, sans stats)
 037_table_prerequisites.sql      -- Prerequis titre/implant des items, prerequis stat/titre/implant des kits
 038_table_race_prerequisites.sql -- Prerequis de race des items et des kits (une des races listees)
+
+-- Partage via la Communaute
+039_rpc_community_preview.sql    -- RPC community_get_preview : apercu public d'une publication
+040_drop_shared_build.sql        -- APRES deploiement de l'API : supprime shared_build et get_shared_build
 ```
 
 ### Procedure d'application en production
@@ -117,8 +121,11 @@ script d'annulation dans `rollbacks/` (meme nom, suffixe `.rollback.sql`).
 6. Lot Prerequis : `036`, `037` puis `038` (+ seed `020`), **avant** le
    deploiement de l'API (`/api/items` et `/api/kits` embarquent les nouvelles
    tables et echouent si elles manquent).
-7. Verifier les advisors Supabase (securite et performance).
-8. En cas de probleme : executer les rollbacks en ordre inverse.
+7. Lot Partage : `039` (additif), puis deploiement de l'API et du front
+   (partage par lien de publication, `/api/shared` retire), puis `040` qui
+   supprime `shared_build` (sauvegarde des donnees avant).
+8. Verifier les advisors Supabase (securite et performance).
+9. En cas de probleme : executer les rollbacks en ordre inverse.
 
 Ces scripts ont ete valides sur une base Supabase locale (schemas 001-020 +
 seeds, puis 021-031, puis rollbacks et re-application) avec des tests RLS
