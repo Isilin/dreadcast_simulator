@@ -25,6 +25,7 @@ import { useImplantStore } from '@/feature/implant/model/implant.store';
 import { useItemStore } from '@/feature/item/model/item.store';
 import { useKitStore } from '@/feature/kit/model/kit.store';
 import { useProfileStore } from '@/feature/profile/model/profile.store';
+import { useTitleStore } from '@/feature/title/model/title.store';
 
 interface CurrentRef<T> {
   current: T;
@@ -141,6 +142,7 @@ export const useBuildAutosave = ({
       useItemStore.subscribe(scheduleSave),
       useKitStore.subscribe(scheduleSave),
       useDrugStore.subscribe(scheduleSave),
+      useTitleStore.subscribe(scheduleSave),
     ];
 
     return () => {

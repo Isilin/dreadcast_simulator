@@ -29,6 +29,10 @@ import {
   initialState as profileInitialState,
   useProfileStore,
 } from '@/feature/profile/model/profile.store';
+import {
+  initialState as titlesInitialState,
+  useTitleStore,
+} from '@/feature/title/model/title.store';
 
 export interface BuildStoreState {
   profile: typeof profileInitialState;
@@ -36,6 +40,7 @@ export interface BuildStoreState {
   items: typeof itemsInitialState;
   kits: typeof kitsInitialState;
   drug: typeof drugsInitialState;
+  titles: typeof titlesInitialState;
 }
 
 export const readBuildStoreState = (): BuildStoreState => ({
@@ -44,6 +49,7 @@ export const readBuildStoreState = (): BuildStoreState => ({
   items: useItemStore.getState().items,
   kits: useKitStore.getState().kits,
   drug: useDrugStore.getState().drug,
+  titles: useTitleStore.getState().titles,
 });
 
 export const createBuildSnapshot = (
@@ -56,6 +62,7 @@ export const createBuildSnapshot = (
   items: serializeItems(state.items),
   kits: serializeKits(state.kits),
   drug: state.drug,
+  titles: state.titles,
   name: previousBuild?.name ?? getDefaultBuildName(slot),
   savedAt: Date.now(),
 });
@@ -70,6 +77,7 @@ export const restoreBuildToStores = (
   useItemStore.getState().replaceItems(restoreItems(build.items, allItems));
   useKitStore.getState().replaceKits(restoreKits(build.kits, allKits));
   useDrugStore.getState().replaceDrug(build.drug ?? drugsInitialState);
+  useTitleStore.getState().replaceTitles(build.titles ?? titlesInitialState);
 };
 
 export const resetBuildStores = (): void => {
@@ -78,4 +86,5 @@ export const resetBuildStores = (): void => {
   useItemStore.getState().replaceItems(itemsInitialState);
   useKitStore.getState().replaceKits(kitsInitialState);
   useDrugStore.getState().replaceDrug(drugsInitialState);
+  useTitleStore.getState().replaceTitles(titlesInitialState);
 };

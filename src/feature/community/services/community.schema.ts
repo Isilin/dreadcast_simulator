@@ -60,6 +60,7 @@ export const communitySnapshotSchema = z
       )
       .default({}),
     drug: z.string().nullable().optional(),
+    titles: z.array(z.string()).default([]),
   })
   .transform(
     (snapshot): BuildSnapshot => ({
@@ -75,6 +76,7 @@ export const communitySnapshotSchema = z
         ItemSpotValue.map((spot) => [spot, snapshot.kits[spot] ?? []]),
       ) as BuildSnapshot['kits'],
       drug: snapshot.drug ?? null,
+      titles: [...new Set(snapshot.titles)].sort(),
     }),
   );
 

@@ -17,6 +17,7 @@ import {
 } from '@/feature/persistence';
 import { GenderSelector, RaceSelector, Silhouette } from '@/feature/profile';
 import { Skills } from '@/feature/stats';
+import { TitlesButton } from '@/feature/title';
 import { Sidebar, SlotPair, Spinner } from '@/ui';
 import Routes from '@/utils/routes';
 
@@ -92,6 +93,7 @@ function RouteComponent() {
           <Skills />
           <ImplantsButton />
           <DrugsButton />
+          <TitlesButton />
         </Sidebar>
         <div className={layoutStyles.mainContent}>
           <div className={layoutStyles.equipmentSection}>

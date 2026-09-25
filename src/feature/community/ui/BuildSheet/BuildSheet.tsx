@@ -11,6 +11,7 @@ import {
 
 import { ItemSpotValue, StatValues, type Stat } from '@/domain';
 import type { BuildSnapshot } from '@/feature/persistence';
+import { useTitleNames } from '@/feature/title';
 import { UiImage } from '@/ui';
 
 interface BuildSheetProps {
@@ -37,6 +38,17 @@ export const BuildSheet = ({ snapshot, catalogs, stats }: BuildSheetProps) => {
           levelB === levelA ? nameA.localeCompare(nameB) : levelB - levelA,
         ),
     [snapshot.implants],
+  );
+
+  // Title names come from their own catalogue: a build still shows when it
+  // is unavailable, with the title ids.
+  const titleNames = useTitleNames();
+  const titles = useMemo(
+    () =>
+      (snapshot.titles ?? [])
+        .map((id) => titleNames[id] ?? id)
+        .sort((a, b) => a.localeCompare(b)),
+    [snapshot.titles, titleNames],
   );
 
   const isTwoHanded =
@@ -127,6 +139,21 @@ export const BuildSheet = ({ snapshot, catalogs, stats }: BuildSheetProps) => {
         <p className={styles.drug}>
           Drogue : <strong>{restored.drug?.name ?? 'aucune'}</strong>
         </p>
+      </section>
+
+      <section className={styles.block} aria-labelledby="sheet-titles">
+        <h2 id="sheet-titles" className={styles.heading}>
+          Titres
+        </h2>
+        {titles.length > 0 ? (
+          <ul className={styles.implants}>
+            {titles.map((name) => (
+              <li key={name}>{name}</li>
+            ))}
+          </ul>
+        ) : (
+          <p className={styles.empty}>Aucun titre</p>
+        )}
       </section>
 
       <section className={styles.block} aria-labelledby="sheet-stats">

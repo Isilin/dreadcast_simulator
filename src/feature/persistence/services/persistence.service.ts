@@ -4,6 +4,7 @@ import type { ImplantsState } from '@/feature/implant';
 import type { DamageBonusType, Item, ItemsState } from '@/feature/item';
 import type { Kit, KitSelection, KitsState } from '@/feature/kit';
 import type { ProfileState } from '@/feature/profile';
+import type { TitlesState } from '@/feature/title';
 
 export const BUILDS_KEY = 'dreadcast.builds.v3';
 export const GUEST_SLOTS = 1;
@@ -70,6 +71,8 @@ export interface BuildSnapshot {
   items: SerializedItemsSnapshot;
   kits: SerializedKitsSnapshot;
   drug: DrugsState;
+  /** Unlocked title ids. Absent from builds saved before the titles. */
+  titles?: TitlesState;
   savedAt?: number;
 }
 

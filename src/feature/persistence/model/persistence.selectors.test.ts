@@ -94,6 +94,15 @@ describe('persistence selectors', () => {
     expect(
       areBuildsEqual(previousBuild, createSnapshot({ drug: 'drug-1' })),
     ).toBe(false);
+    expect(
+      areBuildsEqual(previousBuild, createSnapshot({ titles: ['sentinelle'] })),
+    ).toBe(false);
+  });
+
+  it('treats a build saved before the titles as having none', () => {
+    expect(
+      areBuildsEqual(createSnapshot(), createSnapshot({ titles: [] })),
+    ).toBe(true);
   });
 
   it('compares missing builds safely', () => {
