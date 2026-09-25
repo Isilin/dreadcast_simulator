@@ -45,6 +45,7 @@ interface WorkbenchWorkspaceProps {
   onKitOpen: (spot: ItemSpot) => void;
   onKitClose: () => void;
   onDamageBonusChange: (spot: ItemSpot, bonus: DamageBonusType) => void;
+  onItemRemove: (spot: ItemSpot) => void;
   onKitIncrease: (index: number) => void;
   onKitDecrease: (index: number) => void;
   onKitDelete: (index: number) => void;
@@ -66,6 +67,7 @@ export const WorkbenchWorkspace = ({
   onKitOpen,
   onKitClose,
   onDamageBonusChange,
+  onItemRemove,
   onKitIncrease,
   onKitDecrease,
   onKitDelete,
@@ -126,6 +128,7 @@ export const WorkbenchWorkspace = ({
             onActivateSpot={onActivateSpot}
             onKitOpen={onKitOpen}
             onDamageBonusChange={onDamageBonusChange}
+            onItemRemove={onItemRemove}
             onDrugActivate={onDrugActivate}
             onDrugClear={onDrugClear}
           />

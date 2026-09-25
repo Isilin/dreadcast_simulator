@@ -122,6 +122,16 @@
   white-space: nowrap;
 }
 
+/* Kit entry and remove button, at the height of the kit entry. */
+.actions {
+  --remove-button-size: 28px;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+}
+
 /* Whole lines of effects only: the next ones are in the tooltip. */
 .effects {
   flex: 0 1 auto;
@@ -217,6 +227,10 @@
 
   .damageControl select {
     min-height: 20px;
+  }
+
+  .actions {
+    --remove-button-size: 24px;
   }
 }
 

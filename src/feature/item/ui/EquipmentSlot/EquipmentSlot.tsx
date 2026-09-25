@@ -10,6 +10,7 @@ import {
 } from '../../model/item.types';
 
 import { StatValues, type ItemSpot, type StatModifier } from '@/domain';
+import { RemoveButton } from '@/ui/RemoveButton';
 import { StatEffects } from '@/ui/StatEffects';
 
 interface EquipmentSlotProps {
@@ -26,6 +27,7 @@ interface EquipmentSlotProps {
   draggedItem: Item | null;
   onActivate: (spot: ItemSpot) => void;
   onDamageBonusChange: (bonus: DamageBonusType) => void;
+  onRemove: () => void;
 }
 
 export const EquipmentSlot = ({
@@ -39,6 +41,7 @@ export const EquipmentSlot = ({
   draggedItem,
   onActivate,
   onDamageBonusChange,
+  onRemove,
 }: EquipmentSlotProps) => {
   const { setNodeRef, isOver } = useDroppable({
     id: `slot-${spot}`,
@@ -119,7 +122,12 @@ export const EquipmentSlot = ({
           </label>
         ) : null}
       </div>
-      {item && !isOffhand ? kitControl : null}
+      {item && !isOffhand ? (
+        <div className={styles.actions}>
+          {kitControl}
+          <RemoveButton label={`Retirer ${item.name}`} onClick={onRemove} />
+        </div>
+      ) : null}
       {effects.length > 0 && !isOffhand ? (
         <div
           className={styles.effects}
