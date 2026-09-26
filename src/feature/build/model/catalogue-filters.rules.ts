@@ -44,7 +44,7 @@ interface SpecializationPreset {
  * Stats and weapons of each specialization, following the scores of
  * detectSpecialization (community feature).
  */
-export const SPECIALIZATION_PRESETS: Record<
+const SPECIALIZATION_PRESETS: Record<
   PresetSpecialization,
   SpecializationPreset
 > = {

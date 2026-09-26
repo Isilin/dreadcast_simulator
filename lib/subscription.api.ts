@@ -22,7 +22,7 @@ export const SUBSCRIPTION_PLAN_SELECT_QUERY = `
   sort_order
 `;
 
-export const INFINITE_SUBSCRIPTION_END_ISO = '9999-12-31T23:59:59.999Z';
+const INFINITE_SUBSCRIPTION_END_ISO = '9999-12-31T23:59:59.999Z';
 
 export interface ActiveSubscriptionResult {
   isActive: boolean;

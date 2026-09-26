@@ -5,20 +5,8 @@ import type { Kit } from '../model';
 import { GET } from '@/utils/http';
 import { validatePayload } from '@/utils/validation';
 
-export const fetchKits = async (
-  type?: Kit['type'] | Array<Kit['type']>,
-  signal?: AbortSignal,
-): Promise<Kit[]> => {
-  const params = new URLSearchParams();
-  if (type) {
-    const types = Array.isArray(type) ? type : [type];
-    if (types.length > 0) {
-      params.set('type', types.join(','));
-    }
-  }
-
-  const url = `/api/kits${params.toString() ? `?${params.toString()}` : ''}`;
-  const response = await GET(url, signal);
+export const fetchKits = async (signal?: AbortSignal): Promise<Kit[]> => {
+  const response = await GET('/api/kits', signal);
 
   if (!response.ok) {
     throw new KitRepositoryError({
@@ -38,30 +26,4 @@ export const fetchKits = async (
   });
 
   return kits.map(toDomain);
-};
-
-export const fetchKitById = async (
-  id: string,
-  signal?: AbortSignal,
-): Promise<Kit> => {
-  const response = await GET(`/api/kits?id=${encodeURIComponent(id)}`, signal);
-
-  if (!response.ok) {
-    throw new KitRepositoryError({
-      code: KIT_REPOSITORY_ERROR_CODE.FETCH_KIT_FAILED,
-      message: `Impossible de recuperer le kit ${id}.`,
-      status: response.status,
-    });
-  }
-
-  const payload: unknown = await response.json();
-  const { kitResponseDtoSchema } = await import('./kit.schema');
-  const kit = validatePayload({
-    schema: kitResponseDtoSchema,
-    payload,
-    errorCode: KIT_REPOSITORY_ERROR_CODE.INVALID_KIT_PAYLOAD,
-    errorMessage: `Le format du kit ${id} est invalide.`,
-  });
-
-  return toDomain(kit);
 };

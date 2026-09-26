@@ -18,8 +18,8 @@ description: 'React development best practices for Dreadcast Simulator'
 ## Architecture Patterns
 
 - Use feature folders with strict index.ts barrel exports
-- Implement reducer + context pattern for state management (no external libraries)
-- Separate StateCtx and DispatchCtx for performance optimization
+- Keep feature state in Zustand stores (`*.store.ts`), no React provider
+- Select narrowly (`useXState`, `useXActions` with `useShallow`) to limit re-renders
 - Follow the repository's established patterns for new features
 
 ## Component Development
@@ -31,10 +31,10 @@ description: 'React development best practices for Dreadcast Simulator'
 
 ## State Management
 
-- Use useReducer + useContext pattern as established in codebase
-- Define actions with discriminated unions and proper typing
-- Wrap actions in useMemo within providers for performance
-- Validate context exists with proper error guards in hooks
+- Use the Zustand store pattern as established in codebase (state + actions + `initialState`)
+- Type actions explicitly (`XActions = Pick<XStore, ...>`)
+- Access stores outside React with `getState()` / `subscribe()` (persistence, autosave)
+- Keep business rules in pure `*.rules.ts` functions, not in components
 
 ## Styling
 
@@ -46,12 +46,12 @@ description: 'React development best practices for Dreadcast Simulator'
 ## Data Fetching
 
 - Use TanStack Query for all async operations
-- Implement repository pattern with USE_MOCK environment branching
-- Create mock data with Zod schema validation
+- Implement repository functions (`*.repo.ts`) calling the `/api` serverless functions
+- Validate every payload with Zod schemas
 - Map DTOs to domain models using dedicated mapper functions
 
 ## French Language Requirements
 
 - All UI text, labels, and user-facing content must be in French
 - Use French terminology for game mechanics and RPG concepts
-- Maintain French naming in data models and mock data
+- Maintain French naming in game data and labels

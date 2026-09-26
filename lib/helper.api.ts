@@ -79,7 +79,7 @@ export const setNoStoreHeaders = (res: VercelResponse): void => {
   res.setHeader('Pragma', 'no-cache');
 };
 
-export const setCacheHeaders = (res: VercelResponse): void => {
+const setCacheHeaders = (res: VercelResponse): void => {
   res.setHeader(
     'Cache-Control',
     'public, max-age=3600, stale-while-revalidate=86400',
@@ -112,18 +112,6 @@ export const handleSupabaseError = (
     return res.status(404).json({ error: notFoundMessage });
   }
   return res.status(500).json({ error: error.message });
-};
-
-export const requireStringParam = (
-  param: string | string[] | undefined,
-  res: VercelResponse,
-  errorMessage: string,
-): string | null => {
-  if (!param || typeof param !== 'string') {
-    res.status(400).json({ error: errorMessage });
-    return null;
-  }
-  return param;
 };
 
 export const getOptionalStringParam = (

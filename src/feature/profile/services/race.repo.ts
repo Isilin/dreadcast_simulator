@@ -27,32 +27,3 @@ export const fetchRaces = async (signal?: AbortSignal): Promise<Race[]> => {
 
   return races.map(toDomain);
 };
-
-export const fetchRaceByType = async (
-  type: string,
-  signal?: AbortSignal,
-): Promise<Race> => {
-  const response = await GET(
-    `/api/races?type=${encodeURIComponent(type)}`,
-    signal,
-  );
-
-  if (!response.ok) {
-    throw new RaceRepositoryError({
-      code: RACE_REPOSITORY_ERROR_CODE.FETCH_RACE_FAILED,
-      message: `Impossible de recuperer la race ${type}.`,
-      status: response.status,
-    });
-  }
-
-  const payload: unknown = await response.json();
-  const { raceResponseDtoSchema } = await import('./race.schema');
-  const race = validatePayload({
-    schema: raceResponseDtoSchema,
-    payload,
-    errorCode: RACE_REPOSITORY_ERROR_CODE.INVALID_RACE_PAYLOAD,
-    errorMessage: `Le format de la race ${type} est invalide.`,
-  });
-
-  return toDomain(race);
-};

@@ -13,8 +13,4 @@
   &[data-status='warning'] {
     color: var(--color-orange);
   }
-
-  &[data-status='default'] {
-    color: var(--color-blue);
-  }
 }

@@ -1,5 +1,4 @@
 import {
-  ALL_GAME_VERSIONS,
   CommunitySortValues,
   SpecializationValues,
   WeaponHandsValues,
@@ -15,7 +14,7 @@ import { StatValues, type Stat } from '@/domain';
 import { weaponFilterToItemTypes } from '@/feature/item';
 import { RaceTypeValues, type Gender, type RaceType } from '@/feature/profile';
 
-export const COMMUNITY_PAGE_SIZE = 24;
+const COMMUNITY_PAGE_SIZE = 24;
 const MAX_LIST_ENTRIES = 30;
 const MAX_QUERY_LENGTH = 64;
 
@@ -243,6 +242,3 @@ export const filtersToApiQuery = (
 
   return params;
 };
-
-export const isAllVersions = (gameVersion: string | null) =>
-  gameVersion === ALL_GAME_VERSIONS;

@@ -4,12 +4,10 @@ import { useShallow } from 'zustand/react/shallow';
 import type { Kit, KitSelection, KitsState } from './kit.types';
 
 import { ItemSpotValue, type ItemSpot } from '@/domain';
-import { useBuildReadOnlyMode } from '@/feature/persistence';
 
 interface KitStore {
   kits: KitsState;
   addKit: (spot: ItemSpot, kit: Kit, force?: boolean) => void;
-  setKit: (spot: ItemSpot, index: number, kit: Kit) => void;
   deleteKit: (spot: ItemSpot, index: number) => void;
   resetKits: (spot: ItemSpot) => void;
   setKitNumber: (spot: ItemSpot, index: number, number: number) => void;
@@ -18,12 +16,7 @@ interface KitStore {
 
 export type KitsActions = Pick<
   KitStore,
-  | 'addKit'
-  | 'setKit'
-  | 'deleteKit'
-  | 'resetKits'
-  | 'setKitNumber'
-  | 'replaceKits'
+  'addKit' | 'deleteKit' | 'resetKits' | 'setKitNumber' | 'replaceKits'
 >;
 
 export const initialState: KitsState = Object.fromEntries(
@@ -44,14 +37,6 @@ export const useKitStore = create<KitStore>((set) => ({
       } else {
         kits = [...slot, { kit, number: 1 }];
       }
-      return { kits: { ...s.kits, [spot]: kits } };
-    });
-  },
-  setKit: (spot, index, kit) => {
-    set((s) => {
-      const slot = s.kits[spot];
-      if (!slot || index < 0 || index >= slot.length) return s;
-      const kits = slot.map((k, i) => (i === index ? { ...k, kit } : k));
       return { kits: { ...s.kits, [spot]: kits } };
     });
   },
@@ -80,29 +65,13 @@ export const useKitStore = create<KitStore>((set) => ({
 
 export const useKitsState = (): KitsState => useKitStore((s) => s.kits);
 
-export const useKitsActions = (): KitsActions => {
-  const isReadOnly = useBuildReadOnlyMode();
-  const actions = useKitStore(
+export const useKitsActions = (): KitsActions =>
+  useKitStore(
     useShallow((s) => ({
       addKit: s.addKit,
-      setKit: s.setKit,
       deleteKit: s.deleteKit,
       resetKits: s.resetKits,
       setKitNumber: s.setKitNumber,
       replaceKits: s.replaceKits,
     })),
   );
-
-  if (!isReadOnly) {
-    return actions;
-  }
-
-  return {
-    addKit: () => undefined,
-    setKit: () => undefined,
-    deleteKit: () => undefined,
-    resetKits: () => undefined,
-    setKitNumber: () => undefined,
-    replaceKits: actions.replaceKits,
-  };
-};

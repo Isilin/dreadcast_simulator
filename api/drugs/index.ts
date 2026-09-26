@@ -17,7 +17,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const supabase = doCreateClient();
-    const query = getOptionalStringParam(req.query.query);
     const id = getOptionalStringParam(req.query.id);
 
     if (id) {
@@ -34,15 +33,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return sendJson(res, drug as DrugResponseDto);
     }
 
-    let drugsQuery = supabase.from('drug').select(DRUG_SELECT_QUERY);
-
-    if (query && query.trim()) {
-      drugsQuery = drugsQuery.ilike('name', `%${query}%`);
-    }
-
-    const { data: drugs, error } = await drugsQuery.order('id', {
-      ascending: true,
-    });
+    const { data: drugs, error } = await supabase
+      .from('drug')
+      .select(DRUG_SELECT_QUERY)
+      .order('id', { ascending: true });
 
     if (error) {
       return res.status(500).json({ error: error.message });

@@ -4,8 +4,6 @@ import { useShallow } from 'zustand/react/shallow';
 import { toggleTitleId } from './title.rules';
 import type { TitlesState } from './title.types';
 
-import { useBuildReadOnlyMode } from '@/feature/persistence';
-
 interface TitleStore {
   titles: TitlesState;
   toggleTitle: (id: string) => void;
@@ -24,21 +22,10 @@ export const useTitleStore = create<TitleStore>((set) => ({
 
 export const useTitlesState = (): TitlesState => useTitleStore((s) => s.titles);
 
-export const useTitlesActions = (): TitlesActions => {
-  const isReadOnly = useBuildReadOnlyMode();
-  const actions = useTitleStore(
+export const useTitlesActions = (): TitlesActions =>
+  useTitleStore(
     useShallow((s) => ({
       toggleTitle: s.toggleTitle,
       replaceTitles: s.replaceTitles,
     })),
   );
-
-  if (!isReadOnly) {
-    return actions;
-  }
-
-  return {
-    toggleTitle: () => undefined,
-    replaceTitles: actions.replaceTitles,
-  };
-};

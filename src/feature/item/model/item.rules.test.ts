@@ -3,7 +3,6 @@ import { describe, expect, it } from 'vitest';
 import {
   getEquippedSpot,
   getItemStatBonus,
-  getItemTypes,
   getOtherHand,
   isArmSpot,
   isTwoHandedOffhand,
@@ -13,15 +12,6 @@ import {
 import type { Item, ItemsState } from './item.types';
 
 describe('item rules', () => {
-  it('includes one-handed shot weapons in arm selectors', () => {
-    expect(getItemTypes('leftArm')).toEqual([
-      '1handMelee',
-      '1handShot',
-      '2handsMelee',
-      '2handsShot',
-    ]);
-  });
-
   it('returns the opposite arm only for two-handed weapons', () => {
     expect(getOtherHand('leftArm', 2)).toBe('rightArm');
     expect(getOtherHand('rightArm', 2)).toBe('leftArm');

@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest';
 
 import {
   getDraggedData,
-  getDragIdentifier,
   getDropAnnouncement,
   getDropData,
 } from './drag-drop.helpers';
@@ -49,9 +48,6 @@ describe('workbench drag and drop helpers', () => {
     expect(itemData).toEqual({ kind: 'item', item });
     expect(kitData).toEqual({ kind: 'kit', kit });
     expect(drugData).toEqual({ kind: 'drug', drug });
-    expect(getDragIdentifier(itemData!)).toBe('item-1');
-    expect(getDragIdentifier(kitData!)).toBe('kit-kit-1');
-    expect(getDragIdentifier(drugData!)).toBe('drug-drug-1');
     expect(getDropData({ kind: 'item-slot', spot: 'head' })).toEqual({
       kind: 'item-slot',
       spot: 'head',

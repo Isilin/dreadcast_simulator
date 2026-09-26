@@ -5,9 +5,6 @@ export const TITLE_REPOSITORY_ERROR_CODE = {
   INVALID_TITLES_PAYLOAD: 'INVALID_TITLES_PAYLOAD',
 } as const;
 
-export type TitleRepositoryErrorCode =
-  (typeof TITLE_REPOSITORY_ERROR_CODE)[keyof typeof TITLE_REPOSITORY_ERROR_CODE];
-
 export const TitleRepositoryError = createRepositoryErrorClass(
   'TitleRepositoryError',
 );

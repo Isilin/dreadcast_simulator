@@ -80,5 +80,3 @@ export const TabsBar = ({ persistence }: TabsBarProps) => {
     </Tabs.Root>
   );
 };
-
-export default TabsBar;

@@ -20,7 +20,7 @@ interface PrerequisiteWarningProps {
   className?: string;
 }
 
-export const formatUnmetCount = (count: number): string =>
+const formatUnmetCount = (count: number): string =>
   `${count} prérequis manquant${count > 1 ? 's' : ''}`;
 
 /**

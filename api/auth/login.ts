@@ -1,18 +1,16 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
 
-import { doCreateClient, handleError } from '../../lib/helper.api.js';
+import {
+  doCreateClient,
+  handleError,
+  setNoStoreHeaders,
+} from '../../lib/helper.api.js';
 
 const loginSchema = z.object({
   email: z.email(),
   password: z.string().min(1),
 });
-
-const setAuthNoCacheHeaders = (res: VercelResponse) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
-  res.setHeader('Pragma', 'no-cache');
-};
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -39,7 +37,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         .json({ error: error?.message ?? 'Connexion refusée' });
     }
 
-    setAuthNoCacheHeaders(res);
+    setNoStoreHeaders(res);
     return res.status(200).json({
       accessToken: data.session.access_token,
       refreshToken: data.session.refresh_token,

@@ -31,7 +31,6 @@ import {
   type Kit,
   useKits,
   useKitsActions,
-  useKitsOnSpot,
   useKitsState,
 } from '@/feature/kit';
 import { TabsBar, useBuildPersistence } from '@/feature/persistence';
@@ -66,8 +65,8 @@ export const BuildWorkbench = ({ initialSlot }: BuildWorkbenchProps = {}) => {
 
   const items = useItemsState();
   const { resetItem, setDamageBonus, setItem } = useItemsActions();
-  const { kits } = useKitsOnSpot(activeSpot);
   const kitsBySpot = useKitsState();
+  const kits = kitsBySpot[activeSpot];
   const { addKit, deleteKit, resetKits, setKitNumber } = useKitsActions();
   const selectedDrugId = useDrugId();
   const { setDrug } = useDrugActions();
@@ -201,5 +200,3 @@ export const BuildWorkbench = ({ initialSlot }: BuildWorkbenchProps = {}) => {
     </DndContext>
   );
 };
-
-export default BuildWorkbench;

@@ -5,14 +5,8 @@ import type { Drug } from '../model/drug.types';
 import { GET } from '@/utils/http';
 import { validatePayload } from '@/utils/validation';
 
-export const fetchDrugs = async (
-  query?: string,
-  signal?: AbortSignal,
-): Promise<Drug[]> => {
-  const url = query
-    ? `/api/drugs?query=${encodeURIComponent(query)}`
-    : '/api/drugs';
-  const response = await GET(url, signal);
+export const fetchDrugs = async (signal?: AbortSignal): Promise<Drug[]> => {
+  const response = await GET('/api/drugs', signal);
 
   if (!response.ok) {
     throw new DrugRepositoryError({

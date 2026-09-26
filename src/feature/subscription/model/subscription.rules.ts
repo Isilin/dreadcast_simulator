@@ -20,8 +20,3 @@ export const getActiveSubscription = <T extends SubscriptionState>(
   now = Date.now(),
 ): T | undefined =>
   subscriptions.find((subscription) => isSubscriptionActive(subscription, now));
-
-export const hasActiveSubscription = (
-  subscriptions: ReadonlyArray<SubscriptionState>,
-  now = Date.now(),
-): boolean => getActiveSubscription(subscriptions, now) !== undefined;

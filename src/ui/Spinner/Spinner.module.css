@@ -51,7 +51,7 @@
 
 /* Respect des préférences utilisateur */
 @media (prefers-reduced-motion: reduce) {
-  .spinner__ring {
+  .spinnerRing {
     animation: none;
   }
 }

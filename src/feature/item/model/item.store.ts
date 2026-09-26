@@ -5,7 +5,6 @@ import { getOtherHand, isWeaponType, itemMatchsSpot } from './item.rules';
 import type { DamageBonusType, Item, ItemsState } from './item.types';
 
 import { ItemSpotValue, type ItemSpot } from '@/domain';
-import { useBuildReadOnlyMode } from '@/feature/persistence';
 
 interface ItemStore {
   items: ItemsState;
@@ -72,9 +71,8 @@ export const useItemStore = create<ItemStore>((set) => ({
 
 export const useItemsState = (): ItemsState => useItemStore((s) => s.items);
 
-export const useItemsActions = (): ItemsActions => {
-  const isReadOnly = useBuildReadOnlyMode();
-  const actions = useItemStore(
+export const useItemsActions = (): ItemsActions =>
+  useItemStore(
     useShallow((s) => ({
       setItem: s.setItem,
       resetItem: s.resetItem,
@@ -82,15 +80,3 @@ export const useItemsActions = (): ItemsActions => {
       setDamageBonus: s.setDamageBonus,
     })),
   );
-
-  if (!isReadOnly) {
-    return actions;
-  }
-
-  return {
-    setItem: () => undefined,
-    resetItem: () => undefined,
-    setDamageBonus: () => undefined,
-    replaceItems: actions.replaceItems,
-  };
-};

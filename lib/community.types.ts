@@ -11,13 +11,6 @@ export type SpecializationCode =
   | 'soutien'
   | 'polyvalent';
 
-export type CommunitySort =
-  | 'trending'
-  | 'top'
-  | 'recent'
-  | 'most_reviewed'
-  | 'updated';
-
 export type CommunityStatsDto = Record<StatProperty, number>;
 
 export interface CommunityKeyStatDto {
@@ -133,9 +126,4 @@ export interface CopyCommunityBuildResponseDto {
 
 export interface ProfileResponseDto {
   pseudo: string | null;
-}
-
-export interface ApiErrorDto {
-  error: string;
-  code?: string;
 }

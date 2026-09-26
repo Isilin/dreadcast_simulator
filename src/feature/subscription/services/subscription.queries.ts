@@ -20,7 +20,7 @@ interface SubscriptionQueryOptions {
   enabled?: boolean;
 }
 
-export const subscriptionQueryKeys = {
+const subscriptionQueryKeys = {
   all: ['subscriptions'] as const,
   plans: ['subscription-plans'] as const,
 };
