@@ -27,6 +27,7 @@ import { BuildSheet } from '../BuildSheet';
 import { CompareDialog } from '../CompareDialog';
 import { FavoriteButton } from '../FavoriteButton';
 import { ReviewSection } from '../ReviewSection';
+import { SharePublicationButton } from '../SharePublicationButton';
 import { StarRatingDisplay } from '../StarRating';
 
 import { StatValues } from '@/domain';
@@ -139,15 +140,18 @@ export const CommunityBuildDetail = ({ id }: CommunityBuildDetailProps) => {
       </Link>
 
       <header className={styles.header}>
-        <div className={styles.badges}>
-          <SpecializationBadge
-            specialization={summary.specialization}
-            detected={summary.detectedSpecialization}
-          />
-          <VersionBadge
-            version={summary.gameVersion}
-            currentVersion={meta?.currentVersion}
-          />
+        <div className={styles.headerTop}>
+          <div className={styles.badges}>
+            <SpecializationBadge
+              specialization={summary.specialization}
+              detected={summary.detectedSpecialization}
+            />
+            <VersionBadge
+              version={summary.gameVersion}
+              currentVersion={meta?.currentVersion}
+            />
+          </div>
+          <SharePublicationButton publicationId={summary.id} />
         </div>
         <h1 className={styles.title}>{summary.title}</h1>
         <p className={styles.meta}>

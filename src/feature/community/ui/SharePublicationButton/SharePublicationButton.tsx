@@ -4,8 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './SharePublicationButton.module.css';
 
 import { Modal } from '@/ui';
-import { CheckIcon, CopyIcon, ShareIcon } from '@/ui/Icon';
-import { IconButton } from '@/ui/IconButton';
+import { CheckIcon, ShareIcon } from '@/ui/Icon';
 import Routes from '@/utils/routes';
 
 interface SharePublicationButtonProps {
@@ -13,103 +12,72 @@ interface SharePublicationButtonProps {
 }
 
 /**
- * Share link of a Communauté publication: anyone can open it, guests get
- * the same preview as signed-in non-subscribers.
+ * Copies the link of a Communauté publication: anyone can open it, guests
+ * get the same preview as signed-in non-subscribers.
  */
 export const SharePublicationButton = ({
   publicationId,
 }: SharePublicationButtonProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>(
-    'idle',
-  );
+  const [isCopied, setIsCopied] = useState(false);
+  const [isFallbackOpen, setIsFallbackOpen] = useState(false);
   const copyTimer = useRef<number | undefined>(undefined);
-  const shareLinkRef = useRef<HTMLAnchorElement>(null);
 
-  const canCopyToClipboard =
-    typeof navigator !== 'undefined' && Boolean(navigator.clipboard);
-  const sharePath = `${Routes.community}/${publicationId}`;
-  const shareUrl =
-    typeof window !== 'undefined'
-      ? `${window.location.origin}${sharePath}`
-      : sharePath;
+  const shareUrl = `${window.location.origin}${Routes.community}/${publicationId}`;
 
   useEffect(() => () => window.clearTimeout(copyTimer.current), []);
 
-  const copyShareUrl = async () => {
-    if (!canCopyToClipboard) {
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+    } catch {
+      // Clipboard missing or refused (permissions, embedded browser): show
+      // the link, selected, so it can be copied by hand.
+      setIsFallbackOpen(true);
       return;
     }
 
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-      setCopyState('copied');
-    } catch {
-      // Clipboard refused (permissions, embedded browser): select the link so
-      // it can be copied by hand.
-      const link = shareLinkRef.current;
-      if (link) window.getSelection()?.selectAllChildren(link);
-      setCopyState('failed');
-    }
+    setIsCopied(true);
     window.clearTimeout(copyTimer.current);
-    copyTimer.current = window.setTimeout(() => setCopyState('idle'), 2500);
+    copyTimer.current = window.setTimeout(() => setIsCopied(false), 2500);
   };
-
-  const copyLabel =
-    copyState === 'copied'
-      ? 'Lien copié'
-      : copyState === 'failed'
-        ? 'Copie impossible : lien sélectionné, faites Ctrl+C'
-        : 'Copier le lien';
 
   return (
     <>
-      <IconButton
-        label="Partager la publication"
-        icon={<ShareIcon />}
-        onClick={() => {
-          setCopyState('idle');
-          setIsOpen(true);
-        }}
-      />
+      <button
+        type="button"
+        className={styles.button}
+        onClick={() => void copyLink()}
+      >
+        {isCopied ? (
+          <CheckIcon className={styles.icon} />
+        ) : (
+          <ShareIcon className={styles.icon} />
+        )}
+        <span>{isCopied ? 'Lien copié' : 'Copier le lien'}</span>
+      </button>
+      <p className="visuallyHidden" aria-live="polite">
+        {isCopied ? 'Lien de la publication copié.' : ''}
+      </p>
 
-      <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
+      <Dialog.Root open={isFallbackOpen} onOpenChange={setIsFallbackOpen}>
         <Modal>
           <Modal.Header>
-            <Modal.Title>Lien de partage</Modal.Title>
+            <Modal.Title>Lien de la publication</Modal.Title>
           </Modal.Header>
           <Modal.Content>
-            <div className={styles.sharePanel}>
+            <div className={styles.fallback}>
               <p>
-                Ce lien ouvre la publication dans la Communauté, y compris pour
-                un visiteur non connecté :
+                Copie automatique impossible : le lien est sélectionné, faites
+                Ctrl+C.
               </p>
-              <div className={styles.shareRow}>
-                <a
-                  ref={shareLinkRef}
-                  href={sharePath}
-                  className={styles.shareLink}
-                >
-                  {shareUrl}
-                </a>
-                {canCopyToClipboard ? (
-                  <IconButton
-                    label={copyLabel}
-                    icon={copyState === 'copied' ? <CheckIcon /> : <CopyIcon />}
-                    variant={
-                      copyState === 'copied'
-                        ? 'primary'
-                        : copyState === 'failed'
-                          ? 'warning'
-                          : 'default'
-                    }
-                    onClick={() => void copyShareUrl()}
-                  />
-                ) : null}
-              </div>
-              <p className="visuallyHidden" aria-live="polite">
-                {copyState === 'idle' ? '' : `${copyLabel}.`}
-              </p>
+              <input
+                type="text"
+                readOnly
+                aria-label="Lien de la publication"
+                className={styles.link}
+                value={shareUrl}
+                onFocus={(event) => event.currentTarget.select()}
+              />
             </div>
           </Modal.Content>
           <Modal.Footer>

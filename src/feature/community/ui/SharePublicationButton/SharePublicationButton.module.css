@@ -1,23 +1,24 @@
-.sharePanel {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
+.button {
+  composes: button from '../community.controls.module.css';
 }
 
-.shareRow {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--small-radius);
-  background: var(--surface-sunken);
+.icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
 }
 
-.shareLink {
-  flex: 1;
-  min-width: 0;
-  color: var(--action-primary-strong);
-  font: 400 11px/1.3 var(--font-data);
-  word-break: break-all;
+.fallback {
+  display: grid;
+  gap: var(--space-2);
+  width: min(100%, 480px);
+  font: 400 13px/1.5 var(--font-data);
+}
+
+.fallback p {
+  margin: 0;
+}
+
+.link {
+  composes: input from '../community.controls.module.css';
 }

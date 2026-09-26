@@ -5,7 +5,6 @@ import styles from './PublishBuildButton.module.css';
 import type { MyPublication } from '../../model';
 import { useMyPublications } from '../../services';
 import { PublishBuildDialog } from '../PublishBuildDialog';
-import { SharePublicationButton } from '../SharePublicationButton';
 
 import type { useBuildPersistence } from '@/feature/persistence';
 import { useActiveSubscription } from '@/feature/subscription';
@@ -48,19 +47,16 @@ export const PublishBuildButton = ({
   );
 
   const viewLink = publication ? (
-    <>
-      <IconTooltip label="Voir la publication">
-        <Link
-          to={Routes.communityById}
-          params={{ id: publication.id }}
-          className={iconButtonClassName}
-          aria-label="Voir la publication"
-        >
-          <EyeIcon />
-        </Link>
-      </IconTooltip>
-      <SharePublicationButton publicationId={publication.id} />
-    </>
+    <IconTooltip label="Voir la publication">
+      <Link
+        to={Routes.communityById}
+        params={{ id: publication.id }}
+        className={iconButtonClassName}
+        aria-label="Voir la publication"
+      >
+        <EyeIcon />
+      </Link>
+    </IconTooltip>
   ) : null;
 
   if (publication?.frozen) {
