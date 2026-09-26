@@ -114,18 +114,6 @@ export const handleSupabaseError = (
   return res.status(500).json({ error: error.message });
 };
 
-export const requireStringParam = (
-  param: string | string[] | undefined,
-  res: VercelResponse,
-  errorMessage: string,
-): string | null => {
-  if (!param || typeof param !== 'string') {
-    res.status(400).json({ error: errorMessage });
-    return null;
-  }
-  return param;
-};
-
 export const getOptionalStringParam = (
   param: string | string[] | undefined,
 ): string | undefined => {

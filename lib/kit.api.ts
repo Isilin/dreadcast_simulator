@@ -1,5 +1,3 @@
-import type { KitResponseDto } from './kit.types.ts';
-
 // The implant of a prerequisite is many-to-one: PostgREST returns an object,
 // while supabase-js (without generated DB types) infers an array. Hence the
 // `as unknown` casts in the handlers.
@@ -28,7 +26,3 @@ export const KIT_SELECT_QUERY = `
     race
   )
 `;
-
-export const typeKit = (kit: unknown): KitResponseDto | null => {
-  return (kit as KitResponseDto) || null;
-};

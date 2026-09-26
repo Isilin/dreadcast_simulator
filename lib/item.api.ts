@@ -1,5 +1,3 @@
-import type { ItemResponseDto } from './item.types.ts';
-
 // The implant of a prerequisite is many-to-one: PostgREST returns an object,
 // while supabase-js (without generated DB types) infers an array. Hence the
 // `as unknown` casts in the handlers.
@@ -38,7 +36,3 @@ export const ITEM_SELECT_QUERY = `
     value
   )
 `;
-
-export const typeItem = (item: unknown): ItemResponseDto | null => {
-  return (item as ItemResponseDto) || null;
-};

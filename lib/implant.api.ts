@@ -1,5 +1,3 @@
-import type { ImplantResponseDto } from './implant.types.ts';
-
 export const IMPLANT_SELECT_QUERY = `
   id,
   name,
@@ -12,7 +10,3 @@ export const IMPLANT_SELECT_QUERY = `
     value
   )
 `;
-
-export const typeImplant = (implant: unknown): ImplantResponseDto | null => {
-  return (implant as ImplantResponseDto) || null;
-};

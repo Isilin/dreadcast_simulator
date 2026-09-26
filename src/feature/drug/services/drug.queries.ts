@@ -7,14 +7,13 @@ const DRUGS_GC_TIME_MS = 30 * 60 * 1000;
 
 export const drugQueryKeys = {
   all: ['drugs'] as const,
-  list: (search?: string) => ['drugs', { search: search ?? '' }] as const,
   detail: (id?: string | null) => ['drug', id ?? null] as const,
 };
 
-export const useDrugs = (search?: string) =>
+export const useDrugs = () =>
   useQuery({
-    queryKey: drugQueryKeys.list(search),
-    queryFn: ({ signal }) => fetchDrugs(search, signal),
+    queryKey: drugQueryKeys.all,
+    queryFn: ({ signal }) => fetchDrugs(signal),
     staleTime: DRUGS_STALE_TIME_MS,
     gcTime: DRUGS_GC_TIME_MS,
   });

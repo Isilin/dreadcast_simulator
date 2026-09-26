@@ -4,15 +4,10 @@ import {
   doCreateClientWithAuth,
   handleError,
   requireBearerToken,
+  setNoStoreHeaders,
 } from '../../lib/helper.api.js';
 import { SUBSCRIPTION_PLAN_SELECT_QUERY } from '../../lib/subscription.api.js';
 import type { SubscriptionPlanResponseDto } from '../../lib/subscription.types.js';
-
-const setNoStoreHeaders = (res: VercelResponse): void => {
-  res.setHeader('Content-Type', 'application/json');
-  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
-  res.setHeader('Pragma', 'no-cache');
-};
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {
