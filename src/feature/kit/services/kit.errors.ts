@@ -5,8 +5,5 @@ export const KIT_REPOSITORY_ERROR_CODE = {
   INVALID_KITS_PAYLOAD: 'INVALID_KITS_PAYLOAD',
 } as const;
 
-export type KitRepositoryErrorCode =
-  (typeof KIT_REPOSITORY_ERROR_CODE)[keyof typeof KIT_REPOSITORY_ERROR_CODE];
-
 export const KitRepositoryError =
   createRepositoryErrorClass('KitRepositoryError');

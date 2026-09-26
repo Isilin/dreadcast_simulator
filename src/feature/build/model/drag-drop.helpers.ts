@@ -9,7 +9,7 @@ import type { Drug } from '@/feature/drug';
 import { itemMatchsSpot, ItemTypeValues, type Item } from '@/feature/item';
 import type { Kit } from '@/feature/kit';
 
-export const isItemSpot = (value: unknown): value is ItemSpot =>
+const isItemSpot = (value: unknown): value is ItemSpot =>
   typeof value === 'string' && ItemSpotValue.includes(value as ItemSpot);
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
@@ -80,12 +80,6 @@ export const getDragLabel = (dragData: WorkbenchDragData): string => {
   if (dragData.kind === 'item') return dragData.item.name;
   if (dragData.kind === 'kit') return dragData.kit.name;
   return dragData.drug.name;
-};
-
-export const getDragIdentifier = (dragData: WorkbenchDragData): string => {
-  if (dragData.kind === 'item') return dragData.item.id;
-  if (dragData.kind === 'kit') return `kit-${dragData.kit.id}`;
-  return `drug-${dragData.drug.id}`;
 };
 
 export const getDropAnnouncement = (

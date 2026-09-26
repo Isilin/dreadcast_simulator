@@ -7,7 +7,7 @@ import type {
 import { StatValues, type Stat } from '@/domain';
 
 /** Same limits as lib/community.validation.ts and the SQL constraints. */
-export const TITLE_MIN_LENGTH = 3;
+const TITLE_MIN_LENGTH = 3;
 export const TITLE_MAX_LENGTH = 64;
 export const DESCRIPTION_MAX_LENGTH = 1000;
 export const REVIEW_BODY_MAX_LENGTH = 280;

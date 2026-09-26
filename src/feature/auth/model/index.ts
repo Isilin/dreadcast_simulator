@@ -1,3 +1,1 @@
-export { useAuthActions, useAuthState, useAuthStore } from './auth.store';
-export type { AuthActions } from './auth.store';
-export type { AuthState } from './auth.types';
+export { useAuthState, useAuthStore } from './auth.store';

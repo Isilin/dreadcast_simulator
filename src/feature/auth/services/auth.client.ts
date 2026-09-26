@@ -7,7 +7,7 @@ import {
   supabaseUrl,
 } from './auth.config';
 
-export const supabaseClient = hasSupabaseAuthConfig
+const supabaseClient = hasSupabaseAuthConfig
   ? createClient(supabaseUrl as string, supabaseAnonKey as string)
   : null;
 

@@ -5,7 +5,7 @@ import { fetchKits } from './kit.repo';
 const KITS_STALE_TIME_MS = 5 * 60 * 1000;
 const KITS_GC_TIME_MS = 30 * 60 * 1000;
 
-export const kitQueryKeys = {
+const kitQueryKeys = {
   all: ['kits'] as const,
 };
 

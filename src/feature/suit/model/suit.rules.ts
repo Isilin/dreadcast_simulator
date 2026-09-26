@@ -49,14 +49,6 @@ export const computeStat = (
   );
 };
 
-export const computeStatWithoutItems = (
-  stat: Stat,
-  raceStats: Partial<Record<Skill, number>>,
-  implantsEffects: Record<Stat, number>,
-): number => {
-  return (raceStats[stat as Skill] ?? 0) + implantsEffects[stat];
-};
-
 /**
  * Base health and stamina of every character, added on top of the race.
  */

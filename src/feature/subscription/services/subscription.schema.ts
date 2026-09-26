@@ -1,6 +1,6 @@
 import z from 'zod';
 
-export const subscriptionPlanCodeSchema = z.enum([
+const subscriptionPlanCodeSchema = z.enum([
   'annual_1',
   'annual_6',
   'annual_12',

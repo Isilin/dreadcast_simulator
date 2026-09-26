@@ -79,7 +79,7 @@ export const setNoStoreHeaders = (res: VercelResponse): void => {
   res.setHeader('Pragma', 'no-cache');
 };
 
-export const setCacheHeaders = (res: VercelResponse): void => {
+const setCacheHeaders = (res: VercelResponse): void => {
   res.setHeader(
     'Cache-Control',
     'public, max-age=3600, stale-while-revalidate=86400',

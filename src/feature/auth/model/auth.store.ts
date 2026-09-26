@@ -1,6 +1,5 @@
 import type { Session } from '@supabase/supabase-js';
 import { create } from 'zustand';
-import { useShallow } from 'zustand/react/shallow';
 
 import type { AuthState } from './auth.types';
 
@@ -9,8 +8,6 @@ interface AuthStore {
   setSession: (session: Session | null) => void;
   setBootstrapping: (isBootstrapping: boolean) => void;
 }
-
-export type AuthActions = Pick<AuthStore, 'setSession' | 'setBootstrapping'>;
 
 const initialState: AuthState = {
   session: null,
@@ -27,11 +24,3 @@ export const useAuthStore = create<AuthStore>((set) => ({
 
 export const useAuthState = (): AuthState =>
   useAuthStore((state) => state.auth);
-
-export const useAuthActions = (): AuthActions =>
-  useAuthStore(
-    useShallow((state) => ({
-      setSession: state.setSession,
-      setBootstrapping: state.setBootstrapping,
-    })),
-  );

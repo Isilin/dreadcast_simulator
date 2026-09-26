@@ -34,7 +34,7 @@ import { useAuthState } from '@/feature/auth';
 const LIST_STALE_TIME_MS = 30 * 1000;
 const META_STALE_TIME_MS = 60 * 60 * 1000;
 
-export const communityQueryKeys = {
+const communityQueryKeys = {
   all: ['community'] as const,
   lists: ['community', 'list'] as const,
   list: (filters: CommunityFilters) => ['community', 'list', filters] as const,

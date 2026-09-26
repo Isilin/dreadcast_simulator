@@ -2,7 +2,7 @@
  * Same rules as lib/community.validation.ts and the user_profile constraints
  * (supabase/schemas/025_table_user_profile.sql).
  */
-export const PSEUDO_MIN_LENGTH = 3;
+const PSEUDO_MIN_LENGTH = 3;
 export const PSEUDO_MAX_LENGTH = 24;
 
 const PSEUDO_PATTERN = /^[A-Za-zÀ-ÖØ-öø-ÿ0-9_.-]{3,24}$/u;

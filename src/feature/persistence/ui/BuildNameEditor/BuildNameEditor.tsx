@@ -131,5 +131,3 @@ export const BuildNameEditor = ({ persistence }: BuildNameEditorProps) => {
     </>
   );
 };
-
-export default BuildNameEditor;

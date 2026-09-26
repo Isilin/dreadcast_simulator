@@ -1,2 +1,2 @@
-export { TabsBar } from './TabsBar/TabsBar';
-export { BuildNameEditor } from './BuildNameEditor/BuildNameEditor';
+export * from './BuildNameEditor';
+export * from './TabsBar';

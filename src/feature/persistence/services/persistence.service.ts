@@ -6,7 +6,7 @@ import type { Kit, KitSelection, KitsState } from '@/feature/kit';
 import type { ProfileState } from '@/feature/profile';
 import type { TitlesState } from '@/feature/title';
 
-export const BUILDS_KEY = 'dreadcast.builds.v3';
+const BUILDS_KEY = 'dreadcast.builds.v3';
 export const GUEST_SLOTS = 1;
 export const AUTHENTICATED_FREE_SLOTS = 5;
 
@@ -145,7 +145,7 @@ export const readBuilds = (): Record<string, BuildSnapshot> => {
 export const writeBuilds = (s: Record<string, BuildSnapshot>) =>
   localStorage.setItem(BUILDS_KEY, JSON.stringify(s));
 
-export const ACTIVE_SLOT_KEY = 'dreadcast.activeSlot';
+const ACTIVE_SLOT_KEY = 'dreadcast.activeSlot';
 
 /**
  * Last active slot of the tab, so that leaving the workbench (Communauté,

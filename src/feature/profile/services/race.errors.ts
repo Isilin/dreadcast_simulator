@@ -5,9 +5,6 @@ export const RACE_REPOSITORY_ERROR_CODE = {
   INVALID_RACES_PAYLOAD: 'INVALID_RACES_PAYLOAD',
 } as const;
 
-export type RaceRepositoryErrorCode =
-  (typeof RACE_REPOSITORY_ERROR_CODE)[keyof typeof RACE_REPOSITORY_ERROR_CODE];
-
 export const RaceRepositoryError = createRepositoryErrorClass(
   'RaceRepositoryError',
 );

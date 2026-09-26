@@ -5,7 +5,7 @@ import { fetchTitles } from './title.repo';
 const TITLES_STALE_TIME_MS = 5 * 60 * 1000;
 const TITLES_GC_TIME_MS = 30 * 60 * 1000;
 
-export const titleQueryKeys = {
+const titleQueryKeys = {
   all: ['titles'] as const,
 };
 

@@ -1,10 +1,6 @@
 import { useMemo } from 'react';
 
-import {
-  BASE_HEALTH_STAMINA,
-  computeStat,
-  computeStatWithoutItems,
-} from './suit.rules';
+import { BASE_HEALTH_STAMINA, computeStat } from './suit.rules';
 
 import { StatValues, type Stat } from '@/domain';
 import { useDrugEffects } from '@/feature/drug';
@@ -43,30 +39,6 @@ export const useSuitSelector = () => {
         {} as Record<Stat, number>,
       ),
     [drugEffects, implantsEffects, itemEffects, items, kitsEffects, raceStats],
-  );
-
-  return stats;
-};
-
-export const usePureStatSelector = () => {
-  const raceStats = useRaceStats();
-  const implantsEffects = useImplantsEffects();
-
-  const stats = useMemo(
-    () =>
-      Object.keys(StatValues).reduce(
-        (acc, s) => {
-          const stat = s as Stat;
-          acc[stat] = computeStatWithoutItems(
-            stat,
-            raceStats || {},
-            implantsEffects,
-          );
-          return acc;
-        },
-        {} as Record<Stat, number>,
-      ),
-    [implantsEffects, raceStats],
   );
 
   return stats;

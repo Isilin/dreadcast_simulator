@@ -8,7 +8,7 @@ import { getAuthHeaders } from '@/feature/auth';
  */
 const pendingUpserts = new Set<Promise<unknown>>();
 
-export const waitForPendingBuildSaves = async (): Promise<void> => {
+const waitForPendingBuildSaves = async (): Promise<void> => {
   await Promise.allSettled([...pendingUpserts]);
 };
 

@@ -39,7 +39,7 @@ export const SPECIALIZATION_CODES = [
   'polyvalent',
 ] as const;
 
-export const COMMUNITY_SORTS = [
+const COMMUNITY_SORTS = [
   'trending',
   'top',
   'recent',
@@ -61,7 +61,7 @@ export const RACE_TYPES = [
   'Androide',
 ] as const;
 
-export const WEAPON_ITEM_TYPES = [
+const WEAPON_ITEM_TYPES = [
   '1handShot',
   '2handsShot',
   '1handMelee',
@@ -69,19 +69,19 @@ export const WEAPON_ITEM_TYPES = [
 ] as const;
 
 /** Sanity bounds only: stats are computed client-side. */
-export const STAT_MIN = -1000;
-export const STAT_MAX = 10000;
+const STAT_MIN = -1000;
+const STAT_MAX = 10000;
 
-export const TITLE_MIN_LENGTH = 3;
+const TITLE_MIN_LENGTH = 3;
 export const TITLE_MAX_LENGTH = 64;
-export const DESCRIPTION_MAX_LENGTH = 1000;
-export const REVIEW_BODY_MAX_LENGTH = 280;
+const DESCRIPTION_MAX_LENGTH = 1000;
+const REVIEW_BODY_MAX_LENGTH = 280;
 
-export const SEARCH_PAGE_SIZE_DEFAULT = 24;
-export const SEARCH_PAGE_SIZE_MAX = 48;
+const SEARCH_PAGE_SIZE_DEFAULT = 24;
+const SEARCH_PAGE_SIZE_MAX = 48;
 
 /** Same rule as the valid_user_profile_pseudo / reserved constraints (025). */
-export const PSEUDO_PATTERN = /^[A-Za-zÀ-ÖØ-öø-ÿ0-9_.-]{3,24}$/u;
+const PSEUDO_PATTERN = /^[A-Za-zÀ-ÖØ-öø-ÿ0-9_.-]{3,24}$/u;
 export const RESERVED_PSEUDOS = [
   'admin',
   'administrateur',
@@ -113,7 +113,7 @@ export const isPseudoValid = (pseudo: string): boolean => {
 // z.number() rejects NaN and Infinity in zod 4.
 const statValueSchema = z.number().min(STAT_MIN).max(STAT_MAX);
 
-export const statsSchema = z
+const statsSchema = z
   .object(
     Object.fromEntries(STAT_KEYS.map((key) => [key, statValueSchema])) as {
       [K in (typeof STAT_KEYS)[number]]: typeof statValueSchema;

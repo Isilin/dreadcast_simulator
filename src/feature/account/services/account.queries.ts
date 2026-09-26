@@ -6,7 +6,7 @@ import { useAuthState } from '@/feature/auth';
 
 const PROFILE_STALE_TIME_MS = 10 * 60 * 1000;
 
-export const accountQueryKeys = {
+const accountQueryKeys = {
   profile: (userId: string | null) => ['account', 'profile', userId] as const,
 };
 

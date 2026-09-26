@@ -5,7 +5,7 @@ import { fetchItems } from './item.repo';
 const ITEMS_STALE_TIME_MS = 5 * 60 * 1000;
 const ITEMS_GC_TIME_MS = 30 * 60 * 1000;
 
-export const itemQueryKeys = {
+const itemQueryKeys = {
   all: ['items'] as const,
 };
 

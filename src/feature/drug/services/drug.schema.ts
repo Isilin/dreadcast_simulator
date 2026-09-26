@@ -1,6 +1,6 @@
 import z from 'zod';
 
-export const statModifierResponseDtoSchema = z.object({
+const statModifierResponseDtoSchema = z.object({
   property: z.enum([
     'strength',
     'agility',
@@ -36,4 +36,3 @@ export const drugResponseDtoSchema = z.object({
 export const drugArrayResponseSchema = z.array(drugResponseDtoSchema);
 
 export type DrugResponseDto = z.infer<typeof drugResponseDtoSchema>;
-export type DrugArrayResponseDto = z.infer<typeof drugArrayResponseSchema>;

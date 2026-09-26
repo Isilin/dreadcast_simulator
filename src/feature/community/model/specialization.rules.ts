@@ -4,18 +4,18 @@ import { SkillValues, type Skill, type Stat } from '@/domain';
 import type { ItemType } from '@/feature/item';
 
 /** Below this total skill gain, a build has no marked specialization. */
-export const MIN_TOTAL_SCORE = 30;
+const MIN_TOTAL_SCORE = 30;
 /** Minimal share of the best specialization among all scores. */
-export const MIN_BEST_SHARE = 0.35;
+const MIN_BEST_SHARE = 0.35;
 /** Minimal lead of the best specialization over the second one. */
-export const MIN_LEAD_SHARE = 0.08;
+const MIN_LEAD_SHARE = 0.08;
 /** Weight of a mismatching weapon (e.g. perception with a melee weapon). */
-export const WEAPON_MISMATCH_FACTOR = 0.4;
+const WEAPON_MISMATCH_FACTOR = 0.4;
 /** Health points counting as one skill point for the tank score. */
-export const HEALTH_POINTS_PER_SCORE = 10;
+const HEALTH_POINTS_PER_SCORE = 10;
 /** Secondary damage stats are small numbers: weight them up. */
-export const SECONDARY_STAT_WEIGHT = 2;
-export const TEAM_HEAL_WEIGHT = 3;
+const SECONDARY_STAT_WEIGHT = 2;
+const TEAM_HEAL_WEIGHT = 3;
 
 export interface SpecializationWeapons {
   types: ItemType[];

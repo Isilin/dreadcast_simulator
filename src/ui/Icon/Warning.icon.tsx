@@ -22,5 +22,3 @@ export const WarningIcon = ({ className }: Props) => (
     <circle cx="12" cy="16.5" r="1.1" fill="currentColor" stroke="none" />
   </svg>
 );
-
-export default WarningIcon;

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   getActiveSubscription,
-  hasActiveSubscription,
+  isSubscriptionActive,
 } from './subscription.rules';
 
 describe('subscription rules', () => {
@@ -10,28 +10,25 @@ describe('subscription rules', () => {
 
   it('accepts only validated subscriptions that have not ended', () => {
     expect(
-      hasActiveSubscription(
-        [{ status: 'validated', endsAt: '2026-01-01T00:00:00.000Z' }],
+      isSubscriptionActive(
+        { status: 'validated', endsAt: '2026-01-01T00:00:00.000Z' },
         now,
       ),
     ).toBe(true);
     expect(
-      hasActiveSubscription(
-        [{ status: 'pending', endsAt: '2026-12-31T00:00:00.000Z' }],
+      isSubscriptionActive(
+        { status: 'pending', endsAt: '2026-12-31T00:00:00.000Z' },
         now,
       ),
     ).toBe(false);
     expect(
-      hasActiveSubscription(
-        [{ status: 'validated', endsAt: '2025-12-31T23:59:59.000Z' }],
+      isSubscriptionActive(
+        { status: 'validated', endsAt: '2025-12-31T23:59:59.000Z' },
         now,
       ),
     ).toBe(false);
     expect(
-      hasActiveSubscription(
-        [{ status: 'validated', endsAt: 'not-a-date' }],
-        now,
-      ),
+      isSubscriptionActive({ status: 'validated', endsAt: 'not-a-date' }, now),
     ).toBe(false);
   });
 

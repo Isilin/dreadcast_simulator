@@ -5,7 +5,7 @@ import type { Theme } from './theme.types';
  * Returns 'dark' if prefers-color-scheme: dark, otherwise 'light'.
  * Defaults to 'dark' in non-browser environments.
  */
-export const getSystemTheme = (): Theme => {
+const getSystemTheme = (): Theme => {
   if (typeof window === 'undefined') return 'dark';
 
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;

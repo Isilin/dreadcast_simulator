@@ -5,7 +5,7 @@ import { fetchDrugById, fetchDrugs } from './drug.repo';
 const DRUGS_STALE_TIME_MS = 5 * 60 * 1000;
 const DRUGS_GC_TIME_MS = 30 * 60 * 1000;
 
-export const drugQueryKeys = {
+const drugQueryKeys = {
   all: ['drugs'] as const,
   detail: (id?: string | null) => ['drug', id ?? null] as const,
 };

@@ -16,7 +16,7 @@ interface ThemeStore extends ThemeState, ThemeActions {}
 // Apply theme to DOM synchronously at module load (no flash of wrong theme)
 const initialTheme = initializeTheme();
 
-export const useThemeStore = create<ThemeStore>((set, get) => ({
+const useThemeStore = create<ThemeStore>((set, get) => ({
   current: initialTheme,
   // true when no stored preference exists and theme comes from system
   isSystemPreference: getStoredTheme(STORAGE_KEY) === null,
@@ -31,7 +31,7 @@ export const useThemeStore = create<ThemeStore>((set, get) => ({
   },
 }));
 
-export const useThemeState = (): ThemeState =>
+const useThemeState = (): ThemeState =>
   useThemeStore(
     useShallow((s) => ({
       current: s.current,

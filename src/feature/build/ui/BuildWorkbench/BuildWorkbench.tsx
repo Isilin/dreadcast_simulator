@@ -200,5 +200,3 @@ export const BuildWorkbench = ({ initialSlot }: BuildWorkbenchProps = {}) => {
     </DndContext>
   );
 };
-
-export default BuildWorkbench;

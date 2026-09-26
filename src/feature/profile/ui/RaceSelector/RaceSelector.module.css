@@ -96,42 +96,6 @@
   box-shadow: var(--elevation-1);
 }
 
-.Arrow {
-  display: flex;
-
-  &[data-side='top'] {
-    bottom: -8px;
-    rotate: 180deg;
-  }
-
-  &[data-side='bottom'] {
-    top: -8px;
-    rotate: 0deg;
-  }
-
-  &[data-side='left'] {
-    right: -13px;
-    rotate: 90deg;
-  }
-
-  &[data-side='right'] {
-    left: -13px;
-    rotate: -90deg;
-  }
-}
-
-.ArrowFill {
-  fill: var(--surface-raised);
-}
-
-.ArrowOuterStroke {
-  fill: var(--border-subtle);
-}
-
-.ArrowInnerStroke {
-  fill: var(--border-strong);
-}
-
 .Item {
   box-sizing: border-box;
   outline: 0;
