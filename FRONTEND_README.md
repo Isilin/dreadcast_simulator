@@ -15,7 +15,7 @@ src/
     auth/           Session, connexion, deconnexion et UI de compte
     account/        Pseudo public du compte (definitif)
     community/      Communaute: publication, recherche, notes, recommandations
-    persistence/    Chargement, snapshots, autosave et partage de builds
+    persistence/    Chargement, snapshots, autosave et builds distants
     profile/        Race, genre et silhouette
     item/           Equipements et slots
     kit/            Kits et racks
@@ -70,8 +70,7 @@ responsabilites sont separees:
 - `persistence.snapshot.ts` lit, cree et restaure les snapshots dans les
   stores de domaine.
 - `autosave.hook.ts` observe les stores et debite les sauvegardes.
-- `persistence.remote.ts` gere les builds ordinaires.
-- `shared-build.remote.ts` gere les liens de partage publics.
+- `persistence.remote.ts` gere les builds distants.
 
 L'autosave debite les sauvegardes de 250 ms et les envoie immediatement si
 l'atelier est demonte (navigation vers la Communaute par exemple).

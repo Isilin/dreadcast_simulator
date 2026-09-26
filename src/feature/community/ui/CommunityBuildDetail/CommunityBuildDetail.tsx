@@ -27,6 +27,7 @@ import { BuildSheet } from '../BuildSheet';
 import { CompareDialog } from '../CompareDialog';
 import { FavoriteButton } from '../FavoriteButton';
 import { ReviewSection } from '../ReviewSection';
+import { SharePublicationButton } from '../SharePublicationButton';
 import { StarRatingDisplay } from '../StarRating';
 
 import { StatValues } from '@/domain';
@@ -34,17 +35,16 @@ import { useActiveSubscription } from '@/feature/subscription';
 import { Modal, Spinner } from '@/ui';
 import Routes from '@/utils/routes';
 
+const LOCKED_DETAIL_TEXT =
+  'Équipement, kits, implants, statistiques complètes, avis, copie dans votre atelier et comparaison sont accessibles avec un abonnement.';
+
 interface CommunityBuildDetailProps {
   id: string;
 }
 
 export const CommunityBuildDetail = ({ id }: CommunityBuildDetailProps) => {
   const navigate = useNavigate();
-  const {
-    isAuthenticated,
-    isSubscriber,
-    isLoading: isAccessLoading,
-  } = useActiveSubscription();
+  const { isAuthenticated, isSubscriber } = useActiveSubscription();
   const detail = useCommunityBuild(id);
   const { data: meta } = useCommunityMeta();
   const { catalogs, isError: isCatalogError } = useBuildCatalogs();
@@ -77,16 +77,6 @@ export const CommunityBuildDetail = ({ id }: CommunityBuildDetailProps) => {
     if (!catalogs || isOutdated || missingIds.length > 0) return content.stats;
     return computeSnapshotStats(content.snapshot, catalogs);
   }, [catalogs, content, isOutdated, missingIds.length]);
-
-  if (!isAccessLoading && !isAuthenticated) {
-    return (
-      <div className={styles.page}>
-        <GuestGate title="Connectez-vous pour voir ce build">
-          <p>Les builds de la Communauté sont visibles par les membres.</p>
-        </GuestGate>
-      </div>
-    );
-  }
 
   if (detail.isPending) {
     return (
@@ -150,15 +140,18 @@ export const CommunityBuildDetail = ({ id }: CommunityBuildDetailProps) => {
       </Link>
 
       <header className={styles.header}>
-        <div className={styles.badges}>
-          <SpecializationBadge
-            specialization={summary.specialization}
-            detected={summary.detectedSpecialization}
-          />
-          <VersionBadge
-            version={summary.gameVersion}
-            currentVersion={meta?.currentVersion}
-          />
+        <div className={styles.headerTop}>
+          <div className={styles.badges}>
+            <SpecializationBadge
+              specialization={summary.specialization}
+              detected={summary.detectedSpecialization}
+            />
+            <VersionBadge
+              version={summary.gameVersion}
+              currentVersion={meta?.currentVersion}
+            />
+          </div>
+          <SharePublicationButton publicationId={summary.id} />
         </div>
         <h1 className={styles.title}>{summary.title}</h1>
         <p className={styles.meta}>
@@ -198,13 +191,15 @@ export const CommunityBuildDetail = ({ id }: CommunityBuildDetailProps) => {
               ))}
             </dl>
           ) : null}
-          <SubscriberGate title="Détail complet réservé aux abonnés">
-            <p>
-              Équipement, kits, implants, statistiques complètes, avis, copie
-              dans votre atelier et comparaison sont accessibles avec un
-              abonnement.
-            </p>
-          </SubscriberGate>
+          {isAuthenticated ? (
+            <SubscriberGate title="Détail complet réservé aux abonnés">
+              <p>{LOCKED_DETAIL_TEXT}</p>
+            </SubscriberGate>
+          ) : (
+            <GuestGate title="Détail complet réservé aux abonnés">
+              <p>{LOCKED_DETAIL_TEXT}</p>
+            </GuestGate>
+          )}
         </>
       ) : null}
 

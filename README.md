@@ -40,7 +40,7 @@ Cette application est construite avec des technologies modernes et suit une arch
   - Hors connexion: 1 build stocke en local (localStorage)
   - Connecte sans abonnement valide: 5 builds distants (BDD)
   - Connecte avec abonnement valide: nombre de builds illimite (BDD)
-  - Partage de build via lien public en lecture seule (`/shared/:id`)
+  - Partage d'un build publie dans la Communaute via son lien (`/communaute/:id`, apercu ouvert aux visiteurs non connectes)
   - En fin d'abonnement, les builds > 5 sont conserves mais masques
   - Validation automatique des prerequis
   - Interface intuitive avec apercu des modifications
@@ -167,7 +167,7 @@ src/
 ├── feature/         # Fonctionnalités métier
 │   ├── build/        # Atelier, coordination et drag-and-drop
 │   ├── auth/         # Session et identifiants
-│   ├── persistence/  # Snapshots, autosave et builds partagés
+│   ├── persistence/  # Snapshots, autosave et builds distants
 │   ├── implant/     # Gestion des implants
 │   ├── item/        # Gestion des équipements
 │   ├── kit/         # Gestion des kits
@@ -196,8 +196,8 @@ Chaque fonctionnalité est organisée selon le pattern `model/services/ui` :
 - `feature/build` orchestre l'atelier, les modes de catalogue et le protocole
   drag-and-drop; les composants métier restent dans `item`, `kit`, `implant` et
   `drug`.
-- `feature/persistence` sépare chargement, snapshots, autosave, builds distants
-  et partage public.
+- `feature/persistence` sépare chargement, snapshots, autosave et builds
+  distants.
 - `feature/auth` sépare session Supabase et opérations d'identifiants derrière
   une façade stable.
 - `src/ui` contient uniquement les primitives génériques réutilisables.

@@ -47,30 +47,6 @@
   cursor: progress;
 }
 
-.sharePanel {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.shareRow {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--small-radius);
-  background: var(--surface-sunken);
-}
-
-.shareLink {
-  flex: 1;
-  min-width: 0;
-  color: var(--action-primary-strong);
-  font: 400 11px/1.3 var(--font-data);
-  word-break: break-all;
-}
-
 .input {
   width: 100%;
   min-width: 0;

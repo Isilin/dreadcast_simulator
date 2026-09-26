@@ -48,6 +48,21 @@ export const getAuthHeaders = async (
   };
 };
 
+/**
+ * JSON headers for /api calls open to guests: bearer only when signed in.
+ */
+export const getOptionalAuthHeaders = async (): Promise<HeadersInit> => {
+  const session = await getCurrentSession();
+  const accessToken = session?.access_token;
+
+  return accessToken
+    ? {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      }
+    : { 'Content-Type': 'application/json' };
+};
+
 export const requireAuthenticatedSession = async (): Promise<boolean> => {
   const { requireAuthenticatedSession: requireSession } =
     await loadAuthService();

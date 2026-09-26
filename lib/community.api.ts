@@ -138,8 +138,23 @@ export interface CommunitySearchRow {
 const toNumberOrNull = (value: number | string | null): number | null =>
   value === null ? null : Number(value);
 
+/** Row of the public community_get_preview RPC: preview metadata only. */
+export type CommunityPreviewRow = Omit<
+  CommunitySearchRow,
+  | 'author_id'
+  | 'stats'
+  | 'is_mine'
+  | 'is_favorite'
+  | 'bayes_score'
+  | 'trend_score'
+  | 'total_count'
+>;
+
 export const toSummaryDto = (
-  row: CommunitySearchRow,
+  row: Omit<
+    CommunitySearchRow,
+    'author_id' | 'bayes_score' | 'trend_score' | 'total_count'
+  >,
 ): CommunityBuildSummaryDto => ({
   id: row.id,
   title: row.title,

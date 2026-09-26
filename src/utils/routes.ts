@@ -2,8 +2,6 @@ const Routes = {
   home: '/',
   connection: '/connection',
   subscription: '/subscription',
-  shared: '/shared',
-  sharedById: '/shared/$id',
   community: '/communaute',
   communityById: '/communaute/$id',
 } as const;
