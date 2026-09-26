@@ -25,17 +25,15 @@ feature/
     index.ts          # Public exports only
     model/            # State management
       *.types.ts      # TypeScript interfaces, const enums
-      *.store.ts      # Zustand store: state + actions + initialState
-      *.hooks.ts      # useFeatureState(), useFeatureDispatch() (thin wrappers)
-      *.rules.ts      # Business logic functions
-      *.selectors.ts  # Derived state computations
+      *.store.ts      # Zustand store: state + actions + initialState, useXState()/useXActions()
+      *.rules.ts      # Business logic functions (pure, unit tested)
+      *.selectors.ts  # Derived state computations (hooks)
     services/         # Data fetching
-      *.repo.ts       # fetchX() functions, USE_MOCK branching
-      *.repo.mock.ts  # Mock data + validation
-      *.queries.ts    # TanStack Query hooks (useXQuery)
-      *.dto.ts        # API response types
-      *.schema.ts     # Zod schemas
+      *.repo.ts       # fetchX() functions calling the /api serverless functions
+      *.queries.ts    # TanStack Query hooks (useXs)
+      *.schema.ts     # Zod schemas and inferred DTO types
       *.mapper.ts     # DTO → Domain transformations
+      *.errors.ts     # Typed repository errors
     ui/               # React components
       Component/      # Each component in own folder
         Component.tsx + Component.module.css + index.ts
@@ -52,7 +50,7 @@ feature/
 | Types/Interfaces | `PascalCase`                                | `User`, `ImplantState`                |
 | Enums (const)    | Array with `PascalCase` + `as const`        | `ImplantNameValues`                   |
 | Type from const  | `PascalCase`                                | `type ImplantName = ...`              |
-| Constants        | `UPPER_SNAKE_CASE`                          | `MAX_RETRIES`, `USE_MOCK`             |
+| Constants        | `UPPER_SNAKE_CASE`                          | `MAX_RETRIES`, `MAX_IMPLANTS`         |
 | CSS Classes      | `camelCase` in modules                      | `.container`, `.headerTitle`          |
 
 ## 4. TypeScript Standards
@@ -61,7 +59,7 @@ feature/
 
 - **Never use `any`** - prefer `unknown` with type guards
 - Use `const` assertions for immutable data: `as const`
-- Define discriminated unions for actions and complex state
+- Define discriminated unions for complex state (e.g. drag-and-drop payloads)
 - Use proper type imports: `import type { ... }`
 - Implement interfaces over type aliases for object shapes
 
@@ -82,27 +80,6 @@ enum ImplantName {
   GENIE = 'Génie',
   // ...
 }
-```
-
-### Action Type Pattern (Required)
-
-```typescript
-// ✅ Correct - Discriminated union for reducer actions
-export type Action =
-  | {
-      type: 'setImplant';
-      implantName: ImplantName;
-      level: number;
-    }
-  | {
-      type: 'increaseImplant';
-      implantName: ImplantName;
-    }
-  | {
-      type: 'decreaseImplant';
-      implantName: ImplantName;
-    }
-  | { type: 'replaceImplants'; state: ImplantsState };
 ```
 
 ### Generic and Utility Types
@@ -133,7 +110,9 @@ interface ImplantStore {
   replaceImplants: (state: ImplantsState) => void;
 }
 
-export const initialState: ImplantsState = { /* ... */ };
+export const initialState: ImplantsState = {
+  /* ... */
+};
 
 export const useImplantStore = create<ImplantStore>((set) => ({
   implants: initialState,
@@ -142,19 +121,17 @@ export const useImplantStore = create<ImplantStore>((set) => ({
   replaceImplants: (implants) => set({ implants }),
 }));
 
-// Dispatch hook uses useShallow for stable action references
-export const useImplantsActions = () =>
-  useImplantStore(
-    useShallow((s) => ({ setImplant: s.setImplant, replaceImplants: s.replaceImplants })),
-  );
-```
-
-```typescript
-// ✅ Correct - Thin hook wrappers over the store
+// Thin hook wrappers over the store; actions use useShallow for stable references
 export const useImplantsState = (): ImplantsState =>
   useImplantStore((s) => s.implants);
 
-export const useImplantsDispatch = () => useImplantsActions();
+export const useImplantsActions = (): ImplantsActions =>
+  useImplantStore(
+    useShallow((s) => ({
+      setImplant: s.setImplant,
+      replaceImplants: s.replaceImplants,
+    })),
+  );
 ```
 
 ### CSS Modules Pattern (Required)
@@ -177,7 +154,6 @@ export const Card = ({ children, className, ...others }) => {
 - Always specify complete dependency arrays in `useEffect`
 - Wrap functions in `useCallback` if used in dependencies
 - Use `useMemo` for expensive computations only
-- Wrap action creators in `useMemo` within providers
 
 ## 6. Formatting and Style
 
@@ -193,17 +169,14 @@ export const Card = ({ children, className, ...others }) => {
 
 ```typescript
 // ✅ Correct import order
-import { useMemo, useReducer, type PropsWithChildren } from 'react';
+import { useMemo } from 'react';
 
-import {
-  createImplantsActions,
-  initialState,
-  reducer,
-} from './implant.actions';
-import { DispatchCtx, StateCtx } from './implant.contexts';
+import styles from './ImplantsPanel.module.css';
+import { computeImplantsCount } from '../../model/implant.rules';
+import { useImplantsState } from '../../model/implant.store';
 
 import type { Stat } from '@/domain';
-import { Card } from '@/ui';
+import { StatusCounterBadge } from '@/ui';
 ```
 
 1. React and external libraries
@@ -226,7 +199,7 @@ import { Card } from '@/ui';
 - Define state fields and actions in the same store
 - Export `initialState` as a named constant for use in persistence and tests
 - Use `useShallow` from `zustand/react/shallow` for dispatch hooks that return objects
-- Expose thin hook wrappers (`useFeatureState`, `useFeatureDispatch`) over the store
+- Expose thin hook wrappers (`useXState`, `useXActions`) over the store
 
 ### Cross-Store Access
 
@@ -246,21 +219,35 @@ import { Card } from '@/ui';
 
 ```typescript
 // ✅ Correct repository implementation
-export async function fetchItems(type?: ItemType[]): Promise<Item[]> {
-  if (USE_MOCK) {
-    return fetchItemsMock(type);
+export const fetchItems = async (signal?: AbortSignal): Promise<Item[]> => {
+  const response = await GET('/api/items', signal);
+
+  if (!response.ok) {
+    throw new ItemRepositoryError({
+      code: ITEM_REPOSITORY_ERROR_CODE.FETCH_ITEMS_FAILED,
+      message: 'Impossible de recuperer la liste des items.',
+      status: response.status,
+    });
   }
-  // Real implementation when ready
-  return fetchItemsMock(type);
-}
+
+  const payload: unknown = await response.json();
+  const { itemArrayResponseSchema } = await import('./item.schema');
+  const items = validatePayload({
+    schema: itemArrayResponseSchema,
+    payload,
+    errorCode: ITEM_REPOSITORY_ERROR_CODE.INVALID_ITEMS_PAYLOAD,
+    errorMessage: 'Le format des items recus est invalide.',
+  });
+
+  return items.map(toDomain);
+};
 ```
 
-### Mock Data
+### API Data
 
-- All mock data must include Zod schema validation
-- Use realistic French RPG data for game elements
-- Implement proper error simulation in mocks
-- Sleep/delay simulation for realistic loading states
+- Every payload coming from `/api` is validated with a Zod schema before use
+- DTOs are mapped to domain models in `*.mapper.ts`
+- Serverless handlers live in `api/`, shared server code (queries, validation) in `lib/`
 
 ### TanStack Query Integration
 
@@ -301,12 +288,12 @@ export async function fetchItems(type?: ItemType[]): Promise<Item[]> {
 
 ## 11. Testing Standards
 
-### Test Structure (When Implemented)
+### Test Structure
 
-- Use React Testing Library for component tests
-- Test user behavior, not implementation details
-- Mock TanStack Query and context providers appropriately
-- Test French text rendering and accessibility
+- Unit tests run with Vitest (`yarn test`), co-located as `*.test.ts`
+- Focus on pure logic: `*.rules.ts`, helpers, handlers, schemas and mappers
+- Test behavior, not implementation details
+- UI flows are checked manually on desktop and mobile when the workbench changes
 
 ### Test Organization
 
@@ -321,7 +308,7 @@ export async function fetchItems(type?: ItemType[]): Promise<Item[]> {
 
 - Use `React.memo` sparingly for expensive components
 - Implement proper `useMemo` and `useCallback` usage
-- Avoid unnecessary re-renders with context separation
+- Avoid unnecessary re-renders with narrow store selectors (`useShallow`)
 - Use code splitting for large features
 
 ### Bundle Optimization
@@ -370,6 +357,7 @@ export async function fetchItems(type?: ItemType[]): Promise<Item[]> {
 # Required commands
 yarn dev          # Start development server
 yarn build        # TypeScript check + build
+yarn test         # Vitest unit tests
 yarn lint         # ESLint check
 yarn lint:fix     # Auto-fix linting issues
 yarn format       # Prettier format all files

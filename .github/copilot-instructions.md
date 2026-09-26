@@ -2,9 +2,9 @@
 
 ## Project Overview
 
-This is a French-language character build simulator for Dreadcast, a browser-based cyberpunk RPG. Users create characters by selecting race/gender, equipping implants, items, and kits, with automatic stat calculation and local persistence for up to 10 builds.
+This is a French-language character build simulator for Dreadcast, a browser-based cyberpunk RPG. Users create characters by selecting race/gender, equipping items, kits, implants, a drug and titles, with automatic stat calculation and prerequisite checks. Builds are saved locally for guests (1 build) or in the database for signed-in users (5 builds, unlimited with a subscription), and subscribers can publish them to the Community.
 
-**Tech Stack:** React 19 + TypeScript, Vite, TanStack Router, TanStack Query, Base UI Components, CSS Modules
+**Tech Stack:** React 19 + TypeScript, Vite, TanStack Router, TanStack Query, Zustand, Base UI Components, CSS Modules, Vercel serverless functions (`api/`, shared code in `lib/`), Supabase
 
 ## Architecture Pattern: Feature-Sliced Design
 
@@ -16,19 +16,15 @@ feature/
     index.ts          # Public exports only
     model/            # State management
       *.types.ts      # TypeScript interfaces, const enums using "as const"
-      *.actions.ts    # Reducer, actions, initialState
-      *.contexts.ts   # React contexts (StateCtx, DispatchCtx)
-      *.provider.tsx  # Provider with useReducer + useMemo for actions
-      *.hooks.ts      # useFeatureState(), useFeatureDispatch()
-      *.rules.ts      # Business logic functions
-      *.selectors.ts  # Derived state computations
+      *.store.ts      # Zustand store: state, actions, initialState, useXState()/useXActions()
+      *.rules.ts      # Business logic functions (pure, unit tested)
+      *.selectors.ts  # Derived state computations (hooks)
     services/         # Data fetching
-      *.repo.ts       # fetchX() functions, USE_MOCK branching
-      *.repo.mock.ts  # Mock data + validation
-      *.queries.ts    # TanStack Query hooks (useXQuery)
-      *.dto.ts        # API response types
-      *.schema.ts     # Zod schemas
+      *.repo.ts       # fetchX() functions calling /api
+      *.queries.ts    # TanStack Query hooks (useXs)
+      *.schema.ts     # Zod schemas and inferred DTO types
       *.mapper.ts     # DTO → Domain transformations
+      *.errors.ts     # Typed repository errors
     ui/               # React components (each in own folder with .tsx + .module.css + index.ts)
 ```
 
@@ -36,32 +32,39 @@ feature/
 
 ## State Management Pattern
 
-All features use **reducer + context** pattern (no external state library):
+Feature state lives in module-level **Zustand** stores (no React provider):
 
 1. **Types** define state shape using `const x = [...] as const` and `type X = (typeof x)[number]`
-2. **Actions** define `type Action = Union<ActionTypes>`, `reducer()`, and `createXActions(dispatch)`
-3. **Contexts** split into `StateCtx` and `DispatchCtx` (separate contexts for optimization)
-4. **Provider** uses `useReducer` + `useMemo` to wrap actions
-5. **Hooks** validate context exists with guards: `if (!state) throw new Error('Missing XProvider')`
+2. **Store** (`create<XStore>`) holds state, actions and an exported `initialState`
+3. **Hooks** are thin wrappers: `useXState()` selects the state, `useXActions()` selects actions with `useShallow`
+4. Outside React, use `useXStore.getState()` / `useXStore.subscribe()` (persistence, autosave)
 
-Example from [implant.provider.tsx](frontend/src/feature/implant/model/implant.provider.tsx):
+Example from [implant.store.ts](src/feature/implant/model/implant.store.ts):
 
-```tsx
-const [state, dispatch] = useReducer(reducer, initialState);
-const actions = useMemo(() => createImplantsActions(dispatch), [dispatch]);
-return (
-  <DispatchCtx.Provider value={actions}>
-    <StateCtx.Provider value={state}>{children}</StateCtx.Provider>
-  </DispatchCtx.Provider>
-);
+```ts
+export const useImplantStore = create<ImplantStore>((set) => ({
+  implants: initialState,
+  setImplant: (name, level) => {
+    set((s) => ({ implants: { ...s.implants, [name]: level } }));
+  },
+  replaceImplants: (implants) => set({ implants }),
+}));
+
+export const useImplantsActions = (): ImplantsActions =>
+  useImplantStore(
+    useShallow((s) => ({
+      setImplant: s.setImplant,
+      replaceImplants: s.replaceImplants,
+    })),
+  );
 ```
 
 ## Data Fetching Strategy
 
-- **Repository Pattern:** `*.repo.ts` files contain `fetchX()` functions that check `USE_MOCK` (from `VITE_USE_MOCK` env var)
-- **Mocks First:** Development uses mock data in `*.repo.mock.ts` with Zod validation via `*.schema.ts`
+- **Repository Pattern:** `*.repo.ts` files contain `fetchX()` functions calling the `/api` serverless functions
+- **Validation:** every payload is validated with the Zod schemas of `*.schema.ts`, then mapped with `*.mapper.ts`
 - **TanStack Query:** Queries defined in `*.queries.ts` wrap repo functions
-- **No Real API Yet:** All repos currently return mock data (real API commented out)
+- **API:** handlers in `api/**`, shared server code (select queries, validation, handlers) in `lib/`, data in Supabase
 
 ## Domain Layer
 
@@ -94,16 +97,17 @@ import { Card } from '@/ui';
 
 Located in `src/ui/` - reusable components following same folder structure (Component.tsx + Component.module.css + index.ts):
 
-- `Card`, `Modal`, `Popin`, `Spinner`, `TechBadge`, `DeleteButton`, `EffectChip`
+- `AppShell`, `Card`, `Modal`, `Popin`, `Spinner`, `IconButton`, `RemoveButton`, `StatusCounterBadge`, `StatEffects`
 - `Icon/*` for SVG icon components
 - `UiImage` with caching utility
 
 ## Build & Development
 
 ```bash
-# In frontend/ directory
-yarn dev          # Vite dev server on :5173
+# From the repository root
+yarn dev          # Vite dev server on :5173 (/api proxied to the Vercel deployment)
 yarn build        # TypeScript check + Vite build
+yarn test         # Vitest unit tests
 yarn lint         # ESLint check
 yarn lint:fix     # Auto-fix linting issues
 yarn format       # Prettier format all files
@@ -111,26 +115,24 @@ yarn format       # Prettier format all files
 
 ## Persistence
 
-- LocalStorage only (no backend)
-- `src/feature/persistence/` manages build snapshots
-- Key: `'dreadcast.builds.v1'`
-- Default 5 slots, stores: profile, implants, items, kits state
+- `src/feature/persistence/` manages build snapshots, autosave and remote builds
+- Guests: 1 build in localStorage (key `'dreadcast.builds.v3'`)
+- Signed in: builds stored through `/api/builds` (5 slots, unlimited with an active subscription)
+- Snapshots store profile, items, kits, implants, drug and titles
 
 ## Important Notes
 
-- **French Language:** All UI text, comments, and data labels are in French
-- **Game Data:** Based on Dreadcast RPG mechanics (stats, implants, items from game)
-- **Roadmap:** Sharing builds, dark mode, mobile responsive, advanced formulas, weapons bonuses, drugs support planned
-- **No Tests Yet:** Test infrastructure not set up
+- **French Language:** All UI text and data labels are in French
+- **Game Data:** Based on Dreadcast RPG mechanics (stats, implants, items from game), stored in Supabase
+- **Tests:** Vitest unit tests co-located as `*.test.ts`
 - **Vercel Deployment:** Auto-deploys to https://dreadcast-simulator-kappa.vercel.app/
 
 ## When Adding Features
 
-1. Create feature folder with full model/services/ui structure
+1. Create feature folder with the model/services/ui structure it needs
 2. Define types with `as const` pattern for enums
-3. Implement reducer pattern if state needed
-4. Create mock data first, then repo functions
+3. Add a Zustand store if the feature has state
+4. Add the API handler (`api/`, `lib/`) and the repo function with its Zod schema
 5. Add TanStack Query hooks for data fetching
 6. Build UI components with CSS modules
 7. Export through index.ts at each level
-8. Update providers in route files if needed

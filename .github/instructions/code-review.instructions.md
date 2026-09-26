@@ -9,7 +9,7 @@ description: 'Code review standards and GitHub review guidelines'
 
 - Verify adherence to feature-sliced design patterns
 - Check proper index.ts barrel export usage
-- Validate state management follows reducer + context pattern
+- Validate state management follows the Zustand store pattern
 - Ensure CSS modules are used consistently
 
 ## TypeScript Review

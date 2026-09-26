@@ -29,7 +29,7 @@ description: 'Documentation requirements and standards'
 ## API Documentation
 
 - Document repository function signatures and return types
-- Explain mock data structure and Zod schemas
+- Explain Zod schemas and the payloads they validate
 - Document DTO to domain mapping strategies
 - Describe TanStack Query integration patterns
 

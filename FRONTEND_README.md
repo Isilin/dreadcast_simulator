@@ -1,9 +1,68 @@
-# Architecture frontend
+# Guide technique
 
 Le frontend est une application React 19 + TypeScript construite avec Vite,
-TanStack Router, TanStack Query et Zustand. Le code suit une organisation
-feature-sliced: chaque fonctionnalite garde ses regles, ses donnees et son UI
-dans une frontiere explicite.
+TanStack Router, TanStack Query et Zustand. Les donnees passent par des
+fonctions serverless Vercel (`api/`, code partage dans `lib/`) adossees a
+Supabase. Le code suit une organisation feature-sliced: chaque fonctionnalite
+garde ses regles, ses donnees et son UI dans une frontiere explicite.
+
+Les conventions de code sont dans [CODING_STANDARDS.md](CODING_STANDARDS.md).
+
+## Demarrage local
+
+```bash
+git clone https://github.com/Isilin/dreadcast_simulator.git
+cd dreadcast_simulator
+corepack enable
+yarn install
+yarn dev
+```
+
+Ouvrir [http://localhost:5173](http://localhost:5173).
+
+`yarn dev` proxifie les appels `/api/*` vers le deploiement Vercel
+(`vite.config.ts`): le catalogue, les kits, les implants, les drogues et les
+races demandent donc une API deployee fonctionnelle. Pour executer aussi les
+fonctions de `api/` en local, utiliser `yarn vercel dev` (projet Vercel lie).
+
+Quand le panneau Catalogue affiche `Catalogue indisponible`, le client a recu
+une erreur de service: verifier les variables Supabase du projet Vercel et les
+journaux des fonctions serverless. L'interface reste utilisable pour les builds
+deja enregistres localement.
+
+### Variables d'environnement (auth Supabase)
+
+Le frontend accepte l'un des deux formats ci-dessous dans `.env.local`.
+
+```bash
+# Format Vite
+VITE_SUPABASE_URL=https://votre-projet.supabase.co
+VITE_SUPABASE_ANON_KEY=votre_cle_anon
+
+# Format Vercel/NEXT_PUBLIC
+NEXT_PUBLIC_SIMULATOR_SUPABASE_URL=https://votre-projet.supabase.co
+NEXT_PUBLIC_SIMULATOR_SUPABASE_ANON_KEY=votre_cle_anon
+```
+
+Sans ces variables, la page de connexion s'affiche mais la connexion est
+desactivee. Le schema et les regles d'acces de la base sont decrits dans
+[supabase/README.md](supabase/README.md).
+
+### Scripts
+
+```bash
+yarn dev          # Serveur de developpement (port 5173)
+yarn build        # Build de production avec verification TypeScript
+yarn analyze      # Build avec rapport de taille dans dist/stats.html
+yarn test         # Tests unitaires Vitest
+yarn lint         # Verification ESLint
+yarn lint:fix     # Correction automatique des erreurs ESLint
+yarn format       # Formatage avec Prettier
+yarn preview      # Preview du build de production
+```
+
+Le dossier `.github/` contient la configuration GitHub Copilot (instructions,
+prompts, agents) et les workflows GitHub Actions.
 
 ## Structure
 
@@ -21,8 +80,12 @@ src/
     kit/            Kits et racks
     implant/        Implants et baie d'implants
     drug/           Drogues et slot actif
-    stats/          Calcul et presentation des statistiques
+    title/          Titres debloques
+    prerequisite/   Prerequis des items et kits (stats, titres, implants, race)
+    suit/           Calcul des statistiques finales
+    stats/          Presentation des competences
     subscription/   Abonnements
+    theme/          Theme clair/sombre
   ui/               Composants generiques reutilisables
   routes/           Composition des pages et configuration TanStack Router
   styles/           Variables, helpers et animations globales

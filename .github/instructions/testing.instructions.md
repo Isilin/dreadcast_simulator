@@ -22,18 +22,16 @@ description: 'Testing standards and practices for Dreadcast Simulator'
 - Test components through user interactions (clicks, typing, etc.)
 - Verify proper French text rendering and labels
 - Test responsive behavior and CSS module class application
-- Validate proper context provider integration
 
 ## State Management Testing
 
-- Test reducer functions in isolation with various action types
-- Verify context providers supply correct state and actions
+- Test store actions and pure `*.rules.ts` functions in isolation
 - Test custom hooks behavior with proper error handling
 - Mock localStorage for persistence layer testing
 
 ## Data Layer Testing
 
-- Test repository functions with both mock and real data scenarios
+- Test repository functions against mocked `fetch` responses
 - Verify Zod schema validation with invalid data
 - Test mapper functions for proper DTO to domain conversion
 - Validate TanStack Query hook behavior and error states
