@@ -7,8 +7,6 @@ import {
   type ImplantsState,
 } from './implant.types';
 
-import { useBuildReadOnlyMode } from '@/feature/persistence';
-
 interface ImplantStore {
   implants: ImplantsState;
   setImplant: (name: ImplantName, level: number) => void;
@@ -43,9 +41,8 @@ export const useImplantStore = create<ImplantStore>((set) => ({
 export const useImplantsState = (): ImplantsState =>
   useImplantStore((s) => s.implants);
 
-export const useImplantsActions = (): ImplantsActions => {
-  const isReadOnly = useBuildReadOnlyMode();
-  const actions = useImplantStore(
+export const useImplantsActions = (): ImplantsActions =>
+  useImplantStore(
     useShallow((s) => ({
       setImplant: s.setImplant,
       increaseImplant: s.increaseImplant,
@@ -53,15 +50,3 @@ export const useImplantsActions = (): ImplantsActions => {
       replaceImplants: s.replaceImplants,
     })),
   );
-
-  if (!isReadOnly) {
-    return actions;
-  }
-
-  return {
-    setImplant: () => undefined,
-    increaseImplant: () => undefined,
-    decreaseImplant: () => undefined,
-    replaceImplants: actions.replaceImplants,
-  };
-};

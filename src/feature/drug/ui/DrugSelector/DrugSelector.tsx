@@ -3,7 +3,6 @@ import { useDrugActions, useDrugId } from '../../model/drug.store';
 import type { Drug } from '../../model/drug.types';
 
 import { StatValues, type Stat } from '@/domain';
-import { useBuildReadOnlyMode } from '@/feature/persistence';
 import { Card, EffectChip, UiImage } from '@/ui';
 
 interface Props {
@@ -14,20 +13,11 @@ export const DrugSelector = ({ drug }: Props) => {
   const selectedId = useDrugId();
   const { toggleDrug } = useDrugActions();
   const isActive = selectedId === drug.id;
-  const isReadOnly = useBuildReadOnlyMode();
-
-  const handleClick = () => {
-    if (isReadOnly) {
-      return;
-    }
-
-    toggleDrug(drug.id);
-  };
 
   return (
     <Card
-      onClick={isReadOnly ? undefined : handleClick}
-      state={isReadOnly ? 'disable' : isActive ? 'info' : 'default'}
+      onClick={() => toggleDrug(drug.id)}
+      state={isActive ? 'info' : 'default'}
     >
       <div className={styles.thumbWrapper}>
         <UiImage

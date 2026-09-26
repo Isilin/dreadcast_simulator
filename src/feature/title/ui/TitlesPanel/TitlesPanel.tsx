@@ -2,14 +2,11 @@ import styles from './TitlesPanel.module.css';
 import { useTitlesActions, useTitlesState } from '../../model/title.store';
 import { useTitles } from '../../services';
 
-import { useBuildReadOnlyMode } from '@/feature/persistence';
-
 /** Titles unlocked by the character: prerequisites of some items and kits. */
 export const TitlesPanel = () => {
   const { data: titles = [], status } = useTitles();
   const unlocked = useTitlesState();
   const { toggleTitle } = useTitlesActions();
-  const isReadOnly = useBuildReadOnlyMode();
   const unlockedCount = titles.filter(({ id }) => unlocked.includes(id)).length;
 
   return (
@@ -38,7 +35,6 @@ export const TitlesPanel = () => {
                   type="checkbox"
                   className={styles.checkbox}
                   checked={checked}
-                  disabled={isReadOnly}
                   onChange={() => toggleTitle(title.id)}
                 />
                 <span className={styles.name}>{title.name}</span>

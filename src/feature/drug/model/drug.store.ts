@@ -3,8 +3,6 @@ import { useShallow } from 'zustand/react/shallow';
 
 import type { DrugsState } from './drug.types';
 
-import { useBuildReadOnlyMode } from '@/feature/persistence';
-
 interface DrugStore {
   drug: DrugsState;
   setDrug: (id: DrugsState) => void;
@@ -32,23 +30,11 @@ export const useDrugStore = create<DrugStore>((set) => ({
 
 export const useDrugId = (): DrugsState => useDrugStore((s) => s.drug);
 
-export const useDrugActions = (): DrugActions => {
-  const isReadOnly = useBuildReadOnlyMode();
-  const actions = useDrugStore(
+export const useDrugActions = (): DrugActions =>
+  useDrugStore(
     useShallow((s) => ({
       setDrug: s.setDrug,
       toggleDrug: s.toggleDrug,
       replaceDrug: s.replaceDrug,
     })),
   );
-
-  if (!isReadOnly) {
-    return actions;
-  }
-
-  return {
-    setDrug: () => undefined,
-    toggleDrug: () => undefined,
-    replaceDrug: actions.replaceDrug,
-  };
-};

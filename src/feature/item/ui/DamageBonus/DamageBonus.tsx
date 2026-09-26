@@ -5,7 +5,6 @@ import { useItemsActions, useItemsState } from '../../model/item.store';
 import { DAMAGE_BONUS_VALUES } from '../../model/item.types';
 
 import type { ItemSpot } from '@/domain';
-import { useBuildReadOnlyMode } from '@/feature/persistence';
 
 interface Props {
   spot: ItemSpot;
@@ -14,7 +13,6 @@ interface Props {
 export const DamageBonus = memo(({ spot }: Props) => {
   const actions = useItemsActions();
   const items = useItemsState();
-  const isReadOnly = useBuildReadOnlyMode();
 
   const hasTwoHandedWeapon = useMemo(
     () => (items.leftArm?.hands ?? 0) > 1 || (items.rightArm?.hands ?? 0) > 1,
@@ -27,9 +25,8 @@ export const DamageBonus = memo(({ spot }: Props) => {
       (spot === 'rightArm' &&
         items[spot].hands !== undefined &&
         items[spot].hands >= 2) ||
-      (spot === 'rightArm' && hasTwoHandedWeapon) ||
-      isReadOnly,
-    [isReadOnly, items, spot, hasTwoHandedWeapon],
+      (spot === 'rightArm' && hasTwoHandedWeapon),
+    [items, spot, hasTwoHandedWeapon],
   );
 
   const currentBonus = items[spot]?.damageBonus ?? 0;

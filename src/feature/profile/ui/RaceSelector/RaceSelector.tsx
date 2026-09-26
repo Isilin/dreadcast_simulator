@@ -6,14 +6,12 @@ import { useProfileActions, useProfileState } from '../../model/profile.store';
 import type { RaceType } from '../../model/profile.types';
 import { useRaces } from '../../services';
 
-import { useBuildReadOnlyMode } from '@/feature/persistence';
 import { CheckIcon, ChevronUpDownIcon } from '@/ui';
 
 export const RaceSelector = () => {
   const { race } = useProfileState();
   const { setRace } = useProfileActions();
   const { data: races, status } = useRaces();
-  const isReadOnly = useBuildReadOnlyMode();
 
   const raceItems = races?.map((r) => ({ label: r.type, value: r.type }));
 
@@ -34,7 +32,7 @@ export const RaceSelector = () => {
       >
         <Select.Trigger
           className={styles.Select}
-          disabled={status === 'pending' || isReadOnly}
+          disabled={status === 'pending'}
         >
           <Select.Value />
           <Select.Icon className={styles.SelectIcon}>

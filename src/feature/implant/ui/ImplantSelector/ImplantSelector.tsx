@@ -10,7 +10,6 @@ import {
 import type { Implant } from '../../model/implant.types';
 import { ImplantIcon } from '../ImplantIcon';
 
-import { useBuildReadOnlyMode } from '@/feature/persistence';
 import { CursorGrowIcon, MinusIcon, PlusIcon } from '@/ui';
 
 interface Props {
@@ -21,7 +20,6 @@ export const ImplantSelector = ({ implant }: Props) => {
   const implantations = useImplantsState();
   const { setImplant } = useImplantsActions();
   const currentImplant = implantations[implant.name];
-  const isReadOnly = useBuildReadOnlyMode();
   const cap = computeImplantLevelCap(implantations, implant);
 
   return (
@@ -36,7 +34,6 @@ export const ImplantSelector = ({ implant }: Props) => {
         className={styles.field}
         min={0}
         max={cap}
-        disabled={isReadOnly}
         value={currentImplant || 0}
         onValueChange={(value) => setImplant(implant.name, value || 0)}
       >
@@ -49,14 +46,14 @@ export const ImplantSelector = ({ implant }: Props) => {
         <NumberField.Group className={styles.group}>
           <NumberField.Decrement
             className={styles.decrement}
-            disabled={isReadOnly || !currentImplant || currentImplant <= 0}
+            disabled={!currentImplant || currentImplant <= 0}
           >
             <MinusIcon />
           </NumberField.Decrement>
           <NumberField.Input className={styles.input} />
           <NumberField.Increment
             className={styles.increment}
-            disabled={isReadOnly || (currentImplant ?? 0) >= cap}
+            disabled={(currentImplant ?? 0) >= cap}
           >
             <PlusIcon />
           </NumberField.Increment>

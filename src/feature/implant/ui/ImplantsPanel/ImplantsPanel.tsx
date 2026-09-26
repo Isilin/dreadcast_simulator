@@ -13,24 +13,16 @@ import { useImplants } from '../../services';
 import { ImplantEffectsPopin } from '../ImplantEffectsPopin';
 import { THUMBS } from '../ImplantIcon/thumbs';
 
-import { useBuildReadOnlyMode } from '@/feature/persistence';
 import { MinusIcon, PlusIcon, StatusCounterBadge, UiImage } from '@/ui';
 
 interface ImplantRowProps {
   implant: Implant;
   level: number;
   cap: number;
-  isReadOnly: boolean;
   onChange: (level: number) => void;
 }
 
-const ImplantRow = ({
-  implant,
-  level,
-  cap,
-  isReadOnly,
-  onChange,
-}: ImplantRowProps) => (
+const ImplantRow = ({ implant, level, cap, onChange }: ImplantRowProps) => (
   <li className={styles.row} data-active={level > 0}>
     <ImplantEffectsPopin
       implant={implant}
@@ -53,7 +45,7 @@ const ImplantRow = ({
         type="button"
         className={styles.step}
         aria-label={`Retirer un niveau de ${implant.name}`}
-        disabled={isReadOnly || level <= 0}
+        disabled={level <= 0}
         onClick={() => onChange(level - 1)}
       >
         <MinusIcon />
@@ -66,7 +58,7 @@ const ImplantRow = ({
         type="button"
         className={styles.step}
         aria-label={`Ajouter un niveau de ${implant.name}`}
-        disabled={isReadOnly || level >= cap}
+        disabled={level >= cap}
         onClick={() => onChange(level + 1)}
       >
         <PlusIcon />
@@ -79,7 +71,6 @@ export const ImplantsPanel = () => {
   const { data: implants = [], status } = useImplants();
   const levels = useImplantsState();
   const { setImplant } = useImplantsActions();
-  const isReadOnly = useBuildReadOnlyMode();
   const count = computeImplantsCount(levels);
 
   return (
@@ -103,7 +94,6 @@ export const ImplantsPanel = () => {
             implant={implant}
             level={levels[implant.name] ?? 0}
             cap={computeImplantLevelCap(levels, implant)}
-            isReadOnly={isReadOnly}
             onChange={(level) => setImplant(implant.name, level)}
           />
         ))}

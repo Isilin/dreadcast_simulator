@@ -4,7 +4,6 @@ import { useShallow } from 'zustand/react/shallow';
 import type { Kit, KitSelection, KitsState } from './kit.types';
 
 import { ItemSpotValue, type ItemSpot } from '@/domain';
-import { useBuildReadOnlyMode } from '@/feature/persistence';
 
 interface KitStore {
   kits: KitsState;
@@ -80,9 +79,8 @@ export const useKitStore = create<KitStore>((set) => ({
 
 export const useKitsState = (): KitsState => useKitStore((s) => s.kits);
 
-export const useKitsActions = (): KitsActions => {
-  const isReadOnly = useBuildReadOnlyMode();
-  const actions = useKitStore(
+export const useKitsActions = (): KitsActions =>
+  useKitStore(
     useShallow((s) => ({
       addKit: s.addKit,
       setKit: s.setKit,
@@ -92,17 +90,3 @@ export const useKitsActions = (): KitsActions => {
       replaceKits: s.replaceKits,
     })),
   );
-
-  if (!isReadOnly) {
-    return actions;
-  }
-
-  return {
-    addKit: () => undefined,
-    setKit: () => undefined,
-    deleteKit: () => undefined,
-    resetKits: () => undefined,
-    setKitNumber: () => undefined,
-    replaceKits: actions.replaceKits,
-  };
-};
