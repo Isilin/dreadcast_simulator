@@ -11,7 +11,6 @@ export default defineConfig(({ mode }) => ({
     tanstackRouter({
       target: 'react',
       autoCodeSplitting: true,
-      routeFileIgnorePattern: '(^|/)ui(/|$)',
     }),
     react({ tsDecorators: true }),
     ...(mode === 'analyze'

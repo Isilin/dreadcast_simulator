@@ -94,16 +94,6 @@ export const itemMatchsSpot = (type: ItemType, spot: ItemSpot): boolean => {
 };
 
 /**
- * Gets the allowed item types for a given spot
- */
-export const getItemTypes = (spot: ItemSpot): ItemType[] => {
-  if (ARM_SPOTS.includes(spot as (typeof ARM_SPOTS)[number])) {
-    return ['1handMelee', '1handShot', '2handsMelee', '2handsShot'];
-  }
-  return [spot as ItemType];
-};
-
-/**
  * Computes the total effects from all equipped items
  */
 export const computeItemsEffect = (state: ItemsState): Record<Stat, number> => {

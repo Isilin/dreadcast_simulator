@@ -15,21 +15,6 @@ export const computeImplantsCount = (state: Record<string, number>): number =>
   Object.entries(state).reduce((acc, [, value]) => acc + value, 0);
 
 /**
- * Type representing the possible implants installation status
- */
-export type ImplantsStatus = 'perfect' | 'error' | 'incomplete';
-
-/**
- * Checks if a specific implant is active
- */
-export const computeImplantStatus = (
-  state: Record<string, number>,
-  name: string,
-): 'active' | undefined => {
-  return state[name] > 0 ? 'active' : undefined;
-};
-
-/**
  * Bonus of an implant on each of its attributes at a level (not cumulative:
  * the value of the level is the whole bonus). 0 when not installed.
  */
