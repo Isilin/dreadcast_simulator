@@ -1,5 +1,5 @@
 /**
- * Same rules as lib/community.validation.ts and the user_profile constraints
+ * Same rules as server/feature/profile/profile.rules.ts and the user_profile constraints
  * (supabase/schemas/025_table_user_profile.sql).
  */
 const PSEUDO_MIN_LENGTH = 3;

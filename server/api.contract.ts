@@ -3,6 +3,7 @@ import { HttpApi } from 'effect/unstable/httpapi';
 import { AuthGroup } from './feature/auth/auth.contract.js';
 import { BuildGroup } from './feature/build/build.contract.js';
 import { CatalogGroup } from './feature/catalog/catalog.contract.js';
+import { CommunityGroup } from './feature/community/community.contract.js';
 import { ProfileGroup } from './feature/profile/profile.contract.js';
 import { SubscriptionGroup } from './feature/subscription/subscription.contract.js';
 import { RequestValidation } from './platform/request-validation.js';
@@ -17,5 +18,6 @@ export class DreadcastApi extends HttpApi.make('dreadcast')
   .add(BuildGroup)
   .add(SubscriptionGroup)
   .add(ProfileGroup)
+  .add(CommunityGroup)
   .middleware(RequestValidation)
   .prefix('/api') {}

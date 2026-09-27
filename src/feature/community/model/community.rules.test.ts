@@ -1,3 +1,4 @@
+import { Exit, Schema } from 'effect';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -16,11 +17,11 @@ import {
   validatePublicationTitle,
 } from './publish-payload.rules';
 import {
-  publishPayloadSchema,
+  PublishPayload,
   RACE_TYPES,
   SPECIALIZATION_CODES,
   STAT_KEYS,
-} from '../../../../lib/community.validation';
+} from '../../../../server/feature/community/community.schema';
 
 import { ItemSpotValue, StatValues, type Stat } from '@/domain';
 import type { Item, ItemsState } from '@/feature/item';
@@ -139,7 +140,7 @@ describe('publication payload', () => {
       stats: roundStats({ strength: 101.5 }),
     });
 
-    const parsed = publishPayloadSchema.safeParse({
+    const parsed = Schema.decodeUnknownExit(PublishPayload)({
       slot: Number(payload.slot),
       title: payload.title,
       description: payload.description,
@@ -148,7 +149,7 @@ describe('publication payload', () => {
       stats: payload.stats,
     });
 
-    expect(parsed.success).toBe(true);
+    expect(Exit.isSuccess(parsed)).toBe(true);
   });
 });
 

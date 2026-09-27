@@ -1,3 +1,4 @@
+import { toInternalError, type DbError } from '../../platform/db-error.js';
 import {
   BadRequest,
   Conflict,
@@ -100,4 +101,22 @@ export const communityError = <C extends CommunityErrorCode>(
   const { status, message } = COMMUNITY_ERRORS[code];
   const ErrorClass = ERROR_CLASS_BY_STATUS[status];
   return new ErrorClass({ error: message, code }) as CommunityError<C>;
+};
+
+export const isCommunityErrorCode = (
+  value: string,
+): value is CommunityErrorCode => Object.hasOwn(COMMUNITY_ERRORS, value);
+
+/**
+ * Failure of a community RPC or query: the RPCs raise the error codes as
+ * messages; row level security refusals become FORBIDDEN.
+ */
+export const toCommunityError = (error: DbError) => {
+  if (isCommunityErrorCode(error.message)) {
+    return communityError(error.message);
+  }
+  if (error.code === '42501') {
+    return communityError('FORBIDDEN');
+  }
+  return toInternalError(error);
 };

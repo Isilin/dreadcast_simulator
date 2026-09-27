@@ -4,40 +4,26 @@
   "outputDirectory": "dist",
   "framework": "vite",
   "functions": {
-    "api/**/*.ts": {
-      "includeFiles": "{lib,server}/**"
+    "api/server.ts": {
+      "includeFiles": "server/**"
     }
   },
   "redirects": [
-    { "source": "/shared/:id", "destination": "/", "permanent": false }
+    {
+      "source": "/shared/:id",
+      "destination": "/",
+      "permanent": false
+    }
   ],
   "rewrites": [
     {
-      "source": "/api/community/builds/:id/:action",
-      "destination": "/api/community?resource=builds&id=:id&action=:action"
+      "source": "/api/:path*",
+      "destination": "/api/server?__path=:path*"
     },
     {
-      "source": "/api/community/builds/:id",
-      "destination": "/api/community?resource=builds&id=:id"
-    },
-    {
-      "source": "/api/community/:resource",
-      "destination": "/api/community?resource=:resource"
-    },
-    {
-      "source": "/api/:path(items|kits|implants|races|titles|drugs|builds|subscriptions|subscription-plans)",
-      "destination": "/api/server?__path=:path"
-    },
-    {
-      "source": "/api/auth/login",
-      "destination": "/api/server?__path=auth/login"
-    },
-    {
-      "source": "/api/profile/me",
-      "destination": "/api/server?__path=profile/me"
-    },
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/(.*)", "destination": "/index.html" }
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {

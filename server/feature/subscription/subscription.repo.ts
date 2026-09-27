@@ -1,5 +1,4 @@
-import type { Effect } from 'effect';
-import { Context, Layer } from 'effect';
+import { Context, Effect, Layer } from 'effect';
 
 import type { SubscriptionDateRange } from './subscription.rules.js';
 import type { Subscription, SubscriptionPlan } from './subscription.schema.js';
@@ -47,6 +46,11 @@ export class SubscriptionRepo extends Context.Service<
       DbError,
       CurrentUser
     >;
+    /**
+     * Same rule as private.has_active_subscription(): validated and not
+     * expired.
+     */
+    readonly hasActive: Effect.Effect<boolean, DbError, CurrentUser>;
     /** Creates a pending subscription, validated later by an admin. */
     readonly create: (
       plan: SubscriptionPlan,
@@ -82,6 +86,20 @@ export class SubscriptionRepo extends Context.Service<
           .select(SUBSCRIPTION_SELECT)
           .eq('user_id', userId)
           .order('starts_at', { ascending: false }),
+      ),
+    ),
+    hasActive: Effect.suspend(() =>
+      CurrentUser.use(({ supabase, userId }) =>
+        runQuery(
+          supabase
+            .from('subscription')
+            .select('id')
+            .eq('user_id', userId)
+            .eq('status', 'validated')
+            .gte('ends_at', new Date().toISOString())
+            .limit(1)
+            .maybeSingle(),
+        ).pipe(Effect.map((row) => row !== null)),
       ),
     ),
     create: (plan, { startsAt, endsAt }) =>
