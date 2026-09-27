@@ -1,0 +1,19 @@
+name: 'Release Please'
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      # Needed to create the autorelease labels.
+      issues: write
+    steps:
+      # Opens/updates the release PR from conventional commits;
+      # merging it tags the version and publishes the GitHub release.
+      - uses: googleapis/release-please-action@v5
