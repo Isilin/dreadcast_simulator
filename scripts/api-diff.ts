@@ -8,8 +8,9 @@
  * --no-cache-check skips Cache-Control: the Vercel CDN rewrites it, so only
  * compare it between two Vercel deployments.
  *
- * VERCEL_BYPASS_TOKEN (optional) is sent as x-vercel-protection-bypass to reach
- * SSO-protected previews.
+ * SSO-protected previews: set VERCEL_BYPASS_TOKEN (sent as
+ * x-vercel-protection-bypass) or API_DIFF_COOKIE (e.g. the `_vercel_jwt=…`
+ * cookie obtained by opening a `_vercel_share` link).
  */
 /* eslint-disable no-console -- CLI report */
 import { isDeepStrictEqual } from 'node:util';
@@ -31,9 +32,12 @@ interface Snapshot {
   body: unknown;
 }
 
-const headers: Record<string, string> = process.env.VERCEL_BYPASS_TOKEN
-  ? { 'x-vercel-protection-bypass': process.env.VERCEL_BYPASS_TOKEN }
-  : {};
+const headers: Record<string, string> = {
+  ...(process.env.VERCEL_BYPASS_TOKEN && {
+    'x-vercel-protection-bypass': process.env.VERCEL_BYPASS_TOKEN,
+  }),
+  ...(process.env.API_DIFF_COOKIE && { Cookie: process.env.API_DIFF_COOKIE }),
+};
 
 const snapshot = async (origin: string, path: string): Promise<Snapshot> => {
   const response = await fetch(new URL(path, origin), { headers });
