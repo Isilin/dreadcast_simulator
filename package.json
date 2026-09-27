@@ -25,7 +25,6 @@
     "@supabase/supabase-js": "^2.117.1",
     "@tanstack/react-query": "^5.103.2",
     "@tanstack/react-router": "^1.170.39",
-    "@vercel/node": "^3.0.0",
     "effect": "4.0.0-rc.117",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",

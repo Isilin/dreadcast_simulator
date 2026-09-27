@@ -209,7 +209,7 @@ export const countActiveFilters = (filters: CommunityFilters): number =>
   ].filter(Boolean).length;
 
 /**
- * Query string of GET /api/community/builds (see lib/community.validation.ts).
+ * Query string of GET /api/community/builds (see server/feature/community/community.schema.ts).
  */
 export const filtersToApiQuery = (
   filters: CommunityFilters,

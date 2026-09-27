@@ -7,7 +7,7 @@ export const COMMUNITY_REPOSITORY_ERROR_CODE = {
 } as const;
 
 /**
- * API codes the UI reacts to (see lib/community.api.ts).
+ * API codes the UI reacts to (see server/feature/community/community.errors.ts).
  */
 export const COMMUNITY_API_ERROR_CODE = {
   SUBSCRIPTION_REQUIRED: 'SUBSCRIPTION_REQUIRED',

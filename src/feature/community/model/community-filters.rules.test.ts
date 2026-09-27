@@ -1,3 +1,4 @@
+import { Schema } from 'effect';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -8,10 +9,8 @@ import {
   parseCommunitySearch,
 } from './community-filters.rules';
 import type { CommunityFilters } from './community.types';
-import {
-  searchQuerySchema,
-  hasAdvancedFilters as apiHasAdvancedFilters,
-} from '../../../../lib/community.validation';
+import { hasAdvancedFilters as apiHasAdvancedFilters } from '../../../../server/feature/community/community.rules';
+import { SearchQuery } from '../../../../server/feature/community/community.schema';
 
 const fullFilters: CommunityFilters = {
   query: 'soigneur',
@@ -73,19 +72,14 @@ describe('community filters', () => {
 
   it('builds a query accepted by the API validation', () => {
     const query = Object.fromEntries(filtersToApiQuery(fullFilters));
-    const parsed = searchQuerySchema.safeParse(query);
+    const parsed = Schema.decodeUnknownSync(SearchQuery)(query);
 
-    expect(parsed.success).toBe(true);
-    if (!parsed.success) return;
-
-    expect(parsed.data.spec).toEqual(['medecin', 'soutien']);
-    expect(parsed.data.weapon).toEqual(['2handsMelee']);
-    expect(parsed.data.minStats).toEqual({ medicine: 200, health: 900 });
-    expect(parsed.data.implants).toEqual(['Urgentiste', "Peau d'acier"]);
-    expect(parsed.data.page).toBe(3);
-    expect(apiHasAdvancedFilters(parsed.data)).toBe(
-      hasAdvancedFilters(fullFilters),
-    );
+    expect(parsed.spec).toEqual(['medecin', 'soutien']);
+    expect(parsed.weapon).toEqual(['2handsMelee']);
+    expect(parsed.minStats).toEqual({ medicine: 200, health: 900 });
+    expect(parsed.implants).toEqual(['Urgentiste', "Peau d'acier"]);
+    expect(parsed.page).toBe(3);
+    expect(apiHasAdvancedFilters(parsed)).toBe(hasAdvancedFilters(fullFilters));
   });
 
   it('flags subscriber-only filters', () => {

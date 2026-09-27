@@ -3,7 +3,7 @@ import {
   type PostgrestError,
   type SupabaseClient as BaseSupabaseClient,
 } from '@supabase/supabase-js';
-import { Context, Effect, Layer } from 'effect';
+import { Context, Effect, Layer, Schema } from 'effect';
 
 import { SupabaseConfig } from './config.js';
 import type { Database } from './database.gen.js';
@@ -58,10 +58,10 @@ type SuccessData<R extends PostgrestResult> = Extract<
   { error: null }
 >['data'];
 
-/** Runs a PostgREST query and moves its `error` to the failure channel. */
-export const runQuery = <R extends PostgrestResult>(
+/** Awaits a PostgREST query and moves its `error` to the failure channel. */
+const execute = <R extends PostgrestResult>(
   query: PromiseLike<R>,
-): Effect.Effect<SuccessData<R>, DbError> =>
+): Effect.Effect<Extract<R, { error: null }>, DbError> =>
   Effect.tryPromise({
     try: () => Promise.resolve(query),
     catch: (cause) =>
@@ -77,7 +77,37 @@ export const runQuery = <R extends PostgrestResult>(
               message: result.error.message,
             }),
           )
-        : // Without error, supabase-js types data as the success payload.
-          Effect.succeed(result.data as SuccessData<R>),
+        : // Without error, supabase-js types the result as a success.
+          Effect.succeed(result as Extract<R, { error: null }>),
     ),
   );
+
+/** Runs a PostgREST query and returns its data. */
+export const runQuery = <R extends PostgrestResult>(
+  query: PromiseLike<R>,
+): Effect.Effect<SuccessData<R>, DbError> =>
+  Effect.map(execute(query), (result) => result.data);
+
+/** Like runQuery, also returning the `count` requested on the select. */
+export const runCountedQuery = <
+  R extends PostgrestResult & { count: number | null },
+>(
+  query: PromiseLike<R>,
+): Effect.Effect<{ data: SuccessData<R>; count: number | null }, DbError> =>
+  Effect.map(execute(query), (result) => ({
+    data: result.data,
+    count: result.count,
+  }));
+
+/**
+ * Validates rows whose generated types are loose (RPC results, JSON columns).
+ * A mismatch is a database error: 500, like any unexpected row.
+ */
+export const decodeRows =
+  <A>(schema: Schema.Codec<A, unknown>) =>
+  (rows: unknown): Effect.Effect<A, DbError> =>
+    Schema.decodeUnknownEffect(schema)(rows).pipe(
+      Effect.mapError(
+        (error) => new DbError({ message: `Unexpected row: ${error.message}` }),
+      ),
+    );

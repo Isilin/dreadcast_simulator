@@ -1,7 +1,10 @@
 import { Schema } from 'effect';
 
-/** Mirrors the stat_property enum (and src/domain/stats.ts). */
-export const StatProperty = Schema.Literals([
+/**
+ * Canonical stat order: stat_property enum, src/domain/stats.ts and
+ * private.community_stat_keys() (parity-tested).
+ */
+export const STAT_KEYS = [
   'strength',
   'agility',
   'robustness',
@@ -22,10 +25,12 @@ export const StatProperty = Schema.Literals([
   'criticalCacDamage',
   'hitDamages',
   'criticalHitDamage',
-]);
+] as const;
+
+export const StatProperty = Schema.Literals(STAT_KEYS);
 
 /** Mirrors the item_type enum. */
-export const ItemType = Schema.Literals([
+export const ITEM_TYPES = [
   'head',
   'chest',
   'legs',
@@ -35,10 +40,12 @@ export const ItemType = Schema.Literals([
   '2handsShot',
   '1handMelee',
   '2handsMelee',
-]);
+] as const;
 
-/** Mirrors the race_type enum. */
-export const RaceType = Schema.Literals([
+export const ItemType = Schema.Literals(ITEM_TYPES);
+
+/** Mirrors the race_type enum (and src/feature/profile). */
+export const RACE_TYPES = [
   'Humain',
   'Elfe',
   'Nain',
@@ -50,7 +57,9 @@ export const RaceType = Schema.Literals([
   'Kobold',
   'Gnoll',
   'Androide',
-]);
+] as const;
+
+export const RaceType = Schema.Literals(RACE_TYPES);
 
 const StatModifier = Schema.Struct({
   property: StatProperty,

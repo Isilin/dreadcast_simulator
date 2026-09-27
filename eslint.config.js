@@ -21,7 +21,7 @@ export default tseslint.config([
   reactRefresh.configs.recommended,
   ...queryPlugin.configs['flat/recommended'],
   {
-    files: ['{src,api,lib,server,scripts}/**/*.{ts,tsx,js,jsx}'],
+    files: ['{src,api,server,scripts}/**/*.{ts,tsx,js,jsx}'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',

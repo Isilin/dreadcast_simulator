@@ -9,6 +9,10 @@ export class ProfileRepo extends Context.Service<
   {
     /** Pseudo of the current user, null until chosen. */
     readonly pseudo: Effect.Effect<string | null, DbError, CurrentUser>;
+    /** Pseudo of each given user that has one. */
+    readonly pseudosOf: (
+      userIds: ReadonlyArray<string>,
+    ) => Effect.Effect<ReadonlyMap<string, string>, DbError, CurrentUser>;
     /** Fails with 23505 (already set or taken) or 23514 (invalid). */
     readonly createPseudo: (
       pseudo: string,
@@ -25,6 +29,21 @@ export class ProfileRepo extends Context.Service<
           .maybeSingle(),
       ).pipe(Effect.map((row) => row?.pseudo ?? null)),
     ),
+    pseudosOf: (userIds) =>
+      userIds.length === 0
+        ? Effect.succeed(new Map())
+        : CurrentUser.use(({ supabase }) =>
+            runQuery(
+              supabase
+                .from('user_profile')
+                .select('user_id, pseudo')
+                .in('user_id', [...userIds]),
+            ).pipe(
+              Effect.map(
+                (rows) => new Map(rows.map((row) => [row.user_id, row.pseudo])),
+              ),
+            ),
+          ),
     createPseudo: (pseudo) =>
       CurrentUser.use(({ supabase, userId }) =>
         runQuery(

@@ -24,6 +24,10 @@ const PATHS = [
   '/api/drugs',
   '/api/drugs?id=0',
   '/api/drugs?id=unknown',
+  '/api/community/meta',
+  '/api/community/builds/not-a-uuid',
+  '/api/community/builds/00000000-0000-4000-8000-000000000000',
+  '/api/community/builds',
 ];
 
 interface Snapshot {
