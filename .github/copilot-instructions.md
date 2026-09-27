@@ -111,6 +111,7 @@ yarn test         # Vitest unit tests
 yarn lint         # ESLint check
 yarn lint:fix     # Auto-fix linting issues
 yarn format       # Prettier format all files
+yarn format:check # Prettier check (no writes), as run in CI
 ```
 
 ## Persistence
