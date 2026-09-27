@@ -58,6 +58,7 @@ yarn test         # Tests unitaires Vitest
 yarn lint         # Verification ESLint
 yarn lint:fix     # Correction automatique des erreurs ESLint
 yarn format       # Formatage avec Prettier
+yarn format:check # Verification Prettier sans reecriture (CI)
 yarn preview      # Preview du build de production
 ```
 

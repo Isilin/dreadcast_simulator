@@ -19,14 +19,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Vite 7 and @vitejs/plugin-react-swc require Node ^20.19 || >=22.12.
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Enable Corepack (yarn 4.x)
         run: corepack enable
 
+      # The app lives at the repository root (package.json, yarn.lock).
       - name: Install dependencies
         run: yarn install --immutable
 
@@ -37,4 +39,4 @@ jobs:
         run: yarn run lint
 
       - name: Format check
-        run: yarn run format
+        run: yarn run format:check
