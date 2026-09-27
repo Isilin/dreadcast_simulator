@@ -1,0 +1,37 @@
+version: 2
+
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      timezone: 'Europe/Paris'
+    open-pull-requests-limit: 10
+    commit-message:
+      # chore(deps) / chore(deps-dev): no release triggered by release-please.
+      prefix: 'chore'
+      prefix-development: 'chore'
+      include: 'scope'
+    # Minor/patch bumps batched into one PR per dependency type;
+    # majors stay in their own PR.
+    groups:
+      prod-minor-patch:
+        dependency-type: 'production'
+        update-types: ['minor', 'patch']
+      dev-minor-patch:
+        dependency-type: 'development'
+        update-types: ['minor', 'patch']
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      timezone: 'Europe/Paris'
+    commit-message:
+      prefix: 'ci'
+      include: 'scope'
+    groups:
+      actions:
+        patterns: ['*']
