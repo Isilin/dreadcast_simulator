@@ -29,7 +29,7 @@ feature/
       *.rules.ts      # Business logic functions (pure, unit tested)
       *.selectors.ts  # Derived state computations (hooks)
     services/         # Data fetching
-      *.repo.ts       # fetchX() functions calling the /api serverless functions
+      *.repo.ts       # fetchX() functions calling the /api endpoints
       *.queries.ts    # TanStack Query hooks (useXs)
       *.schema.ts     # Zod schemas and inferred DTO types
       *.mapper.ts     # DTO → Domain transformations
@@ -247,7 +247,51 @@ export const fetchItems = async (signal?: AbortSignal): Promise<Item[]> => {
 
 - Every payload coming from `/api` is validated with a Zod schema before use
 - DTOs are mapped to domain models in `*.mapper.ts`
-- Serverless handlers live in `api/`, shared server code (queries, validation) in `lib/`
+- The API itself lives in `server/` (see Backend below)
+
+### Backend (`server/`) (Required)
+
+The API is an Effect v4 `HttpApi` served by a single Vercel function
+(`api/server.ts`; `vercel.json` rewrites every `/api/*` route to it).
+
+```typescript
+server/
+  api.contract.ts     # HttpApi: every group, prefix /api
+  api.layer.ts        # handlers + services -> ApiLive; makeApiLayer(fakes) in tests
+  api.docs.ts         # /api/docs (Scalar) and /api/openapi.json
+  web-handler.ts      # (Request) => Promise<Response>, used by api/server.ts
+  main.ts             # local server (yarn dev:api)
+  platform/           # Supabase, auth middlewares, errors, cache, validation
+  feature/<name>/
+    <name>.contract.ts  # HttpApiGroup: endpoints, schemas, errors, middlewares
+    <name>.schema.ts    # Effect Schema payloads and DTOs
+    <name>.handlers.ts  # HttpApiBuilder.group: orchestration only
+    <name>.repo.ts      # Context.Service over Supabase, one method per query
+    <name>.rules.ts     # Pure functions (unit tested)
+```
+
+- `*.contract.ts` and `*.schema.ts` import only `effect` (and other
+  contracts/schemas): the front can derive a typed client from `DreadcastApi`
+- Import `effect/unstable/httpapi/<Module>` and `@effect/platform-node/<Module>`,
+  never their barrels (enforced by ESLint)
+- Errors: the classes of `platform/http-errors.ts` (wire body
+  `{ error, code? }`); database failures go through `toInternalError` or
+  `toCommunityError`, request decoding failures through the `InvalidRequest`
+  endpoint annotation
+- Signed-in endpoints use the `Authentication` middleware and read
+  `CurrentUser` (a Supabase client under the user session, so RLS applies);
+  guest-friendly ones use `OptionalAuthentication`
+- Cache: `PublicCache` for reference data, `NoStore` for user data
+- Supabase clients are created per request (`Supabase.anon()`, `forUser()`):
+  never share one between requests
+- Validate loosely typed rows (RPC results, JSON columns) with
+  `decodeRows(schema)` instead of casting them
+- Regenerate `platform/database.gen.ts` (Supabase MCP
+  `generate_typescript_types`) after a schema migration
+- Tests: `server/testing/test-api.ts` (`makeTestApi`) runs the whole API over
+  fake repositories with the real auth middlewares; `yarn api:diff <ref> <candidate>`
+  compares two deployments
+- API reference: `/api/docs` (OpenAPI document at `/api/openapi.json`)
 
 ### TanStack Query Integration
 
@@ -355,7 +399,8 @@ export const fetchItems = async (signal?: AbortSignal): Promise<Item[]> => {
 
 ```bash
 # Required commands
-yarn dev          # Start development server
+yarn dev          # Start development server (/api proxied to production)
+yarn dev:api      # Local API on :3001 (API_PROXY_TARGET=http://localhost:3001 yarn dev)
 yarn build        # TypeScript check + build
 yarn test         # Vitest unit tests
 yarn lint         # ESLint check

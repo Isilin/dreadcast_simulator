@@ -4,7 +4,7 @@
 
 This is a French-language character build simulator for Dreadcast, a browser-based cyberpunk RPG. Users create characters by selecting race/gender, equipping items, kits, implants, a drug and titles, with automatic stat calculation and prerequisite checks. Builds are saved locally for guests (1 build) or in the database for signed-in users (5 builds, unlimited with a subscription), and subscribers can publish them to the Community.
 
-**Tech Stack:** React 19 + TypeScript, Vite, TanStack Router, TanStack Query, Zustand, Base UI Components, CSS Modules, Vercel serverless functions (`api/`, shared code in `lib/`), Supabase
+**Tech Stack:** React 19 + TypeScript, Vite, TanStack Router, TanStack Query, Zustand, Base UI Components, CSS Modules, Effect v4 HttpApi backend (`server/`, one Vercel function `api/server.ts`), Supabase
 
 ## Architecture Pattern: Feature-Sliced Design
 
@@ -61,10 +61,10 @@ export const useImplantsActions = (): ImplantsActions =>
 
 ## Data Fetching Strategy
 
-- **Repository Pattern:** `*.repo.ts` files contain `fetchX()` functions calling the `/api` serverless functions
+- **Repository Pattern:** `*.repo.ts` files contain `fetchX()` functions calling the `/api` endpoints
 - **Validation:** every payload is validated with the Zod schemas of `*.schema.ts`, then mapped with `*.mapper.ts`
 - **TanStack Query:** Queries defined in `*.queries.ts` wrap repo functions
-- **API:** handlers in `api/**`, shared server code (select queries, validation, handlers) in `lib/`, data in Supabase
+- **API:** Effect HttpApi in `server/` (contract, handlers, repos, rules per feature; see CODING_STANDARDS.md "Backend"), data in Supabase
 
 ## Domain Layer
 
@@ -106,6 +106,7 @@ Located in `src/ui/` - reusable components following same folder structure (Comp
 ```bash
 # From the repository root
 yarn dev          # Vite dev server on :5173 (/api proxied to the Vercel deployment)
+yarn dev:api      # Local Effect API on :3001 (API_PROXY_TARGET=http://localhost:3001 yarn dev)
 yarn build        # TypeScript check + Vite build
 yarn test         # Vitest unit tests
 yarn lint         # ESLint check
@@ -133,7 +134,7 @@ yarn format:check # Prettier check (no writes), as run in CI
 1. Create feature folder with the model/services/ui structure it needs
 2. Define types with `as const` pattern for enums
 3. Add a Zustand store if the feature has state
-4. Add the API handler (`api/`, `lib/`) and the repo function with its Zod schema
+4. Add the endpoint in `server/feature/<name>/` (contract, handlers, repo) and the repo function with its Zod schema
 5. Add TanStack Query hooks for data fetching
 6. Build UI components with CSS modules
 7. Export through index.ts at each level
