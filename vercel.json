@@ -5,7 +5,7 @@
   "framework": "vite",
   "functions": {
     "api/**/*.ts": {
-      "includeFiles": "lib/**"
+      "includeFiles": "{lib,server}/**"
     }
   },
   "redirects": [
@@ -27,6 +27,10 @@
     {
       "source": "/api/community/:resource",
       "destination": "/api/community?resource=:resource"
+    },
+    {
+      "source": "/api/:path(items|kits|implants|races|titles|drugs)",
+      "destination": "/api/server?__path=:path"
     },
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
