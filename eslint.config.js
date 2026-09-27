@@ -85,6 +85,13 @@ export default tseslint.config([
     },
   },
   {
+    // Backend Effect : `Service.use(...)` n'est pas un hook React.
+    files: ['{server,scripts}/**/*.ts'],
+    rules: {
+      'react-hooks/rules-of-hooks': 'off',
+    },
+  },
+  {
     // Configuration spécifique pour les fichiers de configuration
     files: ['*.config.js'],
     languageOptions: {
