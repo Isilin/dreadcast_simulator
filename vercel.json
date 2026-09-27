@@ -13,10 +13,6 @@
   ],
   "rewrites": [
     {
-      "source": "/api/profile/me",
-      "destination": "/api/community?resource=profile"
-    },
-    {
       "source": "/api/community/builds/:id/:action",
       "destination": "/api/community?resource=builds&id=:id&action=:action"
     },
@@ -29,8 +25,16 @@
       "destination": "/api/community?resource=:resource"
     },
     {
-      "source": "/api/:path(items|kits|implants|races|titles|drugs)",
+      "source": "/api/:path(items|kits|implants|races|titles|drugs|builds|subscriptions|subscription-plans)",
       "destination": "/api/server?__path=:path"
+    },
+    {
+      "source": "/api/auth/login",
+      "destination": "/api/server?__path=auth/login"
+    },
+    {
+      "source": "/api/profile/me",
+      "destination": "/api/server?__path=profile/me"
     },
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/(.*)", "destination": "/index.html" }

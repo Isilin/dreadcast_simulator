@@ -80,36 +80,6 @@ const REVIEW_BODY_MAX_LENGTH = 280;
 const SEARCH_PAGE_SIZE_DEFAULT = 24;
 const SEARCH_PAGE_SIZE_MAX = 48;
 
-/** Same rule as the valid_user_profile_pseudo / reserved constraints (025). */
-const PSEUDO_PATTERN = /^[A-Za-zÀ-ÖØ-öø-ÿ0-9_.-]{3,24}$/u;
-export const RESERVED_PSEUDOS = [
-  'admin',
-  'administrateur',
-  'administrator',
-  'anonyme',
-  'dreadcast',
-  'moderateur',
-  'modérateur',
-  'moderator',
-  'modo',
-  'root',
-  'staff',
-  'support',
-  'system',
-  'systeme',
-  'système',
-] as const;
-const RESERVED_PSEUDO_PREFIX = /^(admin|mod[eé]rat)/u;
-
-export const isPseudoValid = (pseudo: string): boolean => {
-  const lower = pseudo.toLowerCase();
-  return (
-    PSEUDO_PATTERN.test(pseudo) &&
-    !(RESERVED_PSEUDOS as readonly string[]).includes(lower) &&
-    !RESERVED_PSEUDO_PREFIX.test(lower)
-  );
-};
-
 // z.number() rejects NaN and Infinity in zod 4.
 const statValueSchema = z.number().min(STAT_MIN).max(STAT_MAX);
 
@@ -179,13 +149,6 @@ export const reviewPayloadSchema = z.object({
     .max(REVIEW_BODY_MAX_LENGTH)
     .nullish()
     .transform((value) => (value ? value : null)),
-});
-
-export const pseudoPayloadSchema = z.object({
-  pseudo: z
-    .string()
-    .trim()
-    .refine(isPseudoValid, { message: 'Pseudo invalide.' }),
 });
 
 export const similarPayloadSchema = z.object({

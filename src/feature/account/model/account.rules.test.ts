@@ -4,7 +4,7 @@ import { validatePseudo } from './account.rules';
 import {
   isPseudoValid,
   RESERVED_PSEUDOS,
-} from '../../../../lib/community.validation';
+} from '../../../../server/feature/profile/profile.rules';
 
 describe('validatePseudo', () => {
   it('accepts letters, accents, digits and _ . -', () => {

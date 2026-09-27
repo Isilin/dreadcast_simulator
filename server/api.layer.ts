@@ -3,28 +3,53 @@ import { HttpServer } from 'effect/unstable/http';
 import { HttpApiBuilder } from 'effect/unstable/httpapi';
 
 import { DreadcastApi } from './api.contract.js';
+import { AuthGateway } from './feature/auth/auth.gateway.js';
+import { AuthHandlers } from './feature/auth/auth.handlers.js';
+import { BuildHandlers } from './feature/build/build.handlers.js';
+import { BuildRepo } from './feature/build/build.repo.js';
 import { CatalogHandlers } from './feature/catalog/catalog.handlers.js';
 import { CatalogRepo } from './feature/catalog/catalog.repo.js';
+import { ProfileHandlers } from './feature/profile/profile.handlers.js';
+import { ProfileRepo } from './feature/profile/profile.repo.js';
+import { SubscriptionHandlers } from './feature/subscription/subscription.handlers.js';
+import { SubscriptionRepo } from './feature/subscription/subscription.repo.js';
+import type { Authentication } from './platform/auth.js';
+import { AuthenticationLive } from './platform/auth.live.js';
 import { RequestValidationLive } from './platform/request-validation.js';
 import { Supabase } from './platform/supabase.js';
 
-/** Handlers of every group. Repositories are provided separately (tests). */
-export const ApiHandlersLive = Layer.mergeAll(CatalogHandlers).pipe(
-  Layer.provide(RequestValidationLive),
-);
+/** Services behind the handlers: real ones in production, fakes in tests. */
+export type ApiServices =
+  | Authentication
+  | AuthGateway
+  | BuildRepo
+  | CatalogRepo
+  | ProfileRepo
+  | SubscriptionRepo;
 
-export const RepositoriesLive = Layer.mergeAll(CatalogRepo.layer).pipe(
-  Layer.provide(Supabase.layer),
-);
+export const ApiHandlersLive = Layer.mergeAll(
+  AuthHandlers,
+  BuildHandlers,
+  CatalogHandlers,
+  ProfileHandlers,
+  SubscriptionHandlers,
+).pipe(Layer.provide(RequestValidationLive));
 
-/** HTTP API without its repositories: provide real or fake ones. */
-export const makeApiLayer = <E, R>(
-  repositories: Layer.Layer<CatalogRepo, E, R>,
-) =>
+export const ApiServicesLive = Layer.mergeAll(
+  AuthenticationLive,
+  AuthGateway.layer,
+  BuildRepo.layer,
+  CatalogRepo.layer,
+  ProfileRepo.layer,
+  SubscriptionRepo.layer,
+).pipe(Layer.provide(Supabase.layer));
+
+/** HTTP API without its services: provide real or fake ones. */
+export const makeApiLayer = <E, R>(services: Layer.Layer<ApiServices, E, R>) =>
   HttpApiBuilder.layer(DreadcastApi).pipe(
     Layer.provide(ApiHandlersLive),
-    Layer.provide(repositories),
+    Layer.provide(services),
     Layer.provide(HttpServer.layerServices),
   );
 
-export const ApiLive = makeApiLayer(RepositoriesLive);
+export const ApiLive = makeApiLayer(ApiServicesLive);
