@@ -1,5 +1,6 @@
 import { Context, Effect } from 'effect';
-import { HttpApiMiddleware, type HttpApiError } from 'effect/unstable/httpapi';
+import type * as HttpApiError from 'effect/unstable/httpapi/HttpApiError';
+import * as HttpApiMiddleware from 'effect/unstable/httpapi/HttpApiMiddleware';
 
 import { BadRequest, Unprocessable } from './http-errors.js';
 

@@ -1,5 +1,5 @@
 import { Effect, Layer } from 'effect';
-import { HttpApiBuilder } from 'effect/unstable/httpapi';
+import * as HttpApiBuilder from 'effect/unstable/httpapi/HttpApiBuilder';
 
 import { BuildRepo } from './build.repo.js';
 import { findBySlot, toBuildDto } from './build.rules.js';

@@ -1,4 +1,5 @@
-import { HttpApi } from 'effect/unstable/httpapi';
+import * as HttpApi from 'effect/unstable/httpapi/HttpApi';
+import * as OpenApi from 'effect/unstable/httpapi/OpenApi';
 
 import { AuthGroup } from './feature/auth/auth.contract.js';
 import { BuildGroup } from './feature/build/build.contract.js';
@@ -20,4 +21,5 @@ export class DreadcastApi extends HttpApi.make('dreadcast')
   .add(ProfileGroup)
   .add(CommunityGroup)
   .middleware(RequestValidation)
-  .prefix('/api') {}
+  .prefix('/api')
+  .annotate(OpenApi.Title, 'Dreadcast Simulator API') {}

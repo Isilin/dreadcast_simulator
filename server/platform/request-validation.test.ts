@@ -1,11 +1,9 @@
 import { Effect, Layer, Schema } from 'effect';
 import { HttpRouter, HttpServer } from 'effect/unstable/http';
-import {
-  HttpApi,
-  HttpApiBuilder,
-  HttpApiEndpoint,
-  HttpApiGroup,
-} from 'effect/unstable/httpapi';
+import * as HttpApi from 'effect/unstable/httpapi/HttpApi';
+import * as HttpApiBuilder from 'effect/unstable/httpapi/HttpApiBuilder';
+import * as HttpApiEndpoint from 'effect/unstable/httpapi/HttpApiEndpoint';
+import * as HttpApiGroup from 'effect/unstable/httpapi/HttpApiGroup';
 import { afterAll, describe, expect, it } from 'vitest';
 
 import { Unprocessable } from './http-errors.js';

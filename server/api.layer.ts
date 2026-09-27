@@ -1,8 +1,9 @@
 import { Layer } from 'effect';
 import { HttpServer } from 'effect/unstable/http';
-import { HttpApiBuilder } from 'effect/unstable/httpapi';
+import * as HttpApiBuilder from 'effect/unstable/httpapi/HttpApiBuilder';
 
 import { DreadcastApi } from './api.contract.js';
+import { DocsLive, OPENAPI_PATH } from './api.docs.js';
 import { AuthGateway } from './feature/auth/auth.gateway.js';
 import { AuthHandlers } from './feature/auth/auth.handlers.js';
 import { BuildHandlers } from './feature/build/build.handlers.js';
@@ -62,9 +63,15 @@ export const ApiServicesLive = Layer.mergeAll(
   SubscriptionRepo.layer,
 ).pipe(Layer.provide(Supabase.layer));
 
-/** HTTP API without its services: provide real or fake ones. */
+/**
+ * HTTP API (+ OpenAPI document and reference page) without its services:
+ * provide real or fake ones.
+ */
 export const makeApiLayer = <E, R>(services: Layer.Layer<ApiServices, E, R>) =>
-  HttpApiBuilder.layer(DreadcastApi).pipe(
+  Layer.mergeAll(
+    HttpApiBuilder.layer(DreadcastApi, { openapiPath: OPENAPI_PATH }),
+    DocsLive,
+  ).pipe(
     Layer.provide(ApiHandlersLive),
     Layer.provide(services),
     Layer.provide(HttpServer.layerServices),

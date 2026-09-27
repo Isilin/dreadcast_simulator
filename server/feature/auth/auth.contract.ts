@@ -1,4 +1,5 @@
-import { HttpApiEndpoint, HttpApiGroup } from 'effect/unstable/httpapi';
+import * as HttpApiEndpoint from 'effect/unstable/httpapi/HttpApiEndpoint';
+import * as HttpApiGroup from 'effect/unstable/httpapi/HttpApiGroup';
 
 import { LoginPayload, LoginResponse } from './auth.schema.js';
 import { NoStore } from '../../platform/cache.js';

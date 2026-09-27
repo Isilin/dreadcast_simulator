@@ -1,10 +1,8 @@
 import { Schema } from 'effect';
-import {
-  type HttpApiError,
-  HttpApiEndpoint,
-  HttpApiGroup,
-  HttpApiSchema,
-} from 'effect/unstable/httpapi';
+import * as HttpApiEndpoint from 'effect/unstable/httpapi/HttpApiEndpoint';
+import type * as HttpApiError from 'effect/unstable/httpapi/HttpApiError';
+import * as HttpApiGroup from 'effect/unstable/httpapi/HttpApiGroup';
+import * as HttpApiSchema from 'effect/unstable/httpapi/HttpApiSchema';
 
 import { communityError, type CommunityErrorCode } from './community.errors.js';
 import { payloadErrorCode } from './community.rules.js';
