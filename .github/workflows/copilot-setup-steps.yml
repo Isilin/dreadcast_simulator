@@ -19,7 +19,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v7
 
-      # Vite 7 and @vitejs/plugin-react-swc require Node ^20.19 || >=22.12.
+      # Vite 8 requires Node ^20.19 || >=22.12, Vitest 5 ^22.12 || >=24.
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
