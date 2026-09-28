@@ -1,5 +1,5 @@
 import { Effect, Layer, Option } from 'effect';
-import { HttpApiBuilder } from 'effect/unstable/httpapi';
+import * as HttpApiBuilder from 'effect/unstable/httpapi/HttpApiBuilder';
 
 import { communityError, toCommunityError } from './community.errors.js';
 import { CommunityRepo, ReviewRepo } from './community.repo.js';

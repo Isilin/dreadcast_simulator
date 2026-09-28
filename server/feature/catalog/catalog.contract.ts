@@ -1,5 +1,6 @@
 import { Schema } from 'effect';
-import { HttpApiEndpoint, HttpApiGroup } from 'effect/unstable/httpapi';
+import * as HttpApiEndpoint from 'effect/unstable/httpapi/HttpApiEndpoint';
+import * as HttpApiGroup from 'effect/unstable/httpapi/HttpApiGroup';
 
 import { Drug, Implant, Item, Kit, Race, Title } from './catalog.schema.js';
 import { PublicCache } from '../../platform/cache.js';

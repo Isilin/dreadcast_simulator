@@ -1,5 +1,5 @@
 import { Effect, Layer } from 'effect';
-import { HttpApiBuilder } from 'effect/unstable/httpapi';
+import * as HttpApiBuilder from 'effect/unstable/httpapi/HttpApiBuilder';
 
 import { SubscriptionRepo } from './subscription.repo.js';
 import { buildSubscriptionDateRange } from './subscription.rules.js';

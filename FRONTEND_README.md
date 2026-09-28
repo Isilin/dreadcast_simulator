@@ -1,9 +1,9 @@
 # Guide technique
 
 Le frontend est une application React 19 + TypeScript construite avec Vite,
-TanStack Router, TanStack Query et Zustand. Les donnees passent par des
-fonctions serverless Vercel (`api/`, code partage dans `lib/`) adossees a
-Supabase. Le code suit une organisation feature-sliced: chaque fonctionnalite
+TanStack Router, TanStack Query et Zustand. Les donnees passent par une API
+Effect (`server/`, servie par une seule fonction Vercel `api/server.ts`)
+adossee a Supabase. Le code suit une organisation feature-sliced: chaque fonctionnalite
 garde ses regles, ses donnees et son UI dans une frontiere explicite.
 
 Les conventions de code sont dans [CODING_STANDARDS.md](CODING_STANDARDS.md).
@@ -22,12 +22,20 @@ Ouvrir [http://localhost:5173](http://localhost:5173).
 
 `yarn dev` proxifie les appels `/api/*` vers le deploiement Vercel
 (`vite.config.ts`): le catalogue, les kits, les implants, les drogues et les
-races demandent donc une API deployee fonctionnelle. Pour executer aussi les
-fonctions de `api/` en local, utiliser `yarn vercel dev` (projet Vercel lie).
+races demandent donc une API deployee fonctionnelle. Pour executer l'API en
+local:
+
+```bash
+yarn dev:api                                    # API sur :3001 (.env.local)
+API_PROXY_TARGET=http://localhost:3001 yarn dev # front branche dessus
+```
+
+Attention: `.env.local` pointe sur la base de production, les ecritures faites
+en local sont reelles. La reference de l'API est servie sur `/api/docs`.
 
 Quand le panneau Catalogue affiche `Catalogue indisponible`, le client a recu
 une erreur de service: verifier les variables Supabase du projet Vercel et les
-journaux des fonctions serverless. L'interface reste utilisable pour les builds
+journaux de la fonction `api/server.ts`. L'interface reste utilisable pour les builds
 deja enregistres localement.
 
 ### Variables d'environnement (auth Supabase)

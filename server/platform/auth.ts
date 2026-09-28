@@ -1,5 +1,6 @@
 import { Context, type Option } from 'effect';
-import { HttpApiMiddleware, HttpApiSecurity } from 'effect/unstable/httpapi';
+import * as HttpApiMiddleware from 'effect/unstable/httpapi/HttpApiMiddleware';
+import * as HttpApiSecurity from 'effect/unstable/httpapi/HttpApiSecurity';
 
 import { InternalError, Unauthorized } from './http-errors.js';
 import type { SupabaseClient } from './supabase.js';

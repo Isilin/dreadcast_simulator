@@ -1,6 +1,6 @@
 import { Effect, Layer } from 'effect';
 import { HttpServerResponse } from 'effect/unstable/http';
-import { HttpApiMiddleware } from 'effect/unstable/httpapi';
+import * as HttpApiMiddleware from 'effect/unstable/httpapi/HttpApiMiddleware';
 
 /**
  * Reference data (catalog, game versions): cached by browsers and the Vercel
