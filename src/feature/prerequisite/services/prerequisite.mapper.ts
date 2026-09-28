@@ -1,26 +1,27 @@
-import type {
-  ImplantPrerequisiteDto,
-  RacePrerequisiteDto,
-  TitlePrerequisiteDto,
-} from './prerequisite.schema';
+import type { Item as ItemDto } from '@server/feature/catalog/catalog.schema';
+
 import type { Prerequisite } from '../model/prerequisite.types';
 
-import type { StatModifier } from '@/domain';
+type StatPrerequisiteDto = ItemDto['item_prerequisite'][number];
+type TitlePrerequisiteDto = ItemDto['item_prerequisite_title'][number];
+type ImplantPrerequisiteDto = ItemDto['item_prerequisite_implant'][number];
+type RacePrerequisiteDto = ItemDto['item_prerequisite_race'][number];
 
+/** Prerequisite rows of an item or a kit (same shape for both). */
 interface PrerequisitesDto {
-  stats?: StatModifier[];
-  /** Absent from API deployments older than the title prerequisites. */
-  titles?: TitlePrerequisiteDto[];
-  /** Absent from API deployments older than the implant prerequisites. */
-  implants?: ImplantPrerequisiteDto[];
+  stats?: ReadonlyArray<StatPrerequisiteDto>;
+  titles?: ReadonlyArray<TitlePrerequisiteDto>;
+  implants?: ReadonlyArray<ImplantPrerequisiteDto>;
   /**
    * One row per allowed race: grouped in a single prerequisite, met by any of
-   * them. Absent from API deployments older than the race prerequisites.
+   * them.
    */
-  races?: RacePrerequisiteDto[];
+  races?: ReadonlyArray<RacePrerequisiteDto>;
 }
 
-const racePrerequisites = (races: RacePrerequisiteDto[]): Prerequisite[] =>
+const racePrerequisites = (
+  races: ReadonlyArray<RacePrerequisiteDto>,
+): Prerequisite[] =>
   races.length > 0
     ? [{ kind: 'race', races: races.map(({ race }) => race) }]
     : [];

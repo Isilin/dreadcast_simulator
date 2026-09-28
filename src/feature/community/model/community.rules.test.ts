@@ -16,6 +16,7 @@ import {
   validatePublicationDescription,
   validatePublicationTitle,
 } from './publish-payload.rules';
+import { IMPLANT_NAMES } from '../../../../server/feature/catalog/catalog.schema';
 import {
   PublishPayload,
   RACE_TYPES,
@@ -24,6 +25,7 @@ import {
 } from '../../../../server/feature/community/community.schema';
 
 import { ItemSpotValue, StatValues, type Stat } from '@/domain';
+import { ImplantNameValues } from '@/feature/implant';
 import type { Item, ItemsState } from '@/feature/item';
 import type { BuildSnapshot } from '@/feature/persistence';
 import { RaceTypeValues } from '@/feature/profile';
@@ -237,5 +239,9 @@ describe('frontend and API constants', () => {
 
   it('share the race list', () => {
     expect([...RACE_TYPES]).toEqual([...RaceTypeValues]);
+  });
+
+  it('share the implant names', () => {
+    expect([...IMPLANT_NAMES]).toEqual([...ImplantNameValues]);
   });
 });

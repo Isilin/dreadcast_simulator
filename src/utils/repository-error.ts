@@ -1,4 +1,4 @@
-interface RepositoryErrorParams {
+export interface RepositoryErrorParams {
   code: string;
   message: string;
   status?: number;

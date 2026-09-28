@@ -10,7 +10,6 @@ import {
   formatStatValue,
   type BuildCatalogs,
 } from '../../model';
-import { communitySnapshotSchema } from '../../services/community.schema';
 
 import type { Stat } from '@/domain';
 import {
@@ -40,7 +39,20 @@ export const CompareDialog = ({
 
   const builds = useQuery({
     queryKey: ['community', 'compare', 'my-builds'],
-    queryFn: ({ signal }) => fetchRemoteBuilds(signal),
+    queryFn: async ({ signal }) => {
+      // The normalizer (Effect Schema) is loaded with the builds.
+      const [remoteBuilds, { toBuildSnapshot }] = await Promise.all([
+        fetchRemoteBuilds(signal),
+        import('../../services/community.snapshot'),
+      ]);
+      // Normalized like published builds; null when unreadable.
+      return Object.fromEntries(
+        Object.entries(remoteBuilds).map(([slot, build]) => [
+          slot,
+          toBuildSnapshot(build),
+        ]),
+      );
+    },
     enabled: isOpen,
     staleTime: 0,
   });
@@ -59,13 +71,12 @@ export const CompareDialog = ({
     (lastSlot && slots.includes(lastSlot) ? lastSlot : (slots[0] ?? null));
 
   const rows = useMemo(() => {
-    const build = slot ? builds.data?.[slot] : undefined;
-    const snapshot = communitySnapshotSchema.safeParse(build);
-    if (!snapshot.success) return null;
+    const snapshot = slot ? builds.data?.[slot] : null;
+    if (!snapshot) return null;
 
     return buildStatComparison(
       publishedStats,
-      computeSnapshotStats(snapshot.data, catalogs),
+      computeSnapshotStats(snapshot, catalogs),
     );
   }, [builds.data, catalogs, publishedStats, slot]);
 

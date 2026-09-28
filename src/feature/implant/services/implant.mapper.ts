@@ -1,7 +1,8 @@
-import type { ImplantResponseDto } from './implant.schema';
+import type { Implant as ImplantDto } from '@server/feature/catalog/catalog.schema';
+
 import type { Implant } from '../model/implant.types';
 
-export const toDomain = (dto: ImplantResponseDto): Implant => ({
+export const toDomain = (dto: ImplantDto): Implant => ({
   id: dto.id,
   name: dto.name,
   levelMax: dto.level_max,

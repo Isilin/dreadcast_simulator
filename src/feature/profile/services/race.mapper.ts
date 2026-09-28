@@ -1,7 +1,8 @@
-import type { Race } from '../model';
-import type { RaceResponseDto } from './race.schema';
+import type { Race as RaceDto } from '@server/feature/catalog/catalog.schema';
 
-export const toDomain = (race: RaceResponseDto): Race => ({
+import type { Race } from '../model';
+
+export const toDomain = (race: RaceDto): Race => ({
   type: race.type,
   strength: race.strength,
   agility: race.agility,

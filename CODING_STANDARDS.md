@@ -31,7 +31,6 @@ feature/
     services/         # Data fetching
       *.repo.ts       # fetchX() functions calling the /api endpoints
       *.queries.ts    # TanStack Query hooks (useXs)
-      *.schema.ts     # Zod schemas and inferred DTO types
       *.mapper.ts     # DTO → Domain transformations
       *.errors.ts     # Typed repository errors
     ui/               # React components
@@ -218,25 +217,21 @@ import { StatusCounterBadge } from '@/ui';
 ### Repository Pattern (Required)
 
 ```typescript
-// ✅ Correct repository implementation
+// ✅ Correct repository implementation: typed client derived from the API
+// contract, loaded lazily (Effect stays out of the initial bundle)
 export const fetchItems = async (signal?: AbortSignal): Promise<Item[]> => {
-  const response = await GET('/api/items', signal);
-
-  if (!response.ok) {
-    throw new ItemRepositoryError({
+  const { callApi } = await import('@/utils/api-client');
+  const items = await callApi((client) => client.catalog.items(), {
+    signal,
+    ErrorClass: ItemRepositoryError,
+    failed: {
       code: ITEM_REPOSITORY_ERROR_CODE.FETCH_ITEMS_FAILED,
       message: 'Impossible de recuperer la liste des items.',
-      status: response.status,
-    });
-  }
-
-  const payload: unknown = await response.json();
-  const { itemArrayResponseSchema } = await import('./item.schema');
-  const items = validatePayload({
-    schema: itemArrayResponseSchema,
-    payload,
-    errorCode: ITEM_REPOSITORY_ERROR_CODE.INVALID_ITEMS_PAYLOAD,
-    errorMessage: 'Le format des items recus est invalide.',
+    },
+    invalid: {
+      code: ITEM_REPOSITORY_ERROR_CODE.INVALID_ITEMS_PAYLOAD,
+      message: 'Le format des items recus est invalide.',
+    },
   });
 
   return items.map(toDomain);
@@ -245,8 +240,16 @@ export const fetchItems = async (signal?: AbortSignal): Promise<Item[]> => {
 
 ### API Data
 
-- Every payload coming from `/api` is validated with a Zod schema before use
-- DTOs are mapped to domain models in `*.mapper.ts`
+- `/api` is called through `callApi` (`src/utils/api-client.ts`): requests and
+  responses are encoded and validated with the server contract schemas, and
+  failures become the feature's `RepositoryError` (API `{ error, code }` kept
+  with `apiMessage`)
+- Signed-in calls pass `accessToken` (`getAccessToken` from `@/feature/auth`);
+  calls sending user input pass `request` so a request the contract rejects
+  gets the same error as the server
+- Import from `@server/...` only types in eagerly loaded front code; runtime
+  imports (Effect) go through a dynamic `import()`
+- DTOs (contract types) are mapped to domain models in `*.mapper.ts`
 - The API itself lives in `server/` (see Backend below)
 
 ### Backend (`server/`) (Required)
@@ -326,7 +329,7 @@ server/
 ### Type Safety
 
 - Use type guards for runtime type checking
-- Validate external data with Zod schemas
+- Validate external data with Effect Schema (contract schemas for the API)
 - Handle async errors in effects and event handlers
 - Provide user-friendly error messages in French
 

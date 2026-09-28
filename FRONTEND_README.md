@@ -164,8 +164,9 @@ garder la Communaute hors du chunk de l'atelier.
 - `model/` porte les regles pures: detection de specialisation, filtres
   (URL, requete API), calcul des stats d'un snapshot sans store
   (`computeSnapshotStats` via `computeSuitStats`), payloads et comparaison.
-- `services/` valide avec zod tout ce qui vient de l'API, y compris les
-  snapshots publies (donnees non fiables normalisees en `BuildSnapshot`).
+- `services/` appelle l'API par le client type (`callApi`), qui valide les
+  reponses avec les schemas du contrat; les snapshots publies (donnees non
+  fiables) sont normalises en `BuildSnapshot` avec Effect Schema.
 - Les fiches et comparaisons rendent un build a partir de props: les stores
   de l'atelier ne sont jamais ecrases par un build consulte.
 - Les regles d'acces (abonne, auteur, pseudo) sont appliquees en base par RLS

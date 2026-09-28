@@ -22,7 +22,6 @@ feature/
     services/         # Data fetching
       *.repo.ts       # fetchX() functions calling /api
       *.queries.ts    # TanStack Query hooks (useXs)
-      *.schema.ts     # Zod schemas and inferred DTO types
       *.mapper.ts     # DTO → Domain transformations
       *.errors.ts     # Typed repository errors
     ui/               # React components (each in own folder with .tsx + .module.css + index.ts)
@@ -62,7 +61,7 @@ export const useImplantsActions = (): ImplantsActions =>
 ## Data Fetching Strategy
 
 - **Repository Pattern:** `*.repo.ts` files contain `fetchX()` functions calling the `/api` endpoints
-- **Validation:** every payload is validated with the Zod schemas of `*.schema.ts`, then mapped with `*.mapper.ts`
+- **Typed client:** repos call `callApi` (`src/utils/api-client.ts`), a client derived from the server contract (`@server/api.contract`); responses are validated by the contract schemas, then mapped with `*.mapper.ts`
 - **TanStack Query:** Queries defined in `*.queries.ts` wrap repo functions
 - **API:** Effect HttpApi in `server/` (contract, handlers, repos, rules per feature; see CODING_STANDARDS.md "Backend"), data in Supabase
 
@@ -134,7 +133,7 @@ yarn format:check # Prettier check (no writes), as run in CI
 1. Create feature folder with the model/services/ui structure it needs
 2. Define types with `as const` pattern for enums
 3. Add a Zustand store if the feature has state
-4. Add the endpoint in `server/feature/<name>/` (contract, handlers, repo) and the repo function with its Zod schema
+4. Add the endpoint in `server/feature/<name>/` (contract, handlers, repo) and the repo function using `callApi`
 5. Add TanStack Query hooks for data fetching
 6. Build UI components with CSS modules
 7. Export through index.ts at each level

@@ -9,11 +9,12 @@ import type {
   SubscriptionRecord,
 } from '../model';
 
-import { getAuthHeaders as getSessionHeaders } from '@/feature/auth';
-import { validatePayload } from '@/utils/validation';
+import { getAccessToken as getSessionToken } from '@/feature/auth';
 
-const getAuthHeaders = (): Promise<HeadersInit> =>
-  getSessionHeaders(
+const loadApi = () => import('@/utils/api-client');
+
+const getAccessToken = (): Promise<string> =>
+  getSessionToken(
     () =>
       new SubscriptionRepositoryError({
         code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.MISSING_AUTH_SESSION,
@@ -25,31 +26,24 @@ const getAuthHeaders = (): Promise<HeadersInit> =>
 export const fetchSubscriptions = async (
   signal?: AbortSignal,
 ): Promise<SubscriptionRecord[]> => {
-  const headers = await getAuthHeaders();
-
-  const response = await fetch('/api/subscriptions', {
-    method: 'GET',
-    headers,
-    signal,
-  });
-
-  if (!response.ok) {
-    throw new SubscriptionRepositoryError({
-      code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.FETCH_SUBSCRIPTIONS_FAILED,
-      message: 'Impossible de recuperer les abonnements.',
-      status: response.status,
-    });
-  }
-
-  const payload: unknown = await response.json();
-  const { subscriptionArrayResponseDtoSchema } =
-    await import('./subscription.schema');
-  const subscriptions = validatePayload({
-    schema: subscriptionArrayResponseDtoSchema,
-    payload,
-    errorCode: SUBSCRIPTION_REPOSITORY_ERROR_CODE.INVALID_SUBSCRIPTIONS_PAYLOAD,
-    errorMessage: 'Le format des abonnements recus est invalide.',
-  });
+  const accessToken = await getAccessToken();
+  const { callApi } = await loadApi();
+  const subscriptions = await callApi(
+    (client) => client.subscriptions.listMine(),
+    {
+      signal,
+      accessToken,
+      ErrorClass: SubscriptionRepositoryError,
+      failed: {
+        code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.FETCH_SUBSCRIPTIONS_FAILED,
+        message: 'Impossible de recuperer les abonnements.',
+      },
+      invalid: {
+        code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.INVALID_SUBSCRIPTIONS_PAYLOAD,
+        message: 'Le format des abonnements recus est invalide.',
+      },
+    },
+  );
 
   return subscriptions.map(toDomain);
 };
@@ -57,31 +51,20 @@ export const fetchSubscriptions = async (
 export const fetchSubscriptionPlans = async (
   signal?: AbortSignal,
 ): Promise<SubscriptionPlan[]> => {
-  const headers = await getAuthHeaders();
-
-  const response = await fetch('/api/subscription-plans', {
-    method: 'GET',
-    headers,
+  const accessToken = await getAccessToken();
+  const { callApi } = await loadApi();
+  const plans = await callApi((client) => client.subscriptions.plans(), {
     signal,
-  });
-
-  if (!response.ok) {
-    throw new SubscriptionRepositoryError({
+    accessToken,
+    ErrorClass: SubscriptionRepositoryError,
+    failed: {
       code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.FETCH_SUBSCRIPTION_PLANS_FAILED,
       message: 'Impossible de recuperer les plans abonnement.',
-      status: response.status,
-    });
-  }
-
-  const payload: unknown = await response.json();
-  const { subscriptionPlanArrayResponseDtoSchema } =
-    await import('./subscription.schema');
-  const plans = validatePayload({
-    schema: subscriptionPlanArrayResponseDtoSchema,
-    payload,
-    errorCode:
-      SUBSCRIPTION_REPOSITORY_ERROR_CODE.INVALID_SUBSCRIPTION_PLANS_PAYLOAD,
-    errorMessage: 'Le format des plans abonnement recus est invalide.',
+    },
+    invalid: {
+      code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.INVALID_SUBSCRIPTION_PLANS_PAYLOAD,
+      message: 'Le format des plans abonnement recus est invalide.',
+    },
   });
 
   return plans.map(toPlanDomain);
@@ -90,35 +73,25 @@ export const fetchSubscriptionPlans = async (
 export const createSubscription = async (
   planCode: SubscriptionPlanCode,
 ): Promise<SubscriptionRecord> => {
-  const headers = await getAuthHeaders();
-
-  const response = await fetch('/api/subscriptions', {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ planCode }),
-  });
-
-  if (!response.ok) {
-    const body = (await response.json().catch(() => null)) as {
-      error?: string;
-    } | null;
-
-    throw new SubscriptionRepositoryError({
-      code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.CREATE_SUBSCRIPTION_FAILED,
-      message: body?.error ?? 'Impossible de creer cet abonnement.',
-      status: response.status,
-    });
-  }
-
-  const payload: unknown = await response.json();
-  const { subscriptionResponseDtoSchema } =
-    await import('./subscription.schema');
-  const subscription = validatePayload({
-    schema: subscriptionResponseDtoSchema,
-    payload,
-    errorCode: SUBSCRIPTION_REPOSITORY_ERROR_CODE.INVALID_SUBSCRIPTION_PAYLOAD,
-    errorMessage: 'Le format de l abonnement recu est invalide.',
-  });
+  const accessToken = await getAccessToken();
+  const { callApi } = await loadApi();
+  const subscription = await callApi(
+    (client) => client.subscriptions.create({ payload: { planCode } }),
+    {
+      accessToken,
+      ErrorClass: SubscriptionRepositoryError,
+      failed: {
+        code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.CREATE_SUBSCRIPTION_FAILED,
+        message: 'Impossible de creer cet abonnement.',
+      },
+      invalid: {
+        code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.INVALID_SUBSCRIPTION_PAYLOAD,
+        message: 'Le format de l abonnement recu est invalide.',
+      },
+      apiMessage: true,
+      request: { group: 'subscriptions', endpoint: 'create', part: 'Payload' },
+    },
+  );
 
   return toDomain(subscription);
 };

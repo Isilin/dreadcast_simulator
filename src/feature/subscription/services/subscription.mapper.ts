@@ -1,8 +1,11 @@
-import type { SubscriptionPlan, SubscriptionRecord } from '../model';
-import type { SubscriptionResponseDto } from './subscription.schema';
-import type { SubscriptionPlanResponseDto } from './subscription.schema';
+import type {
+  Subscription as SubscriptionDto,
+  SubscriptionPlan as SubscriptionPlanDto,
+} from '@server/feature/subscription/subscription.schema';
 
-export const toDomain = (dto: SubscriptionResponseDto): SubscriptionRecord => ({
+import type { SubscriptionPlan, SubscriptionRecord } from '../model';
+
+export const toDomain = (dto: SubscriptionDto): SubscriptionRecord => ({
   id: dto.id,
   userId: dto.user_id,
   planCode: dto.plan_code,
@@ -13,12 +16,11 @@ export const toDomain = (dto: SubscriptionResponseDto): SubscriptionRecord => ({
   status: dto.status,
   validatedAt: dto.validated_at,
   validatedBy: dto.validated_by,
-  createdAt: dto.created_at,
+  // Nullable column, always set by its default: fall back on the start.
+  createdAt: dto.created_at ?? dto.starts_at,
 });
 
-export const toPlanDomain = (
-  dto: SubscriptionPlanResponseDto,
-): SubscriptionPlan => ({
+export const toPlanDomain = (dto: SubscriptionPlanDto): SubscriptionPlan => ({
   code: dto.code,
   label: dto.label,
   durationIngameYears: dto.duration_ingame_years,

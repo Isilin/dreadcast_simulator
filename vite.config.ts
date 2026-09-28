@@ -1,8 +1,10 @@
+/// <reference types="vitest/config" />
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 import { defineConfig } from 'vite';
 import { visualizer } from 'rollup-plugin-visualizer';
+import { configDefaults } from 'vitest/config';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -27,6 +29,8 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      // API contract shared with the backend (typed client).
+      '@server': path.resolve(__dirname, './server'),
     },
   },
   server: {
@@ -41,6 +45,10 @@ export default defineConfig(({ mode }) => ({
       },
     },
   },
+  test: {
+    // .claude/worktrees holds other checkouts of the project.
+    exclude: [...configDefaults.exclude, '.claude/**'],
+  },
   build: {
     rollupOptions: {
       output: {
@@ -51,7 +59,7 @@ export default defineConfig(({ mode }) => ({
           if (id.includes('@tanstack')) return 'tanstack';
           if (id.includes('@dnd-kit')) return 'dnd';
           if (id.includes('@base-ui')) return 'base-ui';
-          if (id.includes('/zod/')) return 'zod';
+          if (id.includes('/effect/')) return 'effect';
 
           return 'vendor';
         },

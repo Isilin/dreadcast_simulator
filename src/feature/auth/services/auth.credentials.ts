@@ -7,6 +7,8 @@ import {
   missingConfigErrorMessage,
 } from './auth.config';
 
+import { RepositoryError } from '@/utils/repository-error';
+
 export interface SignInWithPasswordInput {
   email: string;
   password: string;
@@ -14,11 +16,6 @@ export interface SignInWithPasswordInput {
 
 export interface SignInWithPasswordResult {
   error: AuthError | Error | null;
-}
-
-interface LoginApiResponse {
-  accessToken: string;
-  refreshToken: string;
 }
 
 export const signInWithPassword = async ({
@@ -29,28 +26,28 @@ export const signInWithPassword = async ({
     return { error: new Error(missingConfigErrorMessage) };
   }
 
-  const loginResponse = await fetch('/api/auth/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      email,
-      password,
-    }),
-  });
-
-  if (!loginResponse.ok) {
-    const body = (await loginResponse.json().catch(() => null)) as {
-      error?: string;
-    } | null;
-
+  const { callApi } = await import('@/utils/api-client');
+  let payload: { accessToken: string; refreshToken: string };
+  try {
+    payload = await callApi(
+      (client) => client.auth.login({ payload: { email, password } }),
+      {
+        ErrorClass: RepositoryError,
+        failed: { code: 'LOGIN_FAILED', message: 'Échec de la connexion.' },
+        invalid: {
+          code: 'INVALID_LOGIN_PAYLOAD',
+          message: 'Échec de la connexion.',
+        },
+        apiMessage: true,
+        request: { group: 'auth', endpoint: 'login', part: 'Payload' },
+      },
+    );
+  } catch (error) {
     return {
-      error: new Error(body?.error ?? 'Échec de la connexion.'),
+      error:
+        error instanceof Error ? error : new Error('Échec de la connexion.'),
     };
   }
-
-  const payload = (await loginResponse.json()) as LoginApiResponse;
 
   const client = await getSupabaseClient();
   const { data, error } = await client.auth.setSession({
