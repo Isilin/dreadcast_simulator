@@ -1,7 +1,9 @@
 import { Effect, Schema, SchemaTransformation } from 'effect';
 
 import {
+  ItemType,
   RACE_TYPES,
+  RaceType,
   STAT_KEYS,
   StatProperty,
 } from '../catalog/catalog.schema.js';
@@ -251,9 +253,9 @@ export const BuildSummary = Schema.Struct({
   specialization: Specialization,
   detected_specialization: Specialization,
   game_version: Schema.String,
-  race: Schema.String,
+  race: RaceType,
   gender: Gender,
-  weapon_types: Schema.Array(Schema.String),
+  weapon_types: Schema.Array(ItemType),
   has_heal_weapon: Schema.Boolean,
   key_stats: Schema.Array(KeyStat),
   rating_count: Schema.Number,
@@ -276,7 +278,7 @@ export const SearchResponse = Schema.Struct({
 
 export const Review = Schema.Struct({
   id: Schema.String,
-  stars: Schema.Number,
+  stars: Schema.Int.check(Schema.isBetween({ minimum: 1, maximum: 5 })),
   body: Schema.NullOr(Schema.String),
   created_at: Schema.String,
   updated_at: Schema.String,
@@ -310,7 +312,9 @@ export const MyPublication = Schema.Struct({
   description: Schema.NullOr(Schema.String),
   specialization: Specialization,
   /** Current 1-based slot of the source build, null if it was deleted. */
-  source_slot: Schema.NullOr(Schema.Number),
+  source_slot: Schema.NullOr(
+    Schema.Int.check(Schema.isGreaterThanOrEqualTo(1)),
+  ),
   game_version: Schema.String,
   rating_count: Schema.Number,
   rating_avg: Schema.NullOr(Schema.Number),

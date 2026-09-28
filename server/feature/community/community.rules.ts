@@ -27,9 +27,9 @@ export interface SearchRow {
   specialization: SpecializationCode;
   detected_specialization: SpecializationCode;
   game_version: string;
-  race: string;
+  race: BuildSummary['race'];
   gender: 'male' | 'female';
-  weapon_types: ReadonlyArray<string> | null;
+  weapon_types: BuildSummary['weapon_types'] | null;
   has_heal_weapon: boolean;
   key_stats: ReadonlyArray<KeyStatRow> | null;
   rating_count: number;

@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   DEFAULT_COMMUNITY_FILTERS,
-  filtersToApiQuery,
+  filtersToSearchQuery,
   filtersToSearch,
   hasAdvancedFilters,
   parseCommunitySearch,
@@ -70,9 +70,12 @@ describe('community filters', () => {
     expect(parseCommunitySearch({ q: 1234 }).query).toBe('1234');
   });
 
-  it('builds a query accepted by the API validation', () => {
-    const query = Object.fromEntries(filtersToApiQuery(fullFilters));
-    const parsed = Schema.decodeUnknownSync(SearchQuery)(query);
+  it('builds a query the API decodes back to the same filters', () => {
+    // What the typed client sends, then what the server decodes.
+    const sent = Schema.encodeSync(SearchQuery)(
+      filtersToSearchQuery(fullFilters),
+    );
+    const parsed = Schema.decodeUnknownSync(SearchQuery)(sent);
 
     expect(parsed.spec).toEqual(['medecin', 'soutien']);
     expect(parsed.weapon).toEqual(['2handsMelee']);

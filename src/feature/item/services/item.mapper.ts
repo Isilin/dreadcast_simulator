@@ -1,9 +1,10 @@
-import type { ItemResponseDto } from './item.schema';
+import type { Item as ItemDto } from '@server/feature/catalog/catalog.schema';
+
 import type { Item } from '../model/item.types';
 
 import { toPrerequisites } from '@/feature/prerequisite';
 
-export const toDomain = (dto: ItemResponseDto): Item => {
+export const toDomain = (dto: ItemDto): Item => {
   const prerequisites = toPrerequisites({
     stats: dto.item_prerequisite,
     titles: dto.item_prerequisite_title,
@@ -19,7 +20,7 @@ export const toDomain = (dto: ItemResponseDto): Item => {
     integrity: dto.integrity,
     type: dto.type,
     prerequisites: prerequisites.length > 0 ? prerequisites : undefined,
-    effects: dto.item_effect.length > 0 ? dto.item_effect : undefined,
+    effects: dto.item_effect.length > 0 ? [...dto.item_effect] : undefined,
     minDamage: dto.min_damage ?? undefined,
     maxDamage: dto.max_damage ?? undefined,
     minHeal: dto.min_heal ?? undefined,

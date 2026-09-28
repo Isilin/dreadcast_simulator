@@ -1,3 +1,5 @@
+import type { SearchQuery } from '@server/feature/community/community.schema';
+
 import {
   CommunitySortValues,
   SpecializationValues,
@@ -209,36 +211,30 @@ export const countActiveFilters = (filters: CommunityFilters): number =>
   ].filter(Boolean).length;
 
 /**
- * Query string of GET /api/community/builds (see server/feature/community/community.schema.ts).
+ * Query of GET /api/community/builds, typed by the API contract (the client
+ * encodes it: lists as CSV, flags as '1'...).
  */
-export const filtersToApiQuery = (
+export const filtersToSearchQuery = (
   filters: CommunityFilters,
   pageSize = COMMUNITY_PAGE_SIZE,
-): URLSearchParams => {
-  const params = new URLSearchParams();
-  const set = (key: string, value: string | undefined) => {
-    if (value !== undefined && value !== '') params.set(key, value);
+): SearchQuery => {
+  const query = filters.query.trim();
+  return {
+    ...(query ? { q: query } : {}),
+    spec: filters.specializations,
+    ...(filters.minRating !== null ? { minRating: filters.minRating } : {}),
+    race: filters.races,
+    gender: filters.genders,
+    weapon: weaponFilterToItemTypes(filters.weaponKind, filters.weaponHands),
+    heal: filters.healOnly,
+    ...(filters.gameVersion !== null ? { version: filters.gameVersion } : {}),
+    minStats: filters.minStats,
+    implants: filters.implants,
+    drugs: filters.drugs,
+    items: filters.items,
+    favorites: filters.favoritesOnly,
+    sort: filters.sort,
+    page: filters.page,
+    pageSize,
   };
-
-  set('q', filters.query.trim() || undefined);
-  set('spec', joinCsv(filters.specializations));
-  set('minRating', filters.minRating?.toString());
-  set('race', joinCsv(filters.races));
-  set('gender', joinCsv(filters.genders));
-  set(
-    'weapon',
-    joinCsv(weaponFilterToItemTypes(filters.weaponKind, filters.weaponHands)),
-  );
-  set('heal', filters.healOnly ? '1' : undefined);
-  set('version', filters.gameVersion ?? undefined);
-  set('minStats', serializeMinStats(filters.minStats));
-  set('implants', joinCsv(filters.implants));
-  set('drugs', joinCsv(filters.drugs));
-  set('items', joinCsv(filters.items));
-  set('favorites', filters.favoritesOnly ? '1' : undefined);
-  set('sort', filters.sort);
-  set('page', String(filters.page));
-  set('pageSize', String(pageSize));
-
-  return params;
 };

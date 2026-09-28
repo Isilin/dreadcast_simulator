@@ -1,55 +1,49 @@
+import type { Drug as DrugDto } from '@server/feature/catalog/catalog.schema';
+
 import { DRUG_REPOSITORY_ERROR_CODE, DrugRepositoryError } from './drug.errors';
 import { toDomain } from './drug.mapper';
 import type { Drug } from '../model/drug.types';
 
-import { GET } from '@/utils/http';
-import { validatePayload } from '@/utils/validation';
+const loadApi = () => import('@/utils/api-client');
 
 export const fetchDrugs = async (signal?: AbortSignal): Promise<Drug[]> => {
-  const response = await GET('/api/drugs', signal);
-
-  if (!response.ok) {
-    throw new DrugRepositoryError({
+  const { callApi } = await loadApi();
+  const drugs = await callApi((client) => client.catalog.drugs({ query: {} }), {
+    signal,
+    ErrorClass: DrugRepositoryError,
+    failed: {
       code: DRUG_REPOSITORY_ERROR_CODE.FETCH_DRUGS_FAILED,
       message: 'Impossible de recuperer la liste des drogues.',
-      status: response.status,
-    });
-  }
-
-  const payload: unknown = await response.json();
-  const { drugArrayResponseSchema } = await import('./drug.schema');
-  const drugs = validatePayload({
-    schema: drugArrayResponseSchema,
-    payload,
-    errorCode: DRUG_REPOSITORY_ERROR_CODE.INVALID_DRUGS_PAYLOAD,
-    errorMessage: 'Le format des drogues recues est invalide.',
+    },
+    invalid: {
+      code: DRUG_REPOSITORY_ERROR_CODE.INVALID_DRUGS_PAYLOAD,
+      message: 'Le format des drogues recues est invalide.',
+    },
   });
 
-  return drugs.map(toDomain);
+  return (drugs as ReadonlyArray<DrugDto>).map(toDomain);
 };
 
 export const fetchDrugById = async (
   id: string,
   signal?: AbortSignal,
 ): Promise<Drug> => {
-  const response = await GET(`/api/drugs?id=${encodeURIComponent(id)}`, signal);
+  const { callApi } = await loadApi();
+  const drug = await callApi(
+    (client) => client.catalog.drugs({ query: { id } }),
+    {
+      signal,
+      ErrorClass: DrugRepositoryError,
+      failed: {
+        code: DRUG_REPOSITORY_ERROR_CODE.FETCH_DRUG_FAILED,
+        message: `Impossible de recuperer la drogue ${id}.`,
+      },
+      invalid: {
+        code: DRUG_REPOSITORY_ERROR_CODE.INVALID_DRUG_PAYLOAD,
+        message: `Le format de la drogue ${id} est invalide.`,
+      },
+    },
+  );
 
-  if (!response.ok) {
-    throw new DrugRepositoryError({
-      code: DRUG_REPOSITORY_ERROR_CODE.FETCH_DRUG_FAILED,
-      message: `Impossible de recuperer la drogue ${id}.`,
-      status: response.status,
-    });
-  }
-
-  const payload: unknown = await response.json();
-  const { drugResponseDtoSchema } = await import('./drug.schema');
-  const drug = validatePayload({
-    schema: drugResponseDtoSchema,
-    payload,
-    errorCode: DRUG_REPOSITORY_ERROR_CODE.INVALID_DRUG_PAYLOAD,
-    errorMessage: `Le format de la drogue ${id} est invalide.`,
-  });
-
-  return toDomain(drug);
+  return toDomain(drug as DrugDto);
 };

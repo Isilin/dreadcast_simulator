@@ -1,15 +1,21 @@
-import { Context, Effect, Layer } from 'effect';
+import { Context, Effect, Layer, Schema } from 'effect';
 
-import type {
-  Drug,
+import {
   Implant,
   Item,
   Kit,
-  Race,
-  Title,
+  type Drug,
+  type Race,
+  type Title,
 } from './catalog.schema.js';
 import type { DbError } from '../../platform/db-error.js';
-import { runQuery, Supabase } from '../../platform/supabase.js';
+import { decodeRows, runQuery, Supabase } from '../../platform/supabase.js';
+
+// Implant names are plain text in the database: validate them (and the
+// bounds) against the contract.
+const decodeItems = decodeRows(Schema.Array(Item));
+const decodeKits = decodeRows(Schema.Array(Kit));
+const decodeImplants = decodeRows(Schema.Array(Implant));
 
 const ITEM_SELECT = `
   id,
@@ -136,7 +142,7 @@ export class CatalogRepo extends Context.Service<
               .from('item')
               .select(ITEM_SELECT)
               .order('name', { ascending: true }),
-          ),
+          ).pipe(Effect.flatMap(decodeItems)),
         ),
         kits: Effect.suspend(() =>
           runQuery(
@@ -145,7 +151,7 @@ export class CatalogRepo extends Context.Service<
               .from('kit')
               .select(KIT_SELECT)
               .order('name', { ascending: true }),
-          ),
+          ).pipe(Effect.flatMap(decodeKits)),
         ),
         implants: Effect.suspend(() =>
           runQuery(
@@ -154,7 +160,7 @@ export class CatalogRepo extends Context.Service<
               .from('implant')
               .select(IMPLANT_SELECT)
               .order('id', { ascending: true }),
-          ),
+          ).pipe(Effect.flatMap(decodeImplants)),
         ),
         races: Effect.suspend(() =>
           runQuery(

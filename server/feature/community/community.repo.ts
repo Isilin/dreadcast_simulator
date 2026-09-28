@@ -24,7 +24,7 @@ import {
   runQuery,
   Supabase,
 } from '../../platform/supabase.js';
-import { StatProperty } from '../catalog/catalog.schema.js';
+import { ItemType, RaceType, StatProperty } from '../catalog/catalog.schema.js';
 
 // ---------------------------------------------------------------------------
 // Row schemas: RPC results and JSON columns are loosely typed by the
@@ -41,9 +41,9 @@ const previewFields = {
   specialization: Specialization,
   detected_specialization: Specialization,
   game_version: Schema.String,
-  race: Schema.String,
+  race: RaceType,
   gender: Schema.Literals(['male', 'female']),
-  weapon_types: Schema.NullOr(Schema.Array(Schema.String)),
+  weapon_types: Schema.NullOr(Schema.Array(ItemType)),
   has_heal_weapon: Schema.Boolean,
   key_stats: Schema.NullOr(
     Schema.Array(Schema.Struct({ stat: StatProperty, value: Numeric })),

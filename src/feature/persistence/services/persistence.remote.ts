@@ -1,6 +1,30 @@
 import type { BuildSnapshot } from './persistence.service';
 
-import { getAuthHeaders } from '@/feature/auth';
+import { getAccessToken } from '@/feature/auth';
+import {
+  createRepositoryErrorClass,
+  RepositoryError,
+} from '@/utils/repository-error';
+
+const PersistenceRepositoryError = createRepositoryErrorClass(
+  'PersistenceRepositoryError',
+);
+
+const loadApi = () => import('@/utils/api-client');
+
+const invalidBuilds = {
+  code: 'INVALID_REMOTE_BUILDS_PAYLOAD',
+  message: 'Le format des builds distants est invalide.',
+};
+
+/** Slot of the store ('1', '2'...) as sent to the API. */
+const toApiSlot = (slot: string): number => {
+  const numericSlot = Number.parseInt(slot, 10);
+  if (!Number.isInteger(numericSlot) || numericSlot <= 0) {
+    throw new Error('Slot de build invalide.');
+  }
+  return numericSlot;
+};
 
 /**
  * Saves still in flight. A reload must not read the builds before they land,
@@ -17,24 +41,21 @@ export const fetchRemoteBuilds = async (
 ): Promise<Record<string, BuildSnapshot>> => {
   await waitForPendingBuildSaves();
 
-  const headers = await getAuthHeaders();
-  const response = await fetch('/api/builds', {
-    method: 'GET',
-    headers,
+  const accessToken = await getAccessToken();
+  const { callApi } = await loadApi();
+  const builds = await callApi((client) => client.builds.list(), {
     signal,
+    accessToken,
+    ErrorClass: PersistenceRepositoryError,
+    failed: {
+      code: 'FETCH_REMOTE_BUILDS_FAILED',
+      message: 'Impossible de recuperer les builds distants.',
+    },
+    invalid: invalidBuilds,
   });
 
-  if (!response.ok) {
-    throw new Error('Impossible de recuperer les builds distants.');
-  }
-
-  const payload: unknown = await response.json();
-  const { remoteBuildArrayResponseSchema } =
-    await import('./persistence.schema');
-  const parsed = remoteBuildArrayResponseSchema.parse(payload);
-
   return Object.fromEntries(
-    parsed.map((entry) => {
+    builds.map((entry) => {
       const snapshot = entry.snapshot as unknown as BuildSnapshot;
       return [
         String(entry.slot),
@@ -56,34 +77,32 @@ const sendUpsertRemoteBuild = async ({
   slot,
   snapshot,
 }: UpsertRemoteBuildParams): Promise<BuildSnapshot> => {
-  const headers = await getAuthHeaders();
-  const numericSlot = Number.parseInt(slot, 10);
-
-  if (!Number.isInteger(numericSlot) || numericSlot <= 0) {
-    throw new Error('Slot de build invalide.');
-  }
-
-  const response = await fetch('/api/builds', {
-    method: 'PUT',
-    headers,
-    body: JSON.stringify({
-      slot: numericSlot,
-      snapshot,
-    }),
-  });
-
-  if (!response.ok) {
-    throw new Error('Impossible de sauvegarder le build distant.');
-  }
-
-  const payload: unknown = await response.json();
-  const { remoteBuildResponseDtoSchema } = await import('./persistence.schema');
-  const parsed = remoteBuildResponseDtoSchema.parse(payload);
-  const parsedSnapshot = parsed.snapshot as unknown as BuildSnapshot;
+  const accessToken = await getAccessToken();
+  const numericSlot = toApiSlot(slot);
+  const { callApi } = await loadApi();
+  const saved = await callApi(
+    (client) =>
+      client.builds.upsert({
+        payload: {
+          slot: numericSlot,
+          snapshot: snapshot as unknown as Record<string, unknown>,
+        },
+      }),
+    {
+      accessToken,
+      ErrorClass: PersistenceRepositoryError,
+      failed: {
+        code: 'SAVE_REMOTE_BUILD_FAILED',
+        message: 'Impossible de sauvegarder le build distant.',
+      },
+      invalid: invalidBuilds,
+      request: { group: 'builds', endpoint: 'upsert', part: 'Payload' },
+    },
+  );
 
   return {
-    ...parsedSnapshot,
-    savedAt: new Date(parsed.saved_at).getTime(),
+    ...(saved.snapshot as BuildSnapshot),
+    savedAt: new Date(saved.saved_at).getTime(),
   };
 };
 
@@ -95,14 +114,28 @@ export const deleteRemoteBuild = async (slot: string): Promise<void> => {
   // A save still in flight would recreate the build after its deletion.
   await waitForPendingBuildSaves();
 
-  const headers = await getAuthHeaders();
-  const response = await fetch(`/api/builds?slot=${encodeURIComponent(slot)}`, {
-    method: 'DELETE',
-    headers,
-  });
+  const accessToken = await getAccessToken();
+  const numericSlot = toApiSlot(slot);
+  const { callApi } = await loadApi();
 
-  if (!response.ok && response.status !== 404) {
-    throw new Error('Impossible de supprimer le build distant.');
+  try {
+    await callApi(
+      (client) => client.builds.remove({ query: { slot: numericSlot } }),
+      {
+        accessToken,
+        ErrorClass: PersistenceRepositoryError,
+        failed: {
+          code: 'DELETE_REMOTE_BUILD_FAILED',
+          message: 'Impossible de supprimer le build distant.',
+        },
+        invalid: invalidBuilds,
+        request: { group: 'builds', endpoint: 'remove', part: 'Query' },
+      },
+    );
+  } catch (error) {
+    if (!(error instanceof RepositoryError && error.status === 404)) {
+      throw error;
+    }
   }
 };
 

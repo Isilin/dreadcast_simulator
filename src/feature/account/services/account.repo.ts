@@ -4,13 +4,12 @@ import {
 } from './account.errors';
 import type { AccountProfile } from '../model';
 
-import { getAuthHeaders as getSessionHeaders } from '@/feature/auth';
-import { validatePayload } from '@/utils/validation';
+import { getAccessToken as getSessionToken } from '@/feature/auth';
 
-const PROFILE_URL = '/api/profile/me';
+const loadApi = () => import('@/utils/api-client');
 
-const getAuthHeaders = (): Promise<HeadersInit> =>
-  getSessionHeaders(
+const getAccessToken = (): Promise<string> =>
+  getSessionToken(
     () =>
       new AccountRepositoryError({
         code: ACCOUNT_REPOSITORY_ERROR_CODE.MISSING_AUTH_SESSION,
@@ -19,58 +18,48 @@ const getAuthHeaders = (): Promise<HeadersInit> =>
       }),
   );
 
-const parseProfile = async (response: Response): Promise<AccountProfile> => {
-  const payload: unknown = await response.json();
-  const { profileResponseDtoSchema } = await import('./account.schema');
-  const profile = validatePayload({
-    schema: profileResponseDtoSchema,
-    payload,
-    errorCode: ACCOUNT_REPOSITORY_ERROR_CODE.INVALID_PROFILE_PAYLOAD,
-    errorMessage: 'Le format du profil recu est invalide.',
-  });
-
-  return { pseudo: profile.pseudo };
+const invalidProfile = {
+  code: ACCOUNT_REPOSITORY_ERROR_CODE.INVALID_PROFILE_PAYLOAD,
+  message: 'Le format du profil recu est invalide.',
 };
 
 export const fetchAccountProfile = async (
   signal?: AbortSignal,
 ): Promise<AccountProfile> => {
-  const response = await fetch(PROFILE_URL, {
-    method: 'GET',
-    headers: await getAuthHeaders(),
+  const accessToken = await getAccessToken();
+  const { callApi } = await loadApi();
+  const profile = await callApi((client) => client.profile.me(), {
     signal,
-  });
-
-  if (!response.ok) {
-    throw new AccountRepositoryError({
+    accessToken,
+    ErrorClass: AccountRepositoryError,
+    failed: {
       code: ACCOUNT_REPOSITORY_ERROR_CODE.FETCH_PROFILE_FAILED,
       message: 'Impossible de recuperer le profil.',
-      status: response.status,
-    });
-  }
+    },
+    invalid: invalidProfile,
+  });
 
-  return parseProfile(response);
+  return { pseudo: profile.pseudo };
 };
 
 export const createPseudo = async (pseudo: string): Promise<AccountProfile> => {
-  const response = await fetch(PROFILE_URL, {
-    method: 'PUT',
-    headers: await getAuthHeaders(),
-    body: JSON.stringify({ pseudo: pseudo.trim() }),
-  });
+  const accessToken = await getAccessToken();
+  const { callApi } = await loadApi();
+  const profile = await callApi(
+    (client) =>
+      client.profile.setPseudo({ payload: { pseudo: pseudo.trim() } }),
+    {
+      accessToken,
+      ErrorClass: AccountRepositoryError,
+      failed: {
+        code: ACCOUNT_REPOSITORY_ERROR_CODE.CREATE_PSEUDO_FAILED,
+        message: "Impossible d'enregistrer ce pseudo.",
+      },
+      invalid: invalidProfile,
+      apiMessage: true,
+      request: { group: 'profile', endpoint: 'setPseudo', part: 'Payload' },
+    },
+  );
 
-  if (!response.ok) {
-    const body = (await response.json().catch(() => null)) as {
-      error?: string;
-      code?: string;
-    } | null;
-
-    throw new AccountRepositoryError({
-      code: body?.code ?? ACCOUNT_REPOSITORY_ERROR_CODE.CREATE_PSEUDO_FAILED,
-      message: body?.error ?? "Impossible d'enregistrer ce pseudo.",
-      status: response.status,
-    });
-  }
-
-  return parseProfile(response);
+  return { pseudo: profile.pseudo };
 };

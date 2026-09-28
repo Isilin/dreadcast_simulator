@@ -33,19 +33,22 @@ export const isHealWeapon = (
 /**
  * Weapon kind and hands to the weapon item types to match (any of them).
  */
+/** '1handShot' | '2handsShot' | '1handMelee' | '2handsMelee'. */
+export type WeaponItemType = `${'1hand' | '2hands'}${'Melee' | 'Shot'}`;
+
 export const weaponFilterToItemTypes = (
   kind: WeaponKind | null,
   hands: WeaponHands | null,
-): ItemType[] => {
+): WeaponItemType[] => {
   if (!kind && !hands) return [];
 
   const kinds: WeaponKind[] = kind ? [kind] : ['melee', 'shot'];
   const handCounts: WeaponHands[] = hands ? [hands] : [1, 2];
 
   return kinds.flatMap((weaponKind) =>
-    handCounts.map((count): ItemType => {
+    handCounts.map((count): WeaponItemType => {
       const prefix = count === 1 ? '1hand' : '2hands';
-      return `${prefix}${weaponKind === 'melee' ? 'Melee' : 'Shot'}` as ItemType;
+      return `${prefix}${weaponKind === 'melee' ? 'Melee' : 'Shot'}`;
     }),
   );
 };

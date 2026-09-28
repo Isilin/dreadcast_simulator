@@ -188,7 +188,7 @@ export const filterEquipment = (
   filters: EquipmentFilters,
   { isArmSpot, isEquippable }: FilterEquipmentOptions,
 ): Item[] => {
-  const weaponTypes = isArmSpot
+  const weaponTypes: readonly Item['type'][] = isArmSpot
     ? weaponFilterToItemTypes(filters.weaponKind, filters.weaponHands)
     : [];
   const healOnly = isArmSpot && filters.healOnly;

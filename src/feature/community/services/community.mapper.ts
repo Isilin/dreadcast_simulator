@@ -1,11 +1,12 @@
 import type {
-  CommunityBuildDetailDto,
-  CommunityBuildSummaryDto,
-  CommunityMetaResponseDto,
-  CommunityRecommendationsResponseDto,
-  CommunityReviewDto,
-  MyPublicationDto,
-} from './community.schema';
+  BuildDetail,
+  BuildSummary,
+  MetaResponse,
+  MyPublication as MyPublicationDto,
+  RecommendationsResponse,
+  Review,
+} from '@server/feature/community/community.schema';
+
 import type {
   CommunityBuildDetailData,
   CommunityBuildSummary,
@@ -15,9 +16,29 @@ import type {
   MyPublication,
 } from '../model';
 
-export const toSummaryDomain = (
-  dto: CommunityBuildSummaryDto,
-): CommunityBuildSummary => ({
+import { StatValues, type Stat } from '@/domain';
+import type { BuildSnapshot } from '@/feature/persistence';
+
+const STATS = Object.keys(StatValues) as Stat[];
+
+/** Every stat, 0 when the API omits it. */
+const toStats = (
+  stats: Readonly<Record<string, number>>,
+): Record<Stat, number> =>
+  Object.fromEntries(STATS.map((stat) => [stat, stats[stat] ?? 0])) as Record<
+    Stat,
+    number
+  >;
+
+/** Detail whose snapshot went through decodeCommunitySnapshot. */
+export type DecodedBuildDetail = Omit<BuildDetail, 'content'> & {
+  content: {
+    snapshot: BuildSnapshot;
+    stats: Readonly<Record<string, number>>;
+  } | null;
+};
+
+export const toSummaryDomain = (dto: BuildSummary): CommunityBuildSummary => ({
   id: dto.id,
   title: dto.title,
   description: dto.description,
@@ -26,20 +47,20 @@ export const toSummaryDomain = (
   gameVersion: dto.game_version,
   race: dto.race,
   gender: dto.gender,
-  weaponTypes: dto.weapon_types,
+  weaponTypes: [...dto.weapon_types],
   hasHealWeapon: dto.has_heal_weapon,
-  keyStats: dto.key_stats,
+  keyStats: dto.key_stats.map((entry) => ({ ...entry })),
   ratingCount: dto.rating_count,
   ratingAverage: dto.rating_avg,
   publishedAt: dto.published_at,
   contentUpdatedAt: dto.content_updated_at,
   authorPseudo: dto.author_pseudo,
-  stats: dto.stats,
+  stats: dto.stats ? toStats(dto.stats) : null,
   isMine: dto.is_mine,
   isFavorite: dto.is_favorite,
 });
 
-export const toReviewDomain = (dto: CommunityReviewDto): CommunityReview => ({
+export const toReviewDomain = (dto: Review): CommunityReview => ({
   id: dto.id,
   stars: dto.stars,
   body: dto.body,
@@ -51,10 +72,12 @@ export const toReviewDomain = (dto: CommunityReviewDto): CommunityReview => ({
 });
 
 export const toDetailDomain = (
-  dto: CommunityBuildDetailDto,
+  dto: DecodedBuildDetail,
 ): CommunityBuildDetailData => ({
   summary: toSummaryDomain(dto.summary),
-  content: dto.content,
+  content: dto.content
+    ? { snapshot: dto.content.snapshot, stats: toStats(dto.content.stats) }
+    : null,
   locked: dto.locked,
   isSubscriber: dto.is_subscriber,
   myReview: dto.my_review ? toReviewDomain(dto.my_review) : null,
@@ -76,7 +99,7 @@ export const toMyPublicationDomain = (
   frozen: dto.frozen,
 });
 
-export const toMetaDomain = (dto: CommunityMetaResponseDto): CommunityMeta => ({
+export const toMetaDomain = (dto: typeof MetaResponse.Type): CommunityMeta => ({
   currentVersion: dto.current_version,
   versions: dto.versions.map((version) => ({
     code: version.code,
@@ -87,7 +110,7 @@ export const toMetaDomain = (dto: CommunityMetaResponseDto): CommunityMeta => ({
 });
 
 export const toRecommendationsDomain = (
-  dto: CommunityRecommendationsResponseDto,
+  dto: RecommendationsResponse,
 ): CommunityRecommendations => ({
   items: dto.items.map((item) => ({
     ...toSummaryDomain(item),

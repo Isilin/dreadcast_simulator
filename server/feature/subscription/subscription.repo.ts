@@ -1,10 +1,16 @@
-import { Context, Effect, Layer } from 'effect';
+import { Context, Effect, Layer, Schema } from 'effect';
 
 import type { SubscriptionDateRange } from './subscription.rules.js';
-import type { Subscription, SubscriptionPlan } from './subscription.schema.js';
+import type { SubscriptionPlan } from './subscription.schema.js';
+import { Subscription } from './subscription.schema.js';
 import { CurrentUser } from '../../platform/auth.js';
 import type { DbError } from '../../platform/db-error.js';
-import { runQuery } from '../../platform/supabase.js';
+import { decodeRows, runQuery } from '../../platform/supabase.js';
+
+// The status is plain text in the database: validate the rows against the
+// contract.
+const decodeSubscriptions = decodeRows(Schema.Array(Subscription));
+const decodeSubscription = decodeRows(Subscription);
 
 const SUBSCRIPTION_SELECT = `
   id,
@@ -86,7 +92,7 @@ export class SubscriptionRepo extends Context.Service<
           .select(SUBSCRIPTION_SELECT)
           .eq('user_id', userId)
           .order('starts_at', { ascending: false }),
-      ),
+      ).pipe(Effect.flatMap(decodeSubscriptions)),
     ),
     hasActive: Effect.suspend(() =>
       CurrentUser.use(({ supabase, userId }) =>
@@ -118,7 +124,7 @@ export class SubscriptionRepo extends Context.Service<
             })
             .select(SUBSCRIPTION_SELECT)
             .single(),
-        ),
+        ).pipe(Effect.flatMap(decodeSubscription)),
       ),
   });
 }
