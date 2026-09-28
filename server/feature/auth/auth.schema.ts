@@ -1,6 +1,6 @@
 import { Schema } from 'effect';
 
-/** Same pattern as zod's z.email(), used by the legacy endpoint. */
+/** Same pattern as the legacy endpoint (zod z.email()). */
 const EMAIL_PATTERN =
   /^(?:[A-Za-z0-9_'+\-]+\.)*[A-Za-z0-9_'+\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$/;
 
