@@ -3,7 +3,7 @@ import { createFileRoute, redirect } from '@tanstack/react-router';
 import { LoginForm } from '@/feature/auth';
 import Routes from '@/utils/routes';
 
-export const Route = createFileRoute(Routes.connection)({
+export const Route = createFileRoute('/connection')({
   beforeLoad: async () => {
     const { requireAuthenticatedSession } =
       await import('@/feature/auth/services/auth.service');

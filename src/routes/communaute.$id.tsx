@@ -1,9 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { CommunityBuildDetail } from '@/feature/community';
-import Routes from '@/utils/routes';
 
-export const Route = createFileRoute(Routes.communityById)({
+export const Route = createFileRoute('/communaute/$id')({
   component: RouteComponent,
 });
 

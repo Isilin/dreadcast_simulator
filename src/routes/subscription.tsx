@@ -1,9 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { SubscriptionPage } from '@/feature/subscription';
-import Routes from '@/utils/routes';
 
-export const Route = createFileRoute(Routes.subscription)({
+export const Route = createFileRoute('/subscription')({
   component: RouteComponent,
 });
 
