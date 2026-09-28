@@ -115,6 +115,13 @@ internes restent relatifs a leur feature. `src/ui` ne contient que des
 composants sans regle metier, par exemple les panneaux generiques et les lignes
 de modules installes.
 
+`package.json` declare `"sideEffects": ["**/*.css"]`: seuls les CSS ont des
+effets de bord. Sans cette declaration, Rolldown (Vite 8) garde tous les
+modules re-exportes par un barrel, et chaque page atterrit dans le bundle
+initial. Un `import()` dynamique garde lui aussi tout le namespace de sa cible:
+un chargement lazy vise un module qui n'exporte que ce qu'il faut, jamais le
+barrel d'une feature.
+
 ## Atelier de build
 
 `feature/build` est la feature de workflow. `BuildWorkbench` compose les
@@ -158,8 +165,8 @@ creation et la validation du client Supabase.
 ## Communaute
 
 `feature/community` ne depend jamais de `feature/build`; l'atelier charge ses
-points d'entree (`PublishBuildButton`, `SimilarBuildsButton`) en lazy pour
-garder la Communaute hors du chunk de l'atelier.
+points d'entree (`PublishBuildButton`, `SimilarBuildsButton`) en lazy depuis
+`entry-points.ts` pour garder la Communaute hors du chunk de l'atelier.
 
 - `model/` porte les regles pures: detection de specialisation, filtres
   (URL, requete API), calcul des stats d'un snapshot sans store

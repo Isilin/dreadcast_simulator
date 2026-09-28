@@ -28,9 +28,9 @@ export default defineConfig(({ mode }) => ({
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@': path.resolve(import.meta.dirname, './src'),
       // API contract shared with the backend (typed client).
-      '@server': path.resolve(__dirname, './server'),
+      '@server': path.resolve(import.meta.dirname, './server'),
     },
   },
   server: {
@@ -50,18 +50,24 @@ export default defineConfig(({ mode }) => ({
     exclude: [...configDefaults.exclude, '.claude/**'],
   },
   build: {
-    rollupOptions: {
+    rolldownOptions: {
       output: {
-        manualChunks(id) {
-          if (!id.includes('node_modules')) return undefined;
+        codeSplitting: {
+          groups: [
+            {
+              name(id) {
+                if (!id.includes('node_modules')) return null;
 
-          if (id.includes('@supabase')) return 'supabase';
-          if (id.includes('@tanstack')) return 'tanstack';
-          if (id.includes('@dnd-kit')) return 'dnd';
-          if (id.includes('@base-ui')) return 'base-ui';
-          if (id.includes('/effect/')) return 'effect';
+                if (id.includes('@supabase')) return 'supabase';
+                if (id.includes('@tanstack')) return 'tanstack';
+                if (id.includes('@dnd-kit')) return 'dnd';
+                if (id.includes('@base-ui')) return 'base-ui';
+                if (id.includes('/effect/')) return 'effect';
 
-          return 'vendor';
+                return 'vendor';
+              },
+            },
+          ],
         },
       },
     },
