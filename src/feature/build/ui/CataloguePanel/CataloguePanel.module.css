@@ -97,7 +97,7 @@
   background: var(--action-primary-muted);
 }
 
-.equipmentFilters {
+.filtersDisclosure {
   display: grid;
   gap: 6px;
 }

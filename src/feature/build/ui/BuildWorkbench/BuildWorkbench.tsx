@@ -158,6 +158,7 @@ export const BuildWorkbench = ({ initialSlot }: BuildWorkbenchProps = {}) => {
           areKitsLoading={areKitsLoading}
           areDrugsLoading={areDrugsLoading}
           items={items}
+          kits={kits}
           selectedDrugId={selectedDrugId}
           activeItem={activeItem}
           activeSpot={activeSpot}

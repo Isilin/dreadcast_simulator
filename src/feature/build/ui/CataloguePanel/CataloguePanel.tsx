@@ -6,6 +6,7 @@ import styles from './CataloguePanel.module.css';
 import { useCatalogueResults } from './useCatalogueResults';
 import {
   EMPTY_EQUIPMENT_FILTERS,
+  EMPTY_KIT_FILTERS,
   getBonusStats,
 } from '../../model/catalogue-filters.rules';
 import {
@@ -16,7 +17,7 @@ import {
 import type { ItemSpot } from '@/domain';
 import type { Drug } from '@/feature/drug';
 import type { Item, ItemsState } from '@/feature/item';
-import type { Kit } from '@/feature/kit';
+import type { Kit, KitSelection } from '@/feature/kit';
 
 interface CataloguePanelProps {
   allItems: Item[] | undefined;
@@ -29,6 +30,8 @@ interface CataloguePanelProps {
   areKitsLoading: boolean;
   areDrugsLoading: boolean;
   items: ItemsState;
+  /** Kits installed on the active slot. */
+  kits: KitSelection[];
   selectedDrugId: string | null;
   activeItem: Item | null;
   activeSpot: ItemSpot;
@@ -51,6 +54,7 @@ export const CataloguePanel = ({
   areKitsLoading,
   areDrugsLoading,
   items,
+  kits,
   selectedDrugId,
   activeItem,
   activeSpot,
@@ -65,7 +69,9 @@ export const CataloguePanel = ({
   const [equipmentFilters, setEquipmentFilters] = useState(
     EMPTY_EQUIPMENT_FILTERS,
   );
+  const [kitFilters, setKitFilters] = useState(EMPTY_KIT_FILTERS);
   const bonusStats = useMemo(() => getBonusStats(allItems ?? []), [allItems]);
+  const kitBonusStats = useMemo(() => getBonusStats(allKits ?? []), [allKits]);
   const {
     visibleItems,
     visibleKits,
@@ -78,11 +84,13 @@ export const CataloguePanel = ({
     allItems,
     allKits,
     allDrugs,
+    kits,
     activeItem,
     activeSpot,
     catalogueFilter,
     query,
     equipmentFilters,
+    kitFilters,
     areItemsLoading,
     areKitsLoading,
     areDrugsLoading,
@@ -108,8 +116,11 @@ export const CataloguePanel = ({
         catalogueFilter={catalogueFilter}
         equipmentFilters={equipmentFilters}
         items={items}
+        kitBonusStats={kitBonusStats}
+        kitFilters={kitFilters}
         query={query}
         onEquipmentFiltersChange={setEquipmentFilters}
+        onKitFiltersChange={setKitFilters}
         onQueryChange={setQuery}
         onSelectCatalogueTab={onSelectCatalogueTab}
         onSelectEquipmentSpot={onSelectEquipmentSpot}

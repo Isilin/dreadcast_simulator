@@ -2,7 +2,9 @@ import { useDeferredValue } from 'react';
 
 import {
   filterEquipment,
+  filterKits,
   type EquipmentFilters,
+  type KitFilters,
 } from '../../model/catalogue-filters.rules';
 import type { CatalogueFilter } from '../../model/workbench.types';
 
@@ -10,7 +12,7 @@ import type { ItemSpot } from '@/domain';
 import type { Drug } from '@/feature/drug';
 import { isArmSpot, itemMatchsSpot } from '@/feature/item';
 import type { Item } from '@/feature/item';
-import type { Kit } from '@/feature/kit';
+import { computeRemainingTech, type Kit, type KitSelection } from '@/feature/kit';
 import {
   arePrerequisitesMet,
   usePrerequisiteContext,
@@ -21,11 +23,14 @@ interface UseCatalogueResultsArgs {
   allItems: Item[] | undefined;
   allKits: Kit[] | undefined;
   allDrugs: Drug[];
+  /** Kits installed on the active slot. */
+  kits: KitSelection[];
   activeItem: Item | null;
   activeSpot: ItemSpot;
   catalogueFilter: CatalogueFilter;
   query: string;
   equipmentFilters: EquipmentFilters;
+  kitFilters: KitFilters;
   areItemsLoading: boolean;
   areKitsLoading: boolean;
   areDrugsLoading: boolean;
@@ -38,11 +43,13 @@ export const useCatalogueResults = ({
   allItems,
   allKits,
   allDrugs,
+  kits,
   activeItem,
   activeSpot,
   catalogueFilter,
   query,
   equipmentFilters,
+  kitFilters,
   areItemsLoading,
   areKitsLoading,
   areDrugsLoading,
@@ -67,8 +74,15 @@ export const useCatalogueResults = ({
       isEquippable: (item) => meetsPrerequisites(item.prerequisites),
     },
   );
-  const visibleKits = (allKits ?? []).filter(
-    (kit) => kit.type === activeItem?.type && matchesQuery(kit.name),
+  const visibleKits = filterKits(
+    (allKits ?? []).filter(
+      (kit) => kit.type === activeItem?.type && matchesQuery(kit.name),
+    ),
+    kitFilters,
+    {
+      remainingTech: activeItem ? computeRemainingTech(activeItem.tech, kits) : 0,
+      isEquippable: (kit) => meetsPrerequisites(kit.prerequisites),
+    },
   );
   const visibleDrugs = allDrugs.filter((drug) => matchesQuery(drug.name));
   const catalogueCount =
