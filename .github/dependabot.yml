@@ -14,8 +14,13 @@ updates:
       prefix-development: 'chore'
       include: 'scope'
     # Minor/patch bumps batched into one PR per dependency type;
-    # majors stay in their own PR.
+    # majors stay in their own PR. A dependency joins the first group it
+    # matches: @tanstack packages move together (react-query-devtools
+    # requires the same react-query version).
     groups:
+      tanstack:
+        patterns: ['@tanstack/*']
+        update-types: ['minor', 'patch']
       prod-minor-patch:
         dependency-type: 'production'
         update-types: ['minor', 'patch']
