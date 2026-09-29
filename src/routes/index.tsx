@@ -17,7 +17,7 @@ interface HomeSearch {
   slot?: number;
 }
 
-export const Route = createFileRoute(Routes.home)({
+export const Route = createFileRoute('/')({
   validateSearch: (search: Record<string, unknown>): HomeSearch => {
     const slot = Number(search.slot);
     return Number.isInteger(slot) && slot > 0 ? { slot } : {};

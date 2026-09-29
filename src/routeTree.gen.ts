@@ -9,15 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SubscriptionRouteImport } from './routes/subscription'
-import { Route as ConnectionRouteImport } from './routes/connection'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConnectionRouteImport } from './routes/connection'
+import { Route as SubscriptionRouteImport } from './routes/subscription'
 import { Route as CommunauteIndexRouteImport } from './routes/communaute.index'
 import { Route as CommunauteIdRouteImport } from './routes/communaute.$id'
 
-const SubscriptionRoute = SubscriptionRouteImport.update({
-  id: '/subscription',
-  path: '/subscription',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConnectionRoute = ConnectionRouteImport.update({
@@ -25,9 +25,9 @@ const ConnectionRoute = ConnectionRouteImport.update({
   path: '/connection',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const SubscriptionRoute = SubscriptionRouteImport.update({
+  id: '/subscription',
+  path: '/subscription',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CommunauteIndexRoute = CommunauteIndexRouteImport.update({
@@ -66,11 +66,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
-    | '/connection'
-    | '/subscription'
-    | '/communaute/$id'
-    | '/communaute/'
+    '/' | '/connection' | '/subscription' | '/communaute/$id' | '/communaute/'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/connection' | '/subscription' | '/communaute/$id' | '/communaute'
   id:
@@ -92,11 +88,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/subscription': {
-      id: '/subscription'
-      path: '/subscription'
-      fullPath: '/subscription'
-      preLoaderRoute: typeof SubscriptionRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/connection': {
@@ -106,11 +102,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConnectionRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/subscription': {
+      id: '/subscription'
+      path: '/subscription'
+      fullPath: '/subscription'
+      preLoaderRoute: typeof SubscriptionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/communaute/': {

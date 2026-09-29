@@ -51,26 +51,24 @@ const PublishedSnapshot = Schema.Struct({
  */
 export const decodeCommunitySnapshot = (snapshot: unknown) =>
   Schema.decodeUnknownEffect(PublishedSnapshot)(snapshot).pipe(
-    Effect.map(
-      (published): BuildSnapshot => ({
-        name: published.name,
-        profile: published.profile,
-        implants: Object.fromEntries(
-          ImplantNameValues.map((name) => [
-            name,
-            published.implants?.[name] ?? 0,
-          ]),
-        ) as BuildSnapshot['implants'],
-        items: Object.fromEntries(
-          ItemSpotValue.map((spot) => [spot, published.items?.[spot] ?? null]),
-        ) as BuildSnapshot['items'],
-        kits: Object.fromEntries(
-          ItemSpotValue.map((spot) => [spot, published.kits?.[spot] ?? []]),
-        ) as BuildSnapshot['kits'],
-        drug: published.drug ?? null,
-        titles: [...new Set(published.titles ?? [])].sort(),
-      }),
-    ),
+    Effect.map((published): BuildSnapshot => ({
+      name: published.name,
+      profile: published.profile,
+      implants: Object.fromEntries(
+        ImplantNameValues.map((name) => [
+          name,
+          published.implants?.[name] ?? 0,
+        ]),
+      ) as BuildSnapshot['implants'],
+      items: Object.fromEntries(
+        ItemSpotValue.map((spot) => [spot, published.items?.[spot] ?? null]),
+      ) as BuildSnapshot['items'],
+      kits: Object.fromEntries(
+        ItemSpotValue.map((spot) => [spot, published.kits?.[spot] ?? []]),
+      ) as BuildSnapshot['kits'],
+      drug: published.drug ?? null,
+      titles: [...new Set(published.titles ?? [])].sort(),
+    })),
   );
 
 /** Synchronous variant: null when the snapshot is invalid. */

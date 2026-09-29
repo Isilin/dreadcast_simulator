@@ -12,7 +12,7 @@ import { TitlesPanel } from '@/feature/title';
 // The community entry point is lazy: the Communauté code stays out of the
 // workbench chunk until it renders.
 const SimilarBuildsButton = lazy(() =>
-  import('@/feature/community').then(({ SimilarBuildsButton: Button }) => ({
+  import('@/feature/community/entry-points').then(({ SimilarBuildsButton: Button }) => ({
     default: Button,
   })),
 );

@@ -26,7 +26,7 @@ import { ArrowLeftIcon } from '@/ui/Icon';
 // The Communauté code stays out of the workbench chunk until the button
 // renders.
 const PublishBuildButton = lazy(() =>
-  import('@/feature/community').then(({ PublishBuildButton: Button }) => ({
+  import('@/feature/community/entry-points').then(({ PublishBuildButton: Button }) => ({
     default: Button,
   })),
 );

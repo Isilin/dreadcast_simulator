@@ -32,12 +32,15 @@ export const toPrerequisites = ({
   implants = [],
   races = [],
 }: PrerequisitesDto): Prerequisite[] => [
-  ...stats.map(
-    ({ property, value }): Prerequisite => ({ kind: 'stat', property, value }),
-  ),
-  ...titles.map(
-    ({ title_id }): Prerequisite => ({ kind: 'title', titleId: title_id }),
-  ),
+  ...stats.map(({ property, value }): Prerequisite => ({
+    kind: 'stat',
+    property,
+    value,
+  })),
+  ...titles.map(({ title_id }): Prerequisite => ({
+    kind: 'title',
+    titleId: title_id,
+  })),
   ...implants.flatMap(({ implant }): Prerequisite[] =>
     implant ? [{ kind: 'implant', implant: implant.name }] : [],
   ),
