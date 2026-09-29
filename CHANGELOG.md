@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/Isilin/dreadcast_simulator/compare/v1.0.0...v1.1.0) (2026-09-29)
+
+
+### Features
+
+* **atelier:** stat, specialization, tech budget and prerequisite filters in the kit catalogue ([#43](https://github.com/Isilin/dreadcast_simulator/issues/43)) ([9154bd3](https://github.com/Isilin/dreadcast_simulator/commit/9154bd309b9298e3c2039f6fcd449d05931e5d7f))
+
 ## 1.0.0 (2026-09-29)
 
 
