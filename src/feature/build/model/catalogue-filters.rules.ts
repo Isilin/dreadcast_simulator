@@ -12,6 +12,7 @@ import {
   type WeaponHands,
   type WeaponKind,
 } from '@/feature/item';
+import type { Kit } from '@/feature/kit';
 
 /** Filters of the equipment catalogue, on top of the slot and the search. */
 export interface EquipmentFilters {
@@ -29,6 +30,22 @@ export const EMPTY_EQUIPMENT_FILTERS: EquipmentFilters = {
   weaponKind: null,
   weaponHands: null,
   healOnly: false,
+  equippableOnly: false,
+};
+
+/** Filters of the kit catalogue, on top of the item type and the search. */
+export interface KitFilters {
+  /** Kits giving a bonus on any of these stats. */
+  stats: Stat[];
+  /** Only kits whose tech cost fits in the points left on the item. */
+  withinTechBudget: boolean;
+  /** Only kits whose prerequisites are met (race, implants and titles). */
+  equippableOnly: boolean;
+}
+
+export const EMPTY_KIT_FILTERS: KitFilters = {
+  stats: [],
+  withinTechBudget: false,
   equippableOnly: false,
 };
 
@@ -91,6 +108,15 @@ export const canApplySpecialization = (
   SPECIALIZATION_PRESETS[specialization].healOnly ||
   getPresetStats(specialization, availableStats).length > 0;
 
+const arePresetStatsSelected = (
+  stats: readonly Stat[],
+  specialization: PresetSpecialization,
+  availableStats: readonly Stat[],
+): boolean =>
+  getPresetStats(specialization, availableStats).every((stat) =>
+    stats.includes(stat),
+  );
+
 /**
  * A specialization is active when all its available stats (or heal weapons)
  * are selected.
@@ -103,9 +129,7 @@ export const isSpecializationActive = (
   const preset = SPECIALIZATION_PRESETS[specialization];
   return (
     canApplySpecialization(specialization, availableStats) &&
-    getPresetStats(specialization, availableStats).every((stat) =>
-      filters.stats.includes(stat),
-    ) &&
+    arePresetStatsSelected(filters.stats, specialization, availableStats) &&
     (!preset.healOnly || filters.healOnly)
   );
 };
@@ -141,10 +165,46 @@ export const toggleSpecialization = (
   };
 };
 
-export const toggleStat = (
-  filters: EquipmentFilters,
+/**
+ * Kits have no weapon nor heal part: a specialization only applies the stats
+ * given by the kit catalogue.
+ */
+export const canApplyKitSpecialization = (
+  specialization: PresetSpecialization,
+  availableStats: readonly Stat[],
+): boolean => getPresetStats(specialization, availableStats).length > 0;
+
+export const isKitSpecializationActive = (
+  filters: KitFilters,
+  specialization: PresetSpecialization,
+  availableStats: readonly Stat[],
+): boolean =>
+  canApplyKitSpecialization(specialization, availableStats) &&
+  arePresetStatsSelected(filters.stats, specialization, availableStats);
+
+/**
+ * Applies the stats of a specialization (replacing the selected ones), or
+ * removes them when it is already active.
+ */
+export const toggleKitSpecialization = (
+  filters: KitFilters,
+  specialization: PresetSpecialization,
+  availableStats: readonly Stat[],
+): KitFilters => {
+  const preset = SPECIALIZATION_PRESETS[specialization];
+
+  return {
+    ...filters,
+    stats: isKitSpecializationActive(filters, specialization, availableStats)
+      ? filters.stats.filter((stat) => !preset.stats.includes(stat))
+      : getPresetStats(specialization, availableStats),
+  };
+};
+
+export const toggleStat = <F extends { stats: Stat[] }>(
+  filters: F,
   stat: Stat,
-): EquipmentFilters => ({
+): F => ({
   ...filters,
   stats: filters.stats.includes(stat)
     ? filters.stats.filter((entry) => entry !== stat)
@@ -163,15 +223,51 @@ export const countActiveEquipmentFilters = (
     filters.equippableOnly,
   ].filter(Boolean).length;
 
-/** Stats given as a bonus by at least one item, in the StatValues order. */
-export const getBonusStats = (items: readonly Item[]): Stat[] => {
+export const countActiveKitFilters = (filters: KitFilters): number =>
+  [
+    filters.stats.length > 0,
+    filters.withinTechBudget,
+    filters.equippableOnly,
+  ].filter(Boolean).length;
+
+/**
+ * Stats given as a bonus by at least one item or kit, in the StatValues
+ * order.
+ */
+export const getBonusStats = (
+  entries: readonly Pick<Item, 'effects'>[],
+): Stat[] => {
   const stats = new Set<Stat>();
-  items.forEach((item) =>
-    item.effects?.forEach((effect) => {
+  entries.forEach((entry) =>
+    entry.effects?.forEach((effect) => {
       if (effect.value > 0) stats.add(effect.property);
     }),
   );
   return (Object.keys(StatValues) as Stat[]).filter((stat) => stats.has(stat));
+};
+
+/**
+ * Keeps the entries giving a bonus on any of the stats (all of them without
+ * stats) and passing the other filters, sorted by this bonus when stats are
+ * selected (best first, ties keep their order).
+ */
+const filterByStatBonus = <T extends Pick<Item, 'effects'>>(
+  entries: readonly T[],
+  stats: readonly Stat[],
+  matchesOtherFilters: (entry: T) => boolean,
+): T[] => {
+  const matching = entries
+    .map((entry) => ({ entry, bonus: getItemStatBonus(entry, stats) }))
+    .filter(
+      ({ entry, bonus }) =>
+        (stats.length === 0 || bonus > 0) && matchesOtherFilters(entry),
+    );
+
+  if (stats.length > 0) {
+    matching.sort((a, b) => b.bonus - a.bonus);
+  }
+
+  return matching.map(({ entry }) => entry);
 };
 
 interface FilterEquipmentOptions {
@@ -193,19 +289,35 @@ export const filterEquipment = (
     : [];
   const healOnly = isArmSpot && filters.healOnly;
 
-  const matching = items
-    .map((item) => ({ item, bonus: getItemStatBonus(item, filters.stats) }))
-    .filter(
-      ({ item, bonus }) =>
-        (filters.stats.length === 0 || bonus > 0) &&
-        (weaponTypes.length === 0 || weaponTypes.includes(item.type)) &&
-        (!healOnly || isHealWeapon(item)) &&
-        (!filters.equippableOnly || isEquippable(item)),
-    );
-
-  if (filters.stats.length > 0) {
-    matching.sort((a, b) => b.bonus - a.bonus);
-  }
-
-  return matching.map(({ item }) => item);
+  return filterByStatBonus(
+    items,
+    filters.stats,
+    (item) =>
+      (weaponTypes.length === 0 || weaponTypes.includes(item.type)) &&
+      (!healOnly || isHealWeapon(item)) &&
+      (!filters.equippableOnly || isEquippable(item)),
+  );
 };
+
+interface FilterKitsOptions {
+  /** Tech points left on the item once its kits are installed. */
+  remainingTech: number;
+  isEquippable: (kit: Kit) => boolean;
+}
+
+/**
+ * Keeps the kits matching the filters. With selected stats, the kits are
+ * sorted by their bonus on these stats (best first, ties keep their order).
+ */
+export const filterKits = (
+  kits: readonly Kit[],
+  filters: KitFilters,
+  { remainingTech, isEquippable }: FilterKitsOptions,
+): Kit[] =>
+  filterByStatBonus(
+    kits,
+    filters.stats,
+    (kit) =>
+      (!filters.withinTechBudget || kit.tech <= remainingTech) &&
+      (!filters.equippableOnly || isEquippable(kit)),
+  );

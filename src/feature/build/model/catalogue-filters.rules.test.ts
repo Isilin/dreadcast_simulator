@@ -1,21 +1,29 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  canApplyKitSpecialization,
   canApplySpecialization,
   countActiveEquipmentFilters,
+  countActiveKitFilters,
   EMPTY_EQUIPMENT_FILTERS,
+  EMPTY_KIT_FILTERS,
   filterEquipment,
+  filterKits,
   getBonusStats,
   getPresetStats,
+  isKitSpecializationActive,
   isSpecializationActive,
   PresetSpecializationValues,
+  toggleKitSpecialization,
   toggleSpecialization,
   toggleStat,
   type EquipmentFilters,
+  type KitFilters,
 } from './catalogue-filters.rules';
 
 import { StatValues, type Stat } from '@/domain';
 import type { Item } from '@/feature/item';
+import type { Kit } from '@/feature/kit';
 
 const item = (id: string, overrides: Partial<Item> = {}): Item => ({
   id,
@@ -32,8 +40,23 @@ const filters = (overrides: Partial<EquipmentFilters>): EquipmentFilters => ({
   ...overrides,
 });
 
-const ids = (items: Item[]) => items.map(({ id }) => id);
+const kit = (id: string, overrides: Partial<Kit> = {}): Kit => ({
+  id,
+  name: id,
+  tech: 50,
+  type: 'head',
+  effects: [],
+  ...overrides,
+});
+
+const kitFilters = (overrides: Partial<KitFilters>): KitFilters => ({
+  ...EMPTY_KIT_FILTERS,
+  ...overrides,
+});
+
+const ids = (entries: readonly { id: string }[]) => entries.map(({ id }) => id);
 const everything = { isArmSpot: true, isEquippable: () => true };
+const anyKit = { remainingTech: 1000, isEquippable: () => true };
 
 describe('specialization presets', () => {
   const allStats = Object.keys(StatValues) as Stat[];
@@ -184,6 +207,15 @@ describe('getBonusStats', () => {
 
     expect(getBonusStats(items)).toEqual(['strength', 'medicine']);
   });
+
+  it('lists the stats given as a bonus by kits', () => {
+    const kits = [
+      kit('a', { effects: [{ property: 'agility', value: 3 }] }),
+      kit('b', { effects: [{ property: 'robustness', value: -2 }] }),
+    ];
+
+    expect(getBonusStats(kits)).toEqual(['agility']);
+  });
 });
 
 describe('filterEquipment', () => {
@@ -254,6 +286,146 @@ describe('filterEquipment', () => {
     );
     expect(
       ids(filterEquipment(items, filters({ equippableOnly: true }), options)),
+    ).toEqual(['ok']);
+  });
+});
+
+describe('kit specialization presets', () => {
+  const kitStats: Stat[] = ['strength', 'agility', 'perception', 'stealth'];
+
+  it('only applies the stats given by the kit catalogue', () => {
+    expect(
+      toggleKitSpecialization(EMPTY_KIT_FILTERS, 'tireur', kitStats),
+    ).toEqual(kitFilters({ stats: ['perception'] }));
+    expect(
+      toggleKitSpecialization(
+        kitFilters({ stats: ['strength'], withinTechBudget: true }),
+        'furtif',
+        kitStats,
+      ),
+    ).toEqual(
+      kitFilters({ stats: ['stealth', 'agility'], withinTechBudget: true }),
+    );
+  });
+
+  it('cannot apply a specialization without kit stats', () => {
+    expect(canApplyKitSpecialization('soutien', kitStats)).toBe(false);
+    expect(canApplyKitSpecialization('medecin', kitStats)).toBe(false);
+    expect(
+      isKitSpecializationActive(EMPTY_KIT_FILTERS, 'soutien', kitStats),
+    ).toBe(false);
+  });
+
+  it('is active when all its kit stats are selected', () => {
+    expect(
+      isKitSpecializationActive(
+        kitFilters({ stats: ['stealth'] }),
+        'furtif',
+        kitStats,
+      ),
+    ).toBe(false);
+    expect(
+      isKitSpecializationActive(
+        kitFilters({ stats: ['agility', 'stealth'] }),
+        'furtif',
+        kitStats,
+      ),
+    ).toBe(true);
+  });
+
+  it('removes its stats when toggled again', () => {
+    const active = toggleKitSpecialization(
+      EMPTY_KIT_FILTERS,
+      'combattant_cac',
+      kitStats,
+    );
+
+    expect(
+      toggleKitSpecialization(
+        toggleStat(active, 'agility'),
+        'combattant_cac',
+        kitStats,
+      ),
+    ).toEqual(kitFilters({ stats: ['agility'] }));
+  });
+});
+
+describe('countActiveKitFilters', () => {
+  it('counts one per filter group', () => {
+    expect(countActiveKitFilters(EMPTY_KIT_FILTERS)).toBe(0);
+    expect(
+      countActiveKitFilters({
+        stats: ['agility', 'stealth'],
+        withinTechBudget: true,
+        equippableOnly: true,
+      }),
+    ).toBe(3);
+  });
+});
+
+describe('filterKits', () => {
+  it('keeps every kit without filters', () => {
+    const kits = [kit('a'), kit('b', { tech: 5000 })];
+    expect(ids(filterKits(kits, EMPTY_KIT_FILTERS, anyKit))).toEqual([
+      'a',
+      'b',
+    ]);
+  });
+
+  it('keeps the kits giving a bonus on any selected stat, best first', () => {
+    const kits = [
+      kit('small', { effects: [{ property: 'agility', value: 2 }] }),
+      kit('malus', { effects: [{ property: 'agility', value: -4 }] }),
+      kit('other', { effects: [{ property: 'strength', value: 9 }] }),
+      kit('big', {
+        effects: [
+          { property: 'agility', value: 5 },
+          { property: 'stealth', value: 3 },
+        ],
+      }),
+      kit('tie', { effects: [{ property: 'stealth', value: 2 }] }),
+    ];
+
+    expect(
+      ids(
+        filterKits(kits, kitFilters({ stats: ['agility', 'stealth'] }), anyKit),
+      ),
+    ).toEqual(['big', 'small', 'tie']);
+  });
+
+  it('keeps the kits fitting in the tech left when asked', () => {
+    const kits = [
+      kit('free', { tech: 0 }),
+      kit('fits', { tech: 60 }),
+      kit('exact', { tech: 80 }),
+      kit('over', { tech: 81 }),
+    ];
+    const budget = kitFilters({ withinTechBudget: true });
+
+    expect(
+      ids(filterKits(kits, budget, { ...anyKit, remainingTech: 80 })),
+    ).toEqual(['free', 'fits', 'exact']);
+    expect(
+      ids(filterKits(kits, budget, { ...anyKit, remainingTech: -20 })),
+    ).toEqual([]);
+    expect(
+      ids(filterKits(kits, EMPTY_KIT_FILTERS, { ...anyKit, remainingTech: 0 })),
+    ).toHaveLength(4);
+  });
+
+  it('keeps the equippable kits only when asked', () => {
+    const kits = [kit('ok'), kit('locked')];
+    const options = {
+      remainingTech: 1000,
+      isEquippable: (entry: Kit) => entry.id === 'ok',
+    };
+
+    expect(ids(filterKits(kits, EMPTY_KIT_FILTERS, options))).toEqual([
+      'ok',
+      'locked',
+    ]);
+    expect(
+      ids(filterKits(kits, kitFilters({ equippableOnly: true }), options)),
     ).toEqual(['ok']);
   });
 });

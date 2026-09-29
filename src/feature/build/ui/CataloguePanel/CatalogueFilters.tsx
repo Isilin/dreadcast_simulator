@@ -1,6 +1,10 @@
 import styles from './CataloguePanel.module.css';
 import { EquipmentFiltersPanel } from './EquipmentFiltersPanel';
-import type { EquipmentFilters } from '../../model/catalogue-filters.rules';
+import { KitFiltersPanel } from './KitFiltersPanel';
+import type {
+  EquipmentFilters,
+  KitFilters,
+} from '../../model/catalogue-filters.rules';
 import {
   type CatalogueFilter,
   type CatalogueTab,
@@ -18,8 +22,11 @@ interface CatalogueFiltersProps {
   catalogueFilter: CatalogueFilter;
   equipmentFilters: EquipmentFilters;
   items: ItemsState;
+  kitBonusStats: Stat[];
+  kitFilters: KitFilters;
   query: string;
   onEquipmentFiltersChange: (filters: EquipmentFilters) => void;
+  onKitFiltersChange: (filters: KitFilters) => void;
   onQueryChange: (query: string) => void;
   onSelectCatalogueTab: (tab: CatalogueTab) => void;
   onSelectEquipmentSpot: (spot: ItemSpot) => void;
@@ -37,8 +44,11 @@ export const CatalogueFilters = ({
   catalogueFilter,
   equipmentFilters,
   items,
+  kitBonusStats,
+  kitFilters,
   query,
   onEquipmentFiltersChange,
+  onKitFiltersChange,
   onQueryChange,
   onSelectCatalogueTab,
   onSelectEquipmentSpot,
@@ -87,10 +97,17 @@ export const CatalogueFilters = ({
       />
 
       {isKitView ? (
-        <p className={styles.catalogueContext}>
-          {workbenchSlotLabels[activeSpot]}
-          {activeItem ? ` · compatibles ${activeItem.name}` : ''}
-        </p>
+        <>
+          <p className={styles.catalogueContext}>
+            {workbenchSlotLabels[activeSpot]}
+            {activeItem ? ` · compatibles ${activeItem.name}` : ''}
+          </p>
+          <KitFiltersPanel
+            bonusStats={kitBonusStats}
+            filters={kitFilters}
+            onChange={onKitFiltersChange}
+          />
+        </>
       ) : null}
 
       {activeTab === 'equipment' && !isKitView ? (
