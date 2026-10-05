@@ -2421,7 +2421,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^8.70.1"
     "@typescript-eslint/parser": "npm:^8.70.1"
     "@vitejs/plugin-react-swc": "npm:^4.3.3"
-    effect: "npm:4.0.0-rc.117"
+    effect: "npm:4.0.0"
     eslint: "npm:^9.39.3"
     eslint-plugin-import: "npm:^2.32.0"
     eslint-plugin-jsx-a11y: "npm:^6.10.2"
@@ -2454,10 +2454,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"effect@npm:4.0.0-rc.117":
-  version: 4.0.0-rc.117
-  resolution: "effect@npm:4.0.0-rc.117"
-  checksum: 10c0/dba2072163d6ed630edb821c5bcc9eb620ef1d78caa557f039a231a5425848c2befae35cc44b23cdcdb5a4d949d3ec0c52c281f6c1e7dcfbacba7c4bac44245e
+"effect@npm:4.0.0":
+  version: 4.0.0
+  resolution: "effect@npm:4.0.0"
+  checksum: 10c0/c9cd4c151a0d5141c82331e313fcfa5ba2ac99c6b3cc3d310eb92925286efe96487685f2a3b215a2470b9ee50b0e2f10c187149b820c696c9b1d7d0edd3a6e3c
   languageName: node
   linkType: hard
 
