@@ -279,28 +279,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@effect/platform-node-shared@npm:^4.0.0-rc.117":
-  version: 4.0.0-rc.117
-  resolution: "@effect/platform-node-shared@npm:4.0.0-rc.117"
+"@effect/platform-node-shared@npm:^4.0.0":
+  version: 4.0.1
+  resolution: "@effect/platform-node-shared@npm:4.0.1"
   dependencies:
     "@types/ws": "npm:^8.18.1"
-    ws: "npm:^8.21.3"
+    ws: "npm:^8.22.0"
   peerDependencies:
-    effect: ^4.0.0-rc.117
-  checksum: 10c0/263a6864ce5f12d5bca8c2930b3ec426b6d072fa3758635ac2e9249a732dedd4934037fdde0674da75fefa97103e62df42de9499cea60aad3b7fc2c986313a90
+    effect: ^4.0.1
+  checksum: 10c0/6b55c5465c646d5d17b0fc2f61ff705e443dac7f48906cccc6e6e77961138d58dc81c65e6211e5b9a7461659b2997535f80ce4071e7173cf2c42c664fd3a102a
   languageName: node
   linkType: hard
 
-"@effect/platform-node@npm:4.0.0-rc.117":
-  version: 4.0.0-rc.117
-  resolution: "@effect/platform-node@npm:4.0.0-rc.117"
+"@effect/platform-node@npm:4.0.0":
+  version: 4.0.0
+  resolution: "@effect/platform-node@npm:4.0.0"
   dependencies:
-    "@effect/platform-node-shared": "npm:^4.0.0-rc.117"
-    undici: "npm:^8.10.2"
+    "@effect/platform-node-shared": "npm:^4.0.0"
+    undici: "npm:^8.11.2"
   peerDependencies:
-    effect: ^4.0.0-rc.117
+    effect: ^4.0.0
     redis: ">=5.0.0 <7.0.0"
-  checksum: 10c0/ef459961f30c1f1509c70e280bb3e59eead8eac8b1eebdf07841d75be83162a036837f50f86a8b463bcc591e91d86f15d2c2e1516a58db05cce16a5b26525949
+  checksum: 10c0/2657631ede73c0ff55daf6260e9fdfce16c18c98160d5ada7f15f8c92f4fcf3f9b8ce396d7853134f8005969ae71bff0fc8de603037c014f22a1169b1c6c4a9d
   languageName: node
   linkType: hard
 
@@ -2406,7 +2406,7 @@ __metadata:
   dependencies:
     "@base-ui/react": "npm:1.8.0"
     "@dnd-kit/core": "npm:^6.3.1"
-    "@effect/platform-node": "npm:4.0.0-rc.117"
+    "@effect/platform-node": "npm:4.0.0"
     "@fontsource/chakra-petch": "npm:^5.2.8"
     "@fontsource/ibm-plex-mono": "npm:^5.2.7"
     "@supabase/supabase-js": "npm:^2.117.2"
@@ -5498,7 +5498,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:^8.10.2":
+"undici@npm:^8.11.2":
   version: 8.11.2
   resolution: "undici@npm:8.11.2"
   checksum: 10c0/106f6991178fb7562fd90cdec7993c5f807a9428682306091f0c4b27fc474ec291f868e29972c6252988bf061ad193df943b3b99e775be157a28d92bbb95699d
@@ -5833,7 +5833,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:^8.21.3":
+"ws@npm:^8.22.0":
   version: 8.22.0
   resolution: "ws@npm:8.22.0"
   peerDependencies:
