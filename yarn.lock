@@ -144,10 +144,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.29.7":
-  version: 7.29.7
-  resolution: "@babel/runtime@npm:7.29.7"
-  checksum: 10c0/ca11572f7146b21e0bde6a9ed4bb6a89eafbee5f0944c7eb54d0d8a2dac962c33638a1d611e14faa71dfbb92b4b5f9236232208568a6b7d5c6f3f39ddb91771e
+"@babel/runtime@npm:^7.29.7 || ^8.0.0":
+  version: 8.0.7
+  resolution: "@babel/runtime@npm:8.0.7"
+  checksum: 10c0/7ff1ca2d452a3359dc63bd36b25ff219ef04dfefbf7186900f1c296e55ade2ccc7f88dd2eb9d58ed253e3bde58fae97b9e40d80220ebfe510c99f7cf54837603
   languageName: node
   linkType: hard
 
@@ -187,15 +187,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@base-ui/react@npm:1.8.0":
-  version: 1.8.0
-  resolution: "@base-ui/react@npm:1.8.0"
+"@base-ui/react@npm:1.9.0":
+  version: 1.9.0
+  resolution: "@base-ui/react@npm:1.9.0"
   dependencies:
-    "@babel/runtime": "npm:^7.29.7"
-    "@base-ui/utils": "npm:0.4.0"
+    "@babel/runtime": "npm:^7.29.7 || ^8.0.0"
+    "@base-ui/utils": "npm:0.5.0"
     "@floating-ui/react-dom": "npm:^2.1.9"
     "@floating-ui/utils": "npm:^0.2.12"
-    use-sync-external-store: "npm:^1.6.0"
+    use-sync-external-store: "npm:^1.7.0"
   peerDependencies:
     "@date-fns/tz": ^1.2.0
     "@types/react": ^17 || ^18 || ^19
@@ -209,18 +209,18 @@ __metadata:
       optional: true
     date-fns:
       optional: true
-  checksum: 10c0/bf3faa8891fe6c9695a07b30caa3349f9ffc067f0efd381bb6ed12d68400a2d273ab0f764dd07c5cc6b25f5bc6df6a5688e0164d4e2500ad07efaec8bdd88896
+  checksum: 10c0/0495ec9026ad2f5f04580865a1b40c2899b2475d77472d3dcb8b688b1a2a949e14493cc50adb4dd7d33970caef7845ef4a0b93184a8299ed78bda7ff7c288847
   languageName: node
   linkType: hard
 
-"@base-ui/utils@npm:0.4.0":
-  version: 0.4.0
-  resolution: "@base-ui/utils@npm:0.4.0"
+"@base-ui/utils@npm:0.5.0":
+  version: 0.5.0
+  resolution: "@base-ui/utils@npm:0.5.0"
   dependencies:
-    "@babel/runtime": "npm:^7.29.7"
+    "@babel/runtime": "npm:^7.29.7 || ^8.0.0"
     "@floating-ui/utils": "npm:^0.2.12"
-    reselect: "npm:^5.2.0"
-    use-sync-external-store: "npm:^1.6.0"
+    reselect: "npm:^5.3.0"
+    use-sync-external-store: "npm:^1.7.0"
   peerDependencies:
     "@types/react": ^17 || ^18 || ^19
     react: ^17 || ^18 || ^19
@@ -228,7 +228,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/dd32220d13d42ed2cf0d0ae18e02bf9ece5c54d6a26e49c9449514d66d38b1fee51c875f7d9d21484a326b7a8a2c33c95be620e8a5976b7b6f3bfa27572b6baf
+  checksum: 10c0/864b572ea60ea557bfdc63ff056026ed585cce4f35e4996c63e86503944befa3d9bc41e8f1da847e1273d8ac0b2f55210eecff936c3cfb1e0ea7ba9bfc5c5b5b
   languageName: node
   linkType: hard
 
@@ -1070,21 +1070,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@supabase/auth-js@npm:2.117.2":
-  version: 2.117.2
-  resolution: "@supabase/auth-js@npm:2.117.2"
+"@supabase/auth-js@npm:2.117.3":
+  version: 2.117.3
+  resolution: "@supabase/auth-js@npm:2.117.3"
   dependencies:
     tslib: "npm:2.8.1"
-  checksum: 10c0/79911da85edc1b595ef8b0bfb8e3fa7336984bc9a29ff16c00670dabfa088e5f10e1433a9298ec3b868356d2bb908e59db45391e741f0ef00979327afc46e942
+  checksum: 10c0/528e827eeb7512afe7d0c79d7ff1dba88155b883ad2b6bc5d3ed27a28a876c692a07a33e5e9613ed02e9ced456d6ef71793076a20b311de996454183937b6258
   languageName: node
   linkType: hard
 
-"@supabase/functions-js@npm:2.117.2":
-  version: 2.117.2
-  resolution: "@supabase/functions-js@npm:2.117.2"
+"@supabase/functions-js@npm:2.117.3":
+  version: 2.117.3
+  resolution: "@supabase/functions-js@npm:2.117.3"
   dependencies:
     tslib: "npm:2.8.1"
-  checksum: 10c0/8142c3dc544d2c8b06f9998fea6d82938d21656c561e8beb0b1af29ea74560139e5086cfdc408bdb2ecc49826515b12c734a9084daf105e8d1e82a48cf49a8be
+  checksum: 10c0/6deecba16ab0ac49a3a223ad1e3a29f1c78608c6480c9df1fb96b5c6a6ee8ad35bd99e556b81c3b03ff54a9a28b1fdaea46a58981391f2376c874eebb9141e3b
   languageName: node
   linkType: hard
 
@@ -1095,50 +1095,50 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@supabase/postgrest-js@npm:2.117.2":
-  version: 2.117.2
-  resolution: "@supabase/postgrest-js@npm:2.117.2"
+"@supabase/postgrest-js@npm:2.117.3":
+  version: 2.117.3
+  resolution: "@supabase/postgrest-js@npm:2.117.3"
   dependencies:
     tslib: "npm:2.8.1"
-  checksum: 10c0/3685ee212d24804d51f7fe3f61c3eb4eba1a07397c8334ca764eb8e56d0f75877ec9d82fdda441a64dbb21a412efe3d6e2bafa0c96923843af0cebe038dd12b6
+  checksum: 10c0/e1e9705bd39e1cb250f29ea05490fe1d3dd96eac5ce42b9d416fe726207babe76b68cf504d68c80b8903265c7a93bc838d6536a00b2264ef9c135f2d7bbe1a91
   languageName: node
   linkType: hard
 
-"@supabase/realtime-js@npm:2.117.2":
-  version: 2.117.2
-  resolution: "@supabase/realtime-js@npm:2.117.2"
+"@supabase/realtime-js@npm:2.117.3":
+  version: 2.117.3
+  resolution: "@supabase/realtime-js@npm:2.117.3"
   dependencies:
     "@supabase/phoenix": "npm:0.4.5"
     tslib: "npm:2.8.1"
-  checksum: 10c0/67144dd5e0bd37bac97c34cb3a383bfdf9c2b25b1e593101985ce6bb6d29d4bcffc6195ca8524b3b3aa8474cf97fc27862cab522a5b63677d2568ae5e3dbd1bd
+  checksum: 10c0/bbb9e6a41bdc0d2f803980f7cc2993eb8a7709ada4af13b1fced4bd61c809ec8ad4f2086a9cabfed728211c60320778371ac33d5736ca92a0bd0026711aa0f0c
   languageName: node
   linkType: hard
 
-"@supabase/storage-js@npm:2.117.2":
-  version: 2.117.2
-  resolution: "@supabase/storage-js@npm:2.117.2"
+"@supabase/storage-js@npm:2.117.3":
+  version: 2.117.3
+  resolution: "@supabase/storage-js@npm:2.117.3"
   dependencies:
     iceberg-js: "npm:^0.8.1"
     tslib: "npm:2.8.1"
-  checksum: 10c0/5c6ba9b77e7a608435e3751a49a426893e1d087ecee70930f833aaca954d32fcddb1993aa5f6ab0075d20519e2f2bee5b33ea3fc69ddfbae8e20a6275e3670e5
+  checksum: 10c0/d6f5367778a96775f24a19e2b32b51db77933166b9cfd87a3415f61fd25ee116349b04b19caaac12a221c27f85cf423e5a0778d1d69dd1da0c803fdc084c7f6f
   languageName: node
   linkType: hard
 
-"@supabase/supabase-js@npm:^2.117.2":
-  version: 2.117.2
-  resolution: "@supabase/supabase-js@npm:2.117.2"
+"@supabase/supabase-js@npm:^2.117.3":
+  version: 2.117.3
+  resolution: "@supabase/supabase-js@npm:2.117.3"
   dependencies:
-    "@supabase/auth-js": "npm:2.117.2"
-    "@supabase/functions-js": "npm:2.117.2"
-    "@supabase/postgrest-js": "npm:2.117.2"
-    "@supabase/realtime-js": "npm:2.117.2"
-    "@supabase/storage-js": "npm:2.117.2"
+    "@supabase/auth-js": "npm:2.117.3"
+    "@supabase/functions-js": "npm:2.117.3"
+    "@supabase/postgrest-js": "npm:2.117.3"
+    "@supabase/realtime-js": "npm:2.117.3"
+    "@supabase/storage-js": "npm:2.117.3"
   peerDependencies:
     "@opentelemetry/api": ">=1.0.0"
   peerDependenciesMeta:
     "@opentelemetry/api":
       optional: true
-  checksum: 10c0/f98b520ac800bd1da1fa2eb0eb124cee99052eba8e0bba4399c81c89943bdeb2637eb59eb81647c2e042dee41922827f2105f6a31d08ff490c6685dbab6ee7ea
+  checksum: 10c0/b77ff68afc8296dac8947ae8ecc9beebf0d9b5d2dadfccbd354b2a55c69e455fa1a7c3cc0a7508def16ad8ff8329d41f63179905a0751886889c7666949339f1
   languageName: node
   linkType: hard
 
@@ -1325,6 +1325,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/history@npm:1.162.5":
+  version: 1.162.5
+  resolution: "@tanstack/history@npm:1.162.5"
+  checksum: 10c0/dbd749b0ffc1f02bd0937f3ae039b0e8c8f935d5eaa77b82e86f8d769fdcc1bf01e6253fe73e8597c89e330447a78f5d9599cfeaacf141e2b3ee394f19fa88bf
+  languageName: node
+  linkType: hard
+
 "@tanstack/match-sorter-utils@npm:^9.1.2":
   version: 9.1.2
   resolution: "@tanstack/match-sorter-utils@npm:9.1.2"
@@ -1338,6 +1345,13 @@ __metadata:
   version: 5.104.0
   resolution: "@tanstack/query-core@npm:5.104.0"
   checksum: 10c0/e080454f308dc41bf0e52e46aac455af3112f454519d369740aacaec4d260a3bfddde569204908ff7a6e1b1b84f8e065e0ac1375555e2bc1b023d398c0b44f96
+  languageName: node
+  linkType: hard
+
+"@tanstack/query-core@npm:5.104.1":
+  version: 5.104.1
+  resolution: "@tanstack/query-core@npm:5.104.1"
+  checksum: 10c0/d42788e0c9ee4a389d7de21c5fe856acd50d24f72cc87b3c76e6852399ab9835801f415d0a9e10706d2a3a27937d42c5f1ac621ceeac21e6bcd60aa87984bdf4
   languageName: node
   linkType: hard
 
@@ -1373,42 +1387,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:^5.104.0":
-  version: 5.104.0
-  resolution: "@tanstack/react-query@npm:5.104.0"
+"@tanstack/react-query@npm:^5.104.1":
+  version: 5.104.1
+  resolution: "@tanstack/react-query@npm:5.104.1"
   dependencies:
-    "@tanstack/query-core": "npm:5.104.0"
+    "@tanstack/query-core": "npm:5.104.1"
   peerDependencies:
     react: ^18 || ^19
-  checksum: 10c0/efcf6328c95847c99e4b41c6e68f74d303b8e9eef673473648643dd2fcc8d9d3368223f27a4e510526f3fa3fd5508554e804141a67a9cf37c90842f8639cb430
+  checksum: 10c0/b5d431f983ff3dbd91c14eb2e3ec2dc0a429ab0b8b7dd6169a5b021eb450fffe1f2f1d0bef0726914b63d5b264b699d2ae1b4a2381bff85bb9c1c4c070407b74
   languageName: node
   linkType: hard
 
-"@tanstack/react-router@npm:^1.170.40":
-  version: 1.170.40
-  resolution: "@tanstack/react-router@npm:1.170.40"
+"@tanstack/react-router@npm:^1.170.42":
+  version: 1.170.42
+  resolution: "@tanstack/react-router@npm:1.170.42"
   dependencies:
-    "@tanstack/history": "npm:1.162.4"
-    "@tanstack/react-store": "npm:^0.11.0"
-    "@tanstack/router-core": "npm:1.171.33"
+    "@tanstack/history": "npm:1.162.5"
+    "@tanstack/react-store": "npm:^0.11.2"
+    "@tanstack/router-core": "npm:1.171.35"
     isbot: "npm:^5.1.22"
   peerDependencies:
     react: ">=18.0.0 || >=19.0.0"
     react-dom: ">=18.0.0 || >=19.0.0"
-  checksum: 10c0/f090613dc425d7b0268887c705de1dbdec81d3958e1b7fdaeb47b4fc3e69a0bff9c74e9a6529796b52cd77da9f47cbaf2e83b05705665ce08a3270ca521ea873
+  checksum: 10c0/3f797cf3fd23a48025dc33d0f15517abe4f3a644bbeb83d04cfbbe5ff69d6b7f6813df436fc89b5eb5ff6be2217f3aa8a9bb2b0b25f2101aef0b028cb034124f
   languageName: node
   linkType: hard
 
-"@tanstack/react-store@npm:^0.11.0":
-  version: 0.11.1
-  resolution: "@tanstack/react-store@npm:0.11.1"
+"@tanstack/react-store@npm:^0.11.2":
+  version: 0.11.2
+  resolution: "@tanstack/react-store@npm:0.11.2"
   dependencies:
-    "@tanstack/store": "npm:0.11.1"
+    "@tanstack/store": "npm:0.11.2"
     use-sync-external-store: "npm:^1.6.0"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10c0/9b43ea1b07cfed9100b9d037a339e6dbef17ff8e7fd4b8968ef76b75c97a20ec3627345adca94135664d6fccd88f48622e1e871c64738ff2f0b0ce24ce365dfd
+  checksum: 10c0/a755aa369c13824709ca5b29355ab7a72ba913d3561786f993412c8c375f36c54b20c0366bd406cf21b363b12e516a251a774ee7140479571b628e895448a93d
   languageName: node
   linkType: hard
 
@@ -1421,6 +1435,18 @@ __metadata:
     seroval: "npm:^1.6.7"
     seroval-plugins: "npm:^1.6.7"
   checksum: 10c0/755924f7b6da414838982999f12d14764a4faa5bf6e9e9db57d18d62d5483589fb58a43b3628d1380099ff845ba843dc7291373e577938e7029cb3d5753711e6
+  languageName: node
+  linkType: hard
+
+"@tanstack/router-core@npm:1.171.35":
+  version: 1.171.35
+  resolution: "@tanstack/router-core@npm:1.171.35"
+  dependencies:
+    "@tanstack/history": "npm:1.162.5"
+    cookie-es: "npm:^3.0.0"
+    seroval: "npm:^1.6.7"
+    seroval-plugins: "npm:^1.6.7"
+  checksum: 10c0/143bdfc3fbb71626e928244fa24de1bf728c3eb0ad48ad62416ae9baef2444979186df0e654eb01d5d10b8e2d41d606d6523c462a761a1de5f8453dde1bdab1f
   languageName: node
   linkType: hard
 
@@ -1490,10 +1516,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/store@npm:0.11.1":
-  version: 0.11.1
-  resolution: "@tanstack/store@npm:0.11.1"
-  checksum: 10c0/36e308f3a5037a4d79e2b2ea9f6f4015a617fcd7cb8ff541fe50869b015fb8753b267a8c24709ad197c4c3b5fd85207edc4f71eccaf9b0d311f62336a9cf7764
+"@tanstack/store@npm:0.11.2":
+  version: 0.11.2
+  resolution: "@tanstack/store@npm:0.11.2"
+  checksum: 10c0/5422149c853c16e642a0ddfb51c2b4a867a11516069d3b9647659212e9762b86d609144de6ac6ec099b0360c3b198d1243f613148d69c1028dee56382f0430cd
   languageName: node
   linkType: hard
 
@@ -2404,16 +2430,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "dreadcast_simulator@workspace:."
   dependencies:
-    "@base-ui/react": "npm:1.8.0"
+    "@base-ui/react": "npm:1.9.0"
     "@dnd-kit/core": "npm:^6.3.1"
     "@effect/platform-node": "npm:4.0.0-rc.117"
     "@fontsource/chakra-petch": "npm:^5.2.8"
     "@fontsource/ibm-plex-mono": "npm:^5.2.7"
-    "@supabase/supabase-js": "npm:^2.117.2"
+    "@supabase/supabase-js": "npm:^2.117.3"
     "@tanstack/eslint-plugin-query": "npm:^5.104.0"
-    "@tanstack/react-query": "npm:^5.104.0"
+    "@tanstack/react-query": "npm:^5.104.1"
     "@tanstack/react-query-devtools": "npm:5.104.0"
-    "@tanstack/react-router": "npm:^1.170.40"
+    "@tanstack/react-router": "npm:^1.170.42"
     "@tanstack/router-plugin": "npm:^1.168.40"
     "@types/node": "npm:^24.11.0"
     "@types/react": "npm:^19.3.0"
@@ -2421,7 +2447,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^8.70.1"
     "@typescript-eslint/parser": "npm:^8.70.1"
     "@vitejs/plugin-react-swc": "npm:^4.3.3"
-    effect: "npm:4.0.0-rc.117"
+    effect: "npm:4.0.2"
     eslint: "npm:^9.39.3"
     eslint-plugin-import: "npm:^2.32.0"
     eslint-plugin-jsx-a11y: "npm:^6.10.2"
@@ -2454,10 +2480,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"effect@npm:4.0.0-rc.117":
-  version: 4.0.0-rc.117
-  resolution: "effect@npm:4.0.0-rc.117"
-  checksum: 10c0/dba2072163d6ed630edb821c5bcc9eb620ef1d78caa557f039a231a5425848c2befae35cc44b23cdcdb5a4d949d3ec0c52c281f6c1e7dcfbacba7c4bac44245e
+"effect@npm:4.0.2":
+  version: 4.0.2
+  resolution: "effect@npm:4.0.2"
+  checksum: 10c0/6c1fc28b931ae1586d60c4d9e11100d43183a25ee2ca80489bf06d5fa2c272a8f0a9476bc3f8f0b5d57d23942a7989e176ddfc12248f99f84450ed26c9c077d9
   languageName: node
   linkType: hard
 
@@ -4659,7 +4685,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reselect@npm:^5.2.0":
+"reselect@npm:^5.3.0":
   version: 5.3.0
   resolution: "reselect@npm:5.3.0"
   checksum: 10c0/c79728e4f315152bfb2d82456d35075b705392d9e72c485d7d9b1061bd80af628416216d80f02a42f24dbb24d738aec7fec45806930aaa1d17c32e9875fa1bd6
@@ -5595,6 +5621,15 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
   checksum: 10c0/35e1179f872a53227bdf8a827f7911da4c37c0f4091c29b76b1e32473d1670ebe7bcd880b808b7549ba9a5605c233350f800ffab963ee4a4ee346ee983b6019b
+  languageName: node
+  linkType: hard
+
+"use-sync-external-store@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "use-sync-external-store@npm:1.7.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/6bae7cb778ce611131ec830c4e469fbc2872acefc25d2e4cf1c28b8628690689770742a9f2f0642c95134f9c77041fee60f0352f81ca43f96643b0ed01774726
   languageName: node
   linkType: hard
 
