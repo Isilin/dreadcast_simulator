@@ -1,0 +1,51 @@
+name: 'CI'
+
+# Runs on every PR into develop, and again on develop itself once merged.
+# Release PRs are opened with GITHUB_TOKEN, which does not trigger
+# pull_request workflows: the push runs keep develop's own state checked
+# before its release PR is merged.
+on:
+  pull_request:
+    branches:
+      - develop
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      # Same major as package.json engines (Vercel) and the Docker image.
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '26'
+
+      - name: Enable Corepack (yarn 4.x)
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build (TypeScript + Vite)
+        run: yarn run build
+
+      - name: Lint
+        run: yarn run lint
+
+      - name: Format check
+        run: yarn run format:check
+
+      - name: Tests
+        run: yarn run test

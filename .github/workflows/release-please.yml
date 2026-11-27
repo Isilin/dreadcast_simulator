@@ -1,9 +1,17 @@
 name: 'Release Please'
 
+# Gitflow: feature PRs are squash-merged into `develop`; `main` only ever
+# holds released commits. Merging the release PR on `develop` tags the
+# version, then `main` is fast-forwarded to that exact commit.
 on:
   push:
     branches:
-      - main
+      - develop
+
+# Never run two releases at once (the fast-forward of main must stay ordered).
+concurrency:
+  group: release-please
+  cancel-in-progress: false
 
 jobs:
   release-please:
@@ -13,7 +21,32 @@ jobs:
       pull-requests: write
       # Needed to create the autorelease labels.
       issues: write
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+      sha: ${{ steps.release.outputs.sha }}
     steps:
       # Opens/updates the release PR from conventional commits;
       # merging it tags the version and publishes the GitHub release.
-      - uses: googleapis/release-please-action@v5
+      - id: release
+        uses: googleapis/release-please-action@v5
+        with:
+          target-branch: develop
+
+  # Moves main to the released commit. A plain push only fast-forwards:
+  # if main ever diverges from develop, this step fails instead of
+  # rewriting history.
+  promote-main:
+    needs: release-please
+    if: needs.release-please.outputs.release_created == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.release-please.outputs.sha }}
+          fetch-depth: 0
+
+      - name: Fast-forward main to ${{ needs.release-please.outputs.tag_name }}
+        run: git push origin "${{ needs.release-please.outputs.sha }}:refs/heads/main"
