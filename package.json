@@ -39,7 +39,7 @@
   "devDependencies": {
     "@effect/platform-node": "4.0.0-rc.117",
     "@tanstack/eslint-plugin-query": "^5.108.2",
-    "@tanstack/react-query-devtools": "5.108.2",
+    "@tanstack/react-query-devtools": "5.108.4",
     "@tanstack/router-plugin": "^1.169.0",
     "@types/node": "^26.6.4",
     "@types/react": "^19.3.0",
