@@ -33,6 +33,20 @@ describe('readDatabaseConfig', () => {
     ).toBe('postgres://u@h/db?sslmode=verify-full');
   });
 
+  it('refuses a URL that is not postgres://, without showing it', () => {
+    expect(() =>
+      readDatabaseConfig({ DATABASE_URL: 'https://ref.supabase.co' }),
+    ).toThrow(
+      'DATABASE_URL must be a postgres:// URL, got https://ref.supabase.co',
+    );
+    expect(() =>
+      readDatabaseConfig({ DATABASE_URL: 'secret-password-not-a-url' }),
+    ).toThrow(/^DATABASE_URL is not a valid URL$/);
+    expect(
+      readDatabaseConfig({ DATABASE_URL: 'postgresql://u@h:5432/db' }).url,
+    ).toBe('postgresql://u@h:5432/db');
+  });
+
   it('fails without database URL or with a bad pool size', () => {
     expect(() => readDatabaseConfig({})).toThrow('SIMULATOR_POSTGRES_URL');
     expect(() =>
