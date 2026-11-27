@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/Isilin/dreadcast_simulator/compare/v1.1.0...v1.1.1) (2026-11-27)
+
+
+### Bug Fixes
+
+* **docker:** leave empty build args out of the Vite build ([#71](https://github.com/Isilin/dreadcast_simulator/issues/71)) ([1c40865](https://github.com/Isilin/dreadcast_simulator/commit/1c408659fc2dc15ff81a1c5ddae04bc0c03c0052))
+
 ## [1.1.0](https://github.com/Isilin/dreadcast_simulator/compare/v1.0.0...v1.1.0) (2026-11-27)
 
 
