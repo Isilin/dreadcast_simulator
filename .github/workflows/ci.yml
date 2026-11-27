@@ -99,12 +99,14 @@ jobs:
             docker exec pg pg_isready -U postgres -q && break
             sleep 1
           done
-          docker exec pg psql -U postgres -v ON_ERROR_STOP=1 -c "
-            CREATE ROLE dc_app LOGIN PASSWORD 'ci';
-            CREATE ROLE anon NOLOGIN NOINHERIT;
-            CREATE ROLE authenticated NOLOGIN NOINHERIT;
-            GRANT anon, authenticated TO dc_app;
-            CREATE DATABASE dc_simulateur OWNER dc_app;"
+          # One -c per statement: CREATE DATABASE cannot run in the implicit
+          # transaction of a multi-statement -c.
+          docker exec pg psql -U postgres -v ON_ERROR_STOP=1 \
+            -c "CREATE ROLE dc_app LOGIN PASSWORD 'ci'" \
+            -c "CREATE ROLE anon NOLOGIN NOINHERIT" \
+            -c "CREATE ROLE authenticated NOLOGIN NOINHERIT" \
+            -c "GRANT anon, authenticated TO dc_app" \
+            -c "CREATE DATABASE dc_simulateur OWNER dc_app"
           docker run -d --name app-pg --network ci -p 3001:3000 \
             -e DATABASE_URL=postgres://dc_app:ci@pg:5432/dc_simulateur \
             -e DB_MIGRATE=1 \
