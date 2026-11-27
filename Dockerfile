@@ -1,7 +1,10 @@
 # syntax=docker/dockerfile:1
-# The VITE_* build args are public values (the Supabase anon key is meant to
-# be shipped to browsers), not secrets.
 # check=skip=SecretsUsedInArgOrEnv
+
+# The check above is skipped because the VITE_* build args are public values
+# (the Supabase anon key is meant to be shipped to browsers), not secrets.
+# Parser directives must come first: BuildKit stops reading them at the first
+# ordinary comment or blank line.
 
 # Production image (forge, via Coolify): built by GitHub Actions, never on the
 # server. The final stage holds only the built front (dist/) and the bundled
@@ -27,11 +30,13 @@ COPY . .
 ARG VITE_SUPABASE_URL
 ARG VITE_SUPABASE_ANON_KEY
 ARG VITE_SUBSCRIPTION_CREDITS_ADDRESS
-ENV VITE_SUPABASE_URL=$VITE_SUPABASE_URL \
-    VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY \
-    VITE_SUBSCRIPTION_CREDITS_ADDRESS=$VITE_SUBSCRIPTION_CREDITS_ADDRESS
 
-RUN yarn build && yarn build:server
+# Build args reach RUN as environment variables. An empty one would hide the
+# front's own fallback (`value ?? default` keeps ''), so it is unset instead.
+RUN for name in VITE_SUPABASE_URL VITE_SUPABASE_ANON_KEY VITE_SUBSCRIPTION_CREDITS_ADDRESS; do \
+      [ -n "$(printenv "$name")" ] || unset "$name"; \
+    done; \
+    yarn build && yarn build:server
 
 # --- Runtime -------------------------------------------------------------------
 FROM node:26-alpine
