@@ -1,4 +1,7 @@
 # syntax=docker/dockerfile:1
+# The VITE_* build args are public values (the Supabase anon key is meant to
+# be shipped to browsers), not secrets.
+# check=skip=SecretsUsedInArgOrEnv
 
 # Production image (forge, via Coolify): built by GitHub Actions, never on the
 # server. The final stage holds only the built front (dist/) and the bundled
@@ -8,8 +11,10 @@
 FROM node:26-alpine AS build
 WORKDIR /app
 
+# Node 25+ no longer ships Corepack: install it to get the Yarn version of
+# package.json (packageManager).
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
-RUN corepack enable
+RUN npm install --global corepack@0.36.0 && corepack enable
 
 COPY package.json yarn.lock .yarnrc.yml ./
 RUN --mount=type=cache,target=/root/.yarn/berry/cache \
