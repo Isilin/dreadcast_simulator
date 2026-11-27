@@ -41,12 +41,10 @@ deja enregistres localement.
 ### Variables d'environnement
 
 Le serveur (`yarn dev:api`, fonction Vercel, conteneur) lit la base Postgres
-dans `DATABASE_URL`. Jusqu'a la bascule vers forge, c'est la base de
-production (Supabase) : URL du pooler avec `?uselibpqcompat=true&sslmode=require`.
-
-```bash
-DATABASE_URL=postgresql://postgres.<ref>:<mot-de-passe>@<pooler>:6543/postgres?uselibpqcompat=true&sslmode=require
-```
+dans `DATABASE_URL`, a defaut dans `SIMULATOR_POSTGRES_URL` (pooler injecte
+par l'integration Supabase de Vercel, recupere par `vercel env pull`). Jusqu'a
+la bascule vers forge, c'est la base de production. `sslmode=require` y est lu
+comme dans libpq (chiffre, certificat non verifie).
 
 L'authentification passe encore par Supabase Auth : le frontend accepte l'un
 des deux formats ci-dessous dans `.env.local`.

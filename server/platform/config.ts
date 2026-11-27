@@ -29,11 +29,34 @@ export interface DatabaseConfig {
   readonly poolMax: number;
 }
 
-/** Postgres connection: DATABASE_URL. */
+/**
+ * `sslmode=require` as libpq means it (encrypted, certificate not checked):
+ * node-postgres checks the certificate otherwise, and the Supabase pooler's
+ * is signed by Supabase's own CA.
+ */
+const withLibpqSslModes = (url: string): string => {
+  const parsed = new URL(url);
+  if (
+    parsed.searchParams.get('sslmode') === 'require' &&
+    !parsed.searchParams.has('uselibpqcompat')
+  ) {
+    parsed.searchParams.set('uselibpqcompat', 'true');
+  }
+  return parsed.toString();
+};
+
+/**
+ * Postgres connection: DATABASE_URL, else the pooled URL of the Vercel
+ * Supabase integration (SIMULATOR_POSTGRES_URL).
+ */
 export const readDatabaseConfig = (env: Env = process.env): DatabaseConfig => {
   const poolMax = Number(env.DATABASE_POOL_MAX ?? 10);
   if (!Number.isInteger(poolMax) || poolMax < 1) {
     throw new Error('DATABASE_POOL_MAX must be a positive integer');
   }
-  return { url: required(env, 'DATABASE_URL'), poolMax };
+  const url = required(
+    env,
+    env.DATABASE_URL ? 'DATABASE_URL' : 'SIMULATOR_POSTGRES_URL',
+  );
+  return { url: withLibpqSslModes(url), poolMax };
 };
