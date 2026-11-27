@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/Isilin/dreadcast_simulator/compare/v1.1.1...v1.1.2) (2026-11-27)
+
+
+### Bug Fixes
+
+* **server:** reject a non-postgres DATABASE_URL and time out connections ([#76](https://github.com/Isilin/dreadcast_simulator/issues/76)) ([d6bd2c1](https://github.com/Isilin/dreadcast_simulator/commit/d6bd2c17c59ba0b99eb90f6a8bdadf0608fb95b1))
+
 ## [1.1.1](https://github.com/Isilin/dreadcast_simulator/compare/v1.1.0...v1.1.1) (2026-11-27)
 
 
