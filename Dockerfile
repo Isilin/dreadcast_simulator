@@ -1,7 +1,10 @@
 # syntax=docker/dockerfile:1
-# The VITE_* build args are public values (the Supabase anon key is meant to
-# be shipped to browsers), not secrets.
 # check=skip=SecretsUsedInArgOrEnv
+
+# The check above is skipped because the VITE_* build args are public values
+# (the Supabase anon key is meant to be shipped to browsers), not secrets.
+# Parser directives must come first: BuildKit stops reading them at the first
+# ordinary comment or blank line.
 
 # Production image (forge, via Coolify): built by GitHub Actions, never on the
 # server. The final stage holds only the built front (dist/) and the bundled
