@@ -109,9 +109,7 @@ interface ImplantStore {
   replaceImplants: (state: ImplantsState) => void;
 }
 
-export const initialState: ImplantsState = {
-  /* ... */
-};
+export const initialState: ImplantsState = {/* ... */};
 
 export const useImplantStore = create<ImplantStore>((set) => ({
   implants: initialState,
@@ -259,15 +257,16 @@ serves the built front).
 server/
   app.ts              # createApp(deps): every router under /api, error handler; AppType
   deps.ts             # Deps: services behind the routes
-  live.ts             # makeLiveDeps(): production services (Supabase)
+  live.ts             # makeLiveDeps(): production services (Postgres, Supabase Auth)
   api.docs.ts         # /api/docs (Scalar) and /api/openapi.json
   node.ts             # Node server: API + static front (yarn dev:api, Docker)
-  platform/           # auth middlewares, errors, cache, validation, Supabase
+  platform/           # auth middlewares, errors, cache, validation, Supabase Auth
+  db/                 # Drizzle: schema.ts, client.ts (withAnon / withUser), migrations/
   feature/<name>/
     <name>.schema.ts          # zod payloads and DTOs (also read by the front, as types)
     <name>.routes.ts          # createRoute + handlers: orchestration only
     <name>.repo.ts            # repository interface, one method per query
-    <name>.repo.supabase.ts   # its Supabase implementation
+    <name>.repo.postgres.ts   # its Drizzle implementation (+ .test.ts on PGlite)
     <name>.rules.ts           # Pure functions (unit tested)
 ```
 
@@ -282,13 +281,24 @@ server/
   `invalidRequestAs(...)` in its middlewares (it runs before the validators)
 - Signed-in routes use `requireUser` and read `c.var.user`; guest-friendly
   ones use `optionalUser` (`c.var.maybeUser`). User-scoped repositories are
-  built per request: `deps.builds(c.var.user)` (a Supabase client under the
-  user session, so RLS applies)
+  built per request: `deps.builds(c.var.user)`
 - Cache: `publicCache` for reference data, `noStore` for user data
-- Validate loosely typed rows (RPC results, JSON columns) with
+- Database access: every query runs in `withAnon(db, tx => ...)` or
+  `withUser(db, user, tx => ...)`, a transaction under the `anon` /
+  `authenticated` role with the caller's claims, like PostgREST: row level
+  security and `auth.uid()` apply. Never query outside them
+- The schema keeps the JSON of the PostgREST era: `timestamptz()` columns read
+  as ISO strings with `+00:00`, numerics as numbers, SQL functions called
+  through `jsonRows(...)` (`to_jsonb` of each row)
+- Validate loosely typed rows (function results, JSON and text columns) with
   `decodeRows(schema)` instead of casting them
-- Regenerate `platform/database.gen.ts` (Supabase MCP
-  `generate_typescript_types`) after a schema migration
+- Schema changes: edit `db/schema.ts`, then `drizzle-kit generate` (SQL by
+  hand for policies and functions) in `db/migrations/`. Applied at startup by
+  the container with `DB_MIGRATE=1` (never against the Supabase database:
+  the migrator refuses a database without migration history)
+- Repository tests run on PGlite (Postgres in WASM, no Docker):
+  `makeTestDb()` of `db/testing/test-db.ts` migrates and seeds a fresh
+  database; CI also boots the image against a real Postgres 17
 - Tests: `server/testing/test-api.ts` (`makeTestApi`) runs the whole API over
   fake repositories with the real auth middlewares; `yarn api:diff <ref> <candidate>`
   compares two deployments

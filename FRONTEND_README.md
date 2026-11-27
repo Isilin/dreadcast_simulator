@@ -38,9 +38,16 @@ une erreur de service: verifier les variables Supabase du projet Vercel et les
 journaux de la fonction `api/server.ts`. L'interface reste utilisable pour les builds
 deja enregistres localement.
 
-### Variables d'environnement (auth Supabase)
+### Variables d'environnement
 
-Le frontend accepte l'un des deux formats ci-dessous dans `.env.local`.
+Le serveur (`yarn dev:api`, fonction Vercel, conteneur) lit la base Postgres
+dans `DATABASE_URL`, a defaut dans `SIMULATOR_POSTGRES_URL` (pooler injecte
+par l'integration Supabase de Vercel, recupere par `vercel env pull`). Jusqu'a
+la bascule vers forge, c'est la base de production. `sslmode=require` y est lu
+comme dans libpq (chiffre, certificat non verifie).
+
+L'authentification passe encore par Supabase Auth : le frontend accepte l'un
+des deux formats ci-dessous dans `.env.local`.
 
 ```bash
 # Format Vite

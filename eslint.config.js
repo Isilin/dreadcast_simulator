@@ -17,7 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default tseslint.config([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'dist-server']),
   reactRefresh.configs.recommended,
   ...queryPlugin.configs['flat/recommended'],
   {

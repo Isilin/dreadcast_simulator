@@ -1,13 +1,15 @@
-import type { SupabaseClient } from '@supabase/supabase-js';
 import { createMiddleware } from 'hono/factory';
 
-import type { Database } from './database.gen.js';
 import { unauthorized } from './http-errors.js';
 
-/** Signed-in caller, with a Supabase client acting under its session (RLS). */
+/**
+ * Signed-in caller. Its queries run under its identity (row level security,
+ * see server/db/client.ts).
+ */
 export interface User {
   readonly userId: string;
-  readonly supabase: SupabaseClient<Database>;
+  /** Account metadata set by admins (`role: 'admin'`), read by policies. */
+  readonly appMetadata: Readonly<Record<string, unknown>>;
 }
 
 /**

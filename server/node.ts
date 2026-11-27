@@ -5,7 +5,9 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 import { createApp } from './app.js';
+import { migrateDatabase } from './db/pool.js';
 import { makeLiveDeps } from './live.js';
+import { readDatabaseConfig } from './platform/config.js';
 
 /**
  * Node server of the container (forge): the API under /api plus the built
@@ -15,6 +17,21 @@ import { makeLiveDeps } from './live.js';
  */
 const PORT = Number(process.env.PORT ?? 3000);
 const STATIC_ROOT = process.env.STATIC_ROOT ?? './dist';
+
+// DB_MIGRATE=1 applies the pending migrations before serving: only on our own
+// Postgres (forge-pg). The Supabase database is refused by the migrator.
+if (process.env.DB_MIGRATE === '1') {
+  const applied = await migrateDatabase(
+    readDatabaseConfig().url,
+    process.env.MIGRATIONS_DIR ?? 'server/db/migrations',
+  );
+  // eslint-disable-next-line no-console -- server startup log
+  console.log(
+    applied.length > 0
+      ? `Migrations applied: ${applied.join(', ')}`
+      : 'Database up to date',
+  );
+}
 
 const IMMUTABLE = 'public, max-age=31536000, immutable';
 const REVALIDATE = 'no-cache';

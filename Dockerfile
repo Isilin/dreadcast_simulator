@@ -44,10 +44,13 @@ WORKDIR /app
 
 ENV NODE_ENV=production \
     PORT=3000 \
-    STATIC_ROOT=/app/dist
+    STATIC_ROOT=/app/dist \
+    MIGRATIONS_DIR=/app/migrations
 
 COPY --from=build --chown=node:node /app/dist ./dist
 COPY --from=build --chown=node:node /app/dist-server ./dist-server
+# Applied at startup when DB_MIGRATE=1 (server/node.ts).
+COPY --from=build --chown=node:node /app/server/db/migrations ./migrations
 
 USER node
 EXPOSE 3000

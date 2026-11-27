@@ -5,13 +5,13 @@ import { findBySlot, toBuildDto } from './build.rules.js';
 import { Build, SlotQuery, UpsertBuildPayload } from './build.schema.js';
 import type { AuthMiddlewares, User } from '../../platform/auth.js';
 import { noStore } from '../../platform/cache.js';
-import type { Json } from '../../platform/database.gen.js';
 import {
   badRequest,
   errorResponses,
   forbidden,
   notFound,
 } from '../../platform/http-errors.js';
+import type { Json } from '../../platform/json.js';
 import { invalidRequestAs } from '../../platform/request-validation.js';
 import {
   featureRouter,

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import type { Drug, Race } from './catalog.schema.js';
-import { DbError } from '../../platform/db-error.js';
+import { DbError, NO_ROWS } from '../../platform/db-error.js';
 import { makeTestApi } from '../../testing/test-api.js';
 
 const caducee: Drug = {
@@ -36,7 +36,7 @@ const request = makeTestApi({
     drug: (id) =>
       id === caducee.id
         ? Promise.resolve(caducee)
-        : Promise.reject(new DbError({ code: 'PGRST116', message: '0 rows' })),
+        : Promise.reject(new DbError({ code: NO_ROWS, message: '0 rows' })),
   },
 });
 

@@ -4,7 +4,7 @@
 
 This is a French-language character build simulator for Dreadcast, a browser-based cyberpunk RPG. Users create characters by selecting race/gender, equipping items, kits, implants, a drug and titles, with automatic stat calculation and prerequisite checks. Builds are saved locally for guests (1 build) or in the database for signed-in users (5 builds, unlimited with a subscription), and subscribers can publish them to the Community.
 
-**Tech Stack:** React 19 + TypeScript, Vite, TanStack Router, TanStack Query, Zustand, Base UI Components, CSS Modules, Hono + zod-openapi backend (`server/`: Vercel function `api/server.ts` in dev, Node container on forge in prod), Supabase
+**Tech Stack:** React 19 + TypeScript, Vite, TanStack Router, TanStack Query, Zustand, Base UI Components, CSS Modules, Hono + zod-openapi backend (`server/`: Vercel function `api/server.ts` in dev, Node container on forge in prod), Postgres via Drizzle (Supabase Auth until our own sessions)
 
 ## Architecture Pattern: Feature-Sliced Design
 
@@ -63,7 +63,7 @@ export const useImplantsActions = (): ImplantsActions =>
 - **Repository Pattern:** `*.repo.ts` files contain `fetchX()` functions calling the `/api` endpoints
 - **Typed client:** repos call `callApi` (`src/utils/api-client.ts`), a client derived from the server contract (`@server/api.contract`); responses are validated by the contract schemas, then mapped with `*.mapper.ts`
 - **TanStack Query:** Queries defined in `*.queries.ts` wrap repo functions
-- **API:** Hono in `server/` (schemas, routes, repos, rules per feature; see CODING_STANDARDS.md "Backend"), typed front client `hc<AppType>`, data in Supabase
+- **API:** Hono in `server/` (schemas, routes, repos, rules per feature; see CODING_STANDARDS.md "Backend"), typed front client `hc<AppType>`, data in Postgres through Drizzle (`server/db/`, `withAnon` / `withUser`)
 
 ## Domain Layer
 

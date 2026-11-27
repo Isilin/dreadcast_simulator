@@ -1,5 +1,5 @@
 import type { BuildRow } from './build.rules.js';
-import type { Json } from '../../platform/database.gen.js';
+import type { Json } from '../../platform/json.js';
 
 /** Builds of one user (row level security applies through their session). */
 export interface BuildRepo {

@@ -11,7 +11,6 @@ import type {
 import type { ProfileRepo } from '../feature/profile/profile.repo.js';
 import type { SubscriptionRepo } from '../feature/subscription/subscription.repo.js';
 import type { User } from '../platform/auth.js';
-import type { SupabaseClient } from '../platform/supabase.js';
 
 export const TEST_USER_ID = '11111111-1111-4111-8111-111111111111';
 export const VALID_TOKEN = 'valid-token';
@@ -22,7 +21,7 @@ const notFaked = (name: string) => () =>
 /** Only VALID_TOKEN is a session; the real auth middlewares run on top. */
 const resolveUser = async (accessToken: string): Promise<User | null> =>
   accessToken === VALID_TOKEN
-    ? { userId: TEST_USER_ID, supabase: {} as SupabaseClient }
+    ? { userId: TEST_USER_ID, appMetadata: {} }
     : null;
 
 const catalogStub: CatalogRepo = {

@@ -70,11 +70,12 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # No database here: the health check must report it (503), the rest
-      # must still be served.
-      - name: Smoke test
+      # Unreachable database: the health check must report it (503), the
+      # rest must still be served.
+      - name: Smoke test without database
         run: |
           docker run -d --name app -p 3000:3000 \
+            -e DATABASE_URL=postgres://ci:ci@127.0.0.1:9/ci \
             -e SIMULATOR_SUPABASE_URL=http://127.0.0.1:9 \
             -e SIMULATOR_SUPABASE_ANON_KEY=ci \
             dreadcast-simulator:ci
@@ -88,6 +89,47 @@ jobs:
           test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3000/api/health)" = 503
           test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3000/assets/missing.js)" = 404
 
+      # Real Postgres 17, provisioned like forge-pg (the application role is
+      # not a superuser): the container migrates it at startup, then serves.
+      - name: Smoke test with Postgres 17
+        run: |
+          docker network create ci
+          docker run -d --name pg --network ci -e POSTGRES_PASSWORD=ci postgres:17-alpine
+          for _ in $(seq 1 30); do
+            docker exec pg pg_isready -U postgres -q && break
+            sleep 1
+          done
+          # One -c per statement: CREATE DATABASE cannot run in the implicit
+          # transaction of a multi-statement -c.
+          docker exec pg psql -U postgres -v ON_ERROR_STOP=1 \
+            -c "CREATE ROLE dc_app LOGIN PASSWORD 'ci'" \
+            -c "CREATE ROLE anon NOLOGIN NOINHERIT" \
+            -c "CREATE ROLE authenticated NOLOGIN NOINHERIT" \
+            -c "GRANT anon, authenticated TO dc_app" \
+            -c "CREATE DATABASE dc_simulateur OWNER dc_app"
+          docker run -d --name app-pg --network ci -p 3001:3000 \
+            -e DATABASE_URL=postgres://dc_app:ci@pg:5432/dc_simulateur \
+            -e DB_MIGRATE=1 \
+            -e SIMULATOR_SUPABASE_URL=http://127.0.0.1:9 \
+            -e SIMULATOR_SUPABASE_ANON_KEY=ci \
+            dreadcast-simulator:ci
+          for _ in $(seq 1 30); do
+            curl -sf -o /dev/null http://127.0.0.1:3001/api/health && break
+            sleep 1
+          done
+          curl -sf http://127.0.0.1:3001/api/health | grep -q '"ok"'
+          test "$(curl -sf http://127.0.0.1:3001/api/items)" = '[]'
+          curl -sf http://127.0.0.1:3001/api/community/meta | grep -q '"current_version":"v15"'
+          # Restart: nothing left to apply.
+          docker restart app-pg
+          for _ in $(seq 1 30); do
+            curl -sf -o /dev/null http://127.0.0.1:3001/api/health && break
+            sleep 1
+          done
+          docker logs app-pg 2>&1 | grep -q 'Database up to date'
+
       - name: Container logs
         if: always()
-        run: docker logs app || true
+        run: |
+          docker logs app || true
+          docker logs app-pg || true
