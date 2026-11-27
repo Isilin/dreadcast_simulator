@@ -80,6 +80,7 @@ jobs:
     permissions: {}
     steps:
       # Coolify's app runs the :latest image: a deploy pulls it again.
+      # Since Coolify 4.7, /deploy only accepts POST (GET answers 405).
       - name: Trigger the Coolify deployment
         env:
           COOLIFY_URL: ${{ secrets.COOLIFY_URL }}
@@ -90,6 +91,6 @@ jobs:
             echo "::warning::Coolify secrets are not set: image pushed, nothing deployed."
             exit 0
           fi
-          curl --fail-with-body --silent --show-error \
+          curl --fail-with-body --silent --show-error --request POST \
             --header "Authorization: Bearer $COOLIFY_TOKEN" \
             "$COOLIFY_URL/api/v1/deploy?uuid=$COOLIFY_APP_UUID"
