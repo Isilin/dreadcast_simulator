@@ -217,11 +217,9 @@ import { StatusCounterBadge } from '@/ui';
 ### Repository Pattern (Required)
 
 ```typescript
-// ✅ Correct repository implementation: typed client derived from the API
-// contract, loaded lazily (Effect stays out of the initial bundle)
+// ✅ Correct repository implementation: typed client of the API (Hono RPC)
 export const fetchItems = async (signal?: AbortSignal): Promise<Item[]> => {
-  const { callApi } = await import('@/utils/api-client');
-  const items = await callApi((client) => client.catalog.items(), {
+  const items = await callApi((client) => client.api.items.$get(), {
     signal,
     ErrorClass: ItemRepositoryError,
     failed: {
@@ -240,53 +238,53 @@ export const fetchItems = async (signal?: AbortSignal): Promise<Item[]> => {
 
 ### API Data
 
-- `/api` is called through `callApi` (`src/utils/api-client.ts`): requests and
-  responses are encoded and validated with the server contract schemas, and
-  failures become the feature's `RepositoryError` (API `{ error, code }` kept
-  with `apiMessage`)
-- Signed-in calls pass `accessToken` (`getAccessToken` from `@/feature/auth`);
-  calls sending user input pass `request` so a request the contract rejects
-  gets the same error as the server
-- Import from `@server/...` only types in eagerly loaded front code; runtime
-  imports (Effect) go through a dynamic `import()`
-- DTOs (contract types) are mapped to domain models in `*.mapper.ts`
+- `/api` is called through `callApi` (`src/utils/api-client.ts`), a
+  `hc<AppType>` client: paths, parameters, bodies and responses are typed from
+  the server routes, with no code generation. Failures become the feature's
+  `RepositoryError` (API `{ error, code }` kept with `apiMessage`)
+- Signed-in calls pass `accessToken` (`getAccessToken` from `@/feature/auth`)
+- Import from `@server/...` only types (`import type`): zod and the server
+  code never reach the browser
+- DTOs (route schema types) are mapped to domain models in `*.mapper.ts`
 - The API itself lives in `server/` (see Backend below)
 
 ### Backend (`server/`) (Required)
 
-The API is an Effect v4 `HttpApi` served by a single Vercel function
-(`api/server.ts`; `vercel.json` rewrites every `/api/*` route to it).
+The API is a Hono app (`@hono/zod-openapi`) with two entry points: the Vercel
+function `api/server.ts` (dev; `vercel.json` rewrites every `/api/*` route to
+it) and the Node server `server/node.ts` (prod container on forge, which also
+serves the built front).
 
 ```typescript
 server/
-  api.contract.ts     # HttpApi: every group, prefix /api
-  api.layer.ts        # handlers + services -> ApiLive; makeApiLayer(fakes) in tests
+  app.ts              # createApp(deps): every router under /api, error handler; AppType
+  deps.ts             # Deps: services behind the routes
+  live.ts             # makeLiveDeps(): production services (Supabase)
   api.docs.ts         # /api/docs (Scalar) and /api/openapi.json
-  web-handler.ts      # (Request) => Promise<Response>, used by api/server.ts
-  main.ts             # local server (yarn dev:api)
-  platform/           # Supabase, auth middlewares, errors, cache, validation
+  node.ts             # Node server: API + static front (yarn dev:api, Docker)
+  platform/           # auth middlewares, errors, cache, validation, Supabase
   feature/<name>/
-    <name>.contract.ts  # HttpApiGroup: endpoints, schemas, errors, middlewares
-    <name>.schema.ts    # Effect Schema payloads and DTOs
-    <name>.handlers.ts  # HttpApiBuilder.group: orchestration only
-    <name>.repo.ts      # Context.Service over Supabase, one method per query
-    <name>.rules.ts     # Pure functions (unit tested)
+    <name>.schema.ts          # zod payloads and DTOs (also read by the front, as types)
+    <name>.routes.ts          # createRoute + handlers: orchestration only
+    <name>.repo.ts            # repository interface, one method per query
+    <name>.repo.supabase.ts   # its Supabase implementation
+    <name>.rules.ts           # Pure functions (unit tested)
 ```
 
-- `*.contract.ts` and `*.schema.ts` import only `effect` (and other
-  contracts/schemas): the front can derive a typed client from `DreadcastApi`
-- Import `effect/unstable/httpapi/<Module>` and `@effect/platform-node/<Module>`,
-  never their barrels (enforced by ESLint)
-- Errors: the classes of `platform/http-errors.ts` (wire body
-  `{ error, code? }`); database failures go through `toInternalError` or
-  `toCommunityError`, request decoding failures through the `InvalidRequest`
-  endpoint annotation
-- Signed-in endpoints use the `Authentication` middleware and read
-  `CurrentUser` (a Supabase client under the user session, so RLS applies);
-  guest-friendly ones use `OptionalAuthentication`
-- Cache: `PublicCache` for reference data, `NoStore` for user data
-- Supabase clients are created per request (`Supabase.anon()`, `forUser()`):
-  never share one between requests
+- Routes are chained (`featureRouter().openapi(...).openapi(...)`) so that
+  `AppType` carries every route for the typed client
+- `app.ts`, routes, schemas and repository interfaces must not import Node
+  APIs or implementations: the front type-checks them through `AppType`
+- Errors: throw the helpers of `platform/http-errors.ts` (wire body
+  `{ error, code? }`); a `DbError` left uncaught is a 500 with its message,
+  `mapDbError(promise, toCommunityError)` translates it otherwise
+- Request validation failures: the generic 400, or the route's own error with
+  `invalidRequestAs(...)` in its middlewares (it runs before the validators)
+- Signed-in routes use `requireUser` and read `c.var.user`; guest-friendly
+  ones use `optionalUser` (`c.var.maybeUser`). User-scoped repositories are
+  built per request: `deps.builds(c.var.user)` (a Supabase client under the
+  user session, so RLS applies)
+- Cache: `publicCache` for reference data, `noStore` for user data
 - Validate loosely typed rows (RPC results, JSON columns) with
   `decodeRows(schema)` instead of casting them
 - Regenerate `platform/database.gen.ts` (Supabase MCP
@@ -295,6 +293,8 @@ server/
   fake repositories with the real auth middlewares; `yarn api:diff <ref> <candidate>`
   compares two deployments
 - API reference: `/api/docs` (OpenAPI document at `/api/openapi.json`)
+- Production image: `Dockerfile` (built by GitHub Actions, `deploy-prod.yml`);
+  `yarn build:server` bundles `server/node.ts` into `dist-server/index.js`
 
 ### TanStack Query Integration
 
@@ -329,7 +329,7 @@ server/
 ### Type Safety
 
 - Use type guards for runtime type checking
-- Validate external data with Effect Schema (contract schemas for the API)
+- Validate external data at the boundary (zod route schemas on the server)
 - Handle async errors in effects and event handlers
 - Provide user-friendly error messages in French
 
@@ -404,6 +404,7 @@ server/
 # Required commands
 yarn dev          # Start development server (/api proxied to production)
 yarn dev:api      # Local API on :3001 (API_PROXY_TARGET=http://localhost:3001 yarn dev)
+yarn build:server # Bundle the Node server (dist-server/, used by the Docker image)
 yarn build        # TypeScript check + build
 yarn test         # Vitest unit tests
 yarn lint         # ESLint check

@@ -1,26 +1,27 @@
-import { Effect } from 'effect';
-import { HttpRouter, HttpServerResponse } from 'effect/unstable/http';
-import * as OpenApi from 'effect/unstable/httpapi/OpenApi';
+import type { OpenAPIHono } from '@hono/zod-openapi';
 
-import { DreadcastApi } from './api.contract.js';
-
-/** OpenAPI document generated from the contract (HttpApiBuilder.layer). */
+/** OpenAPI document generated from the route schemas. */
 export const OPENAPI_PATH = '/api/openapi.json';
 
 const DOCS_PATH = '/api/docs';
 
+const DOCUMENT_CONFIG = {
+  openapi: '3.1.0',
+  info: { title: 'Dreadcast Simulator API', version: '1' },
+};
+
 /**
- * Scalar loaded from jsDelivr: the copy bundled in HttpApiScalar weighs 3 MB
- * and would be loaded on every cold start of the function.
+ * Scalar loaded from jsDelivr rather than bundled (it weighs 3 MB and would
+ * be loaded on every cold start of the Vercel function).
  */
 const SCALAR_URL =
-  'https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.72.1/dist/browser/standalone.min.js';
+  'https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.85.0/dist/browser/standalone.min.js';
 
 /** JSON safe to inline in a <script> element. */
 const toInlineJson = (value: unknown) =>
   JSON.stringify(value).replace(/</g, '\\u003c');
 
-const renderDocs = () => `<!doctype html>
+const renderDocs = (document: unknown) => `<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
@@ -33,18 +34,21 @@ const renderDocs = () => `<!doctype html>
     <script>
       Scalar.createApiReference(document.getElementById('api-reference'), {
         _integration: 'html',
-        content: ${toInlineJson(OpenApi.fromApi(DreadcastApi))},
+        content: ${toInlineJson(document)},
       });
     </script>
   </body>
 </html>`;
 
-/** API reference page: GET /api/docs (rendered once, on first request). */
-export const DocsLive = HttpRouter.use((router) => {
+/**
+ * GET /api/openapi.json and the API reference page GET /api/docs (rendered
+ * once, on first request).
+ */
+export const registerDocs = (app: OpenAPIHono) => {
+  app.doc31(OPENAPI_PATH, DOCUMENT_CONFIG);
+
   let html: string | undefined;
-  return router.add(
-    'GET',
-    DOCS_PATH,
-    Effect.sync(() => HttpServerResponse.html((html ??= renderDocs()))),
+  app.get(DOCS_PATH, (c) =>
+    c.html((html ??= renderDocs(app.getOpenAPI31Document(DOCUMENT_CONFIG)))),
   );
-});
+};

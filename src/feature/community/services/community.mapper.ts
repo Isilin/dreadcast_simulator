@@ -99,7 +99,7 @@ export const toMyPublicationDomain = (
   frozen: dto.frozen,
 });
 
-export const toMetaDomain = (dto: typeof MetaResponse.Type): CommunityMeta => ({
+export const toMetaDomain = (dto: MetaResponse): CommunityMeta => ({
   currentVersion: dto.current_version,
   versions: dto.versions.map((version) => ({
     code: version.code,

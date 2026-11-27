@@ -10,8 +10,7 @@ import type {
 } from '../model';
 
 import { getAccessToken as getSessionToken } from '@/feature/auth';
-
-const loadApi = () => import('@/utils/api-client');
+import { callApi } from '@/utils/api-client';
 
 const getAccessToken = (): Promise<string> =>
   getSessionToken(
@@ -27,9 +26,8 @@ export const fetchSubscriptions = async (
   signal?: AbortSignal,
 ): Promise<SubscriptionRecord[]> => {
   const accessToken = await getAccessToken();
-  const { callApi } = await loadApi();
   const subscriptions = await callApi(
-    (client) => client.subscriptions.listMine(),
+    (client) => client.api.subscriptions.$get(),
     {
       signal,
       accessToken,
@@ -52,20 +50,22 @@ export const fetchSubscriptionPlans = async (
   signal?: AbortSignal,
 ): Promise<SubscriptionPlan[]> => {
   const accessToken = await getAccessToken();
-  const { callApi } = await loadApi();
-  const plans = await callApi((client) => client.subscriptions.plans(), {
-    signal,
-    accessToken,
-    ErrorClass: SubscriptionRepositoryError,
-    failed: {
-      code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.FETCH_SUBSCRIPTION_PLANS_FAILED,
-      message: 'Impossible de recuperer les plans abonnement.',
+  const plans = await callApi(
+    (client) => client.api['subscription-plans'].$get(),
+    {
+      signal,
+      accessToken,
+      ErrorClass: SubscriptionRepositoryError,
+      failed: {
+        code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.FETCH_SUBSCRIPTION_PLANS_FAILED,
+        message: 'Impossible de recuperer les plans abonnement.',
+      },
+      invalid: {
+        code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.INVALID_SUBSCRIPTION_PLANS_PAYLOAD,
+        message: 'Le format des plans abonnement recus est invalide.',
+      },
     },
-    invalid: {
-      code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.INVALID_SUBSCRIPTION_PLANS_PAYLOAD,
-      message: 'Le format des plans abonnement recus est invalide.',
-    },
-  });
+  );
 
   return plans.map(toPlanDomain);
 };
@@ -74,9 +74,8 @@ export const createSubscription = async (
   planCode: SubscriptionPlanCode,
 ): Promise<SubscriptionRecord> => {
   const accessToken = await getAccessToken();
-  const { callApi } = await loadApi();
   const subscription = await callApi(
-    (client) => client.subscriptions.create({ payload: { planCode } }),
+    (client) => client.api.subscriptions.$post({ json: { planCode } }),
     {
       accessToken,
       ErrorClass: SubscriptionRepositoryError,
@@ -89,7 +88,6 @@ export const createSubscription = async (
         message: 'Le format de l abonnement recu est invalide.',
       },
       apiMessage: true,
-      request: { group: 'subscriptions', endpoint: 'create', part: 'Payload' },
     },
   );
 

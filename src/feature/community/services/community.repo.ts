@@ -1,5 +1,3 @@
-import type { Effect } from 'effect';
-
 import {
   COMMUNITY_REPOSITORY_ERROR_CODE,
   CommunityRepositoryError,
@@ -12,6 +10,7 @@ import {
   toReviewDomain,
   toSummaryDomain,
 } from './community.mapper';
+import { decodeDetailSnapshot } from './community.snapshot';
 import {
   filtersToSearchQuery,
   type CommunityBuildDetailData,
@@ -32,22 +31,19 @@ import {
   getAccessToken as getSessionToken,
   getOptionalAccessToken,
 } from '@/feature/auth';
-import type { ApiCallOptions, ApiClient } from '@/utils/api-client';
-
-// Effect is loaded with the first call (see src/utils/api-client.ts).
-const loadApi = () => import('@/utils/api-client');
-const loadSnapshot = () => import('./community.snapshot');
-
-type Request = NonNullable<ApiCallOptions['request']>;
+import { callApi, type ApiClient, type SuccessBody } from '@/utils/api-client';
 
 interface CallOptions {
   signal?: AbortSignal;
   fallbackMessage: string;
   /** Sends the request without a session instead of failing. */
   allowGuest?: boolean;
-  /** Part of the request built from user input (validated by the client). */
-  request?: Omit<Request, 'group'>;
 }
+
+const INVALID_RESPONSE = {
+  code: COMMUNITY_REPOSITORY_ERROR_CODE.INVALID_PAYLOAD,
+  message: 'La réponse de la Communauté est invalide.',
+};
 
 const getAccessToken = (): Promise<string> =>
   getSessionToken(
@@ -60,14 +56,15 @@ const getAccessToken = (): Promise<string> =>
   );
 
 /** One Community call: API errors keep their `{ error, code }`. */
-const call = async <A, E>(
-  run: (client: ApiClient) => Effect.Effect<A, E>,
-  { signal, fallbackMessage, allowGuest, request }: CallOptions,
-): Promise<A> => {
+const call = async <
+  R extends Awaited<ReturnType<Parameters<typeof callApi>[0]>>,
+>(
+  run: (client: ApiClient) => Promise<R>,
+  { signal, fallbackMessage, allowGuest }: CallOptions,
+): Promise<SuccessBody<R>> => {
   const accessToken = allowGuest
     ? await getOptionalAccessToken()
     : await getAccessToken();
-  const { callApi } = await loadApi();
 
   return callApi(run, {
     signal,
@@ -77,22 +74,18 @@ const call = async <A, E>(
       code: COMMUNITY_REPOSITORY_ERROR_CODE.REQUEST_FAILED,
       message: fallbackMessage,
     },
-    invalid: {
-      code: COMMUNITY_REPOSITORY_ERROR_CODE.INVALID_PAYLOAD,
-      message: 'La réponse de la Communauté est invalide.',
-    },
+    invalid: INVALID_RESPONSE,
     apiMessage: true,
-    request: request && { group: 'community', ...request },
   });
 };
 
-const byId = (id: string) => ({ params: { id } });
+const byId = (id: string) => ({ param: { id } });
 
 export const fetchCommunityMeta = async (
   signal?: AbortSignal,
 ): Promise<CommunityMeta> =>
   toMetaDomain(
-    await call((client: ApiClient) => client.community.meta(), {
+    await call((client: ApiClient) => client.api.community.meta.$get(), {
       signal,
       allowGuest: true,
       fallbackMessage: 'Impossible de récupérer les versions du jeu.',
@@ -105,11 +98,12 @@ export const searchCommunityBuilds = async (
 ): Promise<CommunitySearchResult> => {
   const result = await call(
     (client: ApiClient) =>
-      client.community.search({ query: filtersToSearchQuery(filters) }),
+      client.api.community.builds.$get({
+        query: filtersToSearchQuery(filters),
+      }),
     {
       signal,
       fallbackMessage: 'Impossible de récupérer les builds de la Communauté.',
-      request: { endpoint: 'search', part: 'Query' },
     },
   );
 
@@ -125,19 +119,19 @@ export const fetchCommunityBuild = async (
   id: string,
   signal?: AbortSignal,
 ): Promise<CommunityBuildDetailData> => {
-  const { withDecodedSnapshot } = await loadSnapshot();
-
-  const detail = await call(
-    (client: ApiClient) =>
-      withDecodedSnapshot(client.community.detail(byId(id))),
+  const dto = await call(
+    (client: ApiClient) => client.api.community.builds[':id'].$get(byId(id)),
     {
       signal,
       allowGuest: true,
       fallbackMessage: 'Impossible de récupérer ce build.',
-      request: { endpoint: 'detail', part: 'Params' },
     },
   );
 
+  const detail = decodeDetailSnapshot(dto);
+  if (!detail) {
+    throw new CommunityRepositoryError({ ...INVALID_RESPONSE });
+  }
   return toDetailDomain(detail);
 };
 
@@ -145,7 +139,7 @@ export const fetchMyPublications = async (
   signal?: AbortSignal,
 ): Promise<MyPublication[]> => {
   const publications = await call(
-    (client: ApiClient) => client.community.mine(),
+    (client: ApiClient) => client.api.community.me.$get(),
     {
       signal,
       fallbackMessage: 'Impossible de récupérer vos publications.',
@@ -160,8 +154,8 @@ export const publishCommunityBuild = async (
 ): Promise<string> => {
   const { id } = await call(
     (client: ApiClient) =>
-      client.community.publish({
-        payload: {
+      client.api.community.builds.$post({
+        json: {
           slot: Number(payload.slot),
           title: payload.title,
           description: payload.description,
@@ -172,7 +166,6 @@ export const publishCommunityBuild = async (
       }),
     {
       fallbackMessage: 'Impossible de publier ce build.',
-      request: { endpoint: 'publish', part: 'Payload' },
     },
   );
 
@@ -185,9 +178,9 @@ export const updateCommunityPublication = async (
 ): Promise<void> => {
   await call(
     (client: ApiClient) =>
-      client.community.update({
+      client.api.community.builds[':id'].$put({
         ...byId(id),
-        payload: {
+        json: {
           title: payload.title,
           description: payload.description,
           specialization: payload.specialization,
@@ -198,24 +191,25 @@ export const updateCommunityPublication = async (
       }),
     {
       fallbackMessage: 'Impossible de mettre à jour la publication.',
-      request: { endpoint: 'update', part: 'Payload' },
     },
   );
 };
 
 export const unpublishCommunityBuild = async (id: string): Promise<void> => {
-  await call((client: ApiClient) => client.community.unpublish(byId(id)), {
-    fallbackMessage: 'Impossible de dépublier ce build.',
-    request: { endpoint: 'unpublish', part: 'Params' },
-  });
+  await call(
+    (client: ApiClient) => client.api.community.builds[':id'].$delete(byId(id)),
+    {
+      fallbackMessage: 'Impossible de dépublier ce build.',
+    },
+  );
 };
 
 export const copyCommunityBuild = async (id: string): Promise<number> => {
   const { slot } = await call(
-    (client: ApiClient) => client.community.copy(byId(id)),
+    (client: ApiClient) =>
+      client.api.community.builds[':id'].copy.$post(byId(id)),
     {
       fallbackMessage: 'Impossible de copier ce build.',
-      request: { endpoint: 'copy', part: 'Params' },
     },
   );
 
@@ -229,11 +223,13 @@ export const fetchCommunityReviews = async (
 ): Promise<CommunityReviewsPage> => {
   const result = await call(
     (client: ApiClient) =>
-      client.community.reviews({ ...byId(id), query: { page: String(page) } }),
+      client.api.community.builds[':id'].reviews.$get({
+        ...byId(id),
+        query: { page: String(page) },
+      }),
     {
       signal,
       fallbackMessage: 'Impossible de récupérer les avis.',
-      request: { endpoint: 'reviews', part: 'Params' },
     },
   );
 
@@ -252,19 +248,24 @@ export const saveCommunityReview = async (
   toReviewDomain(
     await call(
       (client: ApiClient) =>
-        client.community.saveReview({ ...byId(id), payload: review }),
+        client.api.community.builds[':id'].review.$put({
+          ...byId(id),
+          json: review,
+        }),
       {
         fallbackMessage: "Impossible d'enregistrer votre avis.",
-        request: { endpoint: 'saveReview', part: 'Payload' },
       },
     ),
   );
 
 export const deleteCommunityReview = async (id: string): Promise<void> => {
-  await call((client: ApiClient) => client.community.deleteReview(byId(id)), {
-    fallbackMessage: 'Impossible de supprimer votre avis.',
-    request: { endpoint: 'deleteReview', part: 'Params' },
-  });
+  await call(
+    (client: ApiClient) =>
+      client.api.community.builds[':id'].review.$delete(byId(id)),
+    {
+      fallbackMessage: 'Impossible de supprimer votre avis.',
+    },
+  );
 };
 
 export const setCommunityFavorite = async (
@@ -274,14 +275,10 @@ export const setCommunityFavorite = async (
   const result = await call(
     (client: ApiClient) =>
       isFavorite
-        ? client.community.addFavorite(byId(id))
-        : client.community.removeFavorite(byId(id)),
+        ? client.api.community.builds[':id'].favorite.$put(byId(id))
+        : client.api.community.builds[':id'].favorite.$delete(byId(id)),
     {
       fallbackMessage: 'Impossible de mettre à jour vos favoris.',
-      request: {
-        endpoint: isFavorite ? 'addFavorite' : 'removeFavorite',
-        part: 'Params',
-      },
     },
   );
 
@@ -294,11 +291,11 @@ export const fetchSimilarBuilds = async (
 ): Promise<CommunityRecommendations> =>
   toRecommendationsDomain(
     await call(
-      (client: ApiClient) => client.community.similar({ payload: { stats } }),
+      (client: ApiClient) =>
+        client.api.community.similar.$post({ json: { stats } }),
       {
         signal,
         fallbackMessage: 'Impossible de trouver des builds proches.',
-        request: { endpoint: 'similar', part: 'Payload' },
       },
     ),
   );
@@ -307,7 +304,7 @@ export const fetchForYou = async (
   signal?: AbortSignal,
 ): Promise<CommunityRecommendations> =>
   toRecommendationsDomain(
-    await call((client: ApiClient) => client.community.forYou(), {
+    await call((client: ApiClient) => client.api.community['for-you'].$get(), {
       signal,
       fallbackMessage: 'Impossible de récupérer vos recommandations.',
     }),

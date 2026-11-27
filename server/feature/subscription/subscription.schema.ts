@@ -1,35 +1,37 @@
-import { Schema } from 'effect';
+import { z } from '@hono/zod-openapi';
 
-const PriceCents = Schema.Int.check(Schema.isGreaterThanOrEqualTo(1));
+const PriceCents = z.number().int().min(1);
 
-export const SubscriptionPlan = Schema.Struct({
-  code: Schema.String.check(Schema.isMinLength(1)),
-  label: Schema.String.check(Schema.isMinLength(1)),
-  duration_ingame_years: Schema.NullOr(
-    Schema.Int.check(Schema.isGreaterThanOrEqualTo(1)),
-  ),
-  price_cents: PriceCents,
-  sort_order: Schema.Int.check(Schema.isGreaterThanOrEqualTo(0)),
+export const SubscriptionPlan = z
+  .object({
+    code: z.string().min(1),
+    label: z.string().min(1),
+    duration_ingame_years: z.number().int().min(1).nullable(),
+    price_cents: PriceCents,
+    sort_order: z.number().int().min(0),
+  })
+  .openapi('SubscriptionPlan');
+
+export const Subscription = z
+  .object({
+    id: z.string(),
+    user_id: z.string(),
+    plan_code: z.string(),
+    plan_name: z.string(),
+    price_cents: PriceCents,
+    starts_at: z.string(),
+    ends_at: z.string(),
+    /** 'pending' until an admin validates it. */
+    status: z.enum(['pending', 'validated']),
+    validated_at: z.string().nullable(),
+    validated_by: z.string().nullable(),
+    created_at: z.string().nullable(),
+  })
+  .openapi('Subscription');
+
+export const CreateSubscriptionPayload = z.object({
+  planCode: z.string().min(1),
 });
 
-export const Subscription = Schema.Struct({
-  id: Schema.String,
-  user_id: Schema.String,
-  plan_code: Schema.String,
-  plan_name: Schema.String,
-  price_cents: PriceCents,
-  starts_at: Schema.String,
-  ends_at: Schema.String,
-  /** 'pending' until an admin validates it. */
-  status: Schema.Literals(['pending', 'validated']),
-  validated_at: Schema.NullOr(Schema.String),
-  validated_by: Schema.NullOr(Schema.String),
-  created_at: Schema.NullOr(Schema.String),
-});
-
-export const CreateSubscriptionPayload = Schema.Struct({
-  planCode: Schema.String.check(Schema.isMinLength(1)),
-});
-
-export type SubscriptionPlan = typeof SubscriptionPlan.Type;
-export type Subscription = typeof Subscription.Type;
+export type SubscriptionPlan = z.infer<typeof SubscriptionPlan>;
+export type Subscription = z.infer<typeof Subscription>;

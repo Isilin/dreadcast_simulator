@@ -2,9 +2,10 @@ import { ITEM_REPOSITORY_ERROR_CODE, ItemRepositoryError } from './item.errors';
 import { toDomain } from './item.mapper';
 import type { Item } from '../model/item.types';
 
+import { callApi } from '@/utils/api-client';
+
 export const fetchItems = async (signal?: AbortSignal): Promise<Item[]> => {
-  const { callApi } = await import('@/utils/api-client');
-  const items = await callApi((client) => client.catalog.items(), {
+  const items = await callApi((client) => client.api.items.$get(), {
     signal,
     ErrorClass: ItemRepositoryError,
     failed: {

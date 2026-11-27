@@ -2,8 +2,8 @@
 
 Le frontend est une application React 19 + TypeScript construite avec Vite,
 TanStack Router, TanStack Query et Zustand. Les donnees passent par une API
-Effect (`server/`, servie par une seule fonction Vercel `api/server.ts`)
-adossee a Supabase. Le code suit une organisation feature-sliced: chaque fonctionnalite
+Hono (`server/`: fonction Vercel `api/server.ts` en dev, conteneur Node sur
+forge en prod) adossee a Supabase. Le code suit une organisation feature-sliced: chaque fonctionnalite
 garde ses regles, ses donnees et son UI dans une frontiere explicite.
 
 Les conventions de code sont dans [CODING_STANDARDS.md](CODING_STANDARDS.md).
@@ -171,9 +171,10 @@ points d'entree (`PublishBuildButton`, `SimilarBuildsButton`) en lazy depuis
 - `model/` porte les regles pures: detection de specialisation, filtres
   (URL, requete API), calcul des stats d'un snapshot sans store
   (`computeSnapshotStats` via `computeSuitStats`), payloads et comparaison.
-- `services/` appelle l'API par le client type (`callApi`), qui valide les
-  reponses avec les schemas du contrat; les snapshots publies (donnees non
-  fiables) sont normalises en `BuildSnapshot` avec Effect Schema.
+- `services/` appelle l'API par le client type (`callApi`, `hc<AppType>`):
+  chemins, parametres et reponses sont types depuis les routes du serveur; les
+  snapshots publies (donnees non fiables) sont valides puis normalises en
+  `BuildSnapshot` (`community.snapshot.ts`).
 - Les fiches et comparaisons rendent un build a partir de props: les stores
   de l'atelier ne sont jamais ecrases par un build consulte.
 - Les regles d'acces (abonne, auteur, pseudo) sont appliquees en base par RLS

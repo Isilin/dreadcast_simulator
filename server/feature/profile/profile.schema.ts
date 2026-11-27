@@ -1,12 +1,14 @@
-import { Schema } from 'effect';
+import { z } from '@hono/zod-openapi';
 
 import { isPseudoValid } from './profile.rules.js';
 
-export const Profile = Schema.Struct({
-  /** null until the user picks one (definitive). */
-  pseudo: Schema.NullOr(Schema.String),
-});
+export const Profile = z
+  .object({
+    /** null until the user picks one (definitive). */
+    pseudo: z.string().nullable(),
+  })
+  .openapi('Profile');
 
-export const PseudoPayload = Schema.Struct({
-  pseudo: Schema.Trim.check(Schema.makeFilter(isPseudoValid)),
+export const PseudoPayload = z.object({
+  pseudo: z.string().trim().refine(isPseudoValid),
 });

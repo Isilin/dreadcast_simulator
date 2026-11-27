@@ -1,12 +1,5 @@
 import { toInternalError, type DbError } from '../../platform/db-error.js';
-import {
-  BadRequest,
-  Conflict,
-  Forbidden,
-  NotFound,
-  Unauthorized,
-  Unprocessable,
-} from '../../platform/http-errors.js';
+import { HttpError } from '../../platform/http-errors.js';
 
 /**
  * Codes raised by the community RPCs (029) plus a few API-level ones. The
@@ -73,34 +66,10 @@ export const COMMUNITY_ERRORS = {
 
 export type CommunityErrorCode = keyof typeof COMMUNITY_ERRORS;
 
-interface ErrorByStatus {
-  400: BadRequest;
-  401: Unauthorized;
-  403: Forbidden;
-  404: NotFound;
-  409: Conflict;
-  422: Unprocessable;
-}
-
-export type CommunityError<C extends CommunityErrorCode> =
-  ErrorByStatus[(typeof COMMUNITY_ERRORS)[C]['status']];
-
-const ERROR_CLASS_BY_STATUS = {
-  400: BadRequest,
-  401: Unauthorized,
-  403: Forbidden,
-  404: NotFound,
-  409: Conflict,
-  422: Unprocessable,
-} as const;
-
 /** `{ error: <message>, code }` with the status of the code. */
-export const communityError = <C extends CommunityErrorCode>(
-  code: C,
-): CommunityError<C> => {
+export const communityError = (code: CommunityErrorCode): HttpError => {
   const { status, message } = COMMUNITY_ERRORS[code];
-  const ErrorClass = ERROR_CLASS_BY_STATUS[status];
-  return new ErrorClass({ error: message, code }) as CommunityError<C>;
+  return new HttpError(status, message, code);
 };
 
 export const isCommunityErrorCode = (
@@ -111,7 +80,7 @@ export const isCommunityErrorCode = (
  * Failure of a community RPC or query: the RPCs raise the error codes as
  * messages; row level security refusals become FORBIDDEN.
  */
-export const toCommunityError = (error: DbError) => {
+export const toCommunityError = (error: DbError): HttpError => {
   if (isCommunityErrorCode(error.message)) {
     return communityError(error.message);
   }

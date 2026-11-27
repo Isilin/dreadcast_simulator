@@ -1,4 +1,4 @@
-import { Effect, Schema, SchemaTransformation } from 'effect';
+import { z } from '@hono/zod-openapi';
 
 import {
   ItemType,
@@ -51,10 +51,10 @@ const SEARCH_PAGE_SIZE_DEFAULT = 24;
 const SEARCH_PAGE_SIZE_MAX = 48;
 const CSV_MAX_ENTRIES = 30;
 
-export const Specialization = Schema.Literals(SPECIALIZATION_CODES);
-export type SpecializationCode = typeof Specialization.Type;
+export const Specialization = z.enum(SPECIALIZATION_CODES);
+export type SpecializationCode = z.infer<typeof Specialization>;
 
-const Gender = Schema.Literals(['male', 'female']);
+const Gender = z.enum(['male', 'female']);
 
 // ---------------------------------------------------------------------------
 // Payloads
@@ -64,33 +64,23 @@ const isStatKey = (key: string) =>
   (STAT_KEYS as ReadonlyArray<string>).includes(key);
 
 /** Every stat of STAT_KEYS, and nothing else. */
-export const Stats = Schema.Record(
-  Schema.String,
-  Schema.Finite.check(
-    Schema.isBetween({ minimum: STAT_MIN, maximum: STAT_MAX }),
-  ),
-).check(
-  Schema.makeFilter(
+export const Stats = z
+  .record(z.string(), z.number().min(STAT_MIN).max(STAT_MAX))
+  .refine(
     (stats) =>
       Object.keys(stats).length === STAT_KEYS.length &&
       Object.keys(stats).every(isStatKey),
-    { expected: 'every stat, once' },
-  ),
-);
+    { message: 'every stat, once' },
+  );
 
-const Title = Schema.Trim.check(
-  Schema.isMinLength(TITLE_MIN_LENGTH),
-  Schema.isMaxLength(TITLE_MAX_LENGTH),
-);
+const Title = z.string().trim().min(TITLE_MIN_LENGTH).max(TITLE_MAX_LENGTH);
 
 /** Empty and missing texts become null (see normalizeText). */
 const OptionalText = (maxLength: number) =>
-  Schema.optional(
-    Schema.NullOr(Schema.Trim.check(Schema.isMaxLength(maxLength))),
-  );
+  z.string().trim().max(maxLength).nullable().optional();
 
-export const PublishPayload = Schema.Struct({
-  slot: Schema.Int.check(Schema.isGreaterThanOrEqualTo(1)),
+export const PublishPayload = z.object({
+  slot: z.number().int().min(1),
   title: Title,
   description: OptionalText(DESCRIPTION_MAX_LENGTH),
   specialization: Specialization,
@@ -98,44 +88,43 @@ export const PublishPayload = Schema.Struct({
   stats: Stats,
 });
 
-export const UpdatePayload = Schema.Struct({
-  title: Title,
-  description: OptionalText(DESCRIPTION_MAX_LENGTH),
-  specialization: Specialization,
-  refresh: Schema.optional(Schema.Boolean),
-  detected_specialization: Schema.optional(Specialization),
-  stats: Schema.optional(Stats),
-}).check(
-  Schema.makeFilter(
+export const UpdatePayload = z
+  .object({
+    title: Title,
+    description: OptionalText(DESCRIPTION_MAX_LENGTH),
+    specialization: Specialization,
+    refresh: z.boolean().optional(),
+    detected_specialization: Specialization.optional(),
+    stats: Stats.optional(),
+  })
+  .refine(
     (payload) =>
       !payload.refresh ||
       (payload.stats !== undefined &&
         payload.detected_specialization !== undefined),
-    { expected: 'stats and detected specialization when refreshing' },
-  ),
-);
+    { message: 'stats and detected specialization when refreshing' },
+  );
 
-export const ReviewPayload = Schema.Struct({
-  stars: Schema.Int.check(Schema.isBetween({ minimum: 1, maximum: 5 })),
+export const ReviewPayload = z.object({
+  stars: z.number().int().min(1).max(5),
   body: OptionalText(REVIEW_BODY_MAX_LENGTH),
 });
 
-export const SimilarPayload = Schema.Struct({
+export const SimilarPayload = z.object({
   stats: Stats,
-  exclude_ids: Schema.optional(
-    Schema.Array(Schema.String.check(Schema.isUUID())).check(
-      Schema.isMaxLength(50),
-    ),
-  ),
-  version: Schema.optional(Schema.String.check(Schema.isMaxLength(16))),
-  limit: Schema.optional(
-    Schema.Int.check(Schema.isBetween({ minimum: 1, maximum: 24 })),
-  ),
+  exclude_ids: z.array(z.uuid()).max(50).optional(),
+  version: z.string().max(16).optional(),
+  limit: z.number().int().min(1).max(24).optional(),
 });
 
-export type PublishPayload = typeof PublishPayload.Type;
-export type UpdatePayload = typeof UpdatePayload.Type;
-export type SimilarPayload = typeof SimilarPayload.Type;
+export type PublishPayload = z.infer<typeof PublishPayload>;
+export type UpdatePayload = z.infer<typeof UpdatePayload>;
+export type SimilarPayload = z.infer<typeof SimilarPayload>;
+
+/** Publication id in the path. */
+export const PublicationParams = z.object({
+  id: z.uuid().openapi({ param: { name: 'id', in: 'path' } }),
+});
 
 // ---------------------------------------------------------------------------
 // Search query (?spec=a,b&minStats=strength:100&favorites=1...)
@@ -147,30 +136,19 @@ const splitCsv = (value: string) =>
     .map((entry) => entry.trim())
     .filter((entry) => entry.length > 0);
 
-const Csv = <T>(item: Schema.Codec<T, string>) =>
-  Schema.String.pipe(
-    Schema.decodeTo(
-      Schema.Array(item).check(Schema.isMaxLength(CSV_MAX_ENTRIES)),
-      SchemaTransformation.transform<ReadonlyArray<string>, string>({
-        decode: splitCsv,
-        encode: (values) => values.join(','),
-      }),
-    ),
-    // Missing parameter: decoded as ''.
-    Schema.withDecodingDefault(Effect.succeed('')),
-  );
+/** Comma-separated list; a missing parameter is an empty list. */
+const Csv = <T extends z.ZodType<string, string>>(item: T) =>
+  z
+    .string()
+    .default('')
+    .transform(splitCsv)
+    .pipe(z.array(item).max(CSV_MAX_ENTRIES));
 
-const Flag = Schema.String.pipe(
-  Schema.decodeTo(
-    Schema.Boolean,
-    SchemaTransformation.transform({
-      decode: (value) => value === '1' || value === 'true',
-      encode: (value) => (value ? '1' : ''),
-    }),
-  ),
-  // Missing parameter: decoded as ''.
-  Schema.withDecodingDefault(Effect.succeed('')),
-);
+/** `1` or `true`; anything else (or missing) is false. */
+const Flag = z
+  .string()
+  .default('')
+  .transform((value) => value === '1' || value === 'true');
 
 /** `strength:100,medicine:50` -> { strength: 100, medicine: 50 }. */
 const parseMinStats = (value: string): Record<string, number> =>
@@ -181,54 +159,44 @@ const parseMinStats = (value: string): Record<string, number> =>
     }),
   );
 
-const MinStats = Schema.String.pipe(
-  Schema.decodeTo(
-    Schema.Record(Schema.String, Schema.Number).check(
-      Schema.makeFilter(
-        (thresholds) =>
-          Object.entries(thresholds).every(
-            ([key, threshold]) => isStatKey(key) && Number.isFinite(threshold),
-          ),
-        { expected: 'stat:threshold pairs' },
-      ),
-    ),
-    SchemaTransformation.transform({
-      decode: parseMinStats,
-      encode: (thresholds) =>
-        Object.entries(thresholds)
-          .map(([key, threshold]) => `${key}:${threshold}`)
-          .join(','),
-    }),
-  ),
-  // Missing parameter: decoded as ''.
-  Schema.withDecodingDefault(Effect.succeed('')),
-);
+const MinStats = z
+  .string()
+  .default('')
+  .transform(parseMinStats)
+  .pipe(
+    z
+      .record(z.string(), z.number())
+      .refine((thresholds) => Object.keys(thresholds).every(isStatKey), {
+        message: 'stat:threshold pairs',
+      }),
+  );
 
 const PositiveIntFromString = (maximum: number, defaultValue: number) =>
-  Schema.NumberFromString.check(
-    Schema.isInt(),
-    Schema.isBetween({ minimum: 1, maximum }),
-  ).pipe(Schema.withDecodingDefault(Effect.succeed(String(defaultValue))));
+  z
+    .string()
+    .default(String(defaultValue))
+    .transform(Number)
+    .pipe(z.number().int().min(1).max(maximum));
 
-export const SearchQuery = Schema.Struct({
-  q: Schema.optionalKey(Schema.Trim.check(Schema.isMaxLength(64))),
+export const SearchQuery = z.object({
+  q: z.string().trim().max(64).optional(),
   spec: Csv(Specialization),
-  minRating: Schema.optionalKey(
-    Schema.NumberFromString.check(Schema.isBetween({ minimum: 1, maximum: 5 })),
-  ),
-  race: Csv(Schema.Literals(RACE_TYPES)),
+  minRating: z
+    .string()
+    .transform(Number)
+    .pipe(z.number().min(1).max(5))
+    .optional(),
+  race: Csv(z.enum(RACE_TYPES)),
   gender: Csv(Gender),
-  weapon: Csv(Schema.Literals(WEAPON_ITEM_TYPES)),
+  weapon: Csv(z.enum(WEAPON_ITEM_TYPES)),
   heal: Flag,
-  version: Schema.optionalKey(Schema.Trim.check(Schema.isMaxLength(16))),
+  version: z.string().trim().max(16).optional(),
   minStats: MinStats,
-  implants: Csv(Schema.String.check(Schema.isMaxLength(64))),
-  drugs: Csv(Schema.String.check(Schema.isMaxLength(32))),
-  items: Csv(Schema.String.check(Schema.isMaxLength(32))),
+  implants: Csv(z.string().max(64)),
+  drugs: Csv(z.string().max(32)),
+  items: Csv(z.string().max(32)),
   favorites: Flag,
-  sort: Schema.Literals(COMMUNITY_SORTS).pipe(
-    Schema.withDecodingDefault(Effect.succeed('trending' as const)),
-  ),
+  sort: z.enum(COMMUNITY_SORTS).default('trending'),
   page: PositiveIntFromString(1000, 1),
   pageSize: PositiveIntFromString(
     SEARCH_PAGE_SIZE_MAX,
@@ -236,118 +204,146 @@ export const SearchQuery = Schema.Struct({
   ),
 });
 
-export type SearchQuery = typeof SearchQuery.Type;
+/** Decoded search query. */
+export type SearchQuery = z.output<typeof SearchQuery>;
+/** Query string sent by the client (every value a string). */
+export type SearchQueryInput = z.input<typeof SearchQuery>;
+
+export const ReviewsQuery = z.object({
+  // Lenient like before: anything but a positive integer means page 1.
+  page: z.string().optional(),
+});
 
 // ---------------------------------------------------------------------------
 // Responses
 // ---------------------------------------------------------------------------
 
-export const StatsDto = Schema.Record(Schema.String, Schema.Number);
+export const StatsDto = z.record(z.string(), z.number());
 
-const KeyStat = Schema.Struct({ stat: StatProperty, value: Schema.Number });
+const KeyStat = z.object({ stat: StatProperty, value: z.number() });
 
-export const BuildSummary = Schema.Struct({
-  id: Schema.String,
-  title: Schema.String,
-  description: Schema.NullOr(Schema.String),
+const buildSummaryFields = {
+  id: z.string(),
+  title: z.string(),
+  description: z.string().nullable(),
   specialization: Specialization,
   detected_specialization: Specialization,
-  game_version: Schema.String,
+  game_version: z.string(),
   race: RaceType,
   gender: Gender,
-  weapon_types: Schema.Array(ItemType),
-  has_heal_weapon: Schema.Boolean,
-  key_stats: Schema.Array(KeyStat),
-  rating_count: Schema.Number,
-  rating_avg: Schema.NullOr(Schema.Number),
-  published_at: Schema.String,
-  content_updated_at: Schema.String,
-  author_pseudo: Schema.String,
+  weapon_types: z.array(ItemType),
+  has_heal_weapon: z.boolean(),
+  key_stats: z.array(KeyStat),
+  rating_count: z.number(),
+  rating_avg: z.number().nullable(),
+  published_at: z.string(),
+  content_updated_at: z.string(),
+  author_pseudo: z.string(),
   /** null when the caller cannot read the content (not a subscriber). */
-  stats: Schema.NullOr(StatsDto),
-  is_mine: Schema.Boolean,
-  is_favorite: Schema.Boolean,
+  stats: StatsDto.nullable(),
+  is_mine: z.boolean(),
+  is_favorite: z.boolean(),
+};
+
+export const BuildSummary = z
+  .object(buildSummaryFields)
+  .openapi('BuildSummary');
+
+export const SearchResponse = z
+  .object({
+    items: z.array(BuildSummary),
+    total: z.number(),
+    page: z.number(),
+    page_size: z.number(),
+  })
+  .openapi('SearchResponse');
+
+export const Review = z
+  .object({
+    id: z.string(),
+    stars: z.number().int().min(1).max(5),
+    body: z.string().nullable(),
+    created_at: z.string(),
+    updated_at: z.string(),
+    reviewer_pseudo: z.string(),
+    is_mine: z.boolean(),
+    /** Written before the last content update of the publication. */
+    outdated: z.boolean(),
+  })
+  .openapi('Review');
+
+export const BuildDetail = z
+  .object({
+    summary: BuildSummary,
+    /** null when locked (caller is neither a subscriber nor the author). */
+    content: z.object({ snapshot: z.unknown(), stats: StatsDto }).nullable(),
+    locked: z.boolean(),
+    is_subscriber: z.boolean(),
+    my_review: Review.nullable(),
+  })
+  .openapi('BuildDetail');
+
+export const ReviewsResponse = z
+  .object({
+    items: z.array(Review),
+    total: z.number(),
+    page: z.number(),
+    page_size: z.number(),
+  })
+  .openapi('ReviewsResponse');
+
+export const MyPublication = z
+  .object({
+    id: z.string(),
+    title: z.string(),
+    description: z.string().nullable(),
+    specialization: Specialization,
+    /** Current 1-based slot of the source build, null if it was deleted. */
+    source_slot: z.number().int().min(1).nullable(),
+    game_version: z.string(),
+    rating_count: z.number(),
+    rating_avg: z.number().nullable(),
+    published_at: z.string(),
+    content_updated_at: z.string(),
+    /** Subscription expired: visible but cannot be updated. */
+    frozen: z.boolean(),
+  })
+  .openapi('MyPublication');
+
+const GameVersion = z.object({
+  code: z.string(),
+  label: z.string(),
+  released_at: z.string().nullable(),
+  is_current: z.boolean(),
 });
 
-export const SearchResponse = Schema.Struct({
-  items: Schema.Array(BuildSummary),
-  total: Schema.Number,
-  page: Schema.Number,
-  page_size: Schema.Number,
-});
+export const MetaResponse = z
+  .object({
+    current_version: z.string().nullable(),
+    versions: z.array(GameVersion),
+  })
+  .openapi('MetaResponse');
 
-export const Review = Schema.Struct({
-  id: Schema.String,
-  stars: Schema.Int.check(Schema.isBetween({ minimum: 1, maximum: 5 })),
-  body: Schema.NullOr(Schema.String),
-  created_at: Schema.String,
-  updated_at: Schema.String,
-  reviewer_pseudo: Schema.String,
-  is_mine: Schema.Boolean,
-  /** Written before the last content update of the publication. */
-  outdated: Schema.Boolean,
-});
+export const RecommendationsResponse = z
+  .object({
+    items: z.array(
+      z.object({
+        ...buildSummaryFields,
+        similarity: z.number().nullable(),
+      }),
+    ),
+    strategy: z.enum(['similar', 'trending']),
+  })
+  .openapi('RecommendationsResponse');
 
-export const BuildDetail = Schema.Struct({
-  summary: BuildSummary,
-  /** null when locked (caller is neither a subscriber nor the author). */
-  content: Schema.NullOr(
-    Schema.Struct({ snapshot: Schema.Unknown, stats: StatsDto }),
-  ),
-  locked: Schema.Boolean,
-  is_subscriber: Schema.Boolean,
-  my_review: Schema.NullOr(Review),
-});
+export const IdResponse = z.object({ id: z.string() });
+export const FavoriteResponse = z.object({ is_favorite: z.boolean() });
+export const CopyResponse = z.object({ slot: z.number() });
+export const DeletedResponse = z.object({ deleted: z.boolean() });
 
-export const ReviewsResponse = Schema.Struct({
-  items: Schema.Array(Review),
-  total: Schema.Number,
-  page: Schema.Number,
-  page_size: Schema.Number,
-});
-
-export const MyPublication = Schema.Struct({
-  id: Schema.String,
-  title: Schema.String,
-  description: Schema.NullOr(Schema.String),
-  specialization: Specialization,
-  /** Current 1-based slot of the source build, null if it was deleted. */
-  source_slot: Schema.NullOr(
-    Schema.Int.check(Schema.isGreaterThanOrEqualTo(1)),
-  ),
-  game_version: Schema.String,
-  rating_count: Schema.Number,
-  rating_avg: Schema.NullOr(Schema.Number),
-  published_at: Schema.String,
-  content_updated_at: Schema.String,
-  /** Subscription expired: visible but cannot be updated. */
-  frozen: Schema.Boolean,
-});
-
-const GameVersion = Schema.Struct({
-  code: Schema.String,
-  label: Schema.String,
-  released_at: Schema.NullOr(Schema.String),
-  is_current: Schema.Boolean,
-});
-
-export const MetaResponse = Schema.Struct({
-  current_version: Schema.NullOr(Schema.String),
-  versions: Schema.Array(GameVersion),
-});
-
-export const RecommendationsResponse = Schema.Struct({
-  items: Schema.Array(
-    Schema.Struct({
-      ...BuildSummary.fields,
-      similarity: Schema.NullOr(Schema.Number),
-    }),
-  ),
-  strategy: Schema.Literals(['similar', 'trending']),
-});
-
-export type BuildSummary = typeof BuildSummary.Type;
-export type Review = typeof Review.Type;
-export type BuildDetail = typeof BuildDetail.Type;
-export type MyPublication = typeof MyPublication.Type;
-export type RecommendationsResponse = typeof RecommendationsResponse.Type;
+export type BuildSummary = z.infer<typeof BuildSummary>;
+export type Review = z.infer<typeof Review>;
+export type BuildDetail = z.infer<typeof BuildDetail>;
+export type MyPublication = z.infer<typeof MyPublication>;
+export type MetaResponse = z.infer<typeof MetaResponse>;
+export type RecommendationsResponse = z.infer<typeof RecommendationsResponse>;

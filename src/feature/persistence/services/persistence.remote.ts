@@ -1,6 +1,7 @@
 import type { BuildSnapshot } from './persistence.service';
 
 import { getAccessToken } from '@/feature/auth';
+import { callApi } from '@/utils/api-client';
 import {
   createRepositoryErrorClass,
   RepositoryError,
@@ -9,8 +10,6 @@ import {
 const PersistenceRepositoryError = createRepositoryErrorClass(
   'PersistenceRepositoryError',
 );
-
-const loadApi = () => import('@/utils/api-client');
 
 const invalidBuilds = {
   code: 'INVALID_REMOTE_BUILDS_PAYLOAD',
@@ -42,8 +41,7 @@ export const fetchRemoteBuilds = async (
   await waitForPendingBuildSaves();
 
   const accessToken = await getAccessToken();
-  const { callApi } = await loadApi();
-  const builds = await callApi((client) => client.builds.list(), {
+  const builds = await callApi((client) => client.api.builds.$get(), {
     signal,
     accessToken,
     ErrorClass: PersistenceRepositoryError,
@@ -79,11 +77,10 @@ const sendUpsertRemoteBuild = async ({
 }: UpsertRemoteBuildParams): Promise<BuildSnapshot> => {
   const accessToken = await getAccessToken();
   const numericSlot = toApiSlot(slot);
-  const { callApi } = await loadApi();
   const saved = await callApi(
     (client) =>
-      client.builds.upsert({
-        payload: {
+      client.api.builds.$put({
+        json: {
           slot: numericSlot,
           snapshot: snapshot as unknown as Record<string, unknown>,
         },
@@ -96,12 +93,11 @@ const sendUpsertRemoteBuild = async ({
         message: 'Impossible de sauvegarder le build distant.',
       },
       invalid: invalidBuilds,
-      request: { group: 'builds', endpoint: 'upsert', part: 'Payload' },
     },
   );
 
   return {
-    ...(saved.snapshot as BuildSnapshot),
+    ...(saved.snapshot as unknown as BuildSnapshot),
     savedAt: new Date(saved.saved_at).getTime(),
   };
 };
@@ -116,11 +112,11 @@ export const deleteRemoteBuild = async (slot: string): Promise<void> => {
 
   const accessToken = await getAccessToken();
   const numericSlot = toApiSlot(slot);
-  const { callApi } = await loadApi();
 
   try {
     await callApi(
-      (client) => client.builds.remove({ query: { slot: numericSlot } }),
+      (client) =>
+        client.api.builds.$delete({ query: { slot: String(numericSlot) } }),
       {
         accessToken,
         ErrorClass: PersistenceRepositoryError,
@@ -129,7 +125,6 @@ export const deleteRemoteBuild = async (slot: string): Promise<void> => {
           message: 'Impossible de supprimer le build distant.',
         },
         invalid: invalidBuilds,
-        request: { group: 'builds', endpoint: 'remove', part: 'Query' },
       },
     );
   } catch (error) {

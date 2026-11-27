@@ -2,9 +2,10 @@ import { RACE_REPOSITORY_ERROR_CODE, RaceRepositoryError } from './race.errors';
 import { toDomain } from './race.mapper';
 import type { Race } from '../model';
 
+import { callApi } from '@/utils/api-client';
+
 export const fetchRaces = async (signal?: AbortSignal): Promise<Race[]> => {
-  const { callApi } = await import('@/utils/api-client');
-  const races = await callApi((client) => client.catalog.races(), {
+  const races = await callApi((client) => client.api.races.$get(), {
     signal,
     ErrorClass: RaceRepositoryError,
     failed: {

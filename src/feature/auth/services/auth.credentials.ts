@@ -7,6 +7,7 @@ import {
   missingConfigErrorMessage,
 } from './auth.config';
 
+import { callApi } from '@/utils/api-client';
 import { RepositoryError } from '@/utils/repository-error';
 
 export interface SignInWithPasswordInput {
@@ -25,12 +26,10 @@ export const signInWithPassword = async ({
   if (!hasSupabaseAuthConfig) {
     return { error: new Error(missingConfigErrorMessage) };
   }
-
-  const { callApi } = await import('@/utils/api-client');
   let payload: { accessToken: string; refreshToken: string };
   try {
     payload = await callApi(
-      (client) => client.auth.login({ payload: { email, password } }),
+      (client) => client.api.auth.login.$post({ json: { email, password } }),
       {
         ErrorClass: RepositoryError,
         failed: { code: 'LOGIN_FAILED', message: 'Échec de la connexion.' },
@@ -39,7 +38,6 @@ export const signInWithPassword = async ({
           message: 'Échec de la connexion.',
         },
         apiMessage: true,
-        request: { group: 'auth', endpoint: 'login', part: 'Payload' },
       },
     );
   } catch (error) {

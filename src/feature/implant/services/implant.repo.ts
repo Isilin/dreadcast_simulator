@@ -5,11 +5,12 @@ import {
 import { toDomain } from './implant.mapper';
 import type { Implant } from '../model/implant.types';
 
+import { callApi } from '@/utils/api-client';
+
 export const fetchImplants = async (
   signal?: AbortSignal,
 ): Promise<Implant[]> => {
-  const { callApi } = await import('@/utils/api-client');
-  const implants = await callApi((client) => client.catalog.implants(), {
+  const implants = await callApi((client) => client.api.implants.$get(), {
     signal,
     ErrorClass: ImplantRepositoryError,
     failed: {
