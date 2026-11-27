@@ -62,7 +62,6 @@ export default defineConfig(({ mode }) => ({
                 if (id.includes('@tanstack')) return 'tanstack';
                 if (id.includes('@dnd-kit')) return 'dnd';
                 if (id.includes('@base-ui')) return 'base-ui';
-                if (id.includes('/effect/')) return 'effect';
 
                 return 'vendor';
               },

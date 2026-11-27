@@ -1,15 +1,16 @@
-import { Effect } from 'effect';
 import { describe, expect, it } from 'vitest';
 
-import { Unauthorized } from '../../platform/http-errors.js';
+import { unauthorized } from '../../platform/http-errors.js';
 import { makeTestApi } from '../../testing/test-api.js';
 
 const request = makeTestApi({
   authGateway: {
-    signInWithPassword: (email, password) =>
-      password === 'secret'
-        ? Effect.succeed({ accessToken: `at-${email}`, refreshToken: 'rt' })
-        : Effect.fail(new Unauthorized({ error: 'Invalid login credentials' })),
+    signInWithPassword: async (email, password) => {
+      if (password !== 'secret') {
+        throw unauthorized('Invalid login credentials');
+      }
+      return { accessToken: `at-${email}`, refreshToken: 'rt' };
+    },
   },
 });
 
@@ -44,6 +45,18 @@ describe('POST /api/auth/login', () => {
 
   it('answers 400 with the legacy message on an invalid payload', async () => {
     const response = await login({ email: 'not-an-email', password: 'x' });
+
+    expect(response.status).toBe(400);
+    expect(await response.json()).toEqual({
+      error: 'Payload de connexion invalide',
+    });
+  });
+
+  it('answers the same 400 on malformed JSON', async () => {
+    const response = await request('/api/auth/login', {
+      method: 'POST',
+      rawBody: '{bad json',
+    });
 
     expect(response.status).toBe(400);
     expect(await response.json()).toEqual({

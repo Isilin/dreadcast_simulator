@@ -1,17 +1,24 @@
-import { Schema } from 'effect';
+import { z } from '@hono/zod-openapi';
 
 /** 1-based position of a build in the user's creation order. */
-export const Slot = Schema.Int.check(Schema.isGreaterThanOrEqualTo(1));
+export const Slot = z.number().int().min(1);
 
-export const Build = Schema.Struct({
-  slot: Schema.Number,
-  snapshot: Schema.Unknown,
-  saved_at: Schema.String,
-});
+export const Build = z
+  .object({
+    slot: z.number(),
+    snapshot: z.unknown(),
+    saved_at: z.string(),
+  })
+  .openapi('Build');
 
-export const UpsertBuildPayload = Schema.Struct({
+export const UpsertBuildPayload = z.object({
   slot: Slot,
-  snapshot: Schema.Record(Schema.String, Schema.Unknown),
+  snapshot: z.record(z.string(), z.unknown()),
 });
 
-export type Build = typeof Build.Type;
+/** `?slot=` of DELETE /builds (query values are strings). */
+export const SlotQuery = z.object({
+  slot: z.string().transform(Number).pipe(Slot),
+});
+
+export type Build = z.infer<typeof Build>;

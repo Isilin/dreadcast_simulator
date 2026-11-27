@@ -4,7 +4,7 @@
 
 This is a French-language character build simulator for Dreadcast, a browser-based cyberpunk RPG. Users create characters by selecting race/gender, equipping items, kits, implants, a drug and titles, with automatic stat calculation and prerequisite checks. Builds are saved locally for guests (1 build) or in the database for signed-in users (5 builds, unlimited with a subscription), and subscribers can publish them to the Community.
 
-**Tech Stack:** React 19 + TypeScript, Vite, TanStack Router, TanStack Query, Zustand, Base UI Components, CSS Modules, Effect v4 HttpApi backend (`server/`, one Vercel function `api/server.ts`), Supabase
+**Tech Stack:** React 19 + TypeScript, Vite, TanStack Router, TanStack Query, Zustand, Base UI Components, CSS Modules, Hono + zod-openapi backend (`server/`: Vercel function `api/server.ts` in dev, Node container on forge in prod), Supabase
 
 ## Architecture Pattern: Feature-Sliced Design
 
@@ -63,7 +63,7 @@ export const useImplantsActions = (): ImplantsActions =>
 - **Repository Pattern:** `*.repo.ts` files contain `fetchX()` functions calling the `/api` endpoints
 - **Typed client:** repos call `callApi` (`src/utils/api-client.ts`), a client derived from the server contract (`@server/api.contract`); responses are validated by the contract schemas, then mapped with `*.mapper.ts`
 - **TanStack Query:** Queries defined in `*.queries.ts` wrap repo functions
-- **API:** Effect HttpApi in `server/` (contract, handlers, repos, rules per feature; see CODING_STANDARDS.md "Backend"), data in Supabase
+- **API:** Hono in `server/` (schemas, routes, repos, rules per feature; see CODING_STANDARDS.md "Backend"), typed front client `hc<AppType>`, data in Supabase
 
 ## Domain Layer
 
@@ -105,7 +105,7 @@ Located in `src/ui/` - reusable components following same folder structure (Comp
 ```bash
 # From the repository root
 yarn dev          # Vite dev server on :5173 (/api proxied to the Vercel deployment)
-yarn dev:api      # Local Effect API on :3001 (API_PROXY_TARGET=http://localhost:3001 yarn dev)
+yarn dev:api      # Local API on :3001 (API_PROXY_TARGET=http://localhost:3001 yarn dev)
 yarn build        # TypeScript check + Vite build
 yarn test         # Vitest unit tests
 yarn lint         # ESLint check

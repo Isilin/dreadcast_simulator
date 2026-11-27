@@ -85,30 +85,6 @@ export default tseslint.config([
     },
   },
   {
-    // Backend Effect : `Service.use(...)` n'est pas un hook React.
-    files: ['{server,scripts}/**/*.ts'],
-    rules: {
-      'react-hooks/rules-of-hooks': 'off',
-      'no-restricted-imports': [
-        'error',
-        {
-          paths: [
-            {
-              name: 'effect/unstable/httpapi',
-              message:
-                "Importer par module ('effect/unstable/httpapi/HttpApiEndpoint') : le barrel charge HttpApiScalar (3 Mo) a chaque demarrage a froid.",
-            },
-            {
-              name: '@effect/platform-node',
-              message:
-                "Importer par module ('@effect/platform-node/NodeHttpServer') : le barrel charge NodeRedis, qui exige le paquet redis.",
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
     // Configuration spécifique pour les fichiers de configuration
     files: ['*.config.js'],
     languageOptions: {

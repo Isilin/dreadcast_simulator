@@ -1,4 +1,3 @@
-import { Effect } from 'effect';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { DbError } from '../../platform/db-error.js';
@@ -14,14 +13,14 @@ beforeEach(() => {
 
 const request = makeTestApi({
   profile: {
-    pseudo: Effect.sync(() => currentPseudo),
-    createPseudo: (pseudo) =>
-      insertError
-        ? Effect.fail(insertError)
-        : Effect.sync(() => {
-            currentPseudo = pseudo;
-            return pseudo;
-          }),
+    pseudo: async () => currentPseudo,
+    createPseudo: async (pseudo) => {
+      if (insertError) {
+        throw insertError;
+      }
+      currentPseudo = pseudo;
+      return pseudo;
+    },
   },
 });
 

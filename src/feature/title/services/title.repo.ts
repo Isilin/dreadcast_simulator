@@ -5,9 +5,10 @@ import {
 import { toDomain } from './title.mapper';
 import type { Title } from '../model/title.types';
 
+import { callApi } from '@/utils/api-client';
+
 export const fetchTitles = async (signal?: AbortSignal): Promise<Title[]> => {
-  const { callApi } = await import('@/utils/api-client');
-  const titles = await callApi((client) => client.catalog.titles(), {
+  const titles = await callApi((client) => client.api.titles.$get(), {
     signal,
     ErrorClass: TitleRepositoryError,
     failed: {

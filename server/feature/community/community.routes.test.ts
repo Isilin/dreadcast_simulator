@@ -1,4 +1,3 @@
-import { Effect } from 'effect';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import type {
@@ -93,93 +92,78 @@ const reviewRow = (overrides: Partial<ReviewRow> = {}): ReviewRow => ({
 });
 
 const request = makeTestApi({
-  subscriptions: { hasActive: Effect.sync(() => subscriber) },
+  subscriptions: { hasActive: async () => subscriber },
   profile: {
-    pseudo: Effect.sync(() => pseudo),
-    pseudosOf: (ids) =>
-      Effect.succeed(
-        new Map(
-          ids.filter((id) => id === 'r-known').map((id) => [id, 'Connu']),
-        ),
-      ),
+    pseudo: async () => pseudo,
+    pseudosOf: async (ids) =>
+      new Map(ids.filter((id) => id === 'r-known').map((id) => [id, 'Connu'])),
   },
   builds: {
-    listOrdered: Effect.sync(() => [...ownBuilds]),
-    insert: (snapshot, savedAt) =>
-      Effect.sync(() => {
-        insertedSnapshot = snapshot;
-        const row = { id: 'b-new', snapshot, saved_at: savedAt };
-        ownBuilds.push(row);
-        return row;
-      }),
+    listOrdered: async () => [...ownBuilds],
+    insert: async (snapshot, savedAt) => {
+      insertedSnapshot = snapshot;
+      const row = { id: 'b-new', snapshot, saved_at: savedAt };
+      ownBuilds.push(row);
+      return row;
+    },
   },
   community: {
-    gameVersions: Effect.succeed([
+    gameVersions: async () => [
       { code: 'v14', label: 'V14', released_at: null, is_current: false },
       { code: 'v15', label: 'V15', released_at: null, is_current: true },
-    ]),
-    preview: (id) =>
-      Effect.succeed(id === PUBLICATION_ID ? previewRow() : null),
-    search: (params) =>
-      Effect.sync(() => {
-        lastSearch = params;
-        const rows = params.ids
-          ? searchRows.filter((row) => params.ids!.includes(row.id))
-          : searchRows;
-        return { rows, total: rows.length };
-      }),
-    publish: (payload, stats) =>
-      Effect.sync(() => {
-        publishedStats = stats;
-        publishedDescription = payload.description;
-        return PUBLICATION_ID;
-      }),
-    unpublish: (id) => Effect.succeed(id === PUBLICATION_ID ? [id] : []),
-    content: (id) =>
-      Effect.succeed(
-        id === PUBLICATION_ID
-          ? { snapshot: '{"name":"Tank"}', stats: { strength: 120.5 } }
-          : null,
-      ),
-    title: (id) =>
-      Effect.succeed(id === PUBLICATION_ID ? 'Tank de base' : null),
-    header: () => Effect.sync(() => header),
-    addFavorite: () =>
-      favoriteError ? Effect.fail(favoriteError) : Effect.void,
-    removeFavorite: () => Effect.void,
-    similar: () =>
-      Effect.succeed([
-        { publication_id: OTHER_ID, similarity: 0.9 },
-        { publication_id: PUBLICATION_ID, similarity: 0.8 },
-      ]),
-    forYou: () => Effect.succeed([]),
+    ],
+    preview: async (id) => (id === PUBLICATION_ID ? previewRow() : null),
+    search: async (params) => {
+      lastSearch = params;
+      const rows = params.ids
+        ? searchRows.filter((row) => params.ids!.includes(row.id))
+        : searchRows;
+      return { rows, total: rows.length };
+    },
+    publish: async (payload, stats) => {
+      publishedStats = stats;
+      publishedDescription = payload.description;
+      return PUBLICATION_ID;
+    },
+    unpublish: async (id) => (id === PUBLICATION_ID ? [id] : []),
+    content: async (id) =>
+      id === PUBLICATION_ID
+        ? { snapshot: '{"name":"Tank"}', stats: { strength: 120.5 } }
+        : null,
+    title: async (id) => (id === PUBLICATION_ID ? 'Tank de base' : null),
+    header: async () => header,
+    addFavorite: async () => {
+      if (favoriteError) {
+        throw favoriteError;
+      }
+    },
+    removeFavorite: async () => undefined,
+    similar: async () => [
+      { publication_id: OTHER_ID, similarity: 0.9 },
+      { publication_id: PUBLICATION_ID, similarity: 0.8 },
+    ],
+    forYou: async () => [],
   },
   reviews: {
-    mine: () => Effect.sync(() => myReviewRow),
-    page: () =>
-      Effect.succeed({
-        rows: [
-          reviewRow({ id: 'r1', reviewer_id: 'r-known' }),
-          reviewRow({ id: 'r2', reviewer_id: 'r-gone' }),
-        ],
-        total: 2,
-      }),
-    update: (_, stars, body) =>
-      Effect.sync(() =>
-        myReviewRow ? (myReviewRow = { ...myReviewRow, stars, body }) : null,
-      ),
-    insert: (_, stars, body) =>
-      insertFails23505
-        ? Effect.sync(() => {
-            // Another tab created it meanwhile.
-            myReviewRow = reviewRow({ stars: 1 });
-          }).pipe(
-            Effect.andThen(
-              Effect.fail(new DbError({ code: '23505', message: 'dup' })),
-            ),
-          )
-        : Effect.sync(() => (myReviewRow = reviewRow({ stars, body }))),
-    remove: () => Effect.void,
+    mine: async () => myReviewRow,
+    page: async () => ({
+      rows: [
+        reviewRow({ id: 'r1', reviewer_id: 'r-known' }),
+        reviewRow({ id: 'r2', reviewer_id: 'r-gone' }),
+      ],
+      total: 2,
+    }),
+    update: async (_, stars, body) =>
+      myReviewRow ? (myReviewRow = { ...myReviewRow, stars, body }) : null,
+    insert: async (_, stars, body) => {
+      if (insertFails23505) {
+        // Another tab created it meanwhile.
+        myReviewRow = reviewRow({ stars: 1 });
+        throw new DbError({ code: '23505', message: 'dup' });
+      }
+      return (myReviewRow = reviewRow({ stars, body }));
+    },
+    remove: async () => undefined,
   },
 });
 
@@ -521,10 +505,10 @@ describe('recommendations', () => {
 
   it('maps a database community code', async () => {
     const failing = makeTestApi({
-      subscriptions: { hasActive: Effect.succeed(true) },
+      subscriptions: { hasActive: async () => true },
       community: {
         forYou: () =>
-          Effect.fail(new DbError({ code: 'P0001', message: 'FROZEN' })),
+          Promise.reject(new DbError({ code: 'P0001', message: 'FROZEN' })),
       },
     });
     const response = await failing('/api/community/for-you', auth);

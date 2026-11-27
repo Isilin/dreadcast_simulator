@@ -1,4 +1,4 @@
-import type { SearchQuery } from '@server/feature/community/community.schema';
+import type { SearchQueryInput } from '@server/feature/community/community.schema';
 
 import {
   CommunitySortValues,
@@ -214,27 +214,34 @@ export const countActiveFilters = (filters: CommunityFilters): number =>
  * Query of GET /api/community/builds, typed by the API contract (the client
  * encodes it: lists as CSV, flags as '1'...).
  */
+/** Query string of GET /api/community/builds (lists as csv). */
 export const filtersToSearchQuery = (
   filters: CommunityFilters,
   pageSize = COMMUNITY_PAGE_SIZE,
-): SearchQuery => {
-  const query = filters.query.trim();
-  return {
-    ...(query ? { q: query } : {}),
-    spec: filters.specializations,
-    ...(filters.minRating !== null ? { minRating: filters.minRating } : {}),
-    race: filters.races,
-    gender: filters.genders,
-    weapon: weaponFilterToItemTypes(filters.weaponKind, filters.weaponHands),
-    heal: filters.healOnly,
-    ...(filters.gameVersion !== null ? { version: filters.gameVersion } : {}),
-    minStats: filters.minStats,
-    implants: filters.implants,
-    drugs: filters.drugs,
-    items: filters.items,
-    favorites: filters.favoritesOnly,
+): SearchQueryInput => {
+  const query: SearchQueryInput = {
+    q: filters.query.trim() || undefined,
+    spec: joinCsv(filters.specializations),
+    minRating:
+      filters.minRating !== null ? String(filters.minRating) : undefined,
+    race: joinCsv(filters.races),
+    gender: joinCsv(filters.genders),
+    weapon: joinCsv(
+      weaponFilterToItemTypes(filters.weaponKind, filters.weaponHands),
+    ),
+    heal: filters.healOnly ? '1' : undefined,
+    version: filters.gameVersion ?? undefined,
+    minStats: serializeMinStats(filters.minStats),
+    implants: joinCsv(filters.implants),
+    drugs: joinCsv(filters.drugs),
+    items: joinCsv(filters.items),
+    favorites: filters.favoritesOnly ? '1' : undefined,
     sort: filters.sort,
-    page: filters.page,
-    pageSize,
+    page: String(filters.page),
+    pageSize: String(pageSize),
   };
+
+  return Object.fromEntries(
+    Object.entries(query).filter(([, value]) => value !== undefined),
+  ) as SearchQueryInput;
 };

@@ -1,15 +1,17 @@
-import { Schema } from 'effect';
+import { z } from '@hono/zod-openapi';
 
 /** Same pattern as the legacy endpoint (zod z.email()). */
 const EMAIL_PATTERN =
   /^(?:[A-Za-z0-9_'+\-]+\.)*[A-Za-z0-9_'+\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$/;
 
-export const LoginPayload = Schema.Struct({
-  email: Schema.String.check(Schema.isPattern(EMAIL_PATTERN)),
-  password: Schema.String.check(Schema.isMinLength(1)),
+export const LoginPayload = z.object({
+  email: z.string().regex(EMAIL_PATTERN),
+  password: z.string().min(1),
 });
 
-export const LoginResponse = Schema.Struct({
-  accessToken: Schema.String,
-  refreshToken: Schema.String,
-});
+export const LoginResponse = z
+  .object({
+    accessToken: z.string(),
+    refreshToken: z.string(),
+  })
+  .openapi('LoginResponse');

@@ -1,12 +1,23 @@
-import { Config } from 'effect';
+export interface SupabaseConfig {
+  readonly url: string;
+  readonly anonKey: string;
+}
 
 /** Vercel exposes the Supabase integration under both names. */
-const withPublicFallback = (name: string) =>
-  Config.String(name).pipe(
-    Config.orElse(() => Config.String(`NEXT_PUBLIC_${name}`)),
-  );
+const withPublicFallback = (
+  env: Readonly<Record<string, string | undefined>>,
+  name: string,
+): string => {
+  const value = env[name] ?? env[`NEXT_PUBLIC_${name}`];
+  if (!value) {
+    throw new Error(`Missing environment variable ${name}`);
+  }
+  return value;
+};
 
-export const SupabaseConfig = Config.all({
-  url: withPublicFallback('SIMULATOR_SUPABASE_URL'),
-  anonKey: withPublicFallback('SIMULATOR_SUPABASE_ANON_KEY'),
+export const readSupabaseConfig = (
+  env: Readonly<Record<string, string | undefined>> = process.env,
+): SupabaseConfig => ({
+  url: withPublicFallback(env, 'SIMULATOR_SUPABASE_URL'),
+  anonKey: withPublicFallback(env, 'SIMULATOR_SUPABASE_ANON_KEY'),
 });

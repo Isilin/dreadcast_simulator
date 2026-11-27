@@ -1,4 +1,3 @@
-import { Effect } from 'effect';
 import { describe, expect, it } from 'vitest';
 
 import type { Drug, Race } from './catalog.schema.js';
@@ -28,16 +27,16 @@ const human: Race = {
 
 const request = makeTestApi({
   catalog: {
-    items: Effect.succeed([]),
-    kits: Effect.succeed([]),
-    implants: Effect.fail(new DbError({ message: 'connection lost' })),
-    races: Effect.succeed([human]),
-    titles: Effect.succeed([]),
-    drugs: Effect.succeed([caducee]),
+    items: async () => [],
+    kits: async () => [],
+    implants: () => Promise.reject(new DbError({ message: 'connection lost' })),
+    races: async () => [human],
+    titles: async () => [],
+    drugs: async () => [caducee],
     drug: (id) =>
       id === caducee.id
-        ? Effect.succeed(caducee)
-        : Effect.fail(new DbError({ code: 'PGRST116', message: '0 rows' })),
+        ? Promise.resolve(caducee)
+        : Promise.reject(new DbError({ code: 'PGRST116', message: '0 rows' })),
   },
 });
 

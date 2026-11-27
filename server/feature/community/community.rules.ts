@@ -1,4 +1,4 @@
-import type { SchemaIssue } from 'effect';
+import type { ZodError } from 'zod';
 
 import type { CommunityErrorCode } from './community.errors.js';
 import type {
@@ -93,29 +93,9 @@ export const roundStats = (stats: Readonly<Record<string, number>>) =>
     ]),
   );
 
-/** Path of the first failing value of a decoding issue. */
-export const firstIssuePath = (
-  issue: SchemaIssue.Issue,
-): ReadonlyArray<PropertyKey> => {
-  switch (issue._tag) {
-    case 'Pointer':
-      return [...issue.path, ...firstIssuePath(issue.issue)];
-    case 'Filter':
-    case 'Encoding':
-      return firstIssuePath(issue.issue);
-    case 'Composite':
-    case 'AnyOf':
-      return issue.issues[0] ? firstIssuePath(issue.issues[0]) : [];
-    default:
-      return [];
-  }
-};
-
 /** Maps the first failing field of a payload to a stable error code. */
-export const payloadErrorCode = (
-  issue: SchemaIssue.Issue,
-): CommunityErrorCode => {
-  switch (firstIssuePath(issue)[0]) {
+export const payloadErrorCode = (error: ZodError): CommunityErrorCode => {
+  switch (error.issues[0]?.path[0]) {
     case 'title':
       return 'INVALID_TITLE';
     case 'description':

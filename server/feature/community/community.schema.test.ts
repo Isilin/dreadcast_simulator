@@ -1,4 +1,3 @@
-import { Exit, Schema } from 'effect';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -8,8 +7,11 @@ import {
   UpdatePayload,
 } from './community.schema.js';
 
-const decodeQuery = Schema.decodeUnknownExit(SearchQuery);
-const decodeQuerySync = Schema.decodeUnknownSync(SearchQuery);
+const decodeQuery = (input: unknown) => SearchQuery.safeParse(input);
+const decodeQuerySync = (input: unknown) => SearchQuery.parse(input);
+
+const isFailure = (result: { success: boolean }) => !result.success;
+const isSuccess = (result: { success: boolean }) => result.success;
 
 const zeroStats = () =>
   Object.fromEntries(STAT_KEYS.map((key) => [key, 0])) as Record<
@@ -76,7 +78,7 @@ describe('SearchQuery', () => {
     { sort: 'random' },
     { items: Array.from({ length: 31 }, (_, i) => `i${i}`).join(',') },
   ])('rejects %o', (query) => {
-    expect(Exit.isFailure(decodeQuery(query))).toBe(true);
+    expect(isFailure(decodeQuery(query))).toBe(true);
   });
 });
 
@@ -91,21 +93,19 @@ describe('PublishPayload', () => {
   };
 
   it('trims the title', () => {
-    expect(Schema.decodeUnknownSync(PublishPayload)(valid).title).toBe(
-      'Mon build',
-    );
+    expect(PublishPayload.parse(valid).title).toBe('Mon build');
   });
 
   it('requires every stat and nothing else', () => {
     const { strength: _, ...missing } = zeroStats();
-    const decode = Schema.decodeUnknownExit(PublishPayload);
+    const decode = (input: unknown) => PublishPayload.safeParse(input);
 
-    expect(Exit.isFailure(decode({ ...valid, stats: missing }))).toBe(true);
+    expect(isFailure(decode({ ...valid, stats: missing }))).toBe(true);
     expect(
-      Exit.isFailure(decode({ ...valid, stats: { ...zeroStats(), luck: 1 } })),
+      isFailure(decode({ ...valid, stats: { ...zeroStats(), luck: 1 } })),
     ).toBe(true);
     expect(
-      Exit.isFailure(
+      isFailure(
         decode({ ...valid, stats: { ...zeroStats(), strength: 20000 } }),
       ),
     ).toBe(true);
@@ -114,13 +114,13 @@ describe('PublishPayload', () => {
 
 describe('UpdatePayload', () => {
   it('requires stats and detected specialization to refresh', () => {
-    const decode = Schema.decodeUnknownExit(UpdatePayload);
+    const decode = (input: unknown) => UpdatePayload.safeParse(input);
     const base = { title: 'Build', specialization: 'tank' };
 
-    expect(Exit.isSuccess(decode(base))).toBe(true);
-    expect(Exit.isFailure(decode({ ...base, refresh: true }))).toBe(true);
+    expect(isSuccess(decode(base))).toBe(true);
+    expect(isFailure(decode({ ...base, refresh: true }))).toBe(true);
     expect(
-      Exit.isSuccess(
+      isSuccess(
         decode({
           ...base,
           refresh: true,

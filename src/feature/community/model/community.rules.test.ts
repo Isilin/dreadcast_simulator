@@ -1,4 +1,3 @@
-import { Exit, Schema } from 'effect';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -142,7 +141,7 @@ describe('publication payload', () => {
       stats: roundStats({ strength: 101.5 }),
     });
 
-    const parsed = Schema.decodeUnknownExit(PublishPayload)({
+    const parsed = PublishPayload.safeParse({
       slot: Number(payload.slot),
       title: payload.title,
       description: payload.description,
@@ -151,7 +150,7 @@ describe('publication payload', () => {
       stats: payload.stats,
     });
 
-    expect(Exit.isSuccess(parsed)).toBe(true);
+    expect(parsed.success).toBe(true);
   });
 });
 

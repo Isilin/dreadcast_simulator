@@ -5,8 +5,7 @@ import {
 import type { AccountProfile } from '../model';
 
 import { getAccessToken as getSessionToken } from '@/feature/auth';
-
-const loadApi = () => import('@/utils/api-client');
+import { callApi } from '@/utils/api-client';
 
 const getAccessToken = (): Promise<string> =>
   getSessionToken(
@@ -27,8 +26,7 @@ export const fetchAccountProfile = async (
   signal?: AbortSignal,
 ): Promise<AccountProfile> => {
   const accessToken = await getAccessToken();
-  const { callApi } = await loadApi();
-  const profile = await callApi((client) => client.profile.me(), {
+  const profile = await callApi((client) => client.api.profile.me.$get(), {
     signal,
     accessToken,
     ErrorClass: AccountRepositoryError,
@@ -44,10 +42,8 @@ export const fetchAccountProfile = async (
 
 export const createPseudo = async (pseudo: string): Promise<AccountProfile> => {
   const accessToken = await getAccessToken();
-  const { callApi } = await loadApi();
   const profile = await callApi(
-    (client) =>
-      client.profile.setPseudo({ payload: { pseudo: pseudo.trim() } }),
+    (client) => client.api.profile.me.$put({ json: { pseudo: pseudo.trim() } }),
     {
       accessToken,
       ErrorClass: AccountRepositoryError,
@@ -57,7 +53,6 @@ export const createPseudo = async (pseudo: string): Promise<AccountProfile> => {
       },
       invalid: invalidProfile,
       apiMessage: true,
-      request: { group: 'profile', endpoint: 'setPseudo', part: 'Payload' },
     },
   );
 

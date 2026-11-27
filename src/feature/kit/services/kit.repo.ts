@@ -2,9 +2,10 @@ import { KIT_REPOSITORY_ERROR_CODE, KitRepositoryError } from './kit.errors';
 import { toDomain } from './kit.mapper';
 import type { Kit } from '../model';
 
+import { callApi } from '@/utils/api-client';
+
 export const fetchKits = async (signal?: AbortSignal): Promise<Kit[]> => {
-  const { callApi } = await import('@/utils/api-client');
-  const kits = await callApi((client) => client.catalog.kits(), {
+  const kits = await callApi((client) => client.api.kits.$get(), {
     signal,
     ErrorClass: KitRepositoryError,
     failed: {

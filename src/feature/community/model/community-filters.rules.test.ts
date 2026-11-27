@@ -1,4 +1,3 @@
-import { Schema } from 'effect';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -72,10 +71,7 @@ describe('community filters', () => {
 
   it('builds a query the API decodes back to the same filters', () => {
     // What the typed client sends, then what the server decodes.
-    const sent = Schema.encodeSync(SearchQuery)(
-      filtersToSearchQuery(fullFilters),
-    );
-    const parsed = Schema.decodeUnknownSync(SearchQuery)(sent);
+    const parsed = SearchQuery.parse(filtersToSearchQuery(fullFilters));
 
     expect(parsed.spec).toEqual(['medecin', 'soutien']);
     expect(parsed.weapon).toEqual(['2handsMelee']);

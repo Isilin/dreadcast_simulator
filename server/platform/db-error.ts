@@ -1,20 +1,52 @@
-import { Data, Effect } from 'effect';
+import { internalError, notFound, type HttpError } from './http-errors.js';
 
-import { InternalError, NotFound } from './http-errors.js';
+/**
+ * Failure of a database call (PostgREST error, RPC exception, network).
+ * Uncaught, it becomes a 500 with its raw message, as before.
+ */
+export class DbError extends Error {
+  readonly code: string | undefined;
 
-/** Failure of a Supabase call (PostgREST, RPC exception, network). */
-export class DbError extends Data.TaggedError('DbError')<{
-  readonly code?: string;
-  readonly message: string;
-}> {}
+  constructor({ code, message }: { code?: string; message: string }) {
+    super(message);
+    this.name = 'DbError';
+    this.code = code;
+  }
+}
 
-/** Unexpected database failure: 500 with the raw message, as before. */
-export const toInternalError = (error: DbError) =>
-  new InternalError({ error: error.message });
+export const isDbError = (value: unknown): value is DbError =>
+  value instanceof DbError;
+
+/** Unexpected database failure: 500 with the raw message. */
+export const toInternalError = (error: DbError): HttpError =>
+  internalError(error.message);
 
 /** `.single()` found no row (PGRST116) -> 404, anything else -> 500. */
 export const notFoundOrInternal =
-  (notFoundMessage: string) => (error: DbError) =>
+  (notFoundMessage: string) =>
+  (error: DbError): HttpError =>
     error.code === 'PGRST116'
-      ? Effect.fail(new NotFound({ error: notFoundMessage }))
-      : Effect.fail(toInternalError(error));
+      ? notFound(notFoundMessage)
+      : toInternalError(error);
+
+/**
+ * Awaits a repository call and translates its DbError with `toHttpError`;
+ * other failures (HttpError included) pass through.
+ */
+export const mapDbError = async <A>(
+  promise: Promise<A>,
+  toHttpError: (error: DbError) => HttpError | A,
+): Promise<A> => {
+  try {
+    return await promise;
+  } catch (error) {
+    if (!isDbError(error)) {
+      throw error;
+    }
+    const mapped = toHttpError(error);
+    if (mapped instanceof Error) {
+      throw mapped;
+    }
+    return mapped;
+  }
+};

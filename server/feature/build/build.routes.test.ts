@@ -1,4 +1,3 @@
-import { Effect } from 'effect';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import type { BuildRow } from './build.rules.js';
@@ -20,29 +19,28 @@ beforeEach(() => {
 const request = makeTestApi({
   builds: {
     // A copy, like a fresh query result.
-    listOrdered: Effect.sync(() => [...rows]),
-    update: (id, snapshot, savedAt) =>
-      Effect.sync(() => {
-        const row = rows.find((candidate) => candidate.id === id)!;
-        row.snapshot = snapshot;
-        row.saved_at = savedAt;
-        return row;
-      }),
-    insert: (snapshot, savedAt) =>
-      Effect.sync(() => {
-        const row = { id: `new-${rows.length}`, snapshot, saved_at: savedAt };
-        rows.push(row);
-        return row;
-      }),
-    remove: (id) =>
-      refuseDeletion
-        ? Effect.succeed([])
-        : id === 'boom'
-          ? Effect.fail(new DbError({ message: 'db down' }))
-          : Effect.sync(() => {
-              rows = rows.filter((row) => row.id !== id);
-              return [id];
-            }),
+    listOrdered: async () => [...rows],
+    update: async (id, snapshot, savedAt) => {
+      const row = rows.find((candidate) => candidate.id === id)!;
+      row.snapshot = snapshot;
+      row.saved_at = savedAt;
+      return row;
+    },
+    insert: async (snapshot, savedAt) => {
+      const row = { id: `new-${rows.length}`, snapshot, saved_at: savedAt };
+      rows.push(row);
+      return row;
+    },
+    remove: async (id) => {
+      if (refuseDeletion) {
+        return [];
+      }
+      if (id === 'boom') {
+        throw new DbError({ message: 'db down' });
+      }
+      rows = rows.filter((row) => row.id !== id);
+      return [id];
+    },
   },
 });
 

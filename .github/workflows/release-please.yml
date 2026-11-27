@@ -50,3 +50,14 @@ jobs:
 
       - name: Fast-forward main to ${{ needs.release-please.outputs.tag_name }}
         run: git push origin "${{ needs.release-please.outputs.sha }}:refs/heads/main"
+
+  # Builds the image of the release and deploys it on forge (Coolify).
+  deploy:
+    needs: [release-please, promote-main]
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/deploy-prod.yml
+    with:
+      ref: ${{ needs.release-please.outputs.tag_name }}
+    secrets: inherit

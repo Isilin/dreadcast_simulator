@@ -1,0 +1,95 @@
+name: 'Deploy prod'
+
+# Builds the production image on GitHub Actions (never on forge), pushes it to
+# GHCR, then asks Coolify to pull it and restart the app.
+#
+# - Called by release-please.yml after each release (ref = the new tag).
+# - Run by hand to deploy or roll back: Actions > Deploy prod > Run workflow,
+#   with a tag (v1.2.0) or, for the very first deploy, a branch (develop).
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: 'Git ref to deploy (release tag)'
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Git ref to deploy: a tag (v1.2.0) to release or roll back, or a branch'
+        required: true
+        default: 'develop'
+        type: string
+
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: false
+
+env:
+  IMAGE: ghcr.io/isilin/dreadcast_simulator
+
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout ${{ inputs.ref }}
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref }}
+
+      # Docker tags allow [A-Za-z0-9_.-]: feature/x -> feature-x.
+      - name: Image tag
+        id: tag
+        env:
+          REF: ${{ inputs.ref }}
+        run: echo "tag=$(printf '%s' "$REF" | tr -c 'A-Za-z0-9_.-' '-')" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-buildx-action@v4
+
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Public build-time values come from the repository variables.
+      - name: Build and push
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:${{ steps.tag.outputs.tag }}
+            ${{ env.IMAGE }}:latest
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+          build-args: |
+            VITE_SUPABASE_URL=${{ vars.VITE_SUPABASE_URL }}
+            VITE_SUPABASE_ANON_KEY=${{ vars.VITE_SUPABASE_ANON_KEY }}
+            VITE_SUBSCRIPTION_CREDITS_ADDRESS=${{ vars.VITE_SUBSCRIPTION_CREDITS_ADDRESS }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  coolify:
+    needs: image
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      # Coolify's app runs the :latest image: a deploy pulls it again.
+      - name: Trigger the Coolify deployment
+        env:
+          COOLIFY_URL: ${{ secrets.COOLIFY_URL }}
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+          COOLIFY_APP_UUID: ${{ secrets.COOLIFY_APP_UUID }}
+        run: |
+          if [ -z "$COOLIFY_URL" ] || [ -z "$COOLIFY_TOKEN" ] || [ -z "$COOLIFY_APP_UUID" ]; then
+            echo "::warning::Coolify secrets are not set: image pushed, nothing deployed."
+            exit 0
+          fi
+          curl --fail-with-body --silent --show-error \
+            --header "Authorization: Bearer $COOLIFY_TOKEN" \
+            "$COOLIFY_URL/api/v1/deploy?uuid=$COOLIFY_APP_UUID"
