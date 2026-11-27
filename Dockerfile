@@ -27,11 +27,13 @@ COPY . .
 ARG VITE_SUPABASE_URL
 ARG VITE_SUPABASE_ANON_KEY
 ARG VITE_SUBSCRIPTION_CREDITS_ADDRESS
-ENV VITE_SUPABASE_URL=$VITE_SUPABASE_URL \
-    VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY \
-    VITE_SUBSCRIPTION_CREDITS_ADDRESS=$VITE_SUBSCRIPTION_CREDITS_ADDRESS
 
-RUN yarn build && yarn build:server
+# Build args reach RUN as environment variables. An empty one would hide the
+# front's own fallback (`value ?? default` keeps ''), so it is unset instead.
+RUN for name in VITE_SUPABASE_URL VITE_SUPABASE_ANON_KEY VITE_SUBSCRIPTION_CREDITS_ADDRESS; do \
+      [ -n "$(printenv "$name")" ] || unset "$name"; \
+    done; \
+    yarn build && yarn build:server
 
 # --- Runtime -------------------------------------------------------------------
 FROM node:26-alpine
