@@ -27,6 +27,17 @@ updates:
       dev-minor-patch:
         dependency-type: 'development'
         update-types: ['minor', 'patch']
+    ignore:
+      # eslint-plugin-react, -import and -jsx-a11y do not support ESLint 10 yet.
+      - dependency-name: 'eslint'
+        versions: ['>=10']
+      # typescript-eslint supports TypeScript < 6.1, and TS 7 has no JS API.
+      - dependency-name: 'typescript'
+        versions: ['>=7']
+      # Dropped by the move to Hono + Drizzle on plain Postgres.
+      - dependency-name: 'effect'
+      - dependency-name: '@effect/*'
+      - dependency-name: '@supabase/supabase-js'
 
   - package-ecosystem: 'github-actions'
     directory: '/'
