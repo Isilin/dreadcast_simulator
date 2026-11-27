@@ -95,13 +95,16 @@ jobs:
         run: |
           docker network create ci
           docker run -d --name pg --network ci -e POSTGRES_PASSWORD=ci postgres:17-alpine
+          # Over TCP: the image first runs a temporary server for its init
+          # (Unix socket only), then restarts it; only the final server
+          # listens on TCP.
           for _ in $(seq 1 30); do
-            docker exec pg pg_isready -U postgres -q && break
+            docker exec pg pg_isready -h 127.0.0.1 -U postgres -q && break
             sleep 1
           done
           # One -c per statement: CREATE DATABASE cannot run in the implicit
           # transaction of a multi-statement -c.
-          docker exec pg psql -U postgres -v ON_ERROR_STOP=1 \
+          docker exec pg psql -h 127.0.0.1 -U postgres -v ON_ERROR_STOP=1 \
             -c "CREATE ROLE dc_app LOGIN PASSWORD 'ci'" \
             -c "CREATE ROLE anon NOLOGIN NOINHERIT" \
             -c "CREATE ROLE authenticated NOLOGIN NOINHERIT" \
