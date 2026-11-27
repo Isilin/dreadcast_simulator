@@ -1,6 +1,6 @@
 import { createApp } from '../app.js';
 import type { Deps } from '../deps.js';
-import type { AuthGateway } from '../feature/auth/auth.gateway.js';
+import type { AuthService } from '../feature/auth/auth.service.js';
 import type { BuildRepo } from '../feature/build/build.repo.js';
 import type { CatalogRepo } from '../feature/catalog/catalog.repo.js';
 import type {
@@ -10,18 +10,19 @@ import type {
 } from '../feature/community/community.repo.js';
 import type { ProfileRepo } from '../feature/profile/profile.repo.js';
 import type { SubscriptionRepo } from '../feature/subscription/subscription.repo.js';
-import type { User } from '../platform/auth.js';
+import { SESSION_COOKIE, type User } from '../platform/auth.js';
 
 export const TEST_USER_ID = '11111111-1111-4111-8111-111111111111';
+export const TEST_USER_EMAIL = 'test@example.com';
 export const VALID_TOKEN = 'valid-token';
 
 const notFaked = (name: string) => () =>
   Promise.reject(new Error(`${name} is not faked in this test`));
 
 /** Only VALID_TOKEN is a session; the real auth middlewares run on top. */
-const resolveUser = async (accessToken: string): Promise<User | null> =>
-  accessToken === VALID_TOKEN
-    ? { userId: TEST_USER_ID, appMetadata: {} }
+const resolveUser = async (sessionToken: string): Promise<User | null> =>
+  sessionToken === VALID_TOKEN
+    ? { userId: TEST_USER_ID, email: TEST_USER_EMAIL, appMetadata: {} }
     : null;
 
 const catalogStub: CatalogRepo = {
@@ -83,8 +84,10 @@ const reviewStub: ReviewRepo = {
   remove: notFaked('remove'),
 };
 
-const authGatewayStub: AuthGateway = {
-  signInWithPassword: notFaked('signInWithPassword'),
+const authStub: AuthService = {
+  signIn: notFaked('signIn'),
+  resolve: resolveUser,
+  signOut: notFaked('signOut'),
 };
 
 /** Partial fakes: unlisted methods reject when called (500). */
@@ -95,7 +98,7 @@ export interface Fakes {
   profile?: Partial<ProfileRepo>;
   community?: Partial<CommunityPublicRepo & CommunityRepo>;
   reviews?: Partial<ReviewRepo>;
-  authGateway?: Partial<AuthGateway>;
+  auth?: Partial<AuthService>;
   checkDatabase?: () => Promise<void>;
 }
 
@@ -107,8 +110,7 @@ const makeDeps = (fakes: Fakes): Deps => {
   };
 
   return {
-    resolveUser,
-    authGateway: { ...authGatewayStub, ...fakes.authGateway },
+    auth: { ...authStub, ...fakes.auth },
     catalog: { ...catalogStub, ...fakes.catalog },
     communityPublic: { ...communityPublicStub, ...publicFakes },
     community: () => ({ ...communityStub, ...community }),
@@ -131,8 +133,8 @@ export const makeTestApi = (fakes: Fakes) => {
     path: string,
     init: {
       method?: string;
+      /** Session token, sent as the session cookie. */
       token?: string;
-      authorization?: string;
       body?: unknown;
       /** Sent as is (e.g. malformed JSON), instead of `body`. */
       rawBody?: string;
@@ -141,10 +143,8 @@ export const makeTestApi = (fakes: Fakes) => {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
-    const authorization =
-      init.authorization ?? (init.token ? `Bearer ${init.token}` : undefined);
-    if (authorization) {
-      headers.Authorization = authorization;
+    if (init.token) {
+      headers.Cookie = `${SESSION_COOKIE}=${init.token}`;
     }
 
     return app.request(`http://api.test${path}`, {

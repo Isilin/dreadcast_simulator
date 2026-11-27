@@ -13,7 +13,7 @@ export const ErrorBody = z
 
 export type ErrorBody = z.infer<typeof ErrorBody>;
 
-export type ErrorStatus = 400 | 401 | 403 | 404 | 409 | 422 | 500;
+export type ErrorStatus = 400 | 401 | 403 | 404 | 409 | 422 | 429 | 500;
 
 /**
  * Error answered as `status` with `{ error, code? }`. Thrown by handlers and
@@ -48,6 +48,7 @@ export const forbidden = httpError(403);
 export const notFound = httpError(404);
 export const conflict = httpError(409);
 export const unprocessable = httpError(422);
+export const tooManyRequests = httpError(429);
 export const internalError = httpError(500);
 
 export const isHttpError = (value: unknown): value is HttpError =>
@@ -82,5 +83,6 @@ const ERROR_DESCRIPTIONS: Record<ErrorStatus, string> = {
   404: 'Not found',
   409: 'Conflict',
   422: 'Unprocessable',
+  429: 'Too many requests',
   500: 'Internal error',
 };

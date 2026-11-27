@@ -1235,3 +1235,41 @@ export const kit_prerequisite_race = pgTable(
     }),
   ],
 );
+
+// -----------------------------------------------------------------------------
+// Not from the Supabase era
+// -----------------------------------------------------------------------------
+
+export const privateSchema = pgSchema('private');
+
+/**
+ * Sign-in sessions (cookie). Only the server's own role reads them: no grant
+ * to anon or authenticated, and no row level security to bypass.
+ */
+export const sessionInPrivate = privateSchema.table(
+  'session',
+  {
+    /** sha256 of the cookie token: the token itself is never stored. */
+    token_hash: text().primaryKey().notNull(),
+    user_id: uuid()
+      .notNull()
+      .references(() => usersInAuth.id, { onDelete: 'cascade' }),
+    created_at: timestamptz()
+      .default(sql`now()`)
+      .notNull(),
+    expires_at: timestamptz().notNull(),
+    last_seen_at: timestamptz()
+      .default(sql`now()`)
+      .notNull(),
+  },
+  (table) => [
+    index('idx_session_user_id').using(
+      'btree',
+      table.user_id.asc().nullsLast(),
+    ),
+    index('idx_session_expires_at').using(
+      'btree',
+      table.expires_at.asc().nullsLast(),
+    ),
+  ],
+);

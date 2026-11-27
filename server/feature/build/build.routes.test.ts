@@ -47,7 +47,7 @@ const request = makeTestApi({
 const auth = { token: VALID_TOKEN };
 
 describe('authentication', () => {
-  it('rejects a request without Authorization', async () => {
+  it('rejects a request without session cookie', async () => {
     const response = await request('/api/builds');
 
     expect(response.status).toBe(401);
@@ -56,22 +56,16 @@ describe('authentication', () => {
     });
   });
 
-  it('rejects a non-bearer Authorization', async () => {
-    const response = await request('/api/builds', { authorization: 'Basic x' });
-
-    expect(response.status).toBe(401);
-    expect(await response.json()).toEqual({
-      error: "Jeton d'authentification invalide.",
-    });
-  });
-
-  it('rejects a token Supabase does not accept', async () => {
+  it('rejects a dead session and clears its cookie', async () => {
     const response = await request('/api/builds', { token: 'expired' });
 
     expect(response.status).toBe(401);
     expect(await response.json()).toEqual({
-      error: 'Utilisateur non authentifie.',
+      error: 'Session expirée : reconnectez-vous.',
     });
+    expect(response.headers.get('set-cookie')).toMatch(
+      /^dc_session=; Max-Age=0; Path=\/api; HttpOnly; Secure; SameSite=Lax/,
+    );
   });
 
   it('checks the session before the payload', async () => {

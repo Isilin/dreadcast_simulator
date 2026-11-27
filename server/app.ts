@@ -21,11 +21,11 @@ import { unreadableBodyError } from './platform/request-validation.js';
  * bodies, statuses and `{ error, code? }` errors.
  */
 export const createApp = (deps: Deps) => {
-  const auth = makeAuthMiddlewares(deps.resolveUser);
+  const auth = makeAuthMiddlewares(deps.auth.resolve);
 
   const api = new OpenAPIHono()
     .route('/', catalogRoutes(deps.catalog))
-    .route('/', authRoutes(deps.authGateway))
+    .route('/', authRoutes(deps.auth, auth))
     .route('/', buildRoutes(deps.builds, auth))
     .route('/', subscriptionRoutes(deps.subscriptions, auth))
     .route('/', profileRoutes(deps.profiles, auth))

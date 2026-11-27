@@ -66,7 +66,11 @@ export const makeTestDb = async ({
 };
 
 /** Claims of a user without admin metadata. */
-export const userClaims = (userId: string) => ({ userId, appMetadata: {} });
+export const userClaims = (userId: string) => ({
+  userId,
+  email: `${userId}@example.com`,
+  appMetadata: {},
+});
 
 /** An active plan (admins create them). */
 export const createPlan = async (
@@ -100,10 +104,11 @@ export const createUser = async (
   { admin }: TestDb,
   email: string,
   appMetadata: Readonly<Record<string, unknown>> = {},
+  passwordHash: string | null = null,
 ): Promise<string> => {
   const { rows } = await admin.query<{ id: string }>(
-    'INSERT INTO auth.users (email, raw_app_meta_data) VALUES ($1, $2) RETURNING id',
-    [email, appMetadata],
+    'INSERT INTO auth.users (email, raw_app_meta_data, encrypted_password) VALUES ($1, $2, $3) RETURNING id',
+    [email, appMetadata, passwordHash],
   );
   const [row] = rows;
   if (!row) {
