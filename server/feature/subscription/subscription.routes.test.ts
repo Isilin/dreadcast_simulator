@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import type { Subscription, SubscriptionPlan } from './subscription.schema.js';
-import { DbError } from '../../platform/db-error.js';
+import { DbError, NO_ROWS } from '../../platform/db-error.js';
 import {
   makeTestApi,
   TEST_USER_ID,
@@ -23,7 +23,7 @@ const request = makeTestApi({
     activePlans: async () => [plan],
     activePlan: async (code) => {
       if (code !== plan.code) {
-        throw new DbError({ code: 'PGRST116', message: '0 rows' });
+        throw new DbError({ code: NO_ROWS, message: '0 rows' });
       }
       return plan;
     },

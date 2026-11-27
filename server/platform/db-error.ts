@@ -1,7 +1,10 @@
 import { internalError, notFound, type HttpError } from './http-errors.js';
 
+/** Code of a DbError raised when a single row was expected and none came. */
+export const NO_ROWS = 'NO_ROWS';
+
 /**
- * Failure of a database call (PostgREST error, RPC exception, network).
+ * Failure of a database call (Postgres error, with its code, or network).
  * Uncaught, it becomes a 500 with its raw message, as before.
  */
 export class DbError extends Error {
@@ -21,13 +24,11 @@ export const isDbError = (value: unknown): value is DbError =>
 export const toInternalError = (error: DbError): HttpError =>
   internalError(error.message);
 
-/** `.single()` found no row (PGRST116) -> 404, anything else -> 500. */
+/** No row where one was expected (NO_ROWS) -> 404, anything else -> 500. */
 export const notFoundOrInternal =
   (notFoundMessage: string) =>
   (error: DbError): HttpError =>
-    error.code === 'PGRST116'
-      ? notFound(notFoundMessage)
-      : toInternalError(error);
+    error.code === NO_ROWS ? notFound(notFoundMessage) : toInternalError(error);
 
 /**
  * Awaits a repository call and translates its DbError with `toHttpError`;

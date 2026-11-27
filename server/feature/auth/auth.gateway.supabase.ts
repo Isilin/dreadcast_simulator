@@ -1,19 +1,15 @@
 import type { AuthGateway } from './auth.gateway.js';
 import { internalError, unauthorized } from '../../platform/http-errors.js';
-import type { Supabase } from '../../platform/supabase.js';
+import type { SupabaseAuth } from '../../platform/supabase.js';
 
 /** Supabase Auth. */
-export const makeAuthGateway = (supabase: Supabase): AuthGateway => ({
+export const makeAuthGateway = (auth: SupabaseAuth): AuthGateway => ({
   signInWithPassword: async (email, password) => {
-    let result: Awaited<
-      ReturnType<ReturnType<Supabase['anon']>['auth']['signInWithPassword']>
-    >;
+    // Fresh client: it keeps the new session in memory.
+    const client = auth.client();
+    let result: Awaited<ReturnType<typeof client.auth.signInWithPassword>>;
     try {
-      // Fresh client: it keeps the new session in memory.
-      result = await supabase.anon().auth.signInWithPassword({
-        email,
-        password,
-      });
+      result = await client.auth.signInWithPassword({ email, password });
     } catch (cause) {
       throw internalError(
         cause instanceof Error ? cause.message : 'Erreur de connexion',

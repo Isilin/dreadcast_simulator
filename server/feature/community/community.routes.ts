@@ -49,9 +49,9 @@ import {
 } from './community.schema.js';
 import type { AuthMiddlewares, User } from '../../platform/auth.js';
 import { noStore, publicCache } from '../../platform/cache.js';
-import type { Json } from '../../platform/database.gen.js';
 import { isDbError, mapDbError } from '../../platform/db-error.js';
 import { ALL_ERRORS, errorResponses } from '../../platform/http-errors.js';
+import type { Json } from '../../platform/json.js';
 import { invalidRequestAs } from '../../platform/request-validation.js';
 import {
   featureRouter,

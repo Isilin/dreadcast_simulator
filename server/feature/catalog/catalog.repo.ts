@@ -15,6 +15,6 @@ export interface CatalogRepo {
   readonly races: () => Promise<ReadonlyArray<Race>>;
   readonly titles: () => Promise<ReadonlyArray<Title>>;
   readonly drugs: () => Promise<ReadonlyArray<Drug>>;
-  /** Fails with PGRST116 when the drug does not exist. */
+  /** Fails with NO_ROWS when the drug does not exist. */
   readonly drug: (id: string) => Promise<Drug>;
 }

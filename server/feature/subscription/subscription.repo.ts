@@ -4,7 +4,7 @@ import type { Subscription, SubscriptionPlan } from './subscription.schema.js';
 /** Subscriptions of one user. */
 export interface SubscriptionRepo {
   readonly activePlans: () => Promise<ReadonlyArray<SubscriptionPlan>>;
-  /** Fails with PGRST116 when no active plan has this code. */
+  /** Fails with NO_ROWS when no active plan has this code. */
   readonly activePlan: (code: string) => Promise<SubscriptionPlan>;
   /** Most recent first. */
   readonly listMine: () => Promise<ReadonlyArray<Subscription>>;
