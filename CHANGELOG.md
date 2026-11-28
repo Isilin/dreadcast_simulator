@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/Isilin/dreadcast_simulator/compare/v1.2.0...v1.3.0) (2026-11-28)
+
+
+### Features
+
+* **vercel:** redirect the production domain to dc-simulator.isilinbn.fr ([#80](https://github.com/Isilin/dreadcast_simulator/issues/80)) ([fffff8d](https://github.com/Isilin/dreadcast_simulator/commit/fffff8da9794b3d043c9508a550b5b7b5087c03d))
+
 ## [1.2.0](https://github.com/Isilin/dreadcast_simulator/compare/v1.1.2...v1.2.0) (2026-11-28)
 
 
