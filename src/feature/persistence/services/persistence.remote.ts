@@ -1,6 +1,6 @@
 import type { BuildSnapshot } from './persistence.service';
 
-import { getAccessToken } from '@/feature/auth';
+import { requireSession } from '@/feature/auth';
 import { callApi } from '@/utils/api-client';
 import {
   createRepositoryErrorClass,
@@ -40,10 +40,9 @@ export const fetchRemoteBuilds = async (
 ): Promise<Record<string, BuildSnapshot>> => {
   await waitForPendingBuildSaves();
 
-  const accessToken = await getAccessToken();
+  await requireSession();
   const builds = await callApi((client) => client.api.builds.$get(), {
     signal,
-    accessToken,
     ErrorClass: PersistenceRepositoryError,
     failed: {
       code: 'FETCH_REMOTE_BUILDS_FAILED',
@@ -75,7 +74,7 @@ const sendUpsertRemoteBuild = async ({
   slot,
   snapshot,
 }: UpsertRemoteBuildParams): Promise<BuildSnapshot> => {
-  const accessToken = await getAccessToken();
+  await requireSession();
   const numericSlot = toApiSlot(slot);
   const saved = await callApi(
     (client) =>
@@ -86,7 +85,6 @@ const sendUpsertRemoteBuild = async ({
         },
       }),
     {
-      accessToken,
       ErrorClass: PersistenceRepositoryError,
       failed: {
         code: 'SAVE_REMOTE_BUILD_FAILED',
@@ -110,7 +108,7 @@ export const deleteRemoteBuild = async (slot: string): Promise<void> => {
   // A save still in flight would recreate the build after its deletion.
   await waitForPendingBuildSaves();
 
-  const accessToken = await getAccessToken();
+  await requireSession();
   const numericSlot = toApiSlot(slot);
 
   try {
@@ -118,7 +116,6 @@ export const deleteRemoteBuild = async (slot: string): Promise<void> => {
       (client) =>
         client.api.builds.$delete({ query: { slot: String(numericSlot) } }),
       {
-        accessToken,
         ErrorClass: PersistenceRepositoryError,
         failed: {
           code: 'DELETE_REMOTE_BUILD_FAILED',

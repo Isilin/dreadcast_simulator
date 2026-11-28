@@ -13,8 +13,8 @@ Instead of awaiting data in async components before returning JSX, use Suspense 
 
 ```tsx
 async function Page() {
-  const data = await fetchData() // Blocks entire page
-  
+  const data = await fetchData(); // Blocks entire page
+
   return (
     <div>
       <div>Sidebar</div>
@@ -24,7 +24,7 @@ async function Page() {
       </div>
       <div>Footer</div>
     </div>
-  )
+  );
 }
 ```
 
@@ -45,12 +45,12 @@ function Page() {
       </div>
       <div>Footer</div>
     </div>
-  )
+  );
 }
 
 async function DataDisplay() {
-  const data = await fetchData() // Only blocks this component
-  return <div>{data.content}</div>
+  const data = await fetchData(); // Only blocks this component
+  return <div>{data.content}</div>;
 }
 ```
 

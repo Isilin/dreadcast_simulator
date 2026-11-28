@@ -240,7 +240,9 @@ export const fetchItems = async (signal?: AbortSignal): Promise<Item[]> => {
   `hc<AppType>` client: paths, parameters, bodies and responses are typed from
   the server routes, with no code generation. Failures become the feature's
   `RepositoryError` (API `{ error, code }` kept with `apiMessage`)
-- Signed-in calls pass `accessToken` (`getAccessToken` from `@/feature/auth`)
+- The session travels in its HttpOnly cookie (same origin): signed-in calls
+  only check `requireSession()` (`@/feature/auth`) first, for their typed
+  error; a 401 clears the signed-in user (`onUnauthorized`)
 - Import from `@server/...` only types (`import type`): zod and the server
   code never reach the browser
 - DTOs (route schema types) are mapped to domain models in `*.mapper.ts`
@@ -257,10 +259,11 @@ serves the built front).
 server/
   app.ts              # createApp(deps): every router under /api, error handler; AppType
   deps.ts             # Deps: services behind the routes
-  live.ts             # makeLiveDeps(): production services (Postgres, Supabase Auth)
+  live.ts             # makeLiveDeps(): production services (Postgres)
   api.docs.ts         # /api/docs (Scalar) and /api/openapi.json
   node.ts             # Node server: API + static front (yarn dev:api, Docker)
-  platform/           # auth middlewares, errors, cache, validation, Supabase Auth
+  platform/           # session cookie middlewares, errors, cache, validation, rate limit
+  admin/              # admin CLI of the container (dist-server/admin.js)
   db/                 # Drizzle: schema.ts, client.ts (withAnon / withUser), migrations/
   feature/<name>/
     <name>.schema.ts          # zod payloads and DTOs (also read by the front, as types)

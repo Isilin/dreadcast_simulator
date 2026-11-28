@@ -3,11 +3,6 @@ import { useState, type SubmitEvent } from 'react';
 
 import styles from './LoginForm.module.css';
 
-import {
-  getMissingAuthConfigErrorMessage,
-  isAuthConfigured,
-} from '@/feature/auth/services';
-
 export const LoginForm = () => {
   const navigate = useNavigate();
 
@@ -15,8 +10,6 @@ export const LoginForm = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const authConfigured = isAuthConfigured();
 
   const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -57,10 +50,6 @@ export const LoginForm = () => {
           accéder au simulateur.
         </p>
 
-        {!authConfigured ? (
-          <p className={styles.error}>{getMissingAuthConfigErrorMessage()}</p>
-        ) : null}
-
         <form className={styles.form} onSubmit={handleSubmit}>
           <label className={styles.label} htmlFor="auth-user">
             Utilisateur (email)
@@ -74,7 +63,7 @@ export const LoginForm = () => {
             onChange={(event) => setEmail(event.target.value)}
             placeholder="exemple@dreadcast.net"
             required
-            disabled={!authConfigured || isSubmitting}
+            disabled={isSubmitting}
           />
 
           <label className={styles.label} htmlFor="auth-password">
@@ -89,7 +78,7 @@ export const LoginForm = () => {
             onChange={(event) => setPassword(event.target.value)}
             placeholder="••••••••"
             required
-            disabled={!authConfigured || isSubmitting}
+            disabled={isSubmitting}
           />
 
           {errorMessage ? <p className={styles.error}>{errorMessage}</p> : null}
@@ -97,7 +86,7 @@ export const LoginForm = () => {
           <button
             className={styles.submit}
             type="submit"
-            disabled={!authConfigured || isSubmitting}
+            disabled={isSubmitting}
           >
             {isSubmitting ? 'Connexion en cours...' : 'Se connecter'}
           </button>

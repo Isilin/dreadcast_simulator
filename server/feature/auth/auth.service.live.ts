@@ -1,6 +1,5 @@
-import { createHash, randomBytes } from 'node:crypto';
-
 import bcrypt from 'bcryptjs';
+import { createHash, randomBytes } from 'node:crypto';
 
 import type { Account, AuthRepo } from './auth.repo.js';
 import { SESSION_TTL_SECONDS, type AuthService } from './auth.service.js';

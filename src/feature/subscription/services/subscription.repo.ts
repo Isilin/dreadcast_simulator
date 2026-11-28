@@ -9,11 +9,11 @@ import type {
   SubscriptionRecord,
 } from '../model';
 
-import { getAccessToken as getSessionToken } from '@/feature/auth';
+import { requireSession } from '@/feature/auth';
 import { callApi } from '@/utils/api-client';
 
-const getAccessToken = (): Promise<string> =>
-  getSessionToken(
+const ensureSession = (): Promise<void> =>
+  requireSession(
     () =>
       new SubscriptionRepositoryError({
         code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.MISSING_AUTH_SESSION,
@@ -25,12 +25,11 @@ const getAccessToken = (): Promise<string> =>
 export const fetchSubscriptions = async (
   signal?: AbortSignal,
 ): Promise<SubscriptionRecord[]> => {
-  const accessToken = await getAccessToken();
+  await ensureSession();
   const subscriptions = await callApi(
     (client) => client.api.subscriptions.$get(),
     {
       signal,
-      accessToken,
       ErrorClass: SubscriptionRepositoryError,
       failed: {
         code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.FETCH_SUBSCRIPTIONS_FAILED,
@@ -49,12 +48,11 @@ export const fetchSubscriptions = async (
 export const fetchSubscriptionPlans = async (
   signal?: AbortSignal,
 ): Promise<SubscriptionPlan[]> => {
-  const accessToken = await getAccessToken();
+  await ensureSession();
   const plans = await callApi(
     (client) => client.api['subscription-plans'].$get(),
     {
       signal,
-      accessToken,
       ErrorClass: SubscriptionRepositoryError,
       failed: {
         code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.FETCH_SUBSCRIPTION_PLANS_FAILED,
@@ -73,11 +71,10 @@ export const fetchSubscriptionPlans = async (
 export const createSubscription = async (
   planCode: SubscriptionPlanCode,
 ): Promise<SubscriptionRecord> => {
-  const accessToken = await getAccessToken();
+  await ensureSession();
   const subscription = await callApi(
     (client) => client.api.subscriptions.$post({ json: { planCode } }),
     {
-      accessToken,
       ErrorClass: SubscriptionRepositoryError,
       failed: {
         code: SUBSCRIPTION_REPOSITORY_ERROR_CODE.CREATE_SUBSCRIPTION_FAILED,

@@ -1,6 +1,12 @@
-import type { Session } from '@supabase/supabase-js';
+/** Signed-in user, from the session cookie (GET /api/auth/me). */
+export interface AuthSession {
+  user: {
+    id: string;
+    email: string;
+  };
+}
 
 export interface AuthState {
-  session: Session | null;
+  session: AuthSession | null;
   isBootstrapping: boolean;
 }

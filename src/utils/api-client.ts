@@ -20,8 +20,6 @@ interface ErrorSpec {
 
 export interface ApiCallOptions {
   signal?: AbortSignal;
-  /** Session token; omitted for guest calls. */
-  accessToken?: string;
   /** Repository error class of the feature. */
   ErrorClass: new (params: RepositoryErrorParams) => RepositoryError;
   /** Request refused or failed. */
@@ -48,26 +46,34 @@ interface ApiErrorBody {
   code?: string;
 }
 
+type UnauthorizedListener = () => void;
+let unauthorizedListener: UnauthorizedListener | undefined;
+
+/**
+ * Called on every 401: the session cookie is missing or dead (the auth
+ * feature then forgets the signed-in user).
+ */
+export const onUnauthorized = (listener: UnauthorizedListener) => {
+  unauthorizedListener = listener;
+};
+
 const isApiErrorBody = (value: unknown): value is ApiErrorBody =>
   typeof value === 'object' &&
   value !== null &&
   typeof (value as { error?: unknown }).error === 'string';
 
 /**
- * Runs one call of the typed client (TanStack Query). Failures become the
- * feature's RepositoryError: API errors keep their status, and with
- * `apiMessage` their `{ error, code }`.
+ * Runs one call of the typed client (TanStack Query). The session travels in
+ * its HttpOnly cookie (same origin). Failures become the feature's
+ * RepositoryError: API errors keep their status, and with `apiMessage` their
+ * `{ error, code }`.
  */
 export const callApi = async <R extends AnyResponse>(
   call: (client: ApiClient) => Promise<R>,
   options: ApiCallOptions,
 ): Promise<SuccessBody<R>> => {
-  const { accessToken, signal, ErrorClass, failed, invalid, apiMessage } =
-    options;
-  const client = hc<AppType>('/', {
-    headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-    init: { signal },
-  });
+  const { signal, ErrorClass, failed, invalid, apiMessage } = options;
+  const client = hc<AppType>('/', { init: { signal } });
 
   let response: R;
   try {
@@ -77,6 +83,9 @@ export const callApi = async <R extends AnyResponse>(
   }
 
   if (!response.ok) {
+    if (response.status === 401) {
+      unauthorizedListener?.();
+    }
     const body: unknown = await response.json().catch(() => undefined);
     const fromApi = apiMessage && isApiErrorBody(body) ? body : undefined;
     throw new ErrorClass({
