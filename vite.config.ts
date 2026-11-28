@@ -35,10 +35,10 @@ export default defineConfig(({ mode }) => ({
   server: {
     proxy: {
       '/api': {
-        // API_PROXY_TARGET=http://localhost:3001 to use `yarn dev:api`.
+        // Production (forge) by default; API_PROXY_TARGET=http://localhost:3001
+        // to use `yarn dev:api`.
         target:
-          process.env.API_PROXY_TARGET ??
-          'https://dreadcast-simulator-kappa.vercel.app',
+          process.env.API_PROXY_TARGET ?? 'https://dc-simulator.isilinbn.fr',
         changeOrigin: true,
         secure: true,
       },

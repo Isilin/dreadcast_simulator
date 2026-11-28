@@ -3,7 +3,7 @@
  * Cache-Control). Used to check that a migration keeps the HTTP contract.
  *
  * Usage: tsx scripts/api-diff.ts <reference-origin> <candidate-origin> [--no-cache-check]
- * e.g.   tsx scripts/api-diff.ts https://dreadcast-simulator-kappa.vercel.app http://localhost:3001 --no-cache-check
+ * e.g.   tsx scripts/api-diff.ts https://dc-simulator.isilinbn.fr http://localhost:3001 --no-cache-check
  *
  * --no-cache-check skips Cache-Control: the Vercel CDN rewrites it, so only
  * compare it between two Vercel deployments.

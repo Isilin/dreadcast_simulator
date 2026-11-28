@@ -2,7 +2,7 @@
 
 Préparez votre personnage de [Dreadcast](https://dreadcast.net), le jeu de rôle cyberpunk francophone par navigateur, avant de dépenser le moindre crédit : équipez-le, ajoutez kits, implants et drogue, et voyez ses statistiques évoluer en direct.
 
-**[🚀 Ouvrir le simulateur](https://dreadcast-simulator-kappa.vercel.app/)**
+**[🚀 Ouvrir le simulateur](https://dc-simulator.isilinbn.fr/)**
 
 ![L'atelier : catalogue, poste d'équipement et statistiques du personnage](screenshots/atelier.png)
 

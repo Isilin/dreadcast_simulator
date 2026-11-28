@@ -126,7 +126,7 @@ yarn format:check # Prettier check (no writes), as run in CI
 - **French Language:** All UI text and data labels are in French
 - **Game Data:** Based on Dreadcast RPG mechanics (stats, implants, items from game), stored in Supabase
 - **Tests:** Vitest unit tests co-located as `*.test.ts`
-- **Vercel Deployment:** Auto-deploys to https://dreadcast-simulator-kappa.vercel.app/
+- **Deployment:** production on forge (Coolify) at https://dc-simulator.isilinbn.fr/, deployed by the release workflow; Vercel only serves dev previews (`dreadcast-simulator-kappa.vercel.app` redirects to production)
 
 ## When Adding Features
 
