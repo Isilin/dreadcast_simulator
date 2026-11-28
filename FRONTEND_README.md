@@ -34,7 +34,7 @@ Attention: `.env.local` pointe sur la base de production, les ecritures faites
 en local sont reelles. La reference de l'API est servie sur `/api/docs`.
 
 Quand le panneau Catalogue affiche `Catalogue indisponible`, le client a recu
-une erreur de service: verifier les variables Supabase du projet Vercel et les
+une erreur de service: verifier la variable de base de donnees du projet Vercel et les
 journaux de la fonction `api/server.ts`. L'interface reste utilisable pour les builds
 deja enregistres localement.
 
@@ -46,21 +46,19 @@ par l'integration Supabase de Vercel, recupere par `vercel env pull`). Jusqu'a
 la bascule vers forge, c'est la base de production. `sslmode=require` y est lu
 comme dans libpq (chiffre, certificat non verifie).
 
-L'authentification passe encore par Supabase Auth : le frontend accepte l'un
-des deux formats ci-dessous dans `.env.local`.
+La connexion passe par le serveur : mot de passe verifie (bcrypt) dans
+`auth.users`, session dans un cookie HttpOnly `dc_session` (30 jours,
+prolonges a l'usage). Le front n'a besoin d'aucune variable pour cela. Les
+comptes se gerent avec la CLI de l'image (terminal Coolify) :
 
 ```bash
-# Format Vite
-VITE_SUPABASE_URL=https://votre-projet.supabase.co
-VITE_SUPABASE_ANON_KEY=votre_cle_anon
-
-# Format Vercel/NEXT_PUBLIC
-NEXT_PUBLIC_SIMULATOR_SUPABASE_URL=https://votre-projet.supabase.co
-NEXT_PUBLIC_SIMULATOR_SUPABASE_ANON_KEY=votre_cle_anon
+node dist-server/admin.js user:create quelqu-un@example.com   # imprime le mot de passe
+node dist-server/admin.js user:password quelqu-un@example.com # nouveau mot de passe
+node dist-server/admin.js subscription:pending
+node dist-server/admin.js subscription:validate <id>
 ```
 
-Sans ces variables, la page de connexion s'affiche mais la connexion est
-desactivee. Le schema et les regles d'acces de la base sont decrits dans
+Le schema et les regles d'acces de la base sont decrits dans
 [supabase/README.md](supabase/README.md).
 
 ### Scripts

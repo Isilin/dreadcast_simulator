@@ -9,9 +9,10 @@ export const LoginPayload = z.object({
   password: z.string().min(1),
 });
 
-export const LoginResponse = z
+/** The signed-in user: sign-in response and GET /auth/me. */
+export const SessionResponse = z
   .object({
-    accessToken: z.string(),
-    refreshToken: z.string(),
+    user: z.object({ id: z.uuid(), email: z.string() }),
   })
-  .openapi('LoginResponse');
+  .openapi('SessionResponse');
+export type SessionResponse = z.infer<typeof SessionResponse>;

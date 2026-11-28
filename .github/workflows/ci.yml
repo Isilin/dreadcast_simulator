@@ -76,8 +76,6 @@ jobs:
         run: |
           docker run -d --name app -p 3000:3000 \
             -e DATABASE_URL=postgres://ci:ci@127.0.0.1:9/ci \
-            -e SIMULATOR_SUPABASE_URL=http://127.0.0.1:9 \
-            -e SIMULATOR_SUPABASE_ANON_KEY=ci \
             dreadcast-simulator:ci
           for _ in $(seq 1 30); do
             curl -sf -o /dev/null http://127.0.0.1:3000/api/docs && break
@@ -113,8 +111,6 @@ jobs:
           docker run -d --name app-pg --network ci -p 3001:3000 \
             -e DATABASE_URL=postgres://dc_app:ci@pg:5432/dc_simulateur \
             -e DB_MIGRATE=1 \
-            -e SIMULATOR_SUPABASE_URL=http://127.0.0.1:9 \
-            -e SIMULATOR_SUPABASE_ANON_KEY=ci \
             dreadcast-simulator:ci
           for _ in $(seq 1 30); do
             curl -sf -o /dev/null http://127.0.0.1:3001/api/health && break
@@ -130,6 +126,18 @@ jobs:
             sleep 1
           done
           docker logs app-pg 2>&1 | grep -q 'Database up to date'
+          # Sign-in end to end: account from the admin CLI, session cookie
+          # (read from Set-Cookie: curl keeps Secure cookies off plain http).
+          password=$(docker exec app-pg node dist-server/admin.js user:create ci@example.com | sed -n 's/^Password: //p')
+          test -n "$password"
+          token=$(curl -sf -D - -o /dev/null -H 'Content-Type: application/json' \
+            -d "{\"email\":\"ci@example.com\",\"password\":\"$password\"}" \
+            http://127.0.0.1:3001/api/auth/login \
+            | sed -n 's/^set-cookie: dc_session=\([^;]*\).*/\1/ip' | tr -d '\r')
+          test -n "$token"
+          curl -sf -H "Cookie: dc_session=$token" http://127.0.0.1:3001/api/auth/me | grep -q '"email":"ci@example.com"'
+          test "$(curl -s -o /dev/null -w '%{http_code}' -X POST -H "Cookie: dc_session=$token" http://127.0.0.1:3001/api/auth/logout)" = 204
+          test "$(curl -s -o /dev/null -w '%{http_code}' -H "Cookie: dc_session=$token" http://127.0.0.1:3001/api/auth/me)" = 401
 
       - name: Container logs
         if: always()

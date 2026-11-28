@@ -27,10 +27,7 @@ import {
 } from '../model';
 
 import type { Stat } from '@/domain';
-import {
-  getAccessToken as getSessionToken,
-  getOptionalAccessToken,
-} from '@/feature/auth';
+import { requireSession } from '@/feature/auth';
 import { callApi, type ApiClient, type SuccessBody } from '@/utils/api-client';
 
 interface CallOptions {
@@ -45,8 +42,8 @@ const INVALID_RESPONSE = {
   message: 'La réponse de la Communauté est invalide.',
 };
 
-const getAccessToken = (): Promise<string> =>
-  getSessionToken(
+const ensureSession = (): Promise<void> =>
+  requireSession(
     () =>
       new CommunityRepositoryError({
         code: COMMUNITY_REPOSITORY_ERROR_CODE.MISSING_AUTH_SESSION,
@@ -62,13 +59,12 @@ const call = async <
   run: (client: ApiClient) => Promise<R>,
   { signal, fallbackMessage, allowGuest }: CallOptions,
 ): Promise<SuccessBody<R>> => {
-  const accessToken = allowGuest
-    ? await getOptionalAccessToken()
-    : await getAccessToken();
+  if (!allowGuest) {
+    await ensureSession();
+  }
 
   return callApi(run, {
     signal,
-    accessToken,
     ErrorClass: CommunityRepositoryError,
     failed: {
       code: COMMUNITY_REPOSITORY_ERROR_CODE.REQUEST_FAILED,

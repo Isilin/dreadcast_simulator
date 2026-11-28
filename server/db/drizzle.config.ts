@@ -7,5 +7,5 @@ export default defineConfig({
   dialect: 'postgresql',
   schema: './server/db/schema.ts',
   out: './server/db/migrations',
-  schemaFilter: ['public', 'auth'],
+  schemaFilter: ['public', 'auth', 'private'],
 });

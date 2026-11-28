@@ -1,55 +1,49 @@
-import type { Session } from '@supabase/supabase-js';
-
 import { useAuthStore } from '../model';
-import { getSupabaseClient } from './auth.client';
-import { hasSupabaseAuthConfig } from './auth.config';
+import { fetchSession } from './auth.api';
+import type { AuthSession } from '../model/auth.types';
 
-export const bootstrapAuthSession = async (): Promise<Session | null> => {
-  const { setSession, setBootstrapping } = useAuthStore.getState();
+import { onUnauthorized } from '@/utils/api-client';
 
-  if (!hasSupabaseAuthConfig) {
-    setSession(null);
-    setBootstrapping(false);
-    return null;
-  }
+let bootstrap: Promise<AuthSession | null> | undefined;
 
-  try {
-    const client = await getSupabaseClient();
-    const { data } = await client.auth.getSession();
-    setSession(data.session ?? null);
-    return data.session ?? null;
-  } finally {
-    setBootstrapping(false);
-  }
+/**
+ * Reads the session of the cookie once at startup (GET /api/auth/me). An
+ * unreachable API reads as signed out.
+ */
+export const bootstrapAuthSession = (): Promise<AuthSession | null> => {
+  bootstrap ??= (async () => {
+    const { setSession, setBootstrapping } = useAuthStore.getState();
+    try {
+      const session = await fetchSession().catch(() => null);
+      setSession(session);
+      return session;
+    } finally {
+      setBootstrapping(false);
+    }
+  })();
+  return bootstrap;
 };
 
-let authListenerInitialized = false;
+let listenerInitialized = false;
 
+/** A 401 from any call means the session ended: forget the user. */
 export const initAuthListener = () => {
-  if (authListenerInitialized || !hasSupabaseAuthConfig) {
+  if (listenerInitialized) {
     return;
   }
-
-  authListenerInitialized = true;
-
-  void getSupabaseClient().then((client) => {
-    client.auth.onAuthStateChange((_event, session) => {
-      useAuthStore.getState().setSession(session ?? null);
-    });
+  listenerInitialized = true;
+  onUnauthorized(() => {
+    if (useAuthStore.getState().auth.session) {
+      useAuthStore.getState().setSession(null);
+    }
   });
 };
 
-export const getCurrentSession = async (): Promise<Session | null> => {
-  if (!hasSupabaseAuthConfig) {
-    return null;
-  }
-
-  const client = await getSupabaseClient();
-  const { data } = await client.auth.getSession();
-  return data.session ?? null;
+/** Current session, once the startup check is done. */
+export const getCurrentSession = async (): Promise<AuthSession | null> => {
+  await bootstrapAuthSession();
+  return useAuthStore.getState().auth.session;
 };
 
-export const requireAuthenticatedSession = async (): Promise<boolean> => {
-  const session = await getCurrentSession();
-  return Boolean(session?.user);
-};
+export const requireAuthenticatedSession = async (): Promise<boolean> =>
+  Boolean((await getCurrentSession())?.user);

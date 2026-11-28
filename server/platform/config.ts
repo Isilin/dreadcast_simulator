@@ -1,10 +1,5 @@
 type Env = Readonly<Record<string, string | undefined>>;
 
-export interface SupabaseConfig {
-  readonly url: string;
-  readonly anonKey: string;
-}
-
 const required = (env: Env, name: string): string => {
   const value = env[name];
   if (!value) {
@@ -12,16 +7,6 @@ const required = (env: Env, name: string): string => {
   }
   return value;
 };
-
-/** Vercel exposes the Supabase integration under both names. */
-const withPublicFallback = (env: Env, name: string): string =>
-  required(env, env[name] ? name : `NEXT_PUBLIC_${name}`);
-
-/** Supabase Auth (sign-in, session check) until our own sessions. */
-export const readSupabaseConfig = (env: Env = process.env): SupabaseConfig => ({
-  url: withPublicFallback(env, 'SIMULATOR_SUPABASE_URL'),
-  anonKey: withPublicFallback(env, 'SIMULATOR_SUPABASE_ANON_KEY'),
-});
 
 export interface DatabaseConfig {
   readonly url: string;

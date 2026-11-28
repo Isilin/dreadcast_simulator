@@ -1,11 +1,10 @@
-import type { Session } from '@supabase/supabase-js';
 import { create } from 'zustand';
 
-import type { AuthState } from './auth.types';
+import type { AuthSession, AuthState } from './auth.types';
 
 interface AuthStore {
   auth: AuthState;
-  setSession: (session: Session | null) => void;
+  setSession: (session: AuthSession | null) => void;
   setBootstrapping: (isBootstrapping: boolean) => void;
 }
 

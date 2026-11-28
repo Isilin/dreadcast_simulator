@@ -8,7 +8,6 @@ import { configDefaults } from 'vitest/config';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
-  envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
   plugins: [
     tanstackRouter({
       target: 'react',
@@ -58,7 +57,6 @@ export default defineConfig(({ mode }) => ({
               name(id) {
                 if (!id.includes('node_modules')) return null;
 
-                if (id.includes('@supabase')) return 'supabase';
                 if (id.includes('@tanstack')) return 'tanstack';
                 if (id.includes('@dnd-kit')) return 'dnd';
                 if (id.includes('@base-ui')) return 'base-ui';

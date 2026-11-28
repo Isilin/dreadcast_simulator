@@ -4,7 +4,7 @@
 
 This is a French-language character build simulator for Dreadcast, a browser-based cyberpunk RPG. Users create characters by selecting race/gender, equipping items, kits, implants, a drug and titles, with automatic stat calculation and prerequisite checks. Builds are saved locally for guests (1 build) or in the database for signed-in users (5 builds, unlimited with a subscription), and subscribers can publish them to the Community.
 
-**Tech Stack:** React 19 + TypeScript, Vite, TanStack Router, TanStack Query, Zustand, Base UI Components, CSS Modules, Hono + zod-openapi backend (`server/`: Vercel function `api/server.ts` in dev, Node container on forge in prod), Postgres via Drizzle (Supabase Auth until our own sessions)
+**Tech Stack:** React 19 + TypeScript, Vite, TanStack Router, TanStack Query, Zustand, Base UI Components, CSS Modules, Hono + zod-openapi backend (`server/`: Vercel function `api/server.ts` in dev, Node container on forge in prod), Postgres via Drizzle, cookie sessions (bcrypt)
 
 ## Architecture Pattern: Feature-Sliced Design
 

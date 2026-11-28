@@ -1,14 +1,5 @@
-import type { AuthError } from '@supabase/supabase-js';
-
 import { useAuthStore } from '../model';
-import { getSupabaseClient } from './auth.client';
-import {
-  hasSupabaseAuthConfig,
-  missingConfigErrorMessage,
-} from './auth.config';
-
-import { callApi } from '@/utils/api-client';
-import { RepositoryError } from '@/utils/repository-error';
+import { login, logout } from './auth.api';
 
 export interface SignInWithPasswordInput {
   email: string;
@@ -16,56 +7,29 @@ export interface SignInWithPasswordInput {
 }
 
 export interface SignInWithPasswordResult {
-  error: AuthError | Error | null;
+  error: Error | null;
 }
 
 export const signInWithPassword = async ({
   email,
   password,
 }: SignInWithPasswordInput): Promise<SignInWithPasswordResult> => {
-  if (!hasSupabaseAuthConfig) {
-    return { error: new Error(missingConfigErrorMessage) };
-  }
-  let payload: { accessToken: string; refreshToken: string };
   try {
-    payload = await callApi(
-      (client) => client.api.auth.login.$post({ json: { email, password } }),
-      {
-        ErrorClass: RepositoryError,
-        failed: { code: 'LOGIN_FAILED', message: 'Échec de la connexion.' },
-        invalid: {
-          code: 'INVALID_LOGIN_PAYLOAD',
-          message: 'Échec de la connexion.',
-        },
-        apiMessage: true,
-      },
-    );
+    useAuthStore.getState().setSession(await login(email, password));
+    return { error: null };
   } catch (error) {
     return {
       error:
         error instanceof Error ? error : new Error('Échec de la connexion.'),
     };
   }
-
-  const client = await getSupabaseClient();
-  const { data, error } = await client.auth.setSession({
-    access_token: payload.accessToken,
-    refresh_token: payload.refreshToken,
-  });
-
-  if (!error) {
-    useAuthStore.getState().setSession(data.session ?? null);
-  }
-
-  return { error };
 };
 
+/** Signs out locally even when the call fails (the cookie may be gone). */
 export const signOut = async () => {
-  if (!hasSupabaseAuthConfig) {
-    return;
+  try {
+    await logout();
+  } finally {
+    useAuthStore.getState().setSession(null);
   }
-
-  const client = await getSupabaseClient();
-  await client.auth.signOut();
-  useAuthStore.getState().setSession(null);
 };

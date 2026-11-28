@@ -301,12 +301,19 @@ describe('GET /api/community/builds/:id (detail)', () => {
     });
   });
 
-  it('refuses an invalid session instead of falling back to guest', async () => {
+  it('reads a dead session as a guest and clears its cookie', async () => {
     const response = await request(`/api/community/builds/${PUBLICATION_ID}`, {
       token: 'expired',
     });
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(200);
+    expect(await json(response)).toMatchObject({
+      locked: true,
+      is_subscriber: false,
+    });
+    expect(response.headers.get('set-cookie')).toMatch(
+      /^dc_session=; Max-Age=0/,
+    );
   });
 
   it('opens the content to signed-in subscribers', async () => {

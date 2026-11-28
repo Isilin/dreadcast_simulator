@@ -4,11 +4,11 @@ import {
 } from './account.errors';
 import type { AccountProfile } from '../model';
 
-import { getAccessToken as getSessionToken } from '@/feature/auth';
+import { requireSession } from '@/feature/auth';
 import { callApi } from '@/utils/api-client';
 
-const getAccessToken = (): Promise<string> =>
-  getSessionToken(
+const ensureSession = (): Promise<void> =>
+  requireSession(
     () =>
       new AccountRepositoryError({
         code: ACCOUNT_REPOSITORY_ERROR_CODE.MISSING_AUTH_SESSION,
@@ -25,10 +25,9 @@ const invalidProfile = {
 export const fetchAccountProfile = async (
   signal?: AbortSignal,
 ): Promise<AccountProfile> => {
-  const accessToken = await getAccessToken();
+  await ensureSession();
   const profile = await callApi((client) => client.api.profile.me.$get(), {
     signal,
-    accessToken,
     ErrorClass: AccountRepositoryError,
     failed: {
       code: ACCOUNT_REPOSITORY_ERROR_CODE.FETCH_PROFILE_FAILED,
@@ -41,11 +40,10 @@ export const fetchAccountProfile = async (
 };
 
 export const createPseudo = async (pseudo: string): Promise<AccountProfile> => {
-  const accessToken = await getAccessToken();
+  await ensureSession();
   const profile = await callApi(
     (client) => client.api.profile.me.$put({ json: { pseudo: pseudo.trim() } }),
     {
-      accessToken,
       ErrorClass: AccountRepositoryError,
       failed: {
         code: ACCOUNT_REPOSITORY_ERROR_CODE.CREATE_PSEUDO_FAILED,
