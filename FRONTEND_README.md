@@ -3,7 +3,7 @@
 Le frontend est une application React 19 + TypeScript construite avec Vite,
 TanStack Router, TanStack Query et Zustand. Les donnees passent par une API
 Hono (`server/`: fonction Vercel `api/server.ts` en dev, conteneur Node sur
-forge en prod) adossee a Supabase. Le code suit une organisation feature-sliced: chaque fonctionnalite
+forge en prod) adossee a Postgres (base Supabase jusqu'a la bascule des donnees). Le code suit une organisation feature-sliced: chaque fonctionnalite
 garde ses regles, ses donnees et son UI dans une frontiere explicite.
 
 Les conventions de code sont dans [CODING_STANDARDS.md](CODING_STANDARDS.md).
@@ -20,8 +20,8 @@ yarn dev
 
 Ouvrir [http://localhost:5173](http://localhost:5173).
 
-`yarn dev` proxifie les appels `/api/*` vers le deploiement Vercel
-(`vite.config.ts`): le catalogue, les kits, les implants, les drogues et les
+`yarn dev` proxifie les appels `/api/*` vers la production
+(`https://dc-simulator.isilinbn.fr`, `vite.config.ts`): le catalogue, les kits, les implants, les drogues et les
 races demandent donc une API deployee fonctionnelle. Pour executer l'API en
 local:
 

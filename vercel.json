@@ -10,6 +10,14 @@
   },
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        { "type": "host", "value": "dreadcast-simulator-kappa.vercel.app" }
+      ],
+      "destination": "https://dc-simulator.isilinbn.fr/:path*",
+      "permanent": true
+    },
+    {
       "source": "/shared/:id",
       "destination": "/",
       "permanent": false
