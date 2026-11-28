@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/Isilin/dreadcast_simulator/compare/v1.1.2...v1.2.0) (2026-11-28)
+
+
+### Features
+
+* **auth:** own cookie sessions instead of Supabase Auth ([#78](https://github.com/Isilin/dreadcast_simulator/issues/78)) ([b37def1](https://github.com/Isilin/dreadcast_simulator/commit/b37def12d6865f933a041fb23617d83a525ab4bd))
+
 ## [1.1.2](https://github.com/Isilin/dreadcast_simulator/compare/v1.1.1...v1.1.2) (2026-11-27)
 
 
