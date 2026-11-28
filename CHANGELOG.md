@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/Isilin/dreadcast_simulator/compare/v1.3.0...v1.3.1) (2026-11-28)
+
+
+### Bug Fixes
+
+* **vercel:** redirect the root path of the production domain too ([#82](https://github.com/Isilin/dreadcast_simulator/issues/82)) ([f310963](https://github.com/Isilin/dreadcast_simulator/commit/f310963daa4fc8b4220a760b718bc7a48138f8cb))
+
 ## [1.3.0](https://github.com/Isilin/dreadcast_simulator/compare/v1.2.0...v1.3.0) (2026-11-28)
 
 
